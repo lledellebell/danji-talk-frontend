@@ -3,6 +3,7 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
+import react from 'eslint-plugin-react'
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -24,9 +25,9 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      'react/prop-types': 'error',
+      'react/jsx-key': 'error',
+      'react/jsx-no-duplicate-props': 'error',
     },
-    'react/prop-types': 'error',
-    'react/jsx-key': 'error',
-    'react/jsx-no-duplicate-props': 'error',
   },
 )
