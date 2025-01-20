@@ -8,6 +8,20 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: 'autocomplete-valid',
+            selector: '*:not([autocomplete="nope"])',
+          },
+          {
+            id: 'autocomplete-valid',
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
 };
 
