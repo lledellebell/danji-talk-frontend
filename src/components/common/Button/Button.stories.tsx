@@ -49,11 +49,17 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
+const withMemoryRouter = (Story: any) => (
+  <MemoryRouter>
+    <Story />
+  </MemoryRouter>
+);
+
 export const Default: Story = {
   args: {
-    className: "primary",
     size: "medium",
     active: false,
+    className: "primary",
     label: "Default Button",
     as: "button",
   },
@@ -61,9 +67,9 @@ export const Default: Story = {
 
 export const Primary: Story = {
   args: {
-    className: "primary",
     size: "medium",
     active: true,
+    className: "primary",
     label: "Primary Button",
     as: "button",
   },
@@ -71,9 +77,9 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: {
-    className: "secondary",
     size: "medium",
     active: true,
+    className: "secondary",
     label: "Secondary Button",
     as: "button",
   },
@@ -81,9 +87,9 @@ export const Secondary: Story = {
 
 export const Success: Story = {
   args: {
-    className: "success",
     size: "medium",
     active: true,
+    className: "success",
     label: "Success Button",
     as: "button",
   },
@@ -91,9 +97,9 @@ export const Success: Story = {
 
 export const Danger: Story = {
   args: {
-    className: "danger",
     size: "medium",
     active: true,
+    className: "danger",
     label: "Danger Button",
     as: "button",
   },
@@ -101,9 +107,9 @@ export const Danger: Story = {
 
 export const Warning: Story = {
   args: {
-    className: "warning",
-    size: "medium",
     active: true,
+    size: "medium",
+    className: "warning",
     label: "Warning Button",
     as: "button",
   },
@@ -117,7 +123,7 @@ export const DisabledButton: Story = {
     label: "Disabled Button",
     as: "button",
     disabled: true,
-  }
+  },
 };
 
 export const LinkButton: Story = {
@@ -129,13 +135,7 @@ export const LinkButton: Story = {
     as: "a",
     href: "https://example.com",
   },
-  decorators: [
-    (Story) => (
-      <MemoryRouter>
-        <Story />
-      </MemoryRouter>
-    ),
-  ],
+  decorators: [withMemoryRouter],
 };
 
 export const DisabledLinkButton: Story = {
@@ -148,11 +148,5 @@ export const DisabledLinkButton: Story = {
     href: "#",
     disabled: true,
   },
-  decorators: [
-    (Story) => (
-      <MemoryRouter>
-        <Story />
-      </MemoryRouter>
-    ),
-  ],
+  decorators: [withMemoryRouter],
 };
