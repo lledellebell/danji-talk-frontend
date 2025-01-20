@@ -1,20 +1,56 @@
-import styles from "./Button.module.scss"; // CSS Module import
+import styles from "./Button.module.scss";
 
 type ButtonProps = {
   className: "primary" | "secondary" | "success" | "danger" | "warning";
-  active?: boolean;
   label: string;
-  size?: "small" | "medium" | "large"; // 버튼 크기
+  active?: boolean;
+  size?: "small" | "medium" | "large";
+  disabled?: boolean;
+  type?: "button" | "submit" | "reset";
+  href?: string;
+  as?: "button" | "a";
+  onClick?: () => void;
 };
 
 const Button: React.FC<ButtonProps> = ({
   className,
   label,
-  size = "medium", // 기본값은 medium
+  active = false,
+  size = "medium",
+  disabled = false,
+  type = "button",
+  href,
+  as = "button",
+  onClick,
 }) => {
+  const commonProps = {
+    className: `${styles.button} ${styles[className]} ${styles[size]} ${
+      active ? styles.active : ""
+    }`,
+    "aria-label": label,
+    "aria-pressed": as === "button" ? active : undefined,
+    tabIndex: disabled ? -1 : 0,
+    onClick: !disabled ? onClick : undefined,
+  };
+
+  if (as === "a") {
+    return (
+      <a
+        {...commonProps}
+        href={disabled ? undefined : href}
+        role="button"
+        aria-disabled={disabled}
+      >
+        {label}
+      </a>
+    );
+  }
+
   return (
     <button
-      className={`${styles.button} ${styles[className]} ${styles[size]} `}
+      {...commonProps}
+      type={type}
+      disabled={disabled}
     >
       {label}
     </button>

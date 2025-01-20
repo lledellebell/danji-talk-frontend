@@ -1,87 +1,123 @@
+$primary-color: #1e90ff;
+$secondary-color: #f0f0f0;
+$success-color: #28a745;
+$danger-color: #dc3545;
+$warning-color: #ffc107;
+$hover-color: black;
+$active-color: white;
+$disabled-bg-color: #e0e0e0;
+$disabled-text-color: #a0a0a0;
+
+$small-font-size: 12px;
+$small-padding: 5px 10px;
+$medium-font-size: 14px;
+$medium-padding: 10px 20px;
+$large-font-size: 16px;
+$large-padding: 15px 30px;
+
 .button {
   border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 14px;
+  padding: $medium-padding;
+  font-size: $medium-font-size;
   border: 1px solid transparent;
   cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:focus {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+  }
 
   &.primary {
-    background-color: #1e90ff;
+    background-color: $primary-color;
     color: #ffffff;
 
     &:hover {
-      background-color: black; // hover 시 더 어두운 파란색
+      background-color: $hover-color;
     }
 
     &:active {
-      background-color: white; // active 시 더 어두운 파란색
+      background-color: $active-color;
     }
   }
 
   &.secondary {
-    background-color: #f0f0f0;
+    background-color: $secondary-color;
     color: #000000;
 
     &:hover {
-      background-color: black; // hover 시 더 어두운 파란색
+      background-color: $hover-color;
+      color: #ffffff;
     }
 
     &:active {
-      background-color: white; // active 시 더 어두운 파란색
+      background-color: $active-color;
+      color: #000000;
     }
   }
 
   &.success {
-    background-color: #28a745;
+    background-color: $success-color;
     color: #ffffff;
 
     &:hover {
-      background-color: black; // hover 시 더 어두운 파란색
+      background-color: $hover-color;
     }
 
     &:active {
-      background-color: white; // active 시 더 어두운 파란색
+      background-color: $active-color;
     }
   }
 
   &.danger {
-    background-color: #dc3545;
+    background-color: $danger-color;
     color: #ffffff;
 
     &:hover {
-      background-color: black; // hover 시 더 어두운 파란색
+      background-color: $hover-color;
     }
 
     &:active {
-      background-color: white; // active 시 더 어두운 파란색
+      background-color: $active-color;
     }
   }
 
   &.warning {
-    background-color: #ffc107;
+    background-color: $warning-color;
     color: #000000;
 
     &:hover {
-      background-color: black; // hover 시 더 어두운 파란색
+      background-color: $hover-color;
+      color: #ffffff;
     }
 
     &:active {
-      background-color: white; // active 시 더 어두운 파란색
+      background-color: $active-color;
+      color: #000000;
     }
   }
 
   &.small {
-    font-size: 12px;
-    padding: 5px 10px;
+    font-size: $small-font-size;
+    padding: $small-padding;
   }
 
   &.medium {
-    font-size: 14px;
-    padding: 10px 20px;
+    font-size: $medium-font-size;
+    padding: $medium-padding;
   }
 
   &.large {
-    font-size: 16px;
-    padding: 15px 30px;
+    font-size: $large-font-size;
+    padding: $large-padding;
+  }
+
+  &[aria-disabled='true'],
+  &:disabled {
+    background-color: $disabled-bg-color;
+    color: $disabled-text-color;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 }
