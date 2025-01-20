@@ -1,3 +1,4 @@
+import { MemoryRouter } from "react-router-dom";
 import type { Meta, StoryObj } from "@storybook/react";
 import Button from "./Button";
 
@@ -108,6 +109,17 @@ export const Warning: Story = {
   },
 };
 
+export const DisabledButton: Story = {
+  args: {
+    className: "primary",
+    size: "medium",
+    active: false,
+    label: "Disabled Button",
+    as: "button",
+    disabled: true,
+  }
+};
+
 export const LinkButton: Story = {
   args: {
     className: "primary",
@@ -117,17 +129,13 @@ export const LinkButton: Story = {
     as: "a",
     href: "https://example.com",
   },
-};
-
-export const DisabledButton: Story = {
-  args: {
-    className: "primary",
-    size: "medium",
-    active: false,
-    label: "Disabled Button",
-    as: "button",
-    disabled: true,
-  },
+  decorators: [
+    (Story) => (
+      <MemoryRouter>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
 };
 
 export const DisabledLinkButton: Story = {
@@ -137,7 +145,14 @@ export const DisabledLinkButton: Story = {
     active: false,
     label: "Disabled Link Button",
     as: "a",
-    href: "https://example.com",
+    href: "#",
     disabled: true,
   },
+  decorators: [
+    (Story) => (
+      <MemoryRouter>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
 };
