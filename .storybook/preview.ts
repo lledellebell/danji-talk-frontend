@@ -19,6 +19,26 @@ const preview: Preview = {
         ],
       },
     },
+    options: {
+      storySort: (a, b) => {
+        const aPath = a.id.split('/')
+        const bPath = b.id.split('/')
+
+        for (let i = 0; i < Math.max(aPath.length, bPath.length); i++) {
+          const aPart = aPath[i] || ''
+          const bPart = bPath[i] || ''
+
+          const compare = aPart.localeCompare(bPart, undefined, {
+            numeric: true,
+          })
+          if (compare !== 0) {
+            return compare
+          }
+        }
+
+        return 0
+      },
+    },
   },
 };
 
