@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "./Button.module.scss"; // CSS Module import
 
 type ButtonProps = {
@@ -13,18 +12,9 @@ const Button: React.FC<ButtonProps> = ({
   label,
   size = "medium", // 기본값은 medium
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-
   return (
     <button
-      className={`${styles.button} ${styles[className]} ${styles[size]} ${
-        isHovered ? "hover" : ""
-      } ${isActive ? "active" : ""}`}
-      onMouseEnter={() => setIsHovered(true)} // hover 상태 활성화
-      onMouseLeave={() => setIsHovered(false)} // hover 상태 비활성화
-      onMouseDown={() => setIsActive(true)} // active 상태 활성화
-      onMouseUp={() => setIsActive(false)} // active 상태 비활성화
+      className={`${styles.button} ${styles[className]} ${styles[size]} `}
     >
       {label}
     </button>
