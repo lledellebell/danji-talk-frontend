@@ -25,16 +25,9 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
-      'react/prop-types': 'error',
+      'react/prop-types': 'off',
       'react/jsx-key': 'error',
       'react/jsx-no-duplicate-props': 'error',
     },
-    overrides: [
-      {
-        "rules": {
-          "react/prop-types": "off"
-        }
-      }
-    ]
   },
 )
