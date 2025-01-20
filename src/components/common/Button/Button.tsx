@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./Button.module.scss";
 
 type ButtonProps = {
@@ -35,14 +36,14 @@ const Button: React.FC<ButtonProps> = ({
 
   if (as === "a") {
     return (
-      <a
+      <Link
         {...commonProps}
-        href={disabled ? undefined : href}
+        to={disabled ? "#" : href || "#"}
         role="button"
         aria-disabled={disabled}
       >
         {label}
-      </a>
+      </Link>
     );
   }
 
