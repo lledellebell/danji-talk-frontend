@@ -25,9 +25,14 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
 }) => {
   const commonProps = {
-    className: `${styles.button} ${styles[className]} ${styles[size]} ${
-      active ? styles.active : ""
-    }`,
+    className: [
+      styles.button,
+      styles[className],
+      styles[size],
+      active ? styles.active : "",
+    ]
+      .filter(Boolean)
+      .join(" "),
     "aria-label": label,
     "aria-pressed": as === "button" ? active : undefined,
     tabIndex: disabled ? -1 : 0,
@@ -48,11 +53,7 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   return (
-    <button
-      {...commonProps}
-      type={type}
-      disabled={disabled}
-    >
+    <button {...commonProps} type={type} disabled={disabled}>
       {label}
     </button>
   );
