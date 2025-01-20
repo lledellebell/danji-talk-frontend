@@ -32,7 +32,7 @@ const meta: Meta<typeof Button> = {
     },
     href: {
       control: { type: "text" },
-      description: "링크 URL (as='a'일 때만 사용)",
+      description: "링크 URL (as='a'일 때 필수)",
     },
     label: {
       control: { type: "text" },
@@ -49,7 +49,7 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-const withMemoryRouter = (Story: any) => (
+const withMemoryRouter = (Story: React.ComponentType) => (
   <MemoryRouter>
     <Story />
   </MemoryRouter>
