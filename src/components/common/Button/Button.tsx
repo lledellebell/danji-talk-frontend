@@ -1,55 +1,34 @@
-import React from "react";
+import { useState } from "react";
+import styles from "./Button.module.scss"; // CSS Module import
 
 type ButtonProps = {
+  className: "primary" | "secondary" | "success" | "danger" | "warning";
   active?: boolean;
   label: string;
-  fontSize?: string;
-  backgroundColor?: string;
-  activeBackColor?: string;
-  activeTextColor?: string;
-  textColor?: string;
-  borderRadius?: string;
-  border?: string;
   size?: "small" | "medium" | "large"; // 버튼 크기
 };
 
 const Button: React.FC<ButtonProps> = ({
-  active,
+  className,
   label,
-  backgroundColor,
-  activeBackColor,
-  activeTextColor,
-  textColor,
-  borderRadius = "0px",
-  border = "none",
   size = "medium", // 기본값은 medium
 }) => {
-  // primary 값에 따른 색상 정의
-  const buttonStyle = {
-    small: {
-      padding: "5px 10px",
-      fontSize: "12px",
-    },
-    medium: {
-      padding: "10px 20px",
-      fontSize: "14px",
-    },
-    large: {
-      padding: "15px 30px",
-      fontSize: "16px",
-    },
-  };
+  const [isHovered, setIsHovered] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
-  const style = {
-    ...buttonStyle[size],
-    color: active ? textColor : activeTextColor,
-    backgroundColor: active ? backgroundColor : activeBackColor,
-    border: border,
-    borderRadius: borderRadius,
-    cursor: "pointer",
-  };
-
-  return <button style={style}>{label}</button>;
+  return (
+    <button
+      className={`${styles.button} ${styles[className]} ${styles[size]} ${
+        isHovered ? "hover" : ""
+      } ${isActive ? "active" : ""}`}
+      onMouseEnter={() => setIsHovered(true)} // hover 상태 활성화
+      onMouseLeave={() => setIsHovered(false)} // hover 상태 비활성화
+      onMouseDown={() => setIsActive(true)} // active 상태 활성화
+      onMouseUp={() => setIsActive(false)} // active 상태 비활성화
+    >
+      {label}
+    </button>
+  );
 };
 
 export default Button;

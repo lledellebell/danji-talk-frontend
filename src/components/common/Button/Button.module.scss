@@ -1,0 +1,87 @@
+.button {
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: 1px solid transparent;
+  cursor: pointer;
+
+  &.primary {
+    background-color: #1e90ff;
+    color: #ffffff;
+
+    &:hover {
+      background-color: black; // hover 시 더 어두운 파란색
+    }
+
+    &:active {
+      background-color: white; // active 시 더 어두운 파란색
+    }
+  }
+
+  &.secondary {
+    background-color: #f0f0f0;
+    color: #000000;
+
+    &:hover {
+      background-color: black; // hover 시 더 어두운 파란색
+    }
+
+    &:active {
+      background-color: white; // active 시 더 어두운 파란색
+    }
+  }
+
+  &.success {
+    background-color: #28a745;
+    color: #ffffff;
+
+    &:hover {
+      background-color: black; // hover 시 더 어두운 파란색
+    }
+
+    &:active {
+      background-color: white; // active 시 더 어두운 파란색
+    }
+  }
+
+  &.danger {
+    background-color: #dc3545;
+    color: #ffffff;
+
+    &:hover {
+      background-color: black; // hover 시 더 어두운 파란색
+    }
+
+    &:active {
+      background-color: white; // active 시 더 어두운 파란색
+    }
+  }
+
+  &.warning {
+    background-color: #ffc107;
+    color: #000000;
+
+    &:hover {
+      background-color: black; // hover 시 더 어두운 파란색
+    }
+
+    &:active {
+      background-color: white; // active 시 더 어두운 파란색
+    }
+  }
+
+  &.small {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  &.medium {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  &.large {
+    font-size: 16px;
+    padding: 15px 30px;
+  }
+}

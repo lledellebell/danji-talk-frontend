@@ -14,70 +14,45 @@ type Story = StoryObj<typeof Button>;
 // 버튼 스토리 정의
 export const Primary: Story = {
   args: {
+    className: "primary",
+    size: "medium",
     active: true,
     label: "Primary Button",
-    size: "medium",
-    backgroundColor: "#1e90ff",
-    activeBackColor: "black",
-    activeTextColor: "white",
-    textColor: "#ffffff",
-    borderRadius: "0px",
-    border: "1px solid #1e90ff",
   },
 };
 
 export const Secondary: Story = {
   args: {
+    className: "secondary",
+    size: "medium",
     active: true,
     label: "Secondary Button",
-    size: "medium",
-    backgroundColor: "#f0f0f0",
-    activeBackColor: "black",
-    activeTextColor: "white",
-    textColor: "#000000",
-    borderRadius: "0px",
-    border: "1px solid black",
   },
 };
 
 export const Success: Story = {
   args: {
+    className: "success",
+    size: "medium",
     active: true,
     label: "Success Button",
-    size: "medium",
-    backgroundColor: "#28a745", // 초록색
-    activeBackColor: "black",
-    activeTextColor: "white",
-    textColor: "#ffffff",
-    borderRadius: "0px",
-    border: "1px solid black",
   },
 };
 
 export const Danger: Story = {
   args: {
+    className: "danger",
+    size: "medium",
     active: true,
     label: "Danger Button",
-    size: "medium",
-    backgroundColor: "#dc3545", // 빨간색
-    activeBackColor: "black",
-    activeTextColor: "white",
-    textColor: "#ffffff",
-    borderRadius: "5px",
-    border: "1px solid black",
   },
 };
 
 export const Warning: Story = {
   args: {
+    className: "warning",
+    size: "medium",
     active: true,
     label: "Warning Button",
-    size: "medium",
-    backgroundColor: "#ffc107", // 노란색
-    activeBackColor: "black",
-    activeTextColor: "white",
-    textColor: "#000000",
-    borderRadius: "10px",
-    border: "1px solid black",
   },
 };
