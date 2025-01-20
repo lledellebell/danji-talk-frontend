@@ -14,9 +14,6 @@ const preview: Preview = {
           {
             id: 'autocomplete-valid',
             selector: '*:not([autocomplete="nope"])',
-          },
-          {
-            id: 'autocomplete-valid',
             enabled: false,
           },
         ],

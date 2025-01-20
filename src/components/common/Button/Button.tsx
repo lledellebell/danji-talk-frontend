@@ -10,7 +10,10 @@ type ButtonProps = {
   type?: "button" | "submit" | "reset";
   href?: string;
   as?: "button" | "a";
-  onClick?: () => void;
+  onClick?: (
+    event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
+  ) => void;
+  children?: React.ReactNode;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -23,6 +26,7 @@ const Button: React.FC<ButtonProps> = ({
   href,
   as = "button",
   onClick,
+  children,
 }) => {
   const commonProps = {
     className: [
@@ -46,15 +50,22 @@ const Button: React.FC<ButtonProps> = ({
         to={disabled ? "#" : href || "#"}
         role="button"
         aria-disabled={disabled}
+        onClick={(e) => {
+          if (disabled) {
+            e.preventDefault();
+            return;
+          }
+          onClick?.(e);
+        }}
       >
-        {label}
+        {children || label}
       </Link>
     );
   }
 
   return (
     <button {...commonProps} type={type} disabled={disabled}>
-      {label}
+      {children || label}
     </button>
   );
 };
