@@ -8,6 +8,8 @@ $button-transition: background-color 0.3s;
 $cancel-button-bg: #ebf1ff;
 $confirm-button-bg: #97bbff;
 $hover-darken-percentage: 10%;
+$overlay-bg-color: rgba(0, 0, 0, 0.7);
+$button-height: 40px;
 
 // 폰트 스타일 변수
 $font-family: 'Arial, sans-serif';
@@ -21,7 +23,7 @@ $font-color: #333;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: $overlay-bg-color;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,67 +41,56 @@ $font-color: #333;
     font-size: $font-size;
     color: $font-color;
     padding: 20px;
+  }
 
-    &__header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__text,
+  &__title {
+    width: 100%;
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  &__footer {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  &__button {
+    width: 100%;
+    border: none;
+    border-radius: $button-border-radius;
+    padding: $button-padding;
+    cursor: pointer;
+    transition: $button-transition;
+    height: $button-height;
+  }
+
+  &__cancel-button {
+    @extend .dialog__button;
+    background-color: $cancel-button-bg;
+    color: $font-color;
+
+    &:hover {
+      background-color: mix(black, $cancel-button-bg, $hover-darken-percentage);
     }
+  }
 
-    &__content {
-    }
+  &__confirm-button {
+    @extend .dialog__button;
+    background-color: $confirm-button-bg;
+    color: #fff;
 
-    &__text,
-    &__title {
-      width: 100%;
-      margin-top: 0;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    &__footer {
-      text-align: right;
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-
-      &__button {
-        width: 100%;
-        border: none;
-        border-radius: $button-border-radius;
-        padding: $button-padding;
-        cursor: pointer;
-        transition: $button-transition;
-      }
-    }
-
-    &__button {
-      border: none;
-      border-radius: $button-border-radius;
-      padding: $button-padding;
-      cursor: pointer;
-      transition: $button-transition;
-      height: 40px;
-    }
-
-    &__cancel-button {
-      @extend .dialog__container__button;
-      color: $font-color;
-      background-color: $cancel-button-bg;
-
-      &:hover {
-        background-color: darken($cancel-button-bg, $hover-darken-percentage);
-      }
-    }
-
-    &__confirm-button {
-      @extend .dialog__container__button;
-      color: white;
-      background-color: $confirm-button-bg;
-
-      &:hover {
-        background-color: darken($confirm-button-bg, $hover-darken-percentage);
-      }
+    &:hover {
+      background-color: mix(black, $confirm-button-bg, $hover-darken-percentage);
     }
   }
 }
