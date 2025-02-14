@@ -103,7 +103,7 @@ $confirm-button-text-color: #fff;
 
   &__confirm-button {
     @extend .dialog__button;
-    background-color: color.mix(black, $confirm-button-bg, $hover-darken-percentage);
+    background-color: $confirm-button-bg;
     color: $confirm-button-text-color;
 
     &:hover {
