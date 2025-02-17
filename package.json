@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
+    "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN",
+    "server": "json-server --watch ./src/server/db.json --port 3001"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.64.1",
@@ -20,7 +21,8 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.2",
     "sass": "^1.83.4",
-    "zustand": "^5.0.3"
+    "zustand": "^5.0.3",
+    "server": "json-server --watch ./src/server/db.json --port 3001"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",

@@ -1,0 +1,223 @@
+// Breakpoints
+$breakpoint-mobile: 360px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+// Colors
+$color-primary: #007bff;
+$color-primary-hover: #0056b3;
+$color-error: #d91c1c;
+$color-error-hover: #b71515;
+$color-white: #ffffff;
+$color-text: #333333;
+$color-text-secondary: #666666;
+$color-border: #e0e0e0;
+$color-disabled: #999999;
+
+// Font sizes
+$font-size-large: 16px;
+$font-size-medium: 14px;
+$font-size-small: 12px;
+
+// Spacing
+$spacing-large: 24px;
+$spacing-medium: 16px;
+$spacing-small: 12px;
+$spacing-xsmall: 8px;
+
+// Mixin
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin button-styles($bg-color, $hover-color) {
+  width: 100%;
+  padding: $spacing-small;
+  background-color: $bg-color;
+  color: $color-white;
+  border: none;
+  border-radius: 4px;
+  font-size: $font-size-large;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:hover:not(:disabled) {
+    background-color: $hover-color;
+  }
+
+  &:disabled {
+    background-color: $color-disabled;
+    cursor: not-allowed;
+  }
+}
+
+// Mixin for spacing
+@mixin apply-spacing($top: 0, $right: 0, $bottom: 0, $left: 0) {
+  margin-top: $top;
+  margin-right: $right;
+  margin-bottom: $bottom;
+  margin-left: $left;
+}
+
+.login-container {
+  @include flex-center;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: $spacing-large;
+  background-color: $color-white;
+}
+
+.login-form-wrapper {
+  width: 100%;
+  max-width: 400px;
+  padding: $spacing-large;
+  background-color: $color-white;
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    padding: $spacing-medium;
+    max-width: 280px;
+  }
+}
+
+.login-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: $color-text;
+  @include apply-spacing(0, 0, $spacing-large, 0);
+  text-align: center;
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    font-size: 20px;
+    @include apply-spacing(0, 0, $spacing-medium, 0);
+  }
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  
+  > *:not(:first-child) {
+    margin-top: $spacing-medium;
+  }
+}
+
+.submit-button {
+  @include button-styles($color-primary, $color-primary-hover);
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    font-size: $font-size-medium;
+    padding: $spacing-small $spacing-medium;
+  }
+}
+
+.error-message {
+  color: $color-error;
+  font-size: $font-size-medium;
+  text-align: center;
+  @include apply-spacing($spacing-small, 0, 0, 0);
+  animation: fadeIn 0.3s ease-in-out;
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    font-size: $font-size-small;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo-wrapper {
+  @include flex-center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.logo {
+  display: block;
+}
+
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @include apply-spacing($spacing-xsmall !important, 0, $spacing-large, 0);
+  
+  .save-id-label {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xsmall;
+    cursor: pointer;
+    
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  .find-links {
+    display: flex;
+    gap: $spacing-xsmall;
+    @include apply-spacing(0, 0, 0, 0);
+    
+    a {
+      color: #666;
+      text-decoration: none;
+      font-size: $font-size-medium;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    
+    .divider {
+      color: #ccc;
+    }
+  }
+} 
+
+.signup-link {
+    font-size: 14px;
+    text-align: center;
+    font-weight: 400;
+    line-height: 26px;
+    text-decoration: none;
+    color: #666;
+    @include apply-spacing($spacing-xsmall !important, 0, 0, 0);
+    
+    a {
+        color: $color-primary;
+        text-decoration: none;
+        font-weight: 400;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 32px 0 20px;
+}
+
+.divider-line {
+  flex-grow: 1;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.divider-text {
+  margin: 0 10px;
+  color: #999;
+}
