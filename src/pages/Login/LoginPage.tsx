@@ -5,6 +5,7 @@ import styles from './LoginPage.module.scss';
 import { Checkbox } from "../../components/common/Checkbox/Checkbox";
 import { useLogin } from "../../hooks/useLogin";
 import { ArrowIcon } from "../../components/common/Icons/ArrowIcon";
+import SocialLoginList from "../../components/common/List/SocialLoginList";
 
 const style: CSSProperties = {
   maskType:'luminance'
@@ -212,6 +213,7 @@ export const LoginPage = () => {
           error={error}
         />
         <Divider />
+        <SocialLoginList />
       </div>
     </div>
   );
