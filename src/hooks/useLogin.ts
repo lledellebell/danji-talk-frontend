@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import axios from 'axios';
 import { useAuthStore } from '../stores/authStore';
 import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
 
 interface User {
   id: number;
@@ -14,22 +14,14 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export const useLogin = () => {
   const { username, password, setUsername, setError, setIsLoggedIn } = useAuthStore();
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    if (!username || !password) {
-      setError('아이디와 비밀번호를 입력하세요.');
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      setError(null);
-      
+  const loginMutation = useMutation({
+    mutationFn: async () => {
       const response = await axios.get(`${API_URL}/users`);
-      const users = response.data;
-      
+      return response.data;
+    },
+    onSuccess: (users: User[]) => {
       const userExists = users.find((u: User) => u.username === username);
       if (!userExists) {
         setError('아이디가 올바르지 않습니다. 다시 확인해주세요.');
@@ -48,7 +40,8 @@ export const useLogin = () => {
       } else {
         setError('비밀번호가 올바르지 않습니다.');
       }
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error('Login error:', error);
       if (axios.isAxiosError(error)) {
         setError(!error.response 
@@ -56,10 +49,17 @@ export const useLogin = () => {
           : '로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
         );
       }
-    } finally {
-      setIsLoading(false);
     }
+  });
+
+  const handleLogin = () => {
+    if (!username || !password) {
+      setError('아이디와 비밀번호를 입력하세요.');
+      return;
+    }
+    setError(null);
+    loginMutation.mutate();
   };
 
-  return { handleLogin, isLoading };
-}; 
+  return { handleLogin, isLoading: loginMutation.isPending };
+};
