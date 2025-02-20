@@ -1,0 +1,103 @@
+// 변수 정의
+$dialog-background-color: #fff;
+$dialog-border-radius: 8px;
+$dialog-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+$button-border-radius: 4px;
+$button-padding: 8px 16px;
+$button-transition: background-color 0.3s;
+$cancel-button-bg: #ebf1ff;
+$confirm-button-bg: #97bbff;
+$hover-darken-percentage: 10%;
+
+// 폰트 스타일 변수
+$font-family: 'Arial, sans-serif';
+$font-size: 16px;
+$font-color: #333;
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.dialog-container {
+  background-color: $dialog-background-color;
+  border-radius: $dialog-border-radius;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: $dialog-box-shadow;
+  overflow: hidden;
+  font-family: $font-family;
+  font-size: $font-size;
+  color: $font-color;
+  padding: 20px;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog-content {
+}
+
+.dialog-text,
+.dialog-title {
+  width: 100%;
+  margin-top: 0;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dialog-footer {
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+
+  button {
+    width: 100%;
+    border: none;
+    border-radius: $button-border-radius;
+    padding: $button-padding;
+    cursor: pointer;
+    transition: $button-transition;
+  }
+}
+
+.button {
+  border: none;
+  border-radius: $button-border-radius;
+  padding: $button-padding;
+  cursor: pointer;
+  transition: $button-transition;
+  height: 40px;
+}
+
+.dialog-cancel-button {
+  @extend .button;
+  color: $font-color;
+  background-color: $cancel-button-bg;
+
+  &:hover {
+    background-color: darken($cancel-button-bg, $hover-darken-percentage);
+  }
+}
+
+.dialog-confirm-button {
+  @extend .button;
+  color: white;
+  background-color: $confirm-button-bg;
+
+  &:hover {
+    background-color: darken($confirm-button-bg, $hover-darken-percentage);
+  }
+}
