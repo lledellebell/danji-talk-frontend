@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { LoginPage } from './pages/Login/LoginPage'
 import { useAuthStore } from './stores/authStore'
 import FindAccount from './pages/FindAccount/FindAccount'
+import Header from './layouts/Header'
 
 function App() {
   const { isLoggedIn } = useAuthStore()
@@ -12,16 +13,30 @@ function App() {
         <Route 
           path="/login" 
           element={
-            isLoggedIn ? <Navigate to="/" replace /> : <LoginPage />
+            <>
+              <Header title="로그인" type="sub" hasBackButton={true} />
+              {isLoggedIn ? <Navigate to="/" replace /> : <LoginPage />}
+            </>
           } 
         />
         <Route 
           path="/" 
           element={
-            isLoggedIn ? <div>홈페이지</div> : <Navigate to="/login" replace />
+            <>
+              <Header title="홈페이지" type="main" />
+              {isLoggedIn ? <div>홈페이지</div> : <Navigate to="/login" replace />}
+            </>
           } 
         />
-        <Route path="/find-account" element={<FindAccount />} />
+        <Route 
+          path="/find-account" 
+          element={
+            <>
+              <Header title="계정 찾기" type="sub" />
+              <FindAccount />
+            </>
+          } 
+        />
       </Routes>
     </Router>
   )
