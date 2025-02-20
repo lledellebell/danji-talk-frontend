@@ -32,7 +32,7 @@ function App() {
           path="/find-account" 
           element={
             <>
-              <Header title="계정 찾기" type="sub" />
+              <Header title="이메일/비밀번호 찾기" type="sub" hasBackButton={true} />
               <FindAccount />
             </>
           } 
