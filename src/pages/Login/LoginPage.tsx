@@ -102,36 +102,41 @@ const LogoIcon = () => {
 };
 
 const LoginForm = ({ onSubmit, isLoading, error }: { onSubmit: (e: React.FormEvent) => void, isLoading: boolean, error: string | null }) => {
-  const { username, password, setUsername, setPassword } = useAuthStore();
+  const { email, password, setEmail, setPassword } = useAuthStore();
   const [saveId, setSaveId] = useState(false);
 
   useEffect(() => {
-    const savedUsername = localStorage.getItem('savedUsername');
-    if (savedUsername) {
-      setUsername(savedUsername);
+    const savedEmail = localStorage.getItem('savedEmail');
+    if (savedEmail) {
+      setEmail(savedEmail);
       setSaveId(true);
     }
-  }, []);
+  }, [setEmail]);
 
   useEffect(() => {
     if (saveId) {
-      localStorage.setItem('savedUsername', username);
+      localStorage.setItem('savedEmail', email);
     } else {
-      localStorage.removeItem('savedUsername');
+      localStorage.removeItem('savedEmail');
     }
-  }, [saveId, username]);
+  }, [saveId, email]);
+
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   return (
     <form className={styles['login-form']} onSubmit={onSubmit}>
       <InputField
-        label="아이디"
-        name="username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="아이디를 입력하세요"
+        label="이메일"
+        name="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="이메일을 입력하세요"
         required
-        autoComplete="username"
-        error={error === '아이디가 올바르지 않습니다. 다시 확인해주세요.' ? error : undefined}
+        autoComplete="email"
+        error={!isValidEmail(email) ? '이메일 형식이 올바르지 않습니다. 다시 확인해주세요.' : error === '이메일이 올바르지 않습니다. 다시 확인해주세요.' ? error : undefined}
       />
       <InputField
         label="비밀번호"
@@ -156,14 +161,14 @@ const LoginForm = ({ onSubmit, isLoading, error }: { onSubmit: (e: React.FormEve
 const LoginOptions = ({ saveId, onSaveIdChange }: { saveId: boolean, onSaveIdChange: (checked: boolean) => void }) => (
   <div className={styles['login-options']}>
     <Checkbox
-      label="아이디 저장"
+      label="이메일 저장"
       checked={saveId}
       onChange={(e) => onSaveIdChange(e.target.checked)}
       className={styles['save-id-label']}
       size="small"
     />
     <div className={styles['find-links']}>
-      <a href="/find-account">아이디/비밀번호 찾기 <ArrowIcon /></a>
+      <a href="/find-account">이메일/비밀번호 찾기 <ArrowIcon /></a>
     </div>
   </div>
 );

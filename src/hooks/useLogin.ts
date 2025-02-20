@@ -13,7 +13,7 @@ interface User {
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export const useLogin = () => {
-  const { username, password, setUsername, setError, setIsLoggedIn } = useAuthStore();
+  const { email, password, setEmail, setError, setIsLoggedIn } = useAuthStore();
   const navigate = useNavigate();
 
   const loginMutation = useMutation({
@@ -22,19 +22,19 @@ export const useLogin = () => {
       return response.data;
     },
     onSuccess: (users: User[]) => {
-      const userExists = users.find((u: User) => u.username === username);
+      const userExists = users.find((u: User) => u.email === email);
       if (!userExists) {
-        setError('아이디가 올바르지 않습니다. 다시 확인해주세요.');
+        setError('이메일이 올바르지 않습니다. 다시 확인해주세요.');
         return;
       }
       
       const user = users.find((u: User) => 
-        u.username === username && u.password === password
+        u.email === email && u.password === password
       );
 
       if (user) {
         setIsLoggedIn(true);
-        setUsername(username);
+        setEmail(email);
         localStorage.setItem('isLoggedIn', 'true');
         navigate('/');
       } else {
@@ -53,8 +53,8 @@ export const useLogin = () => {
   });
 
   const handleLogin = () => {
-    if (!username || !password) {
-      setError('아이디와 비밀번호를 입력하세요.');
+    if (!email || !password) {
+      setError('이메일과 비밀번호를 입력하세요.');
       return;
     }
     setError(null);
