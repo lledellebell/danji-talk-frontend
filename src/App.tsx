@@ -4,7 +4,13 @@ import Header from "../src/layouts/Header";
 function App() {
   return (
     <>
-      <Header></Header>
+      <Header
+        type="main"
+        title="홈"
+        hasBackButton={true}
+        hasIcons={true}
+        iconCount={1}
+      />
     </>
   );
 }
