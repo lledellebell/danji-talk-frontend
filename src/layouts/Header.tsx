@@ -1,13 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 import back_icon from "../assets/back_icon.svg";
 import user_icon from "../assets/user_icon.svg";
 
 interface HeaderProps {
   title: string;
-  type: "main" | "sub"; // 메인/서브 타입 구분
-  hasBackButton?: boolean; // 뒤로가기 버튼 여부
-  hasIcons?: boolean; // 우측 아이콘 여부
-  iconCount?: number; // 우측 아이콘 개수
+  type: "main" | "sub";
+  hasBackButton?: boolean;
+  hasIcons?: boolean;
+  iconCount?: number;
 }
 
 const SubHeader: React.FC<HeaderProps> = ({
@@ -16,16 +17,16 @@ const SubHeader: React.FC<HeaderProps> = ({
   iconCount = 1,
 }) => {
   return (
-    <div className={`${styles.header} ${styles["header--sub"]}`}>
-      <span className={styles.header__title}>{title}</span>
+    <header className={`${styles.header} ${styles["header--sub"]}`}>
+      <h1 className={styles.header__title}>{title}</h1>
       {hasIcons && (
-        <div className={styles.header__icons}>
+        <nav className={styles.header__icons} aria-label="사용자 아이콘">
           {Array.from({ length: iconCount }).map((_, index) => (
             <img key={index} src={user_icon} alt={`아이콘 ${index + 1}`} />
           ))}
-        </div>
+        </nav>
       )}
-    </div>
+    </header>
   );
 };
 
@@ -35,18 +36,28 @@ const MainHeader: React.FC<HeaderProps> = ({
   hasIcons,
   iconCount = 2,
 }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className={`${styles.header} ${styles["header--main"]}`}>
-      {hasBackButton && <img src={back_icon} alt="뒤로가기" />}
-      <span className={styles.header__title}>{title}</span>
+    <header className={`${styles.header} ${styles["header--main"]}`}>
+      {hasBackButton && (
+        <button
+          onClick={() => navigate(-1)}
+          className={styles["header__back"]}
+          aria-label="뒤로가기"
+        >
+          <img src={back_icon} alt="뒤로가기" />
+        </button>
+      )}
+      <h1 className={styles.header__title}>{title}</h1>
       {hasIcons && (
-        <div className={styles.header__icons}>
+        <nav className={styles.header__icons} aria-label="사용자 아이콘">
           {Array.from({ length: iconCount }).map((_, index) => (
             <img key={index} src={user_icon} alt={`아이콘 ${index + 1}`} />
           ))}
-        </div>
+        </nav>
       )}
-    </div>
+    </header>
   );
 };
 
