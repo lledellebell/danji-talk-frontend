@@ -10,16 +10,16 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Alert: React.FC<AlertProps> = ({ alertTitle, alertContent, confirmLabel = '확인', onClose }) => {
   return (
-    <div className={styles['alert-overlay']} role="alertdialog" aria-labelledby="alert-title" aria-describedby="alert-content">
-      <div className={styles['alert-container']} onClick={(e) => e.stopPropagation()}>
-        <div className={styles['alert-header']}>
-          <h2 id="alert-title" className={styles['alert-title']}>{alertTitle}</h2>
+    <div className={styles['alert__overlay']} role="alertdialog" aria-labelledby="alert__title" aria-describedby="alert__content">
+      <div className={styles['alert__container']} onClick={(e) => e.stopPropagation()}>
+        <div className={styles['alert__header']}>
+          <h2 id="alert__title" className={styles['alert__title']}>{alertTitle}</h2>
         </div>
-        <div id="alert-content" className={styles['alert-content']}>
-          <p className={styles['alert-text']}>{alertContent}</p>
+        <div id="alert__content" className={styles['alert__content']}>
+          <p className={styles['alert__text']}>{alertContent}</p>
         </div>
-        <div className={styles['alert-footer']}>
-          <button onClick={onClose} className={styles['alert-confirm-button']}>
+        <div className={styles['alert__footer']}>
+          <button onClick={onClose} className={styles['alert__confirm-button']}>
             {confirmLabel}
           </button>
         </div>

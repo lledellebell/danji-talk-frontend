@@ -17,34 +17,34 @@ const Dialog: React.FC<DialogProps> = ({ title, content, onClose, cancelLabel = 
 
   return (
     <div
-      className={styles['dialog-overlay']}
+      className={styles['dialog__overlay']}
       onClick={onClose}
       role="dialog"
-      aria-labelledby="dialog-title"
+      aria-labelledby="dialog__title"
       aria-modal="true"
     >
       <div
-        className={styles['dialog-container']}
+        className={styles['dialog__container']}
         onClick={(e) => e.stopPropagation()}
         tabIndex={-1}
       >
-        <div className={styles['dialog-header']}>
-          <h2 id="dialog-title" className={styles['dialog-title']}>{title}</h2>
+        <div className={styles['dialog__header']}>
+          <h2 id="dialog__title" className={styles['dialog__title']}>{title}</h2>
         </div>
-        <div className={styles['dialog-content']}>
-          <p className={styles['dialog-text']}>{content}</p>
+        <div className={styles['dialog__content']}>
+          <p className={styles['dialog__text']}>{content}</p>
         </div>
-        <div className={styles['dialog-footer']}>
+        <div className={styles['dialog__footer']}>
           <button
             onClick={onClose}
-            className={styles['dialog-cancel-button']}
+            className={styles['dialog__cancel-button']}
             aria-label={cancelLabel}
           >
             {cancelLabel}
           </button>
           <button
             onClick={closeDialog}
-            className={styles['dialog-confirm-button']}
+            className={styles['dialog__confirm-button']}
             aria-label={confirmLabel}
           >
             {confirmLabel}

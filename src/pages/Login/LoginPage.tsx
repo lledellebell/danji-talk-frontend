@@ -164,10 +164,10 @@ const LoginOptions = ({ saveId, onSaveIdChange }: { saveId: boolean, onSaveIdCha
       label="이메일 저장"
       checked={saveId}
       onChange={(e) => onSaveIdChange(e.target.checked)}
-      className={styles['save-id-label']}
+      className={styles['login-options__save-id-label']}
       size="small"
     />
-    <div className={styles['find-links']}>
+    <div className={styles['login-options__find-links']}>
       <a href="/find-account">이메일/비밀번호 찾기 <ArrowIcon /></a>
     </div>
   </div>
@@ -176,7 +176,7 @@ const LoginOptions = ({ saveId, onSaveIdChange }: { saveId: boolean, onSaveIdCha
 const LoginButton = ({ isLoading }: { isLoading: boolean }) => (
   <button 
     type="submit" 
-    className={styles['submit-button']} 
+    className={styles['login-form__submit-button']} 
     disabled={isLoading}
   >
     {isLoading ? "로그인 중..." : "로그인"}
@@ -191,9 +191,9 @@ const SignupPrompt = () => (
 
 const Divider = () => (
   <div className={styles['divider']}>
-    <div className={styles['divider-line']}></div>
-    <span className={styles['divider-text']}>Or</span>
-    <div className={styles['divider-line']}></div>
+    <div className={styles['divider__line']}></div>
+    <span className={styles['divider__text']}>Or</span>
+    <div className={styles['divider__line']}></div>
   </div>
 );
 

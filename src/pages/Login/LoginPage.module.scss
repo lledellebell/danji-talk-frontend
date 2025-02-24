@@ -104,7 +104,7 @@ $spacing-xsmall: 8px;
   }
 }
 
-.submit-button {
+.login-form__submit-button {
   @include button-styles($color-primary, $color-primary-hover);
 
   @media screen and (max-width: $breakpoint-mobile) {
@@ -113,7 +113,7 @@ $spacing-xsmall: 8px;
   }
 }
 
-.error-message {
+.login-form__error-message {
   color: $color-error;
   font-size: $font-size-medium;
   text-align: center;
@@ -152,7 +152,7 @@ $spacing-xsmall: 8px;
   justify-content: space-between;
   @include apply-spacing($spacing-xsmall !important, 0, $spacing-large, 0);
   
-  .save-id-label {
+  .login-options__save-id-label {
     display: flex;
     align-items: center;
     gap: $spacing-xsmall;
@@ -164,13 +164,13 @@ $spacing-xsmall: 8px;
     }
   }
   
-  .find-links {
+  .login-options__find-links {
     display: flex;
     gap: $spacing-xsmall;
     @include apply-spacing(0, 0, 0, 0);
     
     a {
-      color: #666;
+      color: $color-text-secondary;
       text-decoration: none;
       font-size: $font-size-medium;
       
@@ -179,8 +179,8 @@ $spacing-xsmall: 8px;
       }
     }
     
-    .divider {
-      color: #ccc;
+    .login-options__divider {
+      color: $color-border;
     }
   }
 } 
@@ -191,7 +191,7 @@ $spacing-xsmall: 8px;
     font-weight: 400;
     line-height: 26px;
     text-decoration: none;
-    color: #666;
+    color: $color-text-secondary;
     @include apply-spacing($spacing-xsmall !important, 0, 0, 0);
     
     a {
@@ -211,17 +211,16 @@ $spacing-xsmall: 8px;
   margin: 32px 0 20px;
 }
 
-.divider-line {
+.divider__line {
   flex-grow: 1;
   height: 1px;
-  background-color: #ccc;
+  background-color: $color-border;
 }
 
-.divider-text {
+.divider__text {
   margin: 0 10px;
-  color: #999;
+  color: $color-text-secondary;
 }
-
 
 @mixin svg-transition($stroke-dashoffset, $stroke-dasharray, $fill-color, $delay, $fill-delay) {
   stroke-dashoffset: $stroke-dashoffset;
