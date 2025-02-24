@@ -32,7 +32,7 @@ $spacing-xsmall: 4px;
 .input-field {
   display: flex;
   flex-direction: column;
-  gap: $spacing-medium;
+  // gap: $spacing-medium;
   width: 100%;
   max-width: $input-max-width;
 
@@ -45,7 +45,7 @@ $spacing-xsmall: 4px;
   font-size: $font-size-medium;
   font-weight: 600;
   color: $color-text;
-  margin-bottom: 2px;
+  // margin-bottom: 2px;
   transform-origin: left;
   transition: transform 0.2s ease-in-out;
 
@@ -142,7 +142,7 @@ $spacing-xsmall: 4px;
   }
 
   &:hover:not(:disabled) {
-    border-bottom-color: $color-border-hover;
+    // border-bottom-color: $color-border-hover;
   }
 
   &:disabled {

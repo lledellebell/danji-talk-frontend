@@ -90,7 +90,6 @@ export const InputField = ({
 
   const handleTogglePassword = () => {
     setShowPassword((prev) => !prev);
-    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -101,7 +100,6 @@ export const InputField = ({
       <div className={styles["input-wrapper"]}>
         <input
           id={id}
-          type={type === "password" && showPassword ? "text" : type}
           type={type === "password" && showPassword ? "text" : type}
           name={name}
           value={value}
@@ -124,8 +122,6 @@ export const InputField = ({
           <button
             type="button"
             onClick={handleTogglePassword}
-            className={styles["password-toggle"]}
-            aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
             className={styles["password-toggle"]}
             aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
           >
