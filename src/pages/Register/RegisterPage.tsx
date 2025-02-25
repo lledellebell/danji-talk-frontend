@@ -57,7 +57,6 @@ const RegisterForm = ({
         onChange={handleEmailChange}
         actionButton={checkEmailActionButton}
         placeholder="4~15자 이내로 입력해주세요"
-        maxLength={15}
         required
         autoComplete="email"
       />
