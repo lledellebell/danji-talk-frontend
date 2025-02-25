@@ -356,7 +356,7 @@ const LoginButton = ({ isLoading }: { isLoading: boolean }) => (
 
 const SignupPrompt = () => (
   <p className={styles['signup-link']}>
-    아직 회원이 아니신가요? <a href="/signup">회원가입</a>
+    아직 회원이 아니신가요? <a href="/register">회원가입</a>
   </p>
 );
 
