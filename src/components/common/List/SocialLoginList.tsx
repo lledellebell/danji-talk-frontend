@@ -33,7 +33,7 @@ const NaverLoginIcon = () => {
 const KAKAO_LOGIN_LABEL = '카카오 로그인 하기';
 
 const socialAccounts = [
-  { id: 1, text: <KakaoLoginIcon />, ariaLabel: '카카오 로그인 하기' },
+  { id: 1, text: <KakaoLoginIcon />, ariaLabel: KAKAO_LOGIN_LABEL },
   { id: 2, text: <GoogleLoginIcon />, ariaLabel: '구글 로그인 하기' },
   { id: 3, text: <NaverLoginIcon />, ariaLabel: '네이버 로그인 하기' },
 ];
