@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styles from "./Button.module.scss";
 
 type ButtonProps = {
-  className?: "primary" | "secondary" | "success" | "danger" | "warning" | string;
+  className?: string | string[];
   label: string;
   active?: boolean;
   size?: "small" | "medium" | "large";
@@ -31,8 +31,8 @@ const Button: React.FC<ButtonProps> = ({
   const commonProps = {
     className: [
       styles.button,
-      styles[className as string],
       styles[size],
+      ...(Array.isArray(className) ? className.map(cls => styles[cls] || cls) : [styles[className as string]]),
       active ? styles.active : "",
     ]
       .filter(Boolean)

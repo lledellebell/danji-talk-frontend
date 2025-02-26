@@ -1,10 +1,13 @@
-
 // Variables
 $spacing-large: 24px;
 $spacing-medium: 16px;
+$spacing-small: 8px;
 $breakpoint-mobile: 768px;
 $color-white: #fff;
 $color-text: #333;
+$color-primary: #97bbff;
+$color-background: #ebf1ff;
+$color-border: #dee2e6;
 
 // Mixin
 @mixin flex-center {
@@ -21,6 +24,21 @@ $color-text: #333;
   margin-left: $left;
 }
 
+// Mixin for button styles
+@mixin button-style($bg-color, $text-color) {
+  background-color: $bg-color;
+  color: $text-color;
+  border: 1px solid $color-border;
+  padding: $spacing-medium;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($bg-color, 10%);
+  }
+}
+
 // Block
 .find-account-wrapper {
   display: flex;
@@ -29,7 +47,6 @@ $color-text: #333;
   flex-direction: column;
   min-height: 100vh;
   padding: $spacing-large;
-  background-color: $color-white;
 }
 
 .find-account-container {
@@ -45,7 +62,7 @@ $color-text: #333;
 
 // Element
 .find-account-title {
-  font-size: 24px;
+  font-size: 2rem;
   font-weight: 600;
   color: $color-text;
   @include apply-spacing(0, 0, $spacing-large, 0);
@@ -57,6 +74,9 @@ $color-text: #333;
   flex-direction: column;
   gap: $spacing-medium;
   margin-top: $spacing-large;
+  @media screen and (max-width: $breakpoint-mobile) {
+    gap: $spacing-small;
+  }
 }
 
 .find-account-form__input-field {
@@ -71,4 +91,13 @@ $color-text: #333;
 
 .find-account-form__button {
   margin-top: $spacing-large;
+  @include button-style($color-background, $color-white);
+}
+
+.button-filled {
+  @include button-style($color-primary, $color-white);
+}
+
+.button-empty {
+  @include button-style($color-white, $color-text);
 }

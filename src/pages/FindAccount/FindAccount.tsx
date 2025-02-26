@@ -17,7 +17,7 @@ interface User {
 
 const FindAccount: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const { data, error, isLoading } = useUsers();
+  const { data, isLoading } = useUsers();
   const { email, setEmail, phone, setPhone } = useAccountStore();
   const [emailError, setEmailError] = useState<string | null>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
@@ -147,8 +147,11 @@ const FindAccount: React.FC = () => {
               <Button
                 label={isLoading ? "로딩 중..." : "다음"}
                 onClick={handleFindAccount}
-                className={styles['find-account-form__button']}
-                disabled={isLoading}
+                className={[
+                  styles['find-account-form__button'],
+                  email && phone ? styles['button-filled'] : styles['button-empty']
+                ]}
+                disabled={isLoading || !email || !phone}
               />
 
               {successMessage && (
