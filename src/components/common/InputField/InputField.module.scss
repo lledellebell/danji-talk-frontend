@@ -19,10 +19,6 @@ $font-size-large: 16px;
 $font-size-medium: 14px;
 $font-size-small: 12px;
 
-// Widths
-$input-max-width: 400px;
-$input-max-width-mobile: 280px;
-
 // Spacing
 $spacing-large: 12px;
 $spacing-medium: 8px;
@@ -34,11 +30,6 @@ $spacing-xsmall: 4px;
   flex-direction: column;
   gap: $spacing-medium;
   width: 100%;
-  max-width: $input-max-width;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    max-width: $input-max-width-mobile;
-  }
 
   &__label {
     font-size: $font-size-medium;

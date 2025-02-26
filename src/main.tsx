@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import "./styles/index.css";
+import "./styles/index.scss";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App.tsx";
 import React from "react";

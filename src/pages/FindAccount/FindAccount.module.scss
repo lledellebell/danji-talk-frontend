@@ -1,0 +1,53 @@
+
+// Variables
+$spacing-large: 24px;
+$spacing-medium: 16px;
+$breakpoint-mobile: 768px;
+$color-white: #fff;
+$color-text: #333;
+
+// Mixin
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Mixin for spacing
+@mixin apply-spacing($top: 0, $right: 0, $bottom: 0, $left: 0) {
+  margin-top: $top;
+  margin-right: $right;
+  margin-bottom: $bottom;
+  margin-left: $left;
+}
+
+// Block
+.find-account-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: $spacing-large;
+  background-color: $color-white;
+}
+
+.find-account-container {
+  padding: $spacing-large;
+  background-color: $color-white;
+  width: 100%;
+  margin: 0 auto;
+  
+  @media screen and (max-width: $breakpoint-mobile) {
+    padding: $spacing-medium;
+  }
+}
+
+// Element
+.find-account-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: $color-text;
+  @include apply-spacing(0, 0, $spacing-large, 0);
+  text-align: center;
+}
