@@ -30,6 +30,8 @@ const NaverLoginIcon = () => {
   return <img src={NaverIcon} alt="네이버 로그인 하기" />;
 };
 
+const KAKAO_LOGIN_LABEL = '카카오 로그인 하기';
+
 const socialAccounts = [
   { id: 1, text: <KakaoLoginIcon />, ariaLabel: '카카오 로그인 하기' },
   { id: 2, text: <GoogleLoginIcon />, ariaLabel: '구글 로그인 하기' },
@@ -41,14 +43,14 @@ const SocialLoginList: React.FC = () => {
   const handleKakaoLogin = useKakaoLogin();
   
   const handleSocialLogin = (provider: string) => {
-    if (provider === '카카오 로그인 하기') {
+    if (provider === KAKAO_LOGIN_LABEL) {
       handleKakaoLogin();
       navigate('/');
     }
   };
 
   useEffect(() => {
-    const hasKakaoLogin = socialAccounts.some(account => account.ariaLabel === '카카오 로그인 하기');
+    const hasKakaoLogin = socialAccounts.some(account => account.ariaLabel === KAKAO_LOGIN_LABEL);
     
     if (hasKakaoLogin && window.Kakao) {
       const appKey = import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY;

@@ -104,6 +104,7 @@ const LogoIcon = () => {
 const LoginForm = ({ onSubmit, isLoading, error }: { onSubmit: (e: React.FormEvent) => void, isLoading: boolean, error: string | null }) => {
   const { email, password, setEmail, setPassword } = useAuthStore();
   const [saveId, setSaveId] = useState(false);
+  const [errorMessage, setError] = useState<string | null>(error);
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('savedEmail');
@@ -132,11 +133,19 @@ const LoginForm = ({ onSubmit, isLoading, error }: { onSubmit: (e: React.FormEve
         label="이메일"
         name="email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => {
+          const newEmail = e.target.value;
+          setEmail(newEmail);
+          if (newEmail && !isValidEmail(newEmail)) {
+            setError('이메일 형식이 올바르지 않습니다. 예: example@domain.com');
+          } else {
+            setError(null);
+          }
+        }}
         placeholder="이메일을 입력하세요"
         required
         autoComplete="email"
-        error={!isValidEmail(email) ? '이메일 형식이 올바르지 않습니다. 다시 확인해주세요.' : error === '이메일이 올바르지 않습니다. 다시 확인해주세요.' ? error : undefined}
+        error={errorMessage || undefined}
       />
       <InputField
         label="비밀번호"
