@@ -16,6 +16,7 @@ interface InputFieldProps
   validation?: (value: string) => string | undefined;
   minLength?: number;
   pattern?: string;
+  className?: string;
   showPasswordToggle?: boolean;
   actionButton?: {
     label: string;
@@ -82,6 +83,7 @@ export const InputField = ({
   pattern,
   showPasswordToggle = false,
   actionButton,
+  className,
   ...rest
 }: InputFieldProps) => {
   const id = useId();
@@ -92,7 +94,7 @@ export const InputField = ({
   };
 
   return (
-    <div className={styles['input-field']}>
+    <div className={`${styles['input-field']} ${className}`}>
       <label htmlFor={id} className={styles['input-field__label']}>
         {label}
       </label>

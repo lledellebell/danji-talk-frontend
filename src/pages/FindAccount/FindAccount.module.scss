@@ -51,3 +51,24 @@ $color-text: #333;
   @include apply-spacing(0, 0, $spacing-large, 0);
   text-align: center;
 }
+
+.find-account-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-medium;
+  margin-top: $spacing-large;
+}
+
+.find-account-form__input-field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-medium;
+
+  + .find-account-form__input-field {
+    margin-top: $spacing-medium;
+  }
+}
+
+.find-account-form__button {
+  margin-top: $spacing-large;
+}
