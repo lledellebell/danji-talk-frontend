@@ -8,6 +8,7 @@ import Button from "../../components/common/Button/Button";
 import { useUsers } from '../../hooks/useUsers';
 import { useAccountStore } from '../../stores/useAccountStore';
 import Alert from "../../components/common/Alert/Alert";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   id: string;
@@ -25,6 +26,8 @@ const FindAccount: React.FC = () => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState(false);
   const [alertContent, setAlertContent] = useState<string | null>(null);
+  const [attemptCount, setAttemptCount] = useState(0);
+  const navigate = useNavigate();
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -65,8 +68,15 @@ const FindAccount: React.FC = () => {
       const phoneMatch = data.users.find((user: User) => user.phone === phone);
 
       if (!emailMatch) {
-        setAlertContent('등록된 회원정보가 없습니다.<br>다시 입력해주세요.');
-        setShowAlert(true);
+        setAttemptCount(prev => prev + 1);
+        if (attemptCount >= 4) {
+          setAlertContent('등록된 회원정보가 없습니다. 회원 가입을 진행하시겠습니까?');
+          setShowAlert(true);
+          navigate('/signup');
+        } else {
+          setAlertContent('등록된 회원정보가 없습니다.<br>다시 입력해주세요.');
+          setShowAlert(true);
+        }
         return;
       }
 
