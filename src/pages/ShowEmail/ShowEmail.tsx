@@ -1,6 +1,7 @@
 import { useUserStore } from '../../stores/userStore';
 import styles from './ShowEmail.module.scss';
 import logo from '../../assets/logo.svg';
+import { Link } from 'react-router-dom';
 
 const Logo = () => {
   return (
@@ -24,7 +25,7 @@ const ShowEmail = () => {
         ) : (
           <p className={styles['show-email-text']}>사용자 정보를 찾을 수 없습니다.</p>
         )}
-        <button className={styles['show-email-button']}>로그인페이지로 이동</button>
+        <Link to="/login" className={styles['show-email-button']}>로그인페이지로 이동</Link>
       </div>
     </div>
   );
