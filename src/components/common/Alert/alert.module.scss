@@ -37,6 +37,8 @@ $button-hover-color: #6fa8dc;
 }
 
 .alert__content {
+  font-size: 15px;
+  line-height: 22px;
 }
 
 .alert__title,
@@ -45,6 +47,11 @@ $button-hover-color: #6fa8dc;
   margin-top: 0;
   text-align: center;
   margin-bottom: 30px;
+}
+
+.alert__title{
+  font-size: 15px;
+  line-height: 22px;
 }
 
 .button {

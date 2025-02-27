@@ -7,6 +7,7 @@ import { InputField } from "../../components/common/InputField/InputField";
 import Button from "../../components/common/Button/Button";
 import { useUsers } from '../../hooks/useUsers';
 import { useAccountStore } from '../../stores/useAccountStore';
+import Alert from "../../components/common/Alert/Alert";
 
 interface User {
   id: string;
@@ -22,6 +23,8 @@ const FindAccount: React.FC = () => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertContent, setAlertContent] = useState<string | null>(null);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -62,12 +65,15 @@ const FindAccount: React.FC = () => {
       const phoneMatch = data.users.find((user: User) => user.phone === phone);
 
       if (!emailMatch) {
-        setEmailError('입력하신 이메일과 일치하는 계정이 없습니다.');
+        setAlertContent('등록된 회원정보가 없습니다.<br>다시 입력해주세요.');
+        setShowAlert(true);
         return;
       }
 
       if (emailMatch && (!phoneMatch || emailMatch.id !== phoneMatch.id)) {
         setPhoneError('이메일은 일치하지만 전화번호가 일치하지 않습니다.');
+        setAlertContent('이메일은 일치하지만 전화번호가 일치하지 않습니다.');
+        setShowAlert(true);
         return;
       }
 
@@ -170,6 +176,13 @@ const FindAccount: React.FC = () => {
             비밀번호 찾기
           </TabPanel>
         </TabWrapper>
+        {showAlert && (
+          <Alert
+            alertTitle="안내"
+            alertContent={alertContent}
+            onClose={() => setShowAlert(false)}
+          />
+        )}
       </div>
     </div>
   );

@@ -16,7 +16,7 @@ const Alert: React.FC<AlertProps> = ({ alertTitle, alertContent, confirmLabel = 
           <h2 id="alert__title" className={styles['alert__title']}>{alertTitle}</h2>
         </div>
         <div id="alert__content" className={styles['alert__content']}>
-          <p className={styles['alert__text']}>{alertContent}</p>
+          <p className={styles['alert__text']} dangerouslySetInnerHTML={{ __html: alertContent as string }} />
         </div>
         <div className={styles['alert__footer']}>
           <button onClick={onClose} className={styles['alert__confirm-button']}>
