@@ -63,7 +63,9 @@ $spacing-xsmall: 8px;
 }
 
 .login-container {
-  @include flex-center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   flex-direction: column;
   min-height: 100vh;
   padding: $spacing-large;
