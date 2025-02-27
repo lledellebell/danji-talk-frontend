@@ -19,7 +19,7 @@ const ShowEmail = () => {
         {userEmail ? (
           <>
             <Logo />
-            <p className={styles['show-email-text']}>회원님의 아이디는<br/><b>{userEmail}</b>입니다.</p>
+            <p className={styles['show-email-text']}>회원님의 이메일은<br/><b>{userEmail}</b>입니다.</p>
           </>
         ) : (
           <p className={styles['show-email-text']}>사용자 정보를 찾을 수 없습니다.</p>

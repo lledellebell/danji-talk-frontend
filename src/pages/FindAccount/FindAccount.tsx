@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState, useRef } from "react";
 import Tab from "../../components/common/Tab/Tab";
 import TabPanel from "../../components/common/Tab/TabPanel";
 import TabWrapper from "../../components/common/Tab/TabWrapper";
 import styles from "./FindAccount.module.scss";
-import { InputField } from "../../components/common/InputField/InputField";
+import InputField from "../../components/common/InputField/InputField";
 import Button from "../../components/common/Button/Button";
 import { useUsers } from '../../hooks/useUsers';
 import { useAccountStore } from '../../stores/useAccountStore';
@@ -18,101 +18,69 @@ interface User {
   phone?: string;
 }
 
+const validatePhone = (phone: string): boolean => /^\d+$/.test(phone);
+const validateUsername = (username: string): string | null => 
+  username.trim().length === 0 ? '이름을 입력하세요.' : null;
+
 const FindAccount: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
   const { data, isLoading } = useUsers();
-  const { email, setEmail, phone, setPhone } = useAccountStore();
-  const [emailError, setEmailError] = useState<string | null>(null);
+  const { phone, setPhone } = useAccountStore();
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState(false);
   const [alertContent, setAlertContent] = useState<string | null>(null);
   const [attemptCount, setAttemptCount] = useState(0);
   const navigate = useNavigate();
   const setUserEmail = useUserStore((state) => state.setUserEmail);
-
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const validatePhone = (phone: string): boolean => {
-    const phoneRegex = /^\d+$/;
-    return phoneRegex.test(phone);
-  };
+  const [username, setUsername] = useState('');
+  const [usernameError, setUsernameError] = useState<string | null>(null);
+  const usernameInputRef = useRef<HTMLInputElement>(null);
 
   const handleFindAccount = async () => {
-    if (!email) {
-      setEmailError('이메일을 입력하세요.');
+    const usernameValidationError = validateUsername(username);
+    if (usernameValidationError) {
+      setUsernameError(usernameValidationError);
+      usernameInputRef.current?.focus();
       return;
     }
 
-    if (!validateEmail(email)) {
-      setEmailError('유효한 이메일 형식이 아닙니다.');
-      return;
-    }
-
-    if (!phone) {
-      setPhoneError('전화번호를 입력하세요.');
-      return;
-    }
-
-    if (!validatePhone(phone)) {
+    if (!phone || !validatePhone(phone)) {
       setPhoneError('전화번호는 숫자만 포함해야 합니다.');
       return;
     }
 
-    setEmailError(null);
+    setUsernameError(null);
     setPhoneError(null);
 
     if (data) {
-      const emailMatch = data.users.find((user: User) => user.email === email);
+      const usernameMatch = data.users.find((user: User) => user.username === username);
       const phoneMatch = data.users.find((user: User) => user.phone === phone);
 
-      if (!emailMatch) {
+      if (!usernameMatch || (usernameMatch && (!phoneMatch || usernameMatch.id !== phoneMatch.id))) {
         setAttemptCount(prev => prev + 1);
-        if (attemptCount >= 4) {
-          setAlertContent('등록된 회원정보가 없습니다. 회원 가입을 진행하시겠습니까?');
-          setShowAlert(true);
-          navigate('/signup');
-        } else {
-          setAlertContent('등록된 회원정보가 없습니다.<br>다시 입력해주세요.');
-          setShowAlert(true);
-        }
-        return;
-      }
-
-      if (emailMatch && (!phoneMatch || emailMatch.id !== phoneMatch.id)) {
-        setPhoneError('이메일은 일치하지만 전화번호가 일치하지 않습니다.');
-        setAlertContent('이메일은 일치하지만 전화번호가 일치하지 않습니다.');
+        setAlertContent(attemptCount >= 4 
+          ? '등록된 회원정보가 없습니다.<br>회원 가입을 진행하시겠습니까?' 
+          : '등록된 회원정보가 없습니다.<br>다시 입력해주세요.');
         setShowAlert(true);
+        if (attemptCount >= 4) navigate('/signup');
         return;
       }
 
-      if (emailMatch && phoneMatch && emailMatch.id === phoneMatch.id) {
-        setUserEmail(emailMatch.email);
-        navigate('/show-email');
-      }
-    }
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newEmail = e.target.value;
-    setEmail(newEmail);
-    if (!validateEmail(newEmail)) {
-      setEmailError('유효한 이메일 형식이 아닙니다.');
-    } else {
-      setEmailError(null);
+      setUserEmail(usernameMatch.email);
+      navigate('/show-email');
     }
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPhone = e.target.value;
     setPhone(newPhone);
-    if (!validatePhone(newPhone)) {
-      setPhoneError('전화번호는 숫자만 포함해야 합니다.');
-    } else {
-      setPhoneError(null);
-    }
+    setPhoneError(validatePhone(newPhone) ? null : '전화번호는 숫자만 포함해야 합니다.');
+  };
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newUsername = e.target.value;
+    setUsername(newUsername);
+    setUsernameError(validateUsername(newUsername));
   };
 
   return (
@@ -138,17 +106,16 @@ const FindAccount: React.FC = () => {
             ariaLabelledby="tab-0"
           >
             <div className={styles['find-account-form']}>
-              
               <InputField
-                label="이메일"
-                name="email"
-                value={email}
-                onChange={handleEmailChange}
-                placeholder="이메일을 입력하세요"
+                label="이름"
+                name="username"
+                value={username}
+                onChange={handleUsernameChange}
+                placeholder="이름을 입력하세요"
                 required
-                autoComplete="email"
+                autoComplete="name"
                 className={styles['find-account-form__input-field']}
-                error={emailError || undefined}
+                error={usernameError || undefined}
               />
               <InputField
                 label="전화번호"
@@ -167,9 +134,9 @@ const FindAccount: React.FC = () => {
                 onClick={handleFindAccount}
                 className={[
                   styles['find-account-form__button'],
-                  email && phone ? styles['button-filled'] : styles['button-empty']
+                  username && phone ? styles['button-filled'] : styles['button-empty']
                 ]}
-                disabled={isLoading || !email || !phone}
+                disabled={isLoading || !username || !phone}
               />
             </div>
           </TabPanel>

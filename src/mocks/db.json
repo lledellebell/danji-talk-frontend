@@ -2,7 +2,7 @@
   "users": [
     {
       "id": "1059",
-      "username": "testuser1",
+      "username": "홍길동1",
       "password": "Test@123456!",
       "email": "testuser1@example.com",
       "phone": "01012345671",
@@ -11,18 +11,18 @@
     },
     {
       "id": "5294",
-      "username": "john_doe",
-      "password": "SecurePass@2023",
-      "email": "john.doe@example.com",
+      "username": "홍길동2",
+      "password": "Test@123456!",
+      "email": "testuser2@example.com",
       "phone": "01012345672",
       "code": "w_ChrmsIyDZAPAHL1zNyhemNj5VjhOGVAAAAAQoqJQ8AAAGVOezsYPsTCyemC-i_",
       "redirectUri": "http://localhost:5173"
     },
     {
       "id": "d732",
-      "username": "testuser2",
+      "username": "홍길동3",
       "password": "Test@123456!",
-      "email": "testuser2@example.com",
+      "email": "testuser3@example.com",
       "phone": "01012345673",
       "code": "hh9C9s_mouX78WNiRbMyjmg5tpzi5KUfAAAAAQorDR4AAAGVPENpivsTCyemC-i_",
       "redirectUri": "http://localhost:5173"
