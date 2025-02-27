@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Tab from "../../components/common/Tab/Tab";
 import TabPanel from "../../components/common/Tab/TabPanel";
 import TabWrapper from "../../components/common/Tab/TabWrapper";
@@ -18,7 +18,16 @@ interface User {
   phone?: string;
 }
 
-const validatePhone = (phone: string): boolean => /^\d+$/.test(phone);
+const validatePhone = (phone: string): string | null => {
+  if (!/^\d+$/.test(phone)) {
+    return '전화번호는 숫자만 포함해야 합니다.';
+  }
+  if (phone.length < 10 || phone.length > 11) {
+    return '전화번호는 10자리 또는 11자리여야 합니다.';
+  }
+  return null;
+};
+
 const validateUsername = (username: string): string | null => {
   if (username.trim().length === 0) {
     return '이름을 입력하세요.';
@@ -49,16 +58,22 @@ const FindAccount: React.FC = () => {
   const [usernameError, setUsernameError] = useState<string | null>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (usernameError) {
+      usernameInputRef.current?.focus();
+    }
+  }, [usernameError]);
+
   const handleFindAccount = async () => {
     const usernameValidationError = validateUsername(username);
     if (usernameValidationError) {
       setUsernameError(usernameValidationError);
-      usernameInputRef.current?.focus();
       return;
     }
 
-    if (!phone || !validatePhone(phone)) {
-      setPhoneError('전화번호는 숫자만 포함해야 합니다.');
+    const phoneValidationError = validatePhone(phone);
+    if (phoneValidationError) {
+      setPhoneError(phoneValidationError);
       return;
     }
 
@@ -66,10 +81,9 @@ const FindAccount: React.FC = () => {
     setPhoneError(null);
 
     if (data) {
-      const usernameMatch = data.users.find((user: User) => user.username === username);
       const phoneMatch = data.users.find((user: User) => user.phone === phone);
 
-      if (!usernameMatch || (usernameMatch && (!phoneMatch || usernameMatch.id !== phoneMatch.id))) {
+      if (!phoneMatch) {
         setAttemptCount(prev => prev + 1);
         setAlertContent(attemptCount >= 4 
           ? '입력하신 정보로 등록된 계정을 찾을 수 없습니다.<br><u>회원가입</u>을 진행하시겠습니까?' 
@@ -78,7 +92,14 @@ const FindAccount: React.FC = () => {
         return;
       }
 
-      setUserEmail(usernameMatch.email);
+      if (phoneMatch.username !== username) {
+        setAttemptCount(prev => prev + 1);
+        setAlertContent('전화번호는 맞지만 이름이 틀렸습니다. 다시 확인해주세요.');
+        setShowAlert(true);
+        return;
+      }
+
+      setUserEmail(phoneMatch.email);
       navigate('/show-email');
     }
   };
@@ -86,7 +107,7 @@ const FindAccount: React.FC = () => {
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPhone = e.target.value;
     setPhone(newPhone);
-    setPhoneError(validatePhone(newPhone) ? null : '전화번호는 숫자만 포함해야 합니다.');
+    setPhoneError(validatePhone(newPhone));
   };
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
