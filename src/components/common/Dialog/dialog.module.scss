@@ -16,6 +16,21 @@ $font-family: 'Arial, sans-serif';
 $font-size: 16px;
 $font-color: #333;
 
+$cancel-button-text-color: #333;
+$confirm-button-text-color: #fff;
+
+// 미디어 쿼리 추가
+@media (max-width: 600px) {
+  .dialog__container {
+    width: 90%;
+    padding: 16px;
+  }
+
+  .dialog__button {
+    padding: 12px;
+  }
+}
+
 .dialog {
   &__overlay {
     position: fixed;
@@ -77,7 +92,7 @@ $font-color: #333;
   &__cancel-button {
     @extend .dialog__button;
     background-color: $cancel-button-bg;
-    color: $font-color;
+    color: $cancel-button-text-color;
 
     &:hover {
       background-color: mix(black, $cancel-button-bg, $hover-darken-percentage);
@@ -87,7 +102,7 @@ $font-color: #333;
   &__confirm-button {
     @extend .dialog__button;
     background-color: $confirm-button-bg;
-    color: #fff;
+    color: $confirm-button-text-color;
 
     &:hover {
       background-color: mix(black, $confirm-button-bg, $hover-darken-percentage);

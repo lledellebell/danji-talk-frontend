@@ -47,6 +47,14 @@ function App() {
             </>
           } 
         />
+        <Route
+          path="/signup"
+          element={
+            <>
+              <Header title="회원가입" type="sub" hasBackButton={true} />
+            </>
+          }
+        />
       </Routes>
     </Router>
   )

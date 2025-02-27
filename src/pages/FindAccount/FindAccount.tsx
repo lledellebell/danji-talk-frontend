@@ -19,8 +19,21 @@ interface User {
 }
 
 const validatePhone = (phone: string): boolean => /^\d+$/.test(phone);
-const validateUsername = (username: string): string | null => 
-  username.trim().length === 0 ? '이름을 입력하세요.' : null;
+const validateUsername = (username: string): string | null => {
+  if (username.trim().length === 0) {
+    return '이름을 입력하세요.';
+  }
+  if (username.length < 2) {
+    return '이름은 최소 2자 이상이어야 합니다.';
+  }
+  if (username.length > 20) {
+    return '이름은 최대 20자 이하이어야 합니다.';
+  }
+  if (/[^a-zA-Z가-힣]/.test(username)) {
+    return '이름에는 문자만 입력할 수 있습니다.';
+  }
+  return null;
+};
 
 const FindAccount: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -59,10 +72,9 @@ const FindAccount: React.FC = () => {
       if (!usernameMatch || (usernameMatch && (!phoneMatch || usernameMatch.id !== phoneMatch.id))) {
         setAttemptCount(prev => prev + 1);
         setAlertContent(attemptCount >= 4 
-          ? '등록된 회원정보가 없습니다.<br>회원 가입을 진행하시겠습니까?' 
-          : '등록된 회원정보가 없습니다.<br>다시 입력해주세요.');
+          ? '입력하신 정보로 등록된 계정을 찾을 수 없습니다.<br><u>회원가입</u>을 진행하시겠습니까?' 
+          : '입력하신 정보로 등록된 계정을 찾을 수 없습니다.<br>정보를 다시 확인하고 입력해주세요.');
         setShowAlert(true);
-        if (attemptCount >= 4) navigate('/signup');
         return;
       }
 
@@ -154,6 +166,8 @@ const FindAccount: React.FC = () => {
             alertTitle="안내"
             alertContent={alertContent}
             onClose={() => setShowAlert(false)}
+            onConfirm={attemptCount >= 5 ? () => navigate('/signup') : undefined}
+            confirmLabel={attemptCount >= 5 ? "회원 가입" : undefined}
           />
         )}
       </div>
