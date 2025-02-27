@@ -1,3 +1,5 @@
+// color namespace
+
 // Variables
 $spacing-large: 24px;
 $spacing-medium: 16px;
@@ -25,7 +27,7 @@ $color-border: #dee2e6;
 }
 
 // Mixin for button styles
-@mixin button-style($bg-color, $text-color) {
+@mixin button-style($bg-color, $text-color, $hover-bg-color: $bg-color) {
   background-color: $bg-color;
   color: $text-color;
   border: 1px solid $color-border;
@@ -35,7 +37,7 @@ $color-border: #dee2e6;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: darken($bg-color, 10%);
+    background-color: $hover-bg-color;
   }
 }
 
@@ -91,13 +93,13 @@ $color-border: #dee2e6;
 
 .find-account-form__button {
   margin-top: $spacing-large;
-  @include button-style($color-background, $color-white);
+  @include button-style($color-background, $color-white, #d0e0ff);
 }
 
 .button-filled {
-  @include button-style($color-primary, $color-white);
+  @include button-style($color-primary, $color-white, #7aa3ff);
 }
 
 .button-empty {
-  @include button-style($color-white, $color-text);
+  @include button-style($color-white, $color-text, #f0f0f0);
 }
