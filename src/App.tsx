@@ -3,6 +3,7 @@ import { LoginPage } from './pages/Login/LoginPage'
 import { useAuthStore } from './stores/authStore'
 import FindAccount from './pages/FindAccount/FindAccount'
 import Header from './layouts/Header'
+import ShowEmail from './pages/ShowEmail/ShowEmail'
 
 function App() {
   const { isLoggedIn } = useAuthStore()
@@ -34,6 +35,15 @@ function App() {
             <>
               <Header title="이메일/비밀번호 찾기" type="sub" hasBackButton={true} />
               <FindAccount />
+            </>
+          } 
+        />
+        <Route 
+          path="/show-email" 
+          element={
+            <>
+              <Header title="이메일/비밀번호 찾기 결과" type="sub" hasBackButton={true} />
+              <ShowEmail />
             </>
           } 
         />

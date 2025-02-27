@@ -9,6 +9,7 @@ import { useUsers } from '../../hooks/useUsers';
 import { useAccountStore } from '../../stores/useAccountStore';
 import Alert from "../../components/common/Alert/Alert";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from '../../stores/userStore';
 
 interface User {
   id: string;
@@ -23,11 +24,11 @@ const FindAccount: React.FC = () => {
   const { email, setEmail, phone, setPhone } = useAccountStore();
   const [emailError, setEmailError] = useState<string | null>(null);
   const [phoneError, setPhoneError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState(false);
   const [alertContent, setAlertContent] = useState<string | null>(null);
   const [attemptCount, setAttemptCount] = useState(0);
   const navigate = useNavigate();
+  const setUserEmail = useUserStore((state) => state.setUserEmail);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -88,7 +89,8 @@ const FindAccount: React.FC = () => {
       }
 
       if (emailMatch && phoneMatch && emailMatch.id === phoneMatch.id) {
-        setSuccessMessage(`${emailMatch.username}님의 계정을 찾았습니다. 다음 단계로 진행하세요.`);
+        setUserEmail(emailMatch.email);
+        navigate('/show-email');
       }
     }
   };
@@ -169,12 +171,6 @@ const FindAccount: React.FC = () => {
                 ]}
                 disabled={isLoading || !email || !phone}
               />
-
-              {successMessage && (
-                <div className={styles['success-message']}>
-                  {successMessage}
-                </div>
-              )}
             </div>
           </TabPanel>
           <TabPanel 
