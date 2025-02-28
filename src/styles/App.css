@@ -5,3 +5,9 @@ html {
 body {
   margin: 0 auto;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* 크기 계산할 때 padding, border 포함 */
+}
