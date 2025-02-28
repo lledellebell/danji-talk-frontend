@@ -7,18 +7,25 @@ interface HeaderProps {
   title: string;
   type: "main" | "sub";
   hasBackButton?: boolean;
+  hasText?: boolean;
   hasIcons?: boolean;
   iconCount?: number;
+  text?: string;
 }
 
 const SubHeader: React.FC<HeaderProps> = ({
   title,
   hasIcons,
   iconCount = 1,
+  hasText,
+  text,
 }) => {
   return (
     <header className={`${styles.header} ${styles["header--sub"]}`}>
       <h1 className={styles.header__title}>{title}</h1>
+      {hasText && text && (
+        <button className={styles.header__button}>{text}</button>
+      )}
       {hasIcons && (
         <nav className={styles.header__icons} aria-label="사용자 아이콘">
           {Array.from({ length: iconCount }).map((_, index) => (
@@ -35,6 +42,8 @@ const MainHeader: React.FC<HeaderProps> = ({
   hasBackButton,
   hasIcons,
   iconCount = 2,
+  hasText,
+  text,
 }) => {
   const navigate = useNavigate();
 
@@ -50,6 +59,9 @@ const MainHeader: React.FC<HeaderProps> = ({
         </button>
       )}
       <h1 className={styles.header__title}>{title}</h1>
+      {hasText && text && (
+        <button className={styles.header__button}>{text}</button>
+      )}
       {hasIcons && (
         <nav className={styles.header__icons} aria-label="사용자 아이콘">
           {Array.from({ length: iconCount }).map((_, index) => (

@@ -16,6 +16,12 @@
     margin-left: auto;
   }
 
+  &__button {
+    font-size: 14px;
+    color: #999;
+    margin-left: auto;
+  }
+
   // 메인 헤더: 타이틀 중앙 정렬
   &--main {
     .header__title {
@@ -33,4 +39,9 @@
       font-size: 14px;
     }
   }
+}
+
+button {
+  border: 0px;
+  background: #ffffff;
 }
