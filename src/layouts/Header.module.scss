@@ -21,6 +21,13 @@
     margin-left: auto;
   }
 
+  &__button {
+    font-size: 14px;
+    color: #999;
+    margin-left: auto;
+  }
+
+  // 메인 헤더: 타이틀 중앙 정렬
   &--main {
     .header__title {
       position: absolute;
@@ -37,25 +44,9 @@
       text-align: left;
     }
   }
-
-  &__back-button {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-  }
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  padding: 0;
-  margin: 0;
+button {
+  border: 0px;
+  background: #ffffff;
 }

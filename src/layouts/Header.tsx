@@ -7,10 +7,11 @@ interface HeaderProps {
   title: string;
   type: 'main' | 'sub';
   hasBackButton?: boolean;
+  hasText?: boolean;
   hasIcons?: boolean;
   hasUserIcon?: boolean;
   iconCount?: number;
-  icons?: string[];
+  text?: string;
 }
 
 const SubHeader: React.FC<HeaderProps> = ({
@@ -18,6 +19,8 @@ const SubHeader: React.FC<HeaderProps> = ({
   hasBackButton,
   hasIcons,
   iconCount = 1,
+  hasText,
+  text,
 }) => {
   const navigate = useNavigate();
 
@@ -39,6 +42,9 @@ const SubHeader: React.FC<HeaderProps> = ({
         )}
       </nav>
       <h1 className={styles.header__title}>{title}</h1>
+      {hasText && text && (
+        <button className={styles.header__button}>{text}</button>
+      )}
       {hasIcons && (
         <ul className={styles.header__icons} aria-label="사용자 아이콘 목록">
           {Array.from({ length: iconCount }).map((_, index) => (
@@ -58,6 +64,8 @@ const MainHeader: React.FC<HeaderProps> = ({
   hasIcons,
   icons,
   iconCount = 2,
+  hasText,
+  text,
 }) => {
   const navigate = useNavigate();
 
@@ -79,19 +87,15 @@ const MainHeader: React.FC<HeaderProps> = ({
         )}
       </nav>
       <h1 className={styles.header__title}>{title}</h1>
-      {hasIcons && icons && (
-        <ul className={styles.header__icons} aria-label="사용자 아이콘 목록">
-          {icons.slice(0, iconCount).map(
-            (
-              icon,
-              index // iconCount만큼만 출력
-            ) => (
-              <li key={index}>
-                <img src={icon} alt={`아이콘 ${index + 1}`} />
-              </li>
-            )
-          )}
-        </ul>
+      {hasText && text && (
+        <button className={styles.header__button}>{text}</button>
+      )}
+      {hasIcons && (
+        <nav className={styles.header__icons} aria-label="사용자 아이콘">
+          {Array.from({ length: iconCount }).map((_, index) => (
+            <img key={index} src={user_icon} alt={`아이콘 ${index + 1}`} />
+          ))}
+        </nav>
       )}
     </header>
   );
