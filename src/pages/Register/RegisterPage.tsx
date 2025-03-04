@@ -35,13 +35,11 @@ const RegisterForm = ({
     confirmPassword,
     name,
     nickname,
-    birthday,
     phoneNumber,
     setPassword,
     setConfirmPassword,
     setName,
     setNickname,
-    setBirthday,
     setPhoneNumber,
   } = useRegisterStore();
 
@@ -117,17 +115,6 @@ const RegisterForm = ({
         placeholder="닉네임을 입력해주세요"
         required
         autoComplete="nickName"
-      />
-      <InputField
-        label="생년월일"
-        type="text"
-        name="birthday"
-        value={birthday}
-        onChange={(e) => setBirthday(e.target.value)}
-        placeholder="주민등록번호 앞 6자리를 입력해주세요"
-        required
-        autoComplete="birthday"
-        maxLength={6}
       />
       <InputField
         label="전화번호"

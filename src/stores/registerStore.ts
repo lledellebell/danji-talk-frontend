@@ -9,7 +9,6 @@ interface RegisterState {
   confirmPassword: string;
   name: string;
   nickname: string;
-  birthday: string;
   phoneNumber: string;
   error: string | null;
   setEmail: (email: string) => void;
@@ -20,7 +19,6 @@ interface RegisterState {
   setConfirmPassword: (confirmPassword: string) => void;
   setName: (name: string) => void;
   setNickname: (nickname: string) => void;
-  setBirthday: (birthday: string) => void;
   setPhoneNumber: (phoneNumber: string) => void;
   setError: (error: string | null) => void;
 }
@@ -34,7 +32,6 @@ export const useRegisterStore = create<RegisterState>((set) => ({
   confirmPassword: "",
   name: "",
   nickname: "",
-  birthday: "",
   phoneNumber: "",
   error: null,
   setEmail: (email) => set({ email }),
@@ -45,7 +42,6 @@ export const useRegisterStore = create<RegisterState>((set) => ({
   setConfirmPassword: (confirmPassword) => set({ confirmPassword }),
   setName: (name) => set({ name }),
   setNickname: (nickname) => set({ nickname }),
-  setBirthday: (birthday) => set({ birthday }),
   setPhoneNumber: (phoneNumber) => set({ phoneNumber }),
   setError: (error) => set({ error }),
 }));
