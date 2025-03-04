@@ -2,11 +2,15 @@ import axios from "axios";
 import { useRegisterStore } from "../stores/registerStore";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { useDialogStore } from "../stores/dialogStore";
+import { useAlertStore } from "../stores/alertStore";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5173";
 
 export const useCheckEmail = () => {
-  const { email, setEmail, setError, setEmailCheckStatus, setAuthCode } =
+  const { openDialog, closeDialog } = useDialogStore();
+  const { openAlert, setTitle, setContent } = useAlertStore();
+  const { email, setEmail, setEmailCheckStatus, setAuthCode } =
     useRegisterStore();
   const [actionButton, setActionButton] = useState({
     label: "중복확인",
@@ -15,11 +19,16 @@ export const useCheckEmail = () => {
 
   const checkEmail = () => {
     if (!email) {
-      setError("이메일을 입력해주세요.");
       return;
     }
+    openDialog();
     setActionButton((prev) => ({ ...prev, disabled: true }));
     checkEmailMutation.mutate();
+  };
+
+  const sendEmailCode = () => {
+    closeDialog();
+    sendAuthCode.mutate();
   };
 
   const checkEmailMutation = useMutation({
@@ -30,27 +39,22 @@ export const useCheckEmail = () => {
       );
       return response.data;
     },
-    onSuccess: (data) => {
-      console.log("res", data);
-      if (data.isDuplicate) {
-        setEmailCheckStatus("duplicate");
-        setError("이미 사용 중인 이메일입니다.");
-      } else {
-        setEmailCheckStatus("checked");
-        setError(null);
-      }
+    // TODO: 성공 처리
+    onSuccess: () => {
+      setEmailCheckStatus("checked");
+      openDialog();
       setActionButton((prev) => ({
         ...prev,
         disabled: false,
       }));
     },
+    // TODO: 실패 처리
     onError: (error) => {
       if (axios.isAxiosError(error)) {
-        setError(
-          !error.response
-            ? "네트워크 연결을 확인해주세요."
-            : "이메일 중복 확인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
-        );
+        if (error.response) {
+          // openAlert();
+          setContent(error.response.data?.message);
+        }
       }
       setActionButton((prev) => ({
         ...prev,
@@ -59,13 +63,38 @@ export const useCheckEmail = () => {
     },
   });
 
+  // TODO: 성공시 처리
+  const sendAuthCode = useMutation({
+    mutationFn: async () => {
+      const response = await axios.post(
+        `${API_URL}/api/mail/certification-code/send`,
+        {
+          mail: email,
+        }
+      );
+      return response.data;
+    },
+    onSuccess: () => {
+      openAlert();
+      setTitle("인증확인");
+      setContent("인증되었습니다.");
+    },
+    // TODO: 실패 처리
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          openAlert();
+          setContent(error.response?.data?.message || "인증 코드 전송 실패");
+        }
+      }
+    },
+  });
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newEmail = e.target.value;
 
     setEmail(newEmail);
     setEmailCheckStatus("initial");
-    setError(null);
-
     setAuthCode("");
     setActionButton((prev) => ({
       ...prev,
@@ -75,6 +104,7 @@ export const useCheckEmail = () => {
 
   return {
     checkEmail,
+    sendEmailCode,
     handleEmailChange,
     checkEmailActionButton: { ...actionButton, onClick: checkEmail },
     isCheckingEmail: checkEmailMutation.isPending,

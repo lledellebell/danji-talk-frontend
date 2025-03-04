@@ -1,10 +1,14 @@
 import Header from "../../layouts/Header";
 import styles from "./RegisterPage.module.scss";
+import { useDialogStore } from "../../stores/dialogStore";
+import { useAlertStore } from "../../stores/alertStore";
 import { useRegisterStore } from "../../stores/registerStore";
 import { useRegister } from "../../hooks/useRegister";
 import { useCheckEmail } from "../../hooks/useCheckEmail";
 import { useAuthCode } from "../../hooks/useAuthCode";
 import { InputField } from "../../components/common/InputField/InputField";
+import Dialog from "../../components/common/Dialog/Dialog";
+import Alert from "../../components/common/Alert/Alert";
 
 const SignupPrompt = () => (
   <p className={styles["signup-link"]}>
@@ -43,11 +47,24 @@ const RegisterForm = ({
     setPhoneNumber,
   } = useRegisterStore();
 
-  const { checkEmailActionButton, handleEmailChange } = useCheckEmail();
+  const { checkEmailActionButton, sendEmailCode, handleEmailChange } =
+    useCheckEmail();
   const { authCodeActionButton, handleAuthCodeChange } = useAuthCode();
+  const { closeDialog } = useDialogStore();
+  const { isOpen, title, content, closeAlert } = useAlertStore();
 
   return (
     <form className={styles["register-form"]} onSubmit={onSubmit}>
+      <Dialog
+        title="중복확인"
+        content="사용 가능한 이메일입니다."
+        confirmLabel="인증번호 전송"
+        onClose={closeDialog}
+        closeDialog={sendEmailCode}
+      />
+      {isOpen && (
+        <Alert alertTitle={title} alertContent={content} onClose={closeAlert} />
+      )}
       <InputField
         label="이메일"
         name="email"
