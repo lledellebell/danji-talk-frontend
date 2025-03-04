@@ -1,6 +1,23 @@
 {
-    "users": [
-      { "id": 1, "username": "testuser", "password": "Test@123456", "email": "test@example.com" },
-      { "id": 2, "username": "john_doe", "password": "securepass", "email": "john@example.com" }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "username": "testuser",
+      "password": "Test@123456",
+      "email": "test@example.com"
+    },
+    {
+      "id": 2,
+      "username": "john_doe",
+      "password": "securepass",
+      "email": "john@example.com"
+    }
+  ],
+  "check-email": {
+    "email": "test@example.com",
+    "isDuplicate": false
+  },
+  "check-auth-code": {
+    "isValid": true
+  }
 }

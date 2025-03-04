@@ -132,7 +132,7 @@ export const InputField = ({
           <button
             type="button"
             onClick={actionButton.onClick}
-            // disabled={actionButton.disabled || disabled}
+            disabled={actionButton.disabled || disabled}
             className={styles["action-button"]}
           >
             {actionButton.label}
