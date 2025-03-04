@@ -3,10 +3,10 @@ import { useMutation } from "@tanstack/react-query";
 import { useRegisterStore } from "../stores/registerStore";
 import { useState } from "react";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5173";
 
 export const useAuthCode = () => {
-  const { authCode, setAuthCode, setAuthCodeVerified, setError } =
+  const { email, authCode, setAuthCode, setAuthCodeVerified, setError } =
     useRegisterStore();
 
   const [actionButton, setActionButton] = useState({
@@ -16,9 +16,12 @@ export const useAuthCode = () => {
 
   const authCodeMutation = useMutation({
     mutationFn: async () => {
-      const response = await axios.get(`${API_URL}/check-auth-code`, {
-        params: { authCode },
-      });
+      const response = await axios.get(
+        `${API_URL}/api/mail/certification-code/verify`,
+        {
+          params: { email: email, code: authCode },
+        }
+      );
       return response.data;
     },
     onSuccess: (data) => {

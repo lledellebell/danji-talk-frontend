@@ -3,7 +3,7 @@ import { useRegisterStore } from "../stores/registerStore";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5173";
 
 export const useCheckEmail = () => {
   const { email, setEmail, setError, setEmailCheckStatus, setAuthCode } =
@@ -24,9 +24,10 @@ export const useCheckEmail = () => {
 
   const checkEmailMutation = useMutation({
     mutationFn: async () => {
-      const response = await axios.get(`${API_URL}/check-email`, {
-        params: { email },
-      });
+      const response = await axios.post(
+        `${API_URL}/api/member/check-email-duplication`,
+        { email: email }
+      );
       return response.data;
     },
     onSuccess: (data) => {

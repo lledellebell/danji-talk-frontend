@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRegisterStore } from "../stores/registerStore";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5173";
 
 export const useRegister = () => {
   const {
@@ -13,7 +13,6 @@ export const useRegister = () => {
     confirmPassword,
     name,
     nickname,
-    birthday,
     phoneNumber,
     setError,
   } = useRegisterStore();
@@ -21,13 +20,12 @@ export const useRegister = () => {
 
   const registerMutation = useMutation({
     mutationFn: async () => {
-      const response = await axios.post(`${API_URL}/register`, {
-        email,
-        password,
-        name,
-        nickname,
-        birthday,
-        phoneNumber,
+      const response = await axios.post(`${API_URL}/api/member/signup`, {
+        email: email,
+        password: password,
+        name: name,
+        nickname: nickname,
+        phoneNumber: phoneNumber,
       });
       return response.data;
     },
@@ -71,7 +69,6 @@ export const useRegister = () => {
 
     if (!name) return setError("이름을 입력해주세요");
     if (!nickname) return setError("닉네임을 입력해주세요");
-    if (!birthday) return setError("생년월일을 확인해주세요");
     if (!phoneNumber) return setError("전화번호를 입력해주세요");
 
     registerMutation.mutate();
