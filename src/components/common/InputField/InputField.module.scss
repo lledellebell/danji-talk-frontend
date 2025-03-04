@@ -36,9 +36,9 @@ $spacing-xsmall: 4px;
   width: 100%;
   max-width: $input-max-width;
 
-  @media screen and (max-width: $breakpoint-mobile) {
-    max-width: $input-max-width-mobile;
-  }
+  // @media screen and (max-width: $breakpoint-mobile) {
+  //   max-width: $input-max-width-mobile;
+  // }
 }
 
 .label {
