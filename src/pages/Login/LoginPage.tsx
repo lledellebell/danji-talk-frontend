@@ -6,6 +6,7 @@ import { Checkbox } from '../../components/common/Checkbox/Checkbox';
 import { useLogin } from '../../hooks/useLogin';
 import { ArrowIcon } from '../../components/common/Icons/ArrowIcon';
 import SocialLoginList from '../../components/common/List/SocialLoginList';
+import Header from '../../layouts/Header';
 
 const style: CSSProperties = {
   maskType: 'luminance',
@@ -378,17 +379,20 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className={styles['login-container']}>
-      <div className={styles['login-form-wrapper']}>
-        <div className={styles['logo-wrapper']}>{LogoIcon()}</div>
-        <LoginForm
+    <>
+      <Header title="로그인" type="sub" hasBackButton={true} />
+      <div className={styles['login-container']}>
+        <div className={styles['login-form-wrapper']}>
+          <div className={styles['logo-wrapper']}>{LogoIcon()}</div>
+          <LoginForm
           onSubmit={handleSubmit}
           isLoading={isLoading}
           error={error}
         />
         <Divider />
-        <SocialLoginList />
+          <SocialLoginList />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
