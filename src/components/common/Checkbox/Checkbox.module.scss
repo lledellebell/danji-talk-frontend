@@ -1,7 +1,7 @@
-$primary-color: #2196F3;
+$primary-color: #2196f3;
 $disabled-color: #e0e0e0;
-$border-color: #1565C0;
-$hover-border-color: #1976D2;
+$border-color: #1565c0;
+$hover-border-color: #1976d2;
 $hover-bg-color: #e8f4fd;
 $font-color: #444;
 $font-family: 'Arial', sans-serif;
@@ -15,7 +15,7 @@ $font-weight: 500;
   margin-right: 8px;
   cursor: pointer;
   user-select: none;
-  
+
   // disabled 상태일 때 부모 요소에 적용할 클래스
   &.disabled {
     cursor: not-allowed;
@@ -41,7 +41,7 @@ $font-weight: 500;
 
   .input:checked + .label .checkmark:after {
     transform: translate(-50%, -50%) scale(1);
-    transition: transform 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   // 체크되지 않은 상태
@@ -52,7 +52,7 @@ $font-weight: 500;
 
   .input:not(:checked) + .label .checkmark:after {
     transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   // disabled 상태
@@ -60,7 +60,7 @@ $font-weight: 500;
     background-color: $disabled-color;
     border-color: #bdbdbd;
   }
-  
+
   .input:disabled + .label .checkmark:after {
     transform: translate(-50%, -50%) scale(0);
   }
@@ -92,12 +92,12 @@ $font-weight: 500;
     margin-top: -2px;
     border-radius: 50%;
     margin-right: 8px;
-    transition: all 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     background-color: #f0f0f0;
     border: 2px solid $border-color;
 
     &:after {
-      content: "";
+      content: '';
       z-index: 1;
       position: absolute;
       top: 50%;
@@ -105,7 +105,8 @@ $font-weight: 500;
       width: 14px;
       height: 14px;
       transform: translate(-50%, -50%) scale(2);
-      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M20.285 6.709l-11.997 12-5.285-5.3 1.415-1.415 3.87 3.87L18.87 5.294z'/></svg>") no-repeat center center;
+      background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M20.285 6.709l-11.997 12-5.285-5.3 1.415-1.415 3.87 3.87L18.87 5.294z'/></svg>")
+        no-repeat center center;
       background-size: contain;
       transition: transform 0.3s ease-in-out;
     }
@@ -114,7 +115,9 @@ $font-weight: 500;
   &:hover:not(.disabled) .label .checkmark {
     border-color: $hover-border-color;
     background-color: $hover-bg-color;
-    transition: border-color 0.2s cubic-bezier(0.4, 0.0, 0.2, 1), background-color 0.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition:
+      border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .label {

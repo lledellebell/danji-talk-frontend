@@ -1,0 +1,105 @@
+// color namespace
+
+// Variables
+$spacing-large: 24px;
+$spacing-medium: 16px;
+$spacing-small: 8px;
+$breakpoint-mobile: 768px;
+$color-white: #fff;
+$color-text: #333;
+$color-primary: #97bbff;
+$color-background: #ebf1ff;
+$color-border: #dee2e6;
+
+// Mixin
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Mixin for spacing
+@mixin apply-spacing($top: 0, $right: 0, $bottom: 0, $left: 0) {
+  margin-top: $top;
+  margin-right: $right;
+  margin-bottom: $bottom;
+  margin-left: $left;
+}
+
+// Mixin for button styles
+@mixin button-style($bg-color, $text-color, $hover-bg-color: $bg-color) {
+  background-color: $bg-color;
+  color: $text-color;
+  border: 1px solid $color-border;
+  padding: $spacing-medium;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $hover-bg-color;
+  }
+}
+
+// Block
+.find-account-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: $spacing-large;
+}
+
+.find-account-container {
+  padding: $spacing-large;
+  background-color: $color-white;
+  width: 100%;
+  margin: 0 auto;
+
+  @media screen and (max-width: $breakpoint-mobile) {
+    padding: $spacing-medium;
+  }
+}
+
+// Element
+.find-account-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: $color-text;
+  @include apply-spacing(0, 0, $spacing-large, 0);
+  text-align: center;
+}
+
+.find-account-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-medium;
+  margin-top: $spacing-large;
+  @media screen and (max-width: $breakpoint-mobile) {
+    gap: $spacing-small;
+  }
+}
+
+.find-account-form__input-field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-medium;
+
+  + .find-account-form__input-field {
+    margin-top: $spacing-medium;
+  }
+}
+
+.find-account-form__button {
+  margin-top: $spacing-large;
+  @include button-style($color-background, $color-white, #d0e0ff);
+}
+
+.button-filled {
+  @include button-style($color-primary, $color-white, #7aa3ff);
+}
+
+.button-empty {
+  @include button-style($color-white, $color-text, #f0f0f0);
+}

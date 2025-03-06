@@ -21,7 +21,8 @@ const meta: Meta<typeof Dialog> = {
   parameters: {
     docs: {
       description: {
-        component: 'Dialog 컴포넌트는 사용자에게 정보를 표시하거나 입력을 요청하는 모달 창입니다.',
+        component:
+          'Dialog 컴포넌트는 사용자에게 정보를 표시하거나 입력을 요청하는 모달 창입니다.',
       },
     },
   },
@@ -48,4 +49,4 @@ export const Default: Story = {
     content: '이것은 기본 다이얼로그입니다.',
   },
   render: (args) => <DialogStory {...args} />,
-}; 
+};

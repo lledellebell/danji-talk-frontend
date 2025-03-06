@@ -4,7 +4,7 @@ import RadioButton from './RadioButton';
 const meta: Meta<typeof RadioButton> = {
   title: 'Components/Common/RadioButton',
   component: RadioButton,
-  tags: ['autodocs'], 
+  tags: ['autodocs'],
   argTypes: {
     onChange: { action: 'changed' },
     checked: {
@@ -23,7 +23,8 @@ const meta: Meta<typeof RadioButton> = {
   parameters: {
     docs: {
       description: {
-        component: 'RadioButton 컴포넌트는 사용자가 선택할 수 있는 옵션을 제공하는 UI 요소입니다.',
+        component:
+          'RadioButton 컴포넌트는 사용자가 선택할 수 있는 옵션을 제공하는 UI 요소입니다.',
       },
     },
   },
@@ -45,7 +46,8 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story: '기본 상태의 라디오 버튼입니다. 선택되지 않은 상태로 렌더링됩니다.',
+        story:
+          '기본 상태의 라디오 버튼입니다. 선택되지 않은 상태로 렌더링됩니다.',
       },
     },
   },
@@ -81,7 +83,8 @@ export const Disabled: Story = {
   parameters: {
     docs: {
       description: {
-        story: '비활성화된 상태의 라디오 버튼입니다. 클릭 이벤트가 발생하지 않습니다.',
+        story:
+          '비활성화된 상태의 라디오 버튼입니다. 클릭 이벤트가 발생하지 않습니다.',
       },
     },
   },
