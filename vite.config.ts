@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://13.124.36.165:8080",
+        target: "https://danjitalk.duckdns.org",
         changeOrigin: true,
         secure: false,
       },
