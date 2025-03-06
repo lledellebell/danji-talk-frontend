@@ -1,7 +1,7 @@
-import styles from "./Avatar.module.scss";
+import styles from './Avatar.module.scss';
 
-type AvatarSize = "small" | "medium" | "large";
-type AvatarVariant = "circle" | "rounded" | "square";
+type AvatarSize = 'small' | 'medium' | 'large';
+type AvatarVariant = 'circle' | 'rounded' | 'square';
 
 interface AvatarProps {
   src?: string;
@@ -17,9 +17,9 @@ interface AvatarProps {
 
 const Avatar: React.FC<AvatarProps> = ({
   src,
-  alt = "Avatar",
-  size = "medium",
-  variant = "circle",
+  alt = 'Avatar',
+  size = 'medium',
+  variant = 'circle',
   disabled = false,
   onClick,
   ariaLabel,
@@ -27,7 +27,7 @@ const Avatar: React.FC<AvatarProps> = ({
   return (
     <button
       className={`${styles.avatar} ${styles[size]} ${styles[variant]} ${
-        disabled ? styles.disabled : ""
+        disabled ? styles.disabled : ''
       }`}
       onClick={!disabled ? onClick : undefined}
       disabled={disabled}

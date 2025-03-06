@@ -7,4 +7,4 @@ export const useAlertStore = () => {
   const closeAlert = () => setIsOpen(false);
 
   return { isOpen, openAlert, closeAlert };
-}; 
+};

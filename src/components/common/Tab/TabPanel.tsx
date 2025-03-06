@@ -17,7 +17,9 @@ const TabPanel: React.FC<TabPanelProps> = ({
 }) => {
   return (
     <div
-      className={isActive ? `${className} tab-wrapper__tabpanel--active` : className}
+      className={
+        isActive ? `${className} tab-wrapper__tabpanel--active` : className
+      }
       role={role}
       id={id}
       aria-labelledby={ariaLabelledby}

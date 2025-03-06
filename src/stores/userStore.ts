@@ -1,4 +1,4 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
 
 interface UserState {
   userId: string | null;
@@ -12,4 +12,4 @@ export const useUserStore = create<UserState>((set) => ({
   userEmail: null,
   setUserId: (id: string) => set({ userId: id }),
   setUserEmail: (email: string) => set({ userEmail: email }),
-})); 
+}));

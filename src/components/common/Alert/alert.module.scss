@@ -49,25 +49,25 @@ $button-hover-color: #6fa8dc;
   margin-bottom: 30px;
 }
 
-.alert__title{
+.alert__title {
   font-size: 15px;
   line-height: 22px;
 }
 
 .button {
-    border: none;
-    border-radius: $button-border-radius;
-    padding: $button-padding;
-    cursor: pointer;
-    transition: $button-transition;
-    height: 40px;
+  border: none;
+  border-radius: $button-border-radius;
+  padding: $button-padding;
+  cursor: pointer;
+  transition: $button-transition;
+  height: 40px;
 }
 
 .alert__confirm-button {
-    @extend .button;
-    width: 100%;
-    color: white;
-    background-color: $confirm-button-bg;
+  @extend .button;
+  width: 100%;
+  color: white;
+  background-color: $confirm-button-bg;
 
   &:hover {
     background-color: $button-hover-color;
@@ -83,4 +83,4 @@ $button-hover-color: #6fa8dc;
     opacity: 1;
     transform: translateY(0);
   }
-} 
+}

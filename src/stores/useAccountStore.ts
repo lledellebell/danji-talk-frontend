@@ -12,4 +12,4 @@ export const useAccountStore = create<AccountState>((set) => ({
   phone: '',
   setEmail: (email) => set({ email }),
   setPhone: (phone) => set({ phone }),
-}));        
+}));

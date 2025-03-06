@@ -105,7 +105,11 @@ $confirm-button-text-color: #fff;
     color: $confirm-button-text-color;
 
     &:hover {
-      background-color: mix(black, $confirm-button-bg, $hover-darken-percentage);
+      background-color: mix(
+        black,
+        $confirm-button-bg,
+        $hover-darken-percentage
+      );
     }
   }
 }

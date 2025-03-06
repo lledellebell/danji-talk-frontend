@@ -20,7 +20,8 @@ const TabWrapper: React.FC<TabWrapperProps> = ({ children, ariaLabel }) => {
   ) as React.ReactElement<TabProps>[];
 
   const tabPanels = allChildren.filter(
-    (child) => React.isValidElement<TabPanelProps>(child) && child.type === TabPanel
+    (child) =>
+      React.isValidElement<TabPanelProps>(child) && child.type === TabPanel
   ) as React.ReactElement<TabPanelProps>[];
 
   // 탭 개수만큼 Ref 배열 생성
@@ -74,7 +75,8 @@ const TabWrapper: React.FC<TabWrapperProps> = ({ children, ariaLabel }) => {
             }`,
             isActive: index === activeIndex,
             onClick: () => handleTabClick(index),
-            onKeyDown: (event: React.KeyboardEvent) => handleKeyDown(event, index),
+            onKeyDown: (event: React.KeyboardEvent) =>
+              handleKeyDown(event, index),
             index,
             innerRef: (el: HTMLButtonElement | null) => {
               tabRefs.current[index] = el;

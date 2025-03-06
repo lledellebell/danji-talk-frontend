@@ -27,9 +27,9 @@ export const useLogin = () => {
         setError('이메일이 올바르지 않습니다. 다시 확인해주세요.');
         return;
       }
-      
-      const user = users.find((u: User) => 
-        u.email === email && u.password === password
+
+      const user = users.find(
+        (u: User) => u.email === email && u.password === password
       );
 
       if (user) {
@@ -44,12 +44,13 @@ export const useLogin = () => {
     onError: (error) => {
       console.error('Login error:', error);
       if (axios.isAxiosError(error)) {
-        setError(!error.response 
-          ? '네트워크 연결을 확인해주세요.' 
-          : '로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
+        setError(
+          !error.response
+            ? '네트워크 연결을 확인해주세요.'
+            : '로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
         );
       }
-    }
+    },
   });
 
   const handleLogin = () => {

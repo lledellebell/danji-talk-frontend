@@ -41,7 +41,7 @@ const socialAccounts = [
 const SocialLoginList: React.FC = () => {
   const navigate = useNavigate();
   const handleKakaoLogin = useKakaoLogin();
-  
+
   const handleSocialLogin = (provider: string) => {
     if (provider === KAKAO_LOGIN_LABEL) {
       handleKakaoLogin();
@@ -50,8 +50,10 @@ const SocialLoginList: React.FC = () => {
   };
 
   useEffect(() => {
-    const hasKakaoLogin = socialAccounts.some(account => account.ariaLabel === KAKAO_LOGIN_LABEL);
-    
+    const hasKakaoLogin = socialAccounts.some(
+      (account) => account.ariaLabel === KAKAO_LOGIN_LABEL
+    );
+
     if (hasKakaoLogin && window.Kakao) {
       const appKey = import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY;
       console.log('Kakao App Key:', appKey);
@@ -65,11 +67,14 @@ const SocialLoginList: React.FC = () => {
   }, []);
 
   return (
-    <ul className={styles['social-login-list']} aria-label="소셜 로그인 버튼 목록">
-      {socialAccounts.map(account => (
+    <ul
+      className={styles['social-login-list']}
+      aria-label="소셜 로그인 버튼 목록"
+    >
+      {socialAccounts.map((account) => (
         <SocialLoginListItem key={account.id}>
-          <button 
-            className={styles['social-login-button']} 
+          <button
+            className={styles['social-login-button']}
             aria-label={account.ariaLabel}
             onClick={() => handleSocialLogin(account.ariaLabel)}
           >
@@ -81,4 +86,4 @@ const SocialLoginList: React.FC = () => {
   );
 };
 
-export default SocialLoginList; 
+export default SocialLoginList;

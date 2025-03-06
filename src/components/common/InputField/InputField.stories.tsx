@@ -1,139 +1,139 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { InputField } from "./InputField";
-import { useState } from "react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { InputField } from './InputField';
+import { useState } from 'react';
 
 const meta = {
-  title: "Components/Common/InputField",
+  title: 'Components/Common/InputField',
   component: InputField,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
-          "사용자 입력을 받는 기본 입력 필드 컴포넌트입니다. 다양한 상태와 유효성 검사를 지원합니다.",
+          '사용자 입력을 받는 기본 입력 필드 컴포넌트입니다. 다양한 상태와 유효성 검사를 지원합니다.',
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     label: {
-      description: "입력 필드의 레이블 텍스트",
-      control: "text",
+      description: '입력 필드의 레이블 텍스트',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "필수 값" },
+        type: { summary: 'string' },
+        defaultValue: { summary: '필수 값' },
       },
     },
     type: {
-      description: "입력 필드의 타입을 지정합니다",
-      control: "select",
-      options: ["text", "email", "password", "search"],
+      description: '입력 필드의 타입을 지정합니다',
+      control: 'select',
+      options: ['text', 'email', 'password', 'search'],
       table: {
-        type: { summary: "text | email | password | search" },
-        defaultValue: { summary: "text" },
+        type: { summary: 'text | email | password | search' },
+        defaultValue: { summary: 'text' },
       },
     },
     name: {
-      description: "입력 필드의 name 속성",
-      control: "text",
+      description: '입력 필드의 name 속성',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "필수 값" },
+        type: { summary: 'string' },
+        defaultValue: { summary: '필수 값' },
       },
     },
     value: {
-      description: "입력 필드의 현재 값",
-      control: "text",
+      description: '입력 필드의 현재 값',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "필수 값" },
+        type: { summary: 'string' },
+        defaultValue: { summary: '필수 값' },
       },
     },
     onChange: {
-      description: "값이 변경될 때 호출되는 콜백 함수",
+      description: '값이 변경될 때 호출되는 콜백 함수',
       table: {
-        type: { summary: "(e: React.ChangeEvent<HTMLInputElement>) => void" },
-        defaultValue: { summary: "필수 값" },
+        type: { summary: '(e: React.ChangeEvent<HTMLInputElement>) => void' },
+        defaultValue: { summary: '필수 값' },
       },
     },
     placeholder: {
-      description: "입력 필드의 플레이스홀더 텍스트",
-      control: "text",
+      description: '입력 필드의 플레이스홀더 텍스트',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "undefined" },
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
       },
     },
     error: {
-      description: "에러 메시지. 값이 있으면 에러 상태로 표시됩니다.",
-      control: "text",
+      description: '에러 메시지. 값이 있으면 에러 상태로 표시됩니다.',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "undefined" },
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
       },
     },
     helperText: {
-      description: "입력 필드 아래에 표시되는 도움말 텍스트",
-      control: "text",
+      description: '입력 필드 아래에 표시되는 도움말 텍스트',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "undefined" },
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
       },
     },
     disabled: {
-      description: "입력 필드의 비활성화 여부",
-      control: "boolean",
+      description: '입력 필드의 비활성화 여부',
+      control: 'boolean',
       table: {
-        type: { summary: "boolean" },
+        type: { summary: 'boolean' },
         defaultValue: { summary: false },
       },
     },
     required: {
-      description: "필수 입력 필드 여부",
-      control: "boolean",
+      description: '필수 입력 필드 여부',
+      control: 'boolean',
       table: {
-        type: { summary: "boolean" },
+        type: { summary: 'boolean' },
         defaultValue: { summary: false },
       },
     },
     showPasswordToggle: {
       description:
-        "비밀번호 표시/숨기기 토글 버튼 표시 여부 (type이 password인 경우에만 적용)",
-      control: "boolean",
+        '비밀번호 표시/숨기기 토글 버튼 표시 여부 (type이 password인 경우에만 적용)',
+      control: 'boolean',
       table: {
-        type: { summary: "boolean" },
+        type: { summary: 'boolean' },
         defaultValue: { summary: false },
       },
     },
     actionButton: {
-      description: "입력 필드 우측에 표시되는 액션 버튼 설정",
+      description: '입력 필드 우측에 표시되는 액션 버튼 설정',
       table: {
         type: {
           summary:
-            "{ label: string; onClick: () => void; disabled?: boolean; }",
+            '{ label: string; onClick: () => void; disabled?: boolean; }',
           detail: `{
   label: string; // 버튼에 표시될 텍스트
   onClick: () => void; // 클릭 시 실행될 함수
   disabled?: boolean; // 버튼 비활성화 여부
 }`,
         },
-        defaultValue: { summary: "undefined" },
+        defaultValue: { summary: 'undefined' },
       },
     },
     minLength: {
-      description: "입력값의 최소 길이",
-      control: "number",
+      description: '입력값의 최소 길이',
+      control: 'number',
       table: {
-        type: { summary: "number" },
-        defaultValue: { summary: "undefined" },
+        type: { summary: 'number' },
+        defaultValue: { summary: 'undefined' },
       },
     },
     pattern: {
-      description: "입력값의 정규식 패턴",
-      control: "text",
+      description: '입력값의 정규식 패턴',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "undefined" },
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
       },
     },
   },
@@ -145,7 +145,7 @@ type Story = StoryObj<typeof InputField>;
 const ControlledInput = (
   props: Partial<React.ComponentProps<typeof InputField>>
 ) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   return (
     <InputField
       label="이메일"
@@ -163,7 +163,7 @@ const ControlledInput = (
 const ControlledPasswordInput = (
   props: Partial<React.ComponentProps<typeof InputField>>
 ) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   return (
     <InputField
       label="비밀번호"
@@ -181,7 +181,7 @@ const ControlledPasswordInput = (
 const ControlledInputWithAction = (
   props: Partial<React.ComponentProps<typeof InputField>>
 ) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const [isChecking, setIsChecking] = useState(false);
 
   const handleCheck = () => {
@@ -201,7 +201,7 @@ const ControlledInputWithAction = (
       onChange={(e) => setValue(e.target.value)}
       placeholder="아이디를 입력하세요"
       actionButton={{
-        label: isChecking ? "확인 중..." : "중복확인",
+        label: isChecking ? '확인 중...' : '중복확인',
         onClick: handleCheck,
         disabled: isChecking || !value,
       }}
@@ -252,7 +252,7 @@ export const PasswordWithToggleAndError: Story = {
 export const WithActionButton: Story = {
   args: {
     disabled: false,
-    label: "이메일",
+    label: '이메일',
   },
 
   render: () => <ControlledInputWithAction />,

@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import styles from "./Header.module.scss";
-import back_icon from "../assets/back_icon.svg";
-import user_icon from "../assets/user_icon.svg";
+import { useNavigate } from 'react-router-dom';
+import styles from './Header.module.scss';
+import back_icon from '../assets/back_icon.svg';
+import user_icon from '../assets/user_icon.svg';
 
 interface HeaderProps {
   title: string;
-  type: "main" | "sub";
+  type: 'main' | 'sub';
   hasBackButton?: boolean;
   hasIcons?: boolean;
   iconCount?: number;
@@ -20,10 +20,14 @@ const SubHeader: React.FC<HeaderProps> = ({
   const navigate = useNavigate();
 
   return (
-    <header className={`${styles.header} ${styles["header--sub"]}`}>
+    <header className={`${styles.header} ${styles['header--sub']}`}>
       <nav aria-label="보조 헤더 내비게이션">
         {hasBackButton && (
-          <button onClick={() => navigate(-1)} className={styles["header__back-button"]} aria-label="뒤로가기">
+          <button
+            onClick={() => navigate(-1)}
+            className={styles['header__back-button']}
+            aria-label="뒤로가기"
+          >
             <img src={back_icon} alt="뒤로가기 아이콘" />
           </button>
         )}
@@ -51,10 +55,14 @@ const MainHeader: React.FC<HeaderProps> = ({
   const navigate = useNavigate();
 
   return (
-    <header className={`${styles.header} ${styles["header--main"]}`}>
+    <header className={`${styles.header} ${styles['header--main']}`}>
       <nav aria-label="메인 헤더 내비게이션">
         {hasBackButton && (
-          <button onClick={() => navigate(-1)} className={styles["header__back-button"]} aria-label="뒤로가기">
+          <button
+            onClick={() => navigate(-1)}
+            className={styles['header__back-button']}
+            aria-label="뒤로가기"
+          >
             <img src={back_icon} alt="뒤로가기 아이콘" />
           </button>
         )}
@@ -74,7 +82,7 @@ const MainHeader: React.FC<HeaderProps> = ({
 };
 
 const Header: React.FC<HeaderProps> = (props) => {
-  return props.type === "main" ? (
+  return props.type === 'main' ? (
     <MainHeader {...props} />
   ) : (
     <SubHeader {...props} />

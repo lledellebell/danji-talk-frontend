@@ -1,14 +1,14 @@
-import { useState, useRef, useEffect } from "react";
-import Tab from "../../components/common/Tab/Tab";
-import TabPanel from "../../components/common/Tab/TabPanel";
-import TabWrapper from "../../components/common/Tab/TabWrapper";
-import styles from "./FindAccount.module.scss";
-import InputField from "../../components/common/InputField/InputField";
-import Button from "../../components/common/Button/Button";
+import { useState, useRef, useEffect } from 'react';
+import Tab from '../../components/common/Tab/Tab';
+import TabPanel from '../../components/common/Tab/TabPanel';
+import TabWrapper from '../../components/common/Tab/TabWrapper';
+import styles from './FindAccount.module.scss';
+import InputField from '../../components/common/InputField/InputField';
+import Button from '../../components/common/Button/Button';
 import { useUsers } from '../../hooks/useUsers';
 import { useAccountStore } from '../../stores/useAccountStore';
-import Alert from "../../components/common/Alert/Alert";
-import { useNavigate } from "react-router-dom";
+import Alert from '../../components/common/Alert/Alert';
+import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../stores/userStore';
 
 interface User {
@@ -84,17 +84,21 @@ const FindAccount: React.FC = () => {
       const phoneMatch = data.users.find((user: User) => user.phone === phone);
 
       if (!phoneMatch) {
-        setAttemptCount(prev => prev + 1);
-        setAlertContent(attemptCount >= 4 
-          ? '입력하신 정보로 등록된 계정을 찾을 수 없습니다.<br><u>회원가입</u>을 진행하시겠습니까?' 
-          : '입력하신 정보로 등록된 계정을 찾을 수 없습니다.<br>정보를 다시 확인하고 입력해주세요.');
+        setAttemptCount((prev) => prev + 1);
+        setAlertContent(
+          attemptCount >= 4
+            ? '입력하신 정보로 등록된 계정을 찾을 수 없습니다.<br><u>회원가입</u>을 진행하시겠습니까?'
+            : '입력하신 정보로 등록된 계정을 찾을 수 없습니다.<br>정보를 다시 확인하고 입력해주세요.'
+        );
         setShowAlert(true);
         return;
       }
 
       if (phoneMatch.username !== username) {
-        setAttemptCount(prev => prev + 1);
-        setAlertContent('전화번호는 맞지만 이름이 틀렸습니다. 다시 확인해주세요.');
+        setAttemptCount((prev) => prev + 1);
+        setAlertContent(
+          '전화번호는 맞지만 이름이 틀렸습니다. 다시 확인해주세요.'
+        );
         setShowAlert(true);
         return;
       }
@@ -122,20 +126,20 @@ const FindAccount: React.FC = () => {
         <TabWrapper ariaLabel="이메일/비밀번호 찾기">
           <Tab
             label="이메일 찾기"
-            index={0} 
-            isActive={activeTab === 0} 
-            onClick={() => setActiveTab(0)} 
+            index={0}
+            isActive={activeTab === 0}
+            onClick={() => setActiveTab(0)}
           />
-          <Tab 
-            label="비밀번호 찾기" 
-            index={1} 
-            isActive={activeTab === 1} 
-            onClick={() => setActiveTab(1)} 
+          <Tab
+            label="비밀번호 찾기"
+            index={1}
+            isActive={activeTab === 1}
+            onClick={() => setActiveTab(1)}
           />
-          <TabPanel 
-            isActive={activeTab === 0} 
-            role="tabpanel" 
-            id="tabpanel-0" 
+          <TabPanel
+            isActive={activeTab === 0}
+            role="tabpanel"
+            id="tabpanel-0"
             ariaLabelledby="tab-0"
           >
             <div className={styles['find-account-form']}>
@@ -163,20 +167,22 @@ const FindAccount: React.FC = () => {
               />
 
               <Button
-                label={isLoading ? "로딩 중..." : "다음"}
+                label={isLoading ? '로딩 중...' : '다음'}
                 onClick={handleFindAccount}
                 className={[
                   styles['find-account-form__button'],
-                  username && phone ? styles['button-filled'] : styles['button-empty']
+                  username && phone
+                    ? styles['button-filled']
+                    : styles['button-empty'],
                 ]}
                 disabled={isLoading || !username || !phone}
               />
             </div>
           </TabPanel>
-          <TabPanel 
-            isActive={activeTab === 1} 
-            role="tabpanel" 
-            id="tabpanel-1" 
+          <TabPanel
+            isActive={activeTab === 1}
+            role="tabpanel"
+            id="tabpanel-1"
             ariaLabelledby="tab-1"
           >
             비밀번호 찾기
@@ -187,8 +193,10 @@ const FindAccount: React.FC = () => {
             alertTitle="안내"
             alertContent={alertContent}
             onClose={() => setShowAlert(false)}
-            onConfirm={attemptCount >= 5 ? () => navigate('/signup') : undefined}
-            confirmLabel={attemptCount >= 5 ? "회원 가입" : undefined}
+            onConfirm={
+              attemptCount >= 5 ? () => navigate('/signup') : undefined
+            }
+            confirmLabel={attemptCount >= 5 ? '회원 가입' : undefined}
           />
         )}
       </div>
@@ -196,4 +204,4 @@ const FindAccount: React.FC = () => {
   );
 };
 
-export default FindAccount; 
+export default FindAccount;

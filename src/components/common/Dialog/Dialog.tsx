@@ -11,7 +11,14 @@ export interface DialogProps {
   onConfirm?: () => void;
 }
 
-const Dialog: React.FC<DialogProps> = ({ title, content, onClose, cancelLabel = '취소', confirmLabel = '확인', onConfirm }) => {
+const Dialog: React.FC<DialogProps> = ({
+  title,
+  content,
+  onClose,
+  cancelLabel = '취소',
+  confirmLabel = '확인',
+  onConfirm,
+}) => {
   const { isOpen } = useDialogStore();
 
   if (!isOpen) return null;
@@ -30,10 +37,17 @@ const Dialog: React.FC<DialogProps> = ({ title, content, onClose, cancelLabel = 
         tabIndex={-1}
       >
         <div className={styles['dialog__header']}>
-          <h2 id="dialog__title" className={styles['dialog__title']} dangerouslySetInnerHTML={{ __html: title as string }} />
+          <h2
+            id="dialog__title"
+            className={styles['dialog__title']}
+            dangerouslySetInnerHTML={{ __html: title as string }}
+          />
         </div>
         <div className={styles['dialog__content']}>
-          <p className={styles['dialog__text']} dangerouslySetInnerHTML={{ __html: content as string }} />
+          <p
+            className={styles['dialog__text']}
+            dangerouslySetInnerHTML={{ __html: content as string }}
+          />
         </div>
         <div className={styles['dialog__footer']}>
           <button
@@ -56,4 +70,4 @@ const Dialog: React.FC<DialogProps> = ({ title, content, onClose, cancelLabel = 
   );
 };
 
-export default Dialog; 
+export default Dialog;

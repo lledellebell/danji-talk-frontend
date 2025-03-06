@@ -13,8 +13,14 @@ export default {
   tags: ['autodocs', 'UI', 'navigation'],
   argTypes: {
     label: { control: 'text', description: '탭의 라벨을 설정합니다.' },
-    isActive: { control: 'boolean', description: '탭이 활성화 상태인지 여부를 설정합니다.' },
-    onClick: { action: 'clicked', description: '탭 클릭 시 호출되는 함수입니다.' },
+    isActive: {
+      control: 'boolean',
+      description: '탭이 활성화 상태인지 여부를 설정합니다.',
+    },
+    onClick: {
+      action: 'clicked',
+      description: '탭 클릭 시 호출되는 함수입니다.',
+    },
     index: { control: 'number', description: '탭의 인덱스를 설정합니다.' },
   },
 } as Meta;

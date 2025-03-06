@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 import Cookies from 'js-cookie';
 import { kakaoLoginRequest } from '../api/api';
 import { useNavigate } from 'react-router-dom';
@@ -50,12 +50,13 @@ export const useAuthStore = create<AuthState>((set) => ({
   setEmail: (email) => set({ email }),
   setPassword: (password) => set({ password }),
   login: () => set({ isLoggedIn: true, error: null }),
-  logout: () => set({ 
-    isLoggedIn: false, 
-    email: '', 
-    password: '', 
-    error: null 
-  }),
+  logout: () =>
+    set({
+      isLoggedIn: false,
+      email: '',
+      password: '',
+      error: null,
+    }),
   setError: (error) => set({ error }),
   setToken: (token) => set({ token }),
   setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn }),
@@ -76,24 +77,27 @@ export const useKakaoLogin = () => {
       },
       fail: (error: Error) => {
         console.error('카카오 로그인 실패:', error);
-      }
+      },
     });
   };
 
   return handleKakaoLogin;
 };
 
-const handleKakaoLoginSuccess = async (authResponse: KakaoAuthResponse, navigate: ReturnType<typeof useNavigate>) => {
+const handleKakaoLoginSuccess = async (
+  authResponse: KakaoAuthResponse,
+  navigate: ReturnType<typeof useNavigate>
+) => {
   try {
     const loginResponse = await kakaoLoginRequest({
       code: authResponse.access_token,
-      redirectUri: window.location.origin
+      redirectUri: window.location.origin,
     });
 
-    Cookies.set("token", loginResponse.data.token, { path: "/" });
+    Cookies.set('token', loginResponse.data.token, { path: '/' });
     useAuthStore.getState().setToken(loginResponse.data.token);
     useAuthStore.getState().setIsLoggedIn(true);
-    
+
     navigate('/home');
   } catch (error) {
     if (error instanceof Error) {

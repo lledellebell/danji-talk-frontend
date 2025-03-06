@@ -1,10 +1,10 @@
-import { useId, useState } from "react";
-import styles from "./InputField.module.scss";
+import { useId, useState } from 'react';
+import styles from './InputField.module.scss';
 
 interface InputFieldProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   label: string;
-  type?: "text" | "email" | "password" | "search";
+  type?: 'text' | 'email' | 'password' | 'search';
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -70,7 +70,7 @@ const EyeOffIcon = () => (
 
 export const InputField = ({
   label,
-  type = "text",
+  type = 'text',
   name,
   value,
   onChange,
@@ -101,7 +101,7 @@ export const InputField = ({
       <div className={styles['input-field__wrapper']}>
         <input
           id={id}
-          type={type === "password" && showPassword ? "text" : type}
+          type={type === 'password' && showPassword ? 'text' : type}
           name={name}
           value={value}
           onChange={onChange}
@@ -111,13 +111,15 @@ export const InputField = ({
           minLength={minLength}
           pattern={pattern}
           className={`${styles['input-field__input']} ${error ? styles['input-field__input--error'] : ''} ${
-            (type === 'password' && showPasswordToggle) || actionButton ? styles['input-field__wrapper--with-button'] : ''
+            (type === 'password' && showPasswordToggle) || actionButton
+              ? styles['input-field__wrapper--with-button']
+              : ''
           }`}
           aria-invalid={!!error}
           aria-errormessage={error ? `${id}-error` : undefined}
           {...rest}
         />
-        {type === "password" && showPasswordToggle && (
+        {type === 'password' && showPasswordToggle && (
           <button
             type="button"
             onClick={handleTogglePassword}
@@ -139,18 +141,19 @@ export const InputField = ({
         )}
       </div>
       {error && (
-        <span id={`${id}-error`} className={styles['input-field__error-text']} role="alert">
+        <span
+          id={`${id}-error`}
+          className={styles['input-field__error-text']}
+          role="alert"
+        >
           {error}
         </span>
       )}
       {helperText && !error && (
-        <span className={styles['input-field__helper-text']}>
-          {helperText}
-        </span>
+        <span className={styles['input-field__helper-text']}>{helperText}</span>
       )}
     </div>
   );
 };
-
 
 export default InputField;
