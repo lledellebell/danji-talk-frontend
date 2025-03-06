@@ -21,8 +21,8 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.2",
     "sass": "^1.83.4",
-    "zustand": "^5.0.3",
-    "server": "json-server --watch ./src/server/db.json --port 3001"
+    "server": "json-server --watch ./src/server/db.json --port 3001",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",
@@ -34,6 +34,7 @@
     "@storybook/react": "^8.5.0",
     "@storybook/react-vite": "^8.5.0",
     "@storybook/test": "^8.5.0",
+    "@types/node": "^22.13.9",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
