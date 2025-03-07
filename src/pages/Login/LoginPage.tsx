@@ -381,7 +381,7 @@ export const LoginPage = () => {
   return (
     <>
       <Header title="로그인" type="sub" hasBackButton={true} />
-      <div className={styles['login-container']}>
+      <main className={styles['login-container']}>
         <div className={styles['login-form-wrapper']}>
           <div className={styles['logo-wrapper']}>{LogoIcon()}</div>
           <LoginForm
@@ -392,7 +392,7 @@ export const LoginPage = () => {
         <Divider />
           <SocialLoginList />
         </div>
-      </div>
+      </main>
     </>
   );
 };

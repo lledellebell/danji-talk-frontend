@@ -20,7 +20,7 @@ $font-size-medium: 14px;
 $font-size-small: 12px;
 
 // Spacing
-$spacing-large: 24px;
+$spacing-large: 20px;
 $spacing-medium: 16px;
 $spacing-small: 12px;
 $spacing-xsmall: 8px;
@@ -36,10 +36,11 @@ $spacing-xsmall: 8px;
   width: 100%;
   padding: $spacing-small;
   background-color: $bg-color;
-  color: $color-white;
+  color: #C0C0C0;
   border: none;
-  border-radius: 4px;
-  font-size: $font-size-large;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 24px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -73,14 +74,8 @@ $spacing-xsmall: 8px;
 }
 
 .login-form-wrapper {
-  padding: $spacing-large;
-  background-color: $color-white;
   width: 100%;
   margin: 0 auto;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    padding: $spacing-medium;
-  }
 }
 
 .login-title {
@@ -101,12 +96,12 @@ $spacing-xsmall: 8px;
   flex-direction: column;
 
   > *:not(:first-child) {
-    margin-top: $spacing-medium;
+    margin-top: 20px;
   }
 }
 
 .login-form__submit-button {
-  @include button-styles($color-primary, $color-primary-hover);
+  @include button-styles(#EAF1FF, rgb(212, 223, 245));
 
   @media screen and (max-width: $breakpoint-mobile) {
     font-size: $font-size-medium;
@@ -116,14 +111,9 @@ $spacing-xsmall: 8px;
 
 .login-form__error-message {
   color: $color-error;
-  font-size: $font-size-medium;
   text-align: center;
   @include apply-spacing($spacing-small, 0, 0, 0);
   animation: fadeIn 0.3s ease-in-out;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    font-size: $font-size-small;
-  }
 }
 
 @keyframes fadeIn {
@@ -151,7 +141,7 @@ $spacing-xsmall: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  @include apply-spacing($spacing-xsmall !important, 0, $spacing-large, 0);
+  @include apply-spacing($spacing-xsmall !important, 0, 54px, 0);
 
   .login-options__save-id-label {
     display: flex;
@@ -163,6 +153,10 @@ $spacing-xsmall: 8px;
       width: 20px;
       height: 20px;
     }
+
+    label{
+      color: #999;
+    }
   }
 
   .login-options__find-links {
@@ -171,7 +165,7 @@ $spacing-xsmall: 8px;
     @include apply-spacing(0, 0, 0, 0);
 
     a {
-      color: $color-text-secondary;
+      color: #999;
       text-decoration: none;
       font-size: $font-size-medium;
 
@@ -187,18 +181,22 @@ $spacing-xsmall: 8px;
 }
 
 .signup-link {
-  font-size: 14px;
+  height: 24px;
   text-align: center;
   font-weight: 400;
-  line-height: 26px;
-  text-decoration: none;
+  font-size: 14px;
+  line-height: 24px;
   color: $color-text-secondary;
-  @include apply-spacing($spacing-xsmall !important, 0, 0, 0);
+  @include apply-spacing(0 !important, 0, 0, 0);
 
   a {
-    color: $color-primary;
+    font: inherit;
+    color: #97BBFF;
     text-decoration: none;
-    font-weight: 400;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 18px;
+    margin-left: 4px;
 
     &:hover {
       text-decoration: underline;
