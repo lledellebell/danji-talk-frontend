@@ -5,7 +5,8 @@ import { useState } from "react";
 import { useDialogStore } from "../stores/dialogStore";
 import { useAlertStore } from "../stores/alertStore";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5173";
+// DuckDNS URL 사용
+const API_URL = import.meta.env.VITE_API_URL || "https://danjitalk.duckdns.org";
 
 export const useCheckEmail = () => {
   const { openDialog, closeDialog } = useDialogStore();
@@ -34,8 +35,14 @@ export const useCheckEmail = () => {
   const checkEmailMutation = useMutation({
     mutationFn: async () => {
       const response = await axios.post(
-        `${API_URL}/api/member/check-email-duplication`,
-        { email: email }
+        `/api/member/check-email-duplication`,
+        { email: email },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true
+        }
       );
       return response.data;
     },
@@ -67,9 +74,15 @@ export const useCheckEmail = () => {
   const sendAuthCode = useMutation({
     mutationFn: async () => {
       const response = await axios.post(
-        `${API_URL}/api/mail/certification-code/send`,
+        `api/mail/certification-code/send`,
         {
           mail: email,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true
         }
       );
       return response.data;
