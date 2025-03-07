@@ -11,7 +11,8 @@ const meta: Meta<typeof RadioButtonGroup> = {
     direction: {
       control: 'radio',
       options: ['horizontal', 'vertical'],
-      description: '라디오 버튼 그룹의 정렬 방향을 설정합니다. (수평 또는 수직)',
+      description:
+        '라디오 버튼 그룹의 정렬 방향을 설정합니다. (수평 또는 수직)',
     },
     selectedValue: {
       control: 'text',
@@ -26,7 +27,8 @@ const meta: Meta<typeof RadioButtonGroup> = {
   parameters: {
     docs: {
       description: {
-        component: 'RadioButtonGroup 컴포넌트는 여러 개의 라디오 버튼을 그룹화하여 사용자가 하나의 옵션을 선택할 수 있도록 합니다.',
+        component:
+          'RadioButtonGroup 컴포넌트는 여러 개의 라디오 버튼을 그룹화하여 사용자가 하나의 옵션을 선택할 수 있도록 합니다.',
       },
     },
   },
@@ -35,7 +37,6 @@ const meta: Meta<typeof RadioButtonGroup> = {
 export default meta;
 
 type Story = StoryObj<typeof RadioButtonGroup>;
-
 
 const RadioButtonGroupWrapper = (args: RadioButtonGroupProps) => {
   const [selectedValue, setSelectedValue] = useState(args.selectedValue);
@@ -69,7 +70,8 @@ export const Vertical: Story = {
   parameters: {
     docs: {
       description: {
-        story: '수직 정렬된 라디오 버튼 그룹입니다. 기본적으로 첫 번째 옵션이 선택된 상태로 렌더링됩니다.',
+        story:
+          '수직 정렬된 라디오 버튼 그룹입니다. 기본적으로 첫 번째 옵션이 선택된 상태로 렌더링됩니다.',
       },
     },
   },
@@ -90,7 +92,8 @@ export const Horizontal: Story = {
   parameters: {
     docs: {
       description: {
-        story: '수평 정렬된 라디오 버튼 그룹입니다. 두 번째 옵션이 선택된 상태로 렌더링됩니다.',
+        story:
+          '수평 정렬된 라디오 버튼 그룹입니다. 두 번째 옵션이 선택된 상태로 렌더링됩니다.',
       },
     },
   },
@@ -111,7 +114,8 @@ export const WithDisabledOption: Story = {
   parameters: {
     docs: {
       description: {
-        story: '비활성화된 옵션이 포함된 라디오 버튼 그룹입니다. 세 번째 옵션은 선택할 수 없습니다.',
+        story:
+          '비활성화된 옵션이 포함된 라디오 버튼 그룹입니다. 세 번째 옵션은 선택할 수 없습니다.',
       },
     },
   },

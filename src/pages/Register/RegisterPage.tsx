@@ -159,14 +159,14 @@ export const RegisterPage = () => {
   };
 
   return (
-    <div>
-      <Header title="회원가입" type="main" hasBackButton={true}></Header>
+    <>
+      <Header title="회원가입" type="sub" hasBackButton={true} />
       <RegisterForm
         onSubmit={handleSubmit}
         error={error}
         isLoading={isRegistering}
       />
       <SignupPrompt />
-    </div>
+    </>
   );
 };

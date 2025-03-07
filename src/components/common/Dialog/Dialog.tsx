@@ -9,15 +9,16 @@ export interface DialogProps {
   closeDialog: () => void;
   cancelLabel?: string;
   confirmLabel?: string;
+  onConfirm?: () => void;
 }
 
 const Dialog: React.FC<DialogProps> = ({
   title,
   content,
   onClose,
-  closeDialog,
-  cancelLabel = "취소",
-  confirmLabel = "확인",
+  cancelLabel = '취소',
+  confirmLabel = '확인',
+  onConfirm,
 }) => {
   const { isOpen } = useDialogStore();
 
@@ -25,36 +26,41 @@ const Dialog: React.FC<DialogProps> = ({
 
   return (
     <div
-      className={styles["dialog-overlay"]}
+      className={styles['dialog__overlay']}
       onClick={onClose}
       role="dialog"
-      aria-labelledby="dialog-title"
+      aria-labelledby="dialog__title"
       aria-modal="true"
     >
       <div
-        className={styles["dialog-container"]}
+        className={styles['dialog__container']}
         onClick={(e) => e.stopPropagation()}
         tabIndex={-1}
       >
-        <div className={styles["dialog-header"]}>
-          <h2 id="dialog-title" className={styles["dialog-title"]}>
-            {title}
-          </h2>
+        <div className={styles['dialog__header']}>
+          <h2
+            id="dialog__title"
+            className={styles['dialog__title']}
+            dangerouslySetInnerHTML={{ __html: title as string }}
+          />
         </div>
-        <div className={styles["dialog-content"]}>
-          <p className={styles["dialog-text"]}>{content}</p>
+        <div className={styles['dialog__content']}>
+          <p
+            className={styles['dialog__text']}
+            dangerouslySetInnerHTML={{ __html: content as string }}
+          />
         </div>
-        <div className={styles["dialog-footer"]}>
+        <div className={styles['dialog__footer']}>
           <button
             onClick={onClose}
-            className={styles["dialog-cancel-button"]}
+            className={styles['dialog__cancel-button']}
             aria-label={cancelLabel}
           >
             {cancelLabel}
           </button>
           <button
-            onClick={closeDialog}
-            className={styles["dialog-confirm-button"]}
+            onClick={onConfirm}
+            className={styles['dialog__confirm-button']}
             aria-label={confirmLabel}
           >
             {confirmLabel}

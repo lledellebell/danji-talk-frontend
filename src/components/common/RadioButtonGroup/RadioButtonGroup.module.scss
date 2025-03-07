@@ -1,12 +1,12 @@
 .radio-button-group {
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 5px;
 
-    &.horizontal {
-        flex-direction: row;
-    }
+  &.horizontal {
+    flex-direction: row;
+  }
 
-    &.vertical {
-        flex-direction: column;
-    }
+  &.vertical {
+    flex-direction: column;
+  }
 }

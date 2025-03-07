@@ -1,21 +1,32 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { LoginPage } from "./LoginPage";
+import type { Meta, StoryObj } from '@storybook/react';
+import { LoginPage } from './LoginPage';
 import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // 스토어 모킹
 const mockAuthStore = {
   username: 'testuser',
   password: 'password123',
-  error: null,
-  token: null,
-  setUsername: (username: string) => { mockAuthStore.username = username; },
-  setPassword: (password: string) => { mockAuthStore.password = password; },
-  setError: (error: string | null) => { mockAuthStore.error = error; },
-  setToken: (token: string | null) => { mockAuthStore.token = token; },
+  error: null as string | null,
+  token: null as string | null,
+  setUsername: (username: string) => {
+    mockAuthStore.username = username;
+  },
+  setPassword: (password: string) => {
+    mockAuthStore.password = password;
+  },
+  setError: (error: string | null) => {
+    mockAuthStore.error = error;
+  },
+  setToken: (token: string | null) => {
+    mockAuthStore.token = token;
+  },
 };
 
+const queryClient = new QueryClient();
+
 const meta = {
-  title: "Pages/Login",
+  title: 'Pages/Login',
   component: LoginPage,
   parameters: {
     layout: 'fullscreen',
@@ -27,9 +38,11 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <BrowserRouter>
-        <Story />
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Story />
+        </BrowserRouter>
+      </QueryClientProvider>
     ),
   ],
   tags: ['autodocs'],
@@ -116,4 +129,4 @@ export const LoginSuccess: Story = {
       token: 'valid-token',
     },
   },
-}; 
+};

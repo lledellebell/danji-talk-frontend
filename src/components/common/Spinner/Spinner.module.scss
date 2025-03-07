@@ -1,52 +1,52 @@
 .spinner {
-    border: 5px solid rgba(0, 0, 0, 0.1);
-    border-top-style: solid;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-top-style: solid;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
 
-    100% {
-        transform: rotate(360deg);
-    }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* 크기별 스타일 */
 .size-small {
-    width: 30px;
-    height: 30px;
-    border-width: 3px;
+  width: 30px;
+  height: 30px;
+  border-width: 3px;
 }
 
 .size-medium {
-    width: 50px;
-    height: 50px;
-    border-width: 5px;
+  width: 50px;
+  height: 50px;
+  border-width: 5px;
 }
 
 .size-large {
-    width: 80px;
-    height: 80px;
-    border-width: 7px;
+  width: 80px;
+  height: 80px;
+  border-width: 7px;
 }
 
 /* 색상별 스타일 */
 .color-primary {
-    border-top-color: #3498db;
+  border-top-color: #3498db;
 }
 
 .color-secondary {
-    border-top-color: #95a5a6;
+  border-top-color: #95a5a6;
 }
 
 .color-success {
-    border-top-color: #2ecc71;
+  border-top-color: #2ecc71;
 }
 
 .color-danger {
-    border-top-color: #e74c3c;
+  border-top-color: #e74c3c;
 }

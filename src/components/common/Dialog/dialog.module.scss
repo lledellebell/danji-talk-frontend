@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // 변수 정의
 $dialog-background-color: #fff;
 $dialog-border-radius: 8px;
@@ -8,96 +10,104 @@ $button-transition: background-color 0.3s;
 $cancel-button-bg: #ebf1ff;
 $confirm-button-bg: #97bbff;
 $hover-darken-percentage: 10%;
+$overlay-bg-color: rgba(0, 0, 0, 0.7);
+$button-height: 40px;
 
 // 폰트 스타일 변수
 $font-family: 'Arial, sans-serif';
 $font-size: 16px;
 $font-color: #333;
 
-.dialog-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+$cancel-button-text-color: #333;
+$confirm-button-text-color: #fff;
+
+// 미디어 쿼리 추가
+@media (max-width: 600px) {
+  .dialog__container {
+    width: 90%;
+    padding: 16px;
+  }
+
+  .dialog__button {
+    padding: 12px;
+  }
 }
 
-.dialog-container {
-  background-color: $dialog-background-color;
-  border-radius: $dialog-border-radius;
-  width: 400px;
-  max-width: 90%;
-  box-shadow: $dialog-box-shadow;
-  overflow: hidden;
-  font-family: $font-family;
-  font-size: $font-size;
-  color: $font-color;
-  padding: 20px;
-}
+.dialog {
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $overlay-bg-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
 
-.dialog-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  &__container {
+    background-color: $dialog-background-color;
+    border-radius: $dialog-border-radius;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: $dialog-box-shadow;
+    overflow: hidden;
+    font-family: $font-family;
+    font-size: $font-size;
+    color: $font-color;
+    padding: 20px;
+  }
 
-.dialog-content {
-}
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.dialog-text,
-.dialog-title {
-  width: 100%;
-  margin-top: 0;
-  text-align: center;
-  margin-bottom: 20px;
-}
+  &__text,
+  &__title {
+    width: 100%;
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
-.dialog-footer {
-  text-align: right;
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
+  &__footer {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
 
-  button {
+  &__button {
     width: 100%;
     border: none;
     border-radius: $button-border-radius;
     padding: $button-padding;
     cursor: pointer;
     transition: $button-transition;
+    height: $button-height;
   }
-}
 
-.button {
-  border: none;
-  border-radius: $button-border-radius;
-  padding: $button-padding;
-  cursor: pointer;
-  transition: $button-transition;
-  height: 40px;
-}
+  &__cancel-button {
+    @extend .dialog__button;
+    background-color: $cancel-button-bg;
+    color: $cancel-button-text-color;
 
-.dialog-cancel-button {
-  @extend .button;
-  color: $font-color;
-  background-color: $cancel-button-bg;
-
-  &:hover {
-    background-color: darken($cancel-button-bg, $hover-darken-percentage);
+    &:hover {
+      background-color: color.mix(black, $cancel-button-bg, $hover-darken-percentage);
+    }
   }
-}
 
-.dialog-confirm-button {
-  @extend .button;
-  color: white;
-  background-color: $confirm-button-bg;
+  &__confirm-button {
+    @extend .dialog__button;
+    background-color: $confirm-button-bg;
+    color: $confirm-button-text-color;
 
-  &:hover {
-    background-color: darken($confirm-button-bg, $hover-darken-percentage);
+    &:hover {
+      background-color: color.mix(black, $confirm-button-bg, $hover-darken-percentage);
+    }
   }
 }

@@ -4,7 +4,9 @@ interface SocialLoginListItemProps {
   children: React.ReactNode;
 }
 
-const SocialLoginListItem: React.FC<SocialLoginListItemProps> = ({ children }) => {
+const SocialLoginListItem: React.FC<SocialLoginListItemProps> = ({
+  children,
+}) => {
   return (
     <li className={styles.listItem} role="presentation">
       {children}
@@ -12,4 +14,4 @@ const SocialLoginListItem: React.FC<SocialLoginListItemProps> = ({ children }) =
   );
 };
 
-export default SocialLoginListItem; 
+export default SocialLoginListItem;
