@@ -119,7 +119,7 @@ $spacing-xsmall: 4px;
     }
 
     &:focus {
-      border-bottom-color: $color-primary;
+      border-bottom-color: #97BBFF;
       outline: none;
 
       & + .input-field__password-toggle {
@@ -128,8 +128,9 @@ $spacing-xsmall: 4px;
       }
 
       & + .input-field__action-button {
-        color: $color-primary;
-        border-color: $color-primary;
+        color: #fff;
+        border-color: #97BBFF;
+        background-color: #97BBFF;
       }
     }
 
@@ -142,8 +143,9 @@ $spacing-xsmall: 4px;
       }
 
       & + .input-field__action-button {
-        color: $color-text-secondary;
-        border-color: $color-text-secondary;
+        color: #fff;
+        border-color: #97BBFF;
+        background-color: #97BBFF;
       }
     }
 
@@ -173,8 +175,9 @@ $spacing-xsmall: 4px;
       }
 
       & + .input-field__action-button {
-        color: $color-text-secondary;
-        border-color: $color-text-secondary;
+        color: #fff;
+        border-color: #97BBFF;
+        background-color: #97BBFF;
       }
     }
   }
@@ -195,7 +198,6 @@ $spacing-xsmall: 4px;
 
     &:hover:not(:disabled) {
       color: $color-text;
-      transform: scale(1.05);
     }
 
     &:focus {
@@ -204,7 +206,6 @@ $spacing-xsmall: 4px;
     }
 
     &:active {
-      transform: scale(0.95);
     }
 
     &--error {
@@ -231,29 +232,40 @@ $spacing-xsmall: 4px;
   }
 
   &__action-button {
+    position: relative;
     background: none;
     border: none;
-    padding: $spacing-medium $spacing-large;
+    padding: 11px 16px;
     cursor: pointer;
-    color: $color-primary;
-    font-size: $font-size-medium;
+    color: #C0C0C0;
+    font-size: 14px;
+    line-height: 20px;
     font-weight: 500;
     white-space: nowrap;
+    border-radius: 6px;
     transition: all 0.2s ease-in-out;
+    background-color: #EAF1FF;
+    margin-left: 10px;
 
-    @media screen and (max-width: $breakpoint-mobile) {
-      padding: $spacing-small $spacing-medium;
-      font-size: $font-size-small;
-      right: $spacing-medium;
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      height: 1px;
+      width: 100%;
+      background-color: #fff;
     }
 
     &:hover:not(:disabled) {
-      color: $color-primary-hover;
+      color: #d4dff5;
     }
 
     &:focus {
       outline: none;
-      color: $color-primary-hover;
+      color: #d4dff5;
     }
 
     &:disabled {

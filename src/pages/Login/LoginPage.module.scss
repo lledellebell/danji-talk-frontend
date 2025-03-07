@@ -101,7 +101,7 @@ $spacing-xsmall: 8px;
 }
 
 .login-form__submit-button {
-  @include button-styles(#EAF1FF, rgb(212, 223, 245));
+  @include button-styles(#EAF1FF, #d4dff5);
 
   @media screen and (max-width: $breakpoint-mobile) {
     font-size: $font-size-medium;
