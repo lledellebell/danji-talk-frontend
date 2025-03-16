@@ -11,17 +11,14 @@ $color-error-hover: #b71515;
 $color-disabled: #999;
 $color-border: #e0e0e0;
 $color-border-hover: #999;
+$color-label: #111;
 $color-text: #333;
 $color-text-secondary: #666;
 
 // Font sizes
 $font-size-large: 16px;
-$font-size-medium: 14px;
+$font-size-medium: 15px;
 $font-size-small: 12px;
-
-// Widths
-$input-max-width: 400px;
-$input-max-width-mobile: 280px;
 
 // Spacing
 $spacing-large: 12px;
@@ -32,260 +29,280 @@ $spacing-xsmall: 4px;
 .input-field {
   display: flex;
   flex-direction: column;
-  gap: $spacing-medium;
-  width: 100%;
-  max-width: $input-max-width;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    max-width: $input-max-width-mobile;
-  }
-}
-
-.label {
-  font-size: $font-size-medium;
-  font-weight: 600;
-  color: $color-text;
-  margin-bottom: 2px;
-  transform-origin: left;
-  transition: transform 0.2s ease-in-out;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    font-size: $font-size-small;
-  }
-
-  .error & {
-    color: $color-error;
-  }
-}
-
-.input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 2px;
-    background-color: $color-primary;
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-  }
-
-  &:focus-within::after {
-    transform: scaleX(1);
-  }
-
-  .error &::after {
-    background-color: $color-error;
-  }
-}
-
-.input {
-  padding: $spacing-medium $spacing-xsmall;
-  font-size: $font-size-large;
-  border: none;
-  border-bottom: 2px solid $color-border;
-  color: $color-text;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  background-color: transparent;
   width: 100%;
 
-  @media screen and (max-width: $breakpoint-mobile) {
-    font-size: $font-size-medium;
-    padding: $spacing-small $spacing-xsmall;
-  }
-
-  // &.with-button {
-  //   padding-right: 72px;
-
-  //   @media screen and (max-width: $breakpoint-mobile) {
-  //     padding-right: 64px;
-  //   }
-  // }
-
-  &.error {
-    color: $color-error;
-    border-bottom-color: $color-error;
-
-    &:hover {
-      border-bottom-color: $color-error-hover;
-    }
-
-    &:focus {
-      border-bottom-color: $color-error;
-
-      & + .password-toggle {
-        color: $color-error;
-      }
-
-      & + .action-button {
-        color: $color-error;
-      }
-    }
-  }
-
-  &:focus {
-    border-bottom-color: $color-primary;
-    outline: none;
-
-    & + .password-toggle {
-      color: $color-primary;
-    }
-
-    & + .action-button {
-      color: $color-primary;
-    }
-  }
-
-  &:hover:not(:disabled) {
-    border-bottom-color: $color-border-hover;
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    border-bottom-style: solid;
-    opacity: 0.7;
-    color: $color-disabled;
-  }
-
-  &::placeholder {
-    color: $color-text-secondary;
-  }
-}
-
-.password-toggle {
-  position: absolute;
-  right: $spacing-large;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  padding: $spacing-medium;
-  cursor: pointer;
-  color: $color-text-secondary;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease-in-out;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    padding: $spacing-small;
-    right: $spacing-medium;
-  }
-
-  &:hover:not(:disabled) {
-    color: $color-text;
-    transform: translateY(-50%) scale(1.05);
-  }
-
-  &:focus {
-    outline: none;
-    color: $color-primary;
-  }
-
-  &:active {
-    transform: translateY(-50%) scale(0.95);
-  }
-
-  .error & {
-    color: $color-error;
-
-    &:hover:not(:disabled) {
-      color: $color-error-hover;
-    }
-
-    &:focus {
-      color: $color-error;
-    }
-  }
-
-  svg {
-    width: 20px;
-    height: 20px;
+  &__label {
+    font-size: $font-size-large;
+    line-height: 24px;
+    font-weight: 600;
+    color: $color-label;
+    transform-origin: left;
+    transition: transform 0.2s ease-in-out;
 
     @media screen and (max-width: $breakpoint-mobile) {
-      width: 16px;
-      height: 16px;
-    }
-  }
-}
-
-.action-button {
-  // position: absolute;
-  // right: $spacing-large;
-  // top: 50%;
-  // transform: translateY(-50%);
-  // color: $color-primary;
-  background: none;
-  border: none;
-  padding: $spacing-medium $spacing-large;
-  cursor: pointer;
-  font-size: $font-size-medium;
-  font-weight: 500;
-  white-space: nowrap;
-  transition: all 0.2s ease-in-out;
-  background: #97bbff;
-  color: #fff;
-  border-radius: 6px;
-  margin-left: 10px;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    padding: $spacing-small $spacing-medium;
-    font-size: $font-size-small;
-    right: $spacing-medium;
-  }
-
-  &:hover:not(:disabled) {
-    color: $color-primary-hover;
-  }
-
-  &:focus {
-    outline: none;
-    color: $color-primary-hover;
-  }
-
-  &:disabled {
-    // color: $color-disabled;
-    background: #eaf1ff;
-    color: #c0c0c0;
-    cursor: not-allowed;
-  }
-
-  .error & {
-    color: $color-error;
-
-    &:hover:not(:disabled) {
-      color: $color-error-hover;
+      font-size: $font-size-small;
     }
 
-    &:focus {
+    &--error {
       color: $color-error;
     }
   }
-}
 
-.error-text {
-  color: $color-error;
-  font-size: $font-size-medium;
-  animation: slideIn 0.3s ease-out;
+  &__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
 
-  @media screen and (max-width: $breakpoint-mobile) {
-    font-size: $font-size-small;
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      height: 1px;
+      width: 100%;
+      background-color: $color-primary;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    &:focus-within::after {
+      transform: scaleX(1);
+    }
+
+    &--error::after {
+      background-color: $color-error;
+    }
   }
-}
 
-.helper-text {
-  font-size: $font-size-medium;
-  color: $color-text-secondary;
-  animation: fadeIn 0.3s ease-out;
+  &__input {
+    padding: 15px 0;
+    font-size: 15px;
+    line-height: 22px;
+    border: none;
+    border-bottom: 1px solid #1E2533;
+    color: #767676;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: transparent;
+    width: 100%;
 
-  @media screen and (max-width: $breakpoint-mobile) {
-    font-size: $font-size-small;
+    &--with-button {
+      padding-right: 72px;
+
+      @media screen and (max-width: $breakpoint-mobile) {
+        padding-right: 64px;
+      }
+    }
+
+    &--error {
+      color: $color-error;
+      border-bottom-color: $color-error;
+
+      &:hover {
+        border-bottom-color: $color-error-hover;
+      }
+
+      &:focus {
+        border-bottom-color: $color-error;
+
+        & + .input-field__password-toggle {
+          color: $color-error;
+          border-color: $color-error;
+        }
+
+        & + .input-field__action-button {
+          color: $color-error;
+          border-color: $color-error;
+        }
+      }
+    }
+
+    &:focus {
+      border-bottom-color: #97BBFF;
+      outline: none;
+
+      & + .input-field__password-toggle {
+        color: $color-primary;
+        border-color: $color-primary;
+      }
+
+      & + .input-field__action-button {
+        color: #fff;
+        border-color: #97BBFF;
+        background-color: #97BBFF;
+      }
+    }
+
+    &:hover:not(:disabled) {
+      border-bottom-color: $color-border-hover;
+
+      & + .input-field__password-toggle {
+        color: $color-text-secondary;
+        border-color: $color-text-secondary;
+      }
+
+      & + .input-field__action-button {
+        color: #fff;
+        border-color: #97BBFF;
+        background-color: #97BBFF;
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      border-bottom-style: solid;
+      opacity: 0.7;
+      color: $color-disabled;
+
+      & + .input-field__password-toggle {
+        color: $color-text-secondary;
+        border-color: $color-text-secondary;
+      }
+
+      & + .input-field__action-button {
+        color: $color-text-secondary;
+        border-color: $color-text-secondary;
+      }
+    }
+
+    &::placeholder {
+      color: $color-text-secondary;
+
+      & + .input-field__password-toggle {
+        color: $color-text-secondary;
+        border-color: $color-text-secondary;
+      }
+
+      & + .input-field__action-button {
+        color: #fff;
+        border-color: #97BBFF;
+        background-color: #97BBFF;
+      }
+    }
+  }
+
+  &__password-toggle {
+    position: relative;
+    background: none;
+    margin-top: 14px;
+    border: none;
+    padding: 9px;
+    cursor: pointer;
+    color: $color-text-secondary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    border-bottom: 1px solid #1E2533;
+
+    &:hover:not(:disabled) {
+      color: $color-text;
+    }
+
+    &:focus {
+      outline: none;
+      color: $color-primary;
+    }
+
+    &:active {
+    }
+
+    &--error {
+      color: $color-error;
+
+      &:hover:not(:disabled) {
+        color: $color-error-hover;
+      }
+
+      &:focus {
+        color: $color-error;
+      }
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+
+      @media screen and (max-width: $breakpoint-mobile) {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  &__action-button {
+    position: relative;
+    background: none;
+    border: none;
+    padding: 11px 16px;
+    cursor: pointer;
+    color: #C0C0C0;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    white-space: nowrap;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+    background-color: #EAF1FF;
+    margin-left: 10px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      height: 1px;
+      width: 100%;
+      background-color: #fff;
+    }
+
+    &:hover:not(:disabled) {
+      color: #d4dff5;
+    }
+
+    &:focus {
+      outline: none;
+      color: #d4dff5;
+    }
+
+    &:disabled {
+      color: $color-disabled;
+      cursor: not-allowed;
+    }
+
+    &--error {
+      color: $color-error;
+
+      &:hover:not(:disabled) {
+        color: $color-error-hover;
+      }
+
+      &:focus {
+        color: $color-error;
+      }
+    }
+  }
+
+  &__error-text {
+    margin-top: 4px;
+    color: $color-error;
+    font-size: 15px;
+    line-height: 22px;
+    font-size: $font-size-medium;
+    animation: slideIn 0.3s ease-out;
+  }
+
+  &__helper-text {
+    font-size: $font-size-medium;
+    color: $color-text-secondary;
+    animation: fadeIn 0.3s ease-out;
+
+    @media screen and (max-width: $breakpoint-mobile) {
+      font-size: $font-size-small;
+    }
   }
 }
 

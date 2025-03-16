@@ -20,7 +20,7 @@ $font-size-medium: 14px;
 $font-size-small: 12px;
 
 // Spacing
-$spacing-large: 24px;
+$spacing-large: 20px;
 $spacing-medium: 16px;
 $spacing-small: 12px;
 $spacing-xsmall: 8px;
@@ -36,10 +36,11 @@ $spacing-xsmall: 8px;
   width: 100%;
   padding: $spacing-small;
   background-color: $bg-color;
-  color: $color-white;
+  color: #C0C0C0;
   border: none;
-  border-radius: 4px;
-  font-size: $font-size-large;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 24px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -63,7 +64,9 @@ $spacing-xsmall: 8px;
 }
 
 .login-container {
-  @include flex-center;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   flex-direction: column;
   min-height: 100vh;
   padding: $spacing-large;
@@ -72,14 +75,7 @@ $spacing-xsmall: 8px;
 
 .login-form-wrapper {
   width: 100%;
-  max-width: 400px;
-  padding: $spacing-large;
-  background-color: $color-white;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    padding: $spacing-medium;
-    max-width: 280px;
-  }
+  margin: 0 auto;
 }
 
 .login-title {
@@ -98,14 +94,14 @@ $spacing-xsmall: 8px;
 .login-form {
   display: flex;
   flex-direction: column;
-  
+
   > *:not(:first-child) {
-    margin-top: $spacing-medium;
+    margin-top: 20px;
   }
 }
 
-.submit-button {
-  @include button-styles($color-primary, $color-primary-hover);
+.login-form__submit-button {
+  @include button-styles(#EAF1FF, #d4dff5);
 
   @media screen and (max-width: $breakpoint-mobile) {
     font-size: $font-size-medium;
@@ -113,16 +109,11 @@ $spacing-xsmall: 8px;
   }
 }
 
-.error-message {
+.login-form__error-message {
   color: $color-error;
-  font-size: $font-size-medium;
   text-align: center;
   @include apply-spacing($spacing-small, 0, 0, 0);
   animation: fadeIn 0.3s ease-in-out;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    font-size: $font-size-small;
-  }
 }
 
 @keyframes fadeIn {
@@ -150,59 +141,67 @@ $spacing-xsmall: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  @include apply-spacing($spacing-xsmall !important, 0, $spacing-large, 0);
-  
-  .save-id-label {
+  @include apply-spacing($spacing-xsmall !important, 0, 54px, 0);
+
+  .login-options__save-id-label {
     display: flex;
     align-items: center;
     gap: $spacing-xsmall;
     cursor: pointer;
-    
-    input[type="checkbox"] {
+
+    input[type='checkbox'] {
       width: 20px;
       height: 20px;
     }
+
+    label{
+      color: #999;
+    }
   }
-  
-  .find-links {
+
+  .login-options__find-links {
     display: flex;
     gap: $spacing-xsmall;
     @include apply-spacing(0, 0, 0, 0);
-    
+
     a {
-      color: #666;
+      color: #999;
       text-decoration: none;
       font-size: $font-size-medium;
-      
+
       &:hover {
         text-decoration: underline;
       }
     }
-    
-    .divider {
-      color: #ccc;
+
+    .login-options__divider {
+      color: $color-border;
     }
   }
-} 
+}
 
 .signup-link {
-    font-size: 14px;
-    text-align: center;
-    font-weight: 400;
-    line-height: 26px;
-    text-decoration: none;
-    color: #666;
-    @include apply-spacing($spacing-xsmall !important, 0, 0, 0);
-    
-    a {
-        color: $color-primary;
-        text-decoration: none;
-        font-weight: 400;
+  height: 24px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: $color-text-secondary;
+  @include apply-spacing(0 !important, 0, 0, 0);
 
-        &:hover {
-            text-decoration: underline;
-        }
+  a {
+    font: inherit;
+    color: #97BBFF;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 18px;
+    margin-left: 4px;
+
+    &:hover {
+      text-decoration: underline;
     }
+  }
 }
 
 .divider {
@@ -211,28 +210,40 @@ $spacing-xsmall: 8px;
   margin: 32px 0 20px;
 }
 
-.divider-line {
+.divider__line {
   flex-grow: 1;
   height: 1px;
-  background-color: #ccc;
+  background-color: $color-border;
 }
 
-.divider-text {
+.divider__text {
   margin: 0 10px;
-  color: #999;
+  color: $color-text-secondary;
 }
 
-
-@mixin svg-transition($stroke-dashoffset, $stroke-dasharray, $fill-color, $delay, $fill-delay) {
+@mixin svg-transition(
+  $stroke-dashoffset,
+  $stroke-dasharray,
+  $fill-color,
+  $delay,
+  $fill-delay
+) {
   stroke-dashoffset: $stroke-dashoffset;
   stroke-dasharray: $stroke-dasharray;
   fill: $fill-color;
-  transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) $delay,
-              fill 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) $fill-delay;
+  transition:
+    stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) $delay,
+    fill 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) $fill-delay;
 }
 
 svg .svg-elem-1 {
-  @include svg-transition(550.1838989257812px, 550.1838989257812px, transparent, 0s, 0.8s);
+  @include svg-transition(
+    550.1838989257812px,
+    550.1838989257812px,
+    transparent,
+    0s,
+    0.8s
+  );
 }
 
 svg.active .svg-elem-1 {
@@ -240,7 +251,13 @@ svg.active .svg-elem-1 {
 }
 
 svg .svg-elem-2 {
-  @include svg-transition(626.6798095703125px, 626.6798095703125px, transparent, 0.12s, 0.9s);
+  @include svg-transition(
+    626.6798095703125px,
+    626.6798095703125px,
+    transparent,
+    0.12s,
+    0.9s
+  );
 }
 
 svg.active .svg-elem-2 {
@@ -249,7 +266,13 @@ svg.active .svg-elem-2 {
 }
 
 svg .svg-elem-3 {
-  @include svg-transition(1390.3553466796875px, 1390.3553466796875px, transparent, 0.24s, 1s);
+  @include svg-transition(
+    1390.3553466796875px,
+    1390.3553466796875px,
+    transparent,
+    0.24s,
+    1s
+  );
 }
 
 svg.active .svg-elem-3 {
@@ -258,7 +281,13 @@ svg.active .svg-elem-3 {
 }
 
 svg .svg-elem-4 {
-  @include svg-transition(514.2296142578125px, 514.2296142578125px, transparent, 0.36s, 1.1s);
+  @include svg-transition(
+    514.2296142578125px,
+    514.2296142578125px,
+    transparent,
+    0.36s,
+    1.1s
+  );
 }
 
 svg.active .svg-elem-4 {
@@ -267,7 +296,13 @@ svg.active .svg-elem-4 {
 }
 
 svg .svg-elem-5 {
-  @include svg-transition(22.936912536621094px, 22.936912536621094px, transparent, 0.48s, 1.2s);
+  @include svg-transition(
+    22.936912536621094px,
+    22.936912536621094px,
+    transparent,
+    0.48s,
+    1.2s
+  );
 }
 
 svg.active .svg-elem-5 {

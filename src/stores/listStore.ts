@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface ListItem {
   id: number;
@@ -21,4 +21,4 @@ export const useListStore = create<ListState>((set) => ({
     set((state) => ({
       items: state.items.filter((item) => item.id !== id),
     })),
-})); 
+}));

@@ -1,6 +1,49 @@
 {
-    "users": [
-      { "id": 1, "username": "testuser", "password": "Test@123456", "email": "test@example.com" },
-      { "id": 2, "username": "john_doe", "password": "securepass", "email": "john@example.com" }
-    ]
+  "users": [
+    {
+      "id": "1059",
+      "username": "홍길동",
+      "password": "Test@123456!",
+      "email": "testuser1@example.com",
+      "phone": "01012345671",
+      "code": "Q6O51CeEin-llX14EktG6JEfknWj5E92AAAAAQoqJQ8AAAGVOezhQ_sTCyemC-i_",
+      "redirectUri": "http://localhost:5173"
+    },
+    {
+      "id": "5294",
+      "username": "홍우진",
+      "password": "Test@123456!",
+      "email": "testuser2@example.com",
+      "phone": "01012345672",
+      "code": "w_ChrmsIyDZAPAHL1zNyhemNj5VjhOGVAAAAAQoqJQ8AAAGVOezsYPsTCyemC-i_",
+      "redirectUri": "http://localhost:5173"
+    },
+    {
+      "id": "1056",
+      "username": "홍길동",
+      "password": "Test@1234512316!",
+      "email": "testuser1@example.com",
+      "phone": "01012345631",
+      "code": "Q6O51CeEin-llX14EktG6JEfknWj5E92AAAAAQoqJQ8AAAGVOezhQ_sTCyemC-i_",
+      "redirectUri": "http://localhost:5173"
+    },
+    {
+      "id": "d732",
+      "username": "홍지",
+      "password": "Test@123456!",
+      "email": "testuser3@example.com",
+      "phone": "01012345673",
+      "code": "hh9C9s_mouX78WNiRbMyjmg5tpzi5KUfAAAAAQorDR4AAAGVPENpivsTCyemC-i_",
+      "redirectUri": "http://localhost:5173"
+    },
+    {
+      "id": "1059",
+      "username": "HongGilDong",
+      "password": "Test@123456!",
+      "email": "testuser1@example.com",
+      "phone": "01012345679",
+      "code": "Q6O51CeEin-llX14EktG6JEfknWj5E92AAAAAQoqJQ8AAAGVOezhQ_sTCyemC-i_",
+      "redirectUri": "http://localhost:5173"
+    }
+  ]
 }

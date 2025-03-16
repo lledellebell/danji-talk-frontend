@@ -46,4 +46,4 @@ export const Default: Story = {
     confirmLabel: '확인',
   },
   render: (args) => <AlertStory {...args} />,
-}; 
+};

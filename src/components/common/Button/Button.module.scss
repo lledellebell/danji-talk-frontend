@@ -22,7 +22,9 @@ $large-padding: 15px 30px;
   border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 
   &:focus {
     outline: 2px solid $primary-color;

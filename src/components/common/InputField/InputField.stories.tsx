@@ -1,16 +1,16 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { InputField } from "./InputField";
-import { useState } from "react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { InputField } from './InputField';
+import { useState } from 'react';
 
 const meta = {
-  title: "Components/Common/InputField",
+  title: 'Components/Common/InputField',
   component: InputField,
   parameters: {
     layout: "centered",
     docs: {
       description: {
         component:
-          "사용자 입력을 받는 기본 입력 필드 컴포넌트입니다. 다양한 상태와 유효성 검사를 지원합니다.",
+          '사용자 입력을 받는 기본 입력 필드 컴포넌트입니다. 다양한 상태와 유효성 검사를 지원합니다.',
       },
     },
   },
@@ -98,8 +98,8 @@ const meta = {
     },
     showPasswordToggle: {
       description:
-        "비밀번호 표시/숨기기 토글 버튼 표시 여부 (type이 password인 경우에만 적용)",
-      control: "boolean",
+        '비밀번호 표시/숨기기 토글 버튼 표시 여부 (type이 password인 경우에만 적용)',
+      control: 'boolean',
       table: {
         type: { summary: "boolean" },
         defaultValue: { summary: false },
@@ -110,7 +110,7 @@ const meta = {
       table: {
         type: {
           summary:
-            "{ label: string; onClick: () => void; disabled?: boolean; }",
+            '{ label: string; onClick: () => void; disabled?: boolean; }',
           detail: `{
   label: string; // 버튼에 표시될 텍스트
   onClick: () => void; // 클릭 시 실행될 함수
@@ -145,7 +145,7 @@ type Story = StoryObj<typeof InputField>;
 const ControlledInput = (
   props: Partial<React.ComponentProps<typeof InputField>>
 ) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   return (
     <InputField
       label="이메일"
@@ -163,7 +163,7 @@ const ControlledInput = (
 const ControlledPasswordInput = (
   props: Partial<React.ComponentProps<typeof InputField>>
 ) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   return (
     <InputField
       label="비밀번호"
@@ -181,7 +181,7 @@ const ControlledPasswordInput = (
 const ControlledInputWithAction = (
   props: Partial<React.ComponentProps<typeof InputField>>
 ) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const [isChecking, setIsChecking] = useState(false);
 
   const handleCheck = () => {
@@ -201,7 +201,7 @@ const ControlledInputWithAction = (
       onChange={(e) => setValue(e.target.value)}
       placeholder="아이디를 입력하세요"
       actionButton={{
-        label: isChecking ? "확인 중..." : "중복확인",
+        label: isChecking ? '확인 중...' : '중복확인',
         onClick: handleCheck,
         disabled: isChecking || !value,
       }}
@@ -252,7 +252,7 @@ export const PasswordWithToggleAndError: Story = {
 export const WithActionButton: Story = {
   args: {
     disabled: false,
-    label: "이메일",
+    label: '이메일',
   },
 
   render: () => <ControlledInputWithAction />,

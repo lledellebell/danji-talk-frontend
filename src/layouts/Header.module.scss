@@ -7,7 +7,12 @@
   position: relative;
 
   &__title {
-    font-weight: bold;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 700;
+    color: #000;
+    text-align: center;
+    width: 100%;
   }
 
   &__icons {
@@ -31,13 +36,21 @@
       font-size: 16px;
     }
   }
-
   // 서브 헤더: 타이틀 왼쪽 정렬
   &--sub {
     .header__title {
       position: static;
-      font-size: 14px;
     }
+  }
+
+  &__back-button {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
   }
 }
 

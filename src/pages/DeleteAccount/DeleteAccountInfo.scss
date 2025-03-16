@@ -1,0 +1,44 @@
+/* DeleteAccountInfo.scss */
+
+.delete-account-info {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.delete-account-info__center {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.delete-account-info__title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.delete-account-info__description {
+  font-size: 14px;
+}
+
+.delete-account-info__section {
+  background: #f9fbff;
+  box-shadow: 0px 0px 2px 0 rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.delete-account-info__section-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.delete-account-info__button {
+  position: fixed;
+  bottom: 20px;
+  width: calc(100% - 40px); /* 전체 너비에서 좌우 margin(20px씩) 뺌 */
+  padding: 10px 20px;
+  margin: 0 20px;
+  box-sizing: border-box;
+}

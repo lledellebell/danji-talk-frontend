@@ -1,10 +1,10 @@
-import { useId, useState } from "react";
-import styles from "./InputField.module.scss";
+import { useId, useState } from 'react';
+import styles from './InputField.module.scss';
 
 interface InputFieldProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   label: string;
-  type?: "text" | "email" | "password" | "search";
+  type?: 'text' | 'email' | 'password' | 'search';
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -16,6 +16,7 @@ interface InputFieldProps
   validation?: (value: string) => string | undefined;
   minLength?: number;
   pattern?: string;
+  className?: string;
   showPasswordToggle?: boolean;
   actionButton?: {
     label: string;
@@ -69,7 +70,7 @@ const EyeOffIcon = () => (
 
 export const InputField = ({
   label,
-  type = "text",
+  type = 'text',
   name,
   value,
   onChange,
@@ -78,11 +79,11 @@ export const InputField = ({
   disabled = false,
   error,
   helperText,
-  validation,
   minLength,
   pattern,
   showPasswordToggle = false,
   actionButton,
+  className,
   ...rest
 }: InputFieldProps) => {
   const id = useId();
@@ -93,11 +94,11 @@ export const InputField = ({
   };
 
   return (
-    <div className={styles["input-field"]}>
-      <label htmlFor={id} className={styles.label}>
+    <div className={`${styles['input-field']} ${className}`}>
+      <label htmlFor={id} className={styles['input-field__label']}>
         {label}
       </label>
-      <div className={styles["input-wrapper"]}>
+      <div className={styles['input-field__wrapper']}>
         <input
           id={id}
           type={type === "password" && showPassword ? "text" : type}
@@ -109,10 +110,10 @@ export const InputField = ({
           disabled={disabled}
           minLength={minLength}
           pattern={pattern}
-          className={`${styles.input} ${error ? styles.error : ""} ${
-            (type === "password" && showPasswordToggle) || actionButton
-              ? styles["with-button"]
-              : ""
+          className={`${styles['input-field__input']} ${error ? styles['input-field__input--error'] : ''} ${
+            (type === 'password' && showPasswordToggle) || actionButton
+              ? styles['input-field__wrapper--with-button']
+              : ''
           }`}
           aria-invalid={!!error}
           aria-errormessage={error ? `${id}-error` : undefined}
@@ -122,8 +123,8 @@ export const InputField = ({
           <button
             type="button"
             onClick={handleTogglePassword}
-            className={styles["password-toggle"]}
-            aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
+            className={styles['input-field__password-toggle']}
+            aria-label={showPassword ? '비밀번호 숨기기' : '비밀번호 표시'}
           >
             {showPassword ? <EyeOffIcon /> : <EyeIcon />}
           </button>
@@ -132,21 +133,27 @@ export const InputField = ({
           <button
             type="button"
             onClick={actionButton.onClick}
-            // disabled={actionButton.disabled || disabled}
-            className={styles["action-button"]}
+            disabled={actionButton.disabled || disabled}
+            className={styles['input-field__action-button']}
           >
             {actionButton.label}
           </button>
         )}
       </div>
       {error && (
-        <span id={`${id}-error`} className={styles["error-text"]} role="alert">
+        <span
+          id={`${id}-error`}
+          className={styles['input-field__error-text']}
+          role="alert"
+        >
           {error}
         </span>
       )}
       {helperText && !error && (
-        <span className={styles["helper-text"]}>{helperText}</span>
+        <span className={styles['input-field__helper-text']}>{helperText}</span>
       )}
     </div>
   );
 };
+
+export default InputField;
