@@ -6,8 +6,10 @@ import {
 } from 'react-router-dom';
 import { LoginPage } from './pages/Login/LoginPage';
 import { RegisterPage } from './pages/Register/RegisterPage';
+import { HomePage } from './pages/HomePage';
 import { DeleteAccount } from './pages/DeleteAccount/DeleteAccount';
 import { useAuthStore } from './stores/authStore';
+
 import FindAccount from './pages/FindAccount/FindAccount';
 import ShowEmail from './pages/ShowEmail/ShowEmail';
 import Header from './layouts/Header';
@@ -28,12 +30,18 @@ function App() {
           path="/"
           element={
             <>
-              <Header title="홈페이지" type="main" />
-              {isLoggedIn ? (
+              <Header
+                title="DANJITLAK"
+                type="sub"
+                hasBackButton={false}
+                hasIcons={true}
+              />
+              <HomePage />
+              {/* {isLoggedIn ? (
                 <div>홈페이지</div>
               ) : (
                 <Navigate to="/login" replace />
-              )}
+              )} */}
             </>
           }
         />

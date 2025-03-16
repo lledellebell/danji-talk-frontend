@@ -10,6 +10,7 @@ interface HeaderProps {
   hasIcons?: boolean;
   hasUserIcon?: boolean;
   iconCount?: number;
+  icons?: string[];
 }
 
 const SubHeader: React.FC<HeaderProps> = ({
@@ -55,6 +56,7 @@ const MainHeader: React.FC<HeaderProps> = ({
   title,
   hasBackButton,
   hasIcons,
+  icons,
   iconCount = 2,
 }) => {
   const navigate = useNavigate();
@@ -77,13 +79,18 @@ const MainHeader: React.FC<HeaderProps> = ({
         )}
       </nav>
       <h1 className={styles.header__title}>{title}</h1>
-      {hasIcons && (
+      {hasIcons && icons && (
         <ul className={styles.header__icons} aria-label="사용자 아이콘 목록">
-          {Array.from({ length: iconCount }).map((_, index) => (
-            <li key={index}>
-              <img src={user_icon} alt={`아이콘 ${index + 1}`} />
-            </li>
-          ))}
+          {icons.slice(0, iconCount).map(
+            (
+              icon,
+              index // iconCount만큼만 출력
+            ) => (
+              <li key={index}>
+                <img src={icon} alt={`아이콘 ${index + 1}`} />
+              </li>
+            )
+          )}
         </ul>
       )}
     </header>
