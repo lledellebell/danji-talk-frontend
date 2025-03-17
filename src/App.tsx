@@ -9,6 +9,8 @@ import { RegisterPage } from './pages/Register/RegisterPage';
 import { DeleteAccount } from './pages/DeleteAccount/DeleteAccount';
 import { useAuthStore } from './stores/authStore';
 import { BoardWrite } from './pages/Board/BoardWrite';
+import { BoardList } from './pages/Board/BoardList';
+
 import FindAccount from './pages/FindAccount/FindAccount';
 import ShowEmail from './pages/ShowEmail/ShowEmail';
 import Header from './layouts/Header';
@@ -80,6 +82,20 @@ function App() {
         />
         <Route path="/find-account" element={<FindAccount />} />
         <Route path="/write" element={<BoardWrite />} />
+        <Route
+          path="/list"
+          element={
+            <>
+              <Header
+                title="래미안 강남 아파트"
+                type="sub"
+                hasBackButton={true}
+                hasIcons={true}
+              />
+              <BoardList />
+            </>
+          }
+        />
       </Routes>
     </Router>
   );

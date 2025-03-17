@@ -1,16 +1,16 @@
-import Header from "../../layouts/Header";
-import styles from "./BoardWrite.module.scss";
-import { InputField } from "../../components/common/InputField/InputField";
-import { useState } from "react";
+import Header from '../../layouts/Header';
+import styles from './BoardWrite.module.scss';
+import { InputField } from '../../components/common/InputField/InputField';
+import { useState } from 'react';
 
 const NotImage = () => {
   return (
-    <div className={styles["not-image"]}>
+    <div className={styles['not-image']}>
       <svg
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={styles["not-image__icon"]}
+        className={styles['not-image__icon']}
         preserveAspectRatio="none"
       >
         <path
@@ -27,8 +27,8 @@ const NotImage = () => {
 
 // Todo: 게시글 작성 API 연동 && 에러 처리
 export const BoardWrite = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
   return (
     <div>
@@ -39,24 +39,25 @@ export const BoardWrite = () => {
         hasText={true}
         text="등록"
       />
-      <div className={styles["board-write"]}>
+      <div className={styles['board-write']}>
         <InputField
           label="제목"
           name="title"
+          placeholder="제목을 입력해주세요"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <textarea
-          className={styles["board-write__content"]}
+          className={styles['board-write__content']}
           name="content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="내용을 입력해주세요."
         ></textarea>
         <span>사진첨부</span>
-        <div className={styles["board-write__image"]}>
+        <div className={styles['board-write__image']}>
           <NotImage />
-          <p className={styles["board-write__image-description"]}>
+          <p className={styles['board-write__image-description']}>
             390 * 460
             <br /> 최대 10장의 이미지 첨부가 가능합니다.
           </p>
