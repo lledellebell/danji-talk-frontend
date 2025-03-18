@@ -8,6 +8,7 @@ import { LoginPage } from './pages/Login/LoginPage';
 import { RegisterPage } from './pages/Register/RegisterPage';
 import { HomePage } from './pages/HomePage';
 import { DeleteAccount } from './pages/DeleteAccount/DeleteAccount';
+import { Complexes } from './pages/Complexes/Complexes';
 import { useAuthStore } from './stores/authStore';
 
 import FindAccount from './pages/FindAccount/FindAccount';
@@ -85,6 +86,15 @@ function App() {
             <>
               <Header title="회원 탈퇴" type="sub" hasBackButton={true} />
               <DeleteAccount />
+            </>
+          }
+        />
+        <Route
+          path="/complexes"
+          element={
+            <>
+              <Header title="단지등록" type="sub" hasBackButton={true} />
+              <Complexes />
             </>
           }
         />

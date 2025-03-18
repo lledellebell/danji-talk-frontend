@@ -1,24 +1,24 @@
-import Header from "../../layouts/Header";
-import styles from "./RegisterPage.module.scss";
-import { useDialogStore } from "../../stores/dialogStore";
-import { useAlertStore } from "../../stores/alertStore";
-import { useRegisterStore } from "../../stores/registerStore";
-import { useRegister } from "../../hooks/useRegister";
-import { useCheckEmail } from "../../hooks/useCheckEmail";
-import { useAuthCode } from "../../hooks/useAuthCode";
-import { InputField } from "../../components/common/InputField/InputField";
-import Dialog from "../../components/common/Dialog/Dialog";
-import Alert from "../../components/common/Alert/Alert";
+import Header from '../../layouts/Header';
+import styles from './RegisterPage.module.scss';
+import { useDialogStore } from '../../stores/dialogStore';
+import { useAlertStore } from '../../stores/alertStore';
+import { useRegisterStore } from '../../stores/registerStore';
+import { useRegister } from '../../hooks/useRegister';
+import { useCheckEmail } from '../../hooks/useCheckEmail';
+import { useAuthCode } from '../../hooks/useAuthCode';
+import { InputField } from '../../components/common/InputField/InputField';
+import Dialog from '../../components/common/Dialog/Dialog';
+import Alert from '../../components/common/Alert/Alert';
 
 const SignupPrompt = () => (
-  <p className={styles["signup-link"]}>
+  <p className={styles['signup-link']}>
     이미 회원이신가요? <a href="/login">로그인</a>
   </p>
 );
 
 const RegisterButton = ({ isLoading }: { isLoading: boolean }) => (
-  <button type="submit" className={styles["submit-button"]}>
-    {isLoading ? "회원가입 중..." : "회원가입"}
+  <button type="submit" className={styles['submit-button']}>
+    {isLoading ? '회원가입 중...' : '회원가입'}
   </button>
 );
 
@@ -54,7 +54,7 @@ const RegisterForm = ({
   const { isOpen, title, content, closeAlert } = useAlertStore();
 
   return (
-    <form className={styles["register-form"]} onSubmit={onSubmit}>
+    <form className={styles['register-form']} onSubmit={onSubmit}>
       <Dialog
         title="중복확인"
         content="사용 가능한 이메일입니다."
@@ -75,7 +75,7 @@ const RegisterForm = ({
         required
         autoComplete="email"
       />
-      {emailCheckStatus === "checked" && (
+      {emailCheckStatus === 'checked' && (
         <InputField
           label="인증번호 입력"
           name="authCode"
@@ -98,7 +98,7 @@ const RegisterForm = ({
         required
         autoComplete="password"
         showPasswordToggle
-        error={error === "비밀번호가 올바르지 않습니다." ? error : undefined}
+        error={error === '비밀번호가 올바르지 않습니다.' ? error : undefined}
       />
       <InputField
         label="비밀번호 확인"
@@ -111,7 +111,7 @@ const RegisterForm = ({
         required
         autoComplete="confirmPassword"
         showPasswordToggle
-        error={error === "비밀번호가 올바르지 않습니다." ? error : undefined}
+        error={error === '비밀번호가 올바르지 않습니다.' ? error : undefined}
       />
       <InputField
         label="이름"
