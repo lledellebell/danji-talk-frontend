@@ -36,12 +36,12 @@ export const useCheckEmail = () => {
     mutationFn: async () => {
       const response = await axios.post(
         `/api/member/check-email-duplication`,
-        { email: email },
+        { mail: email },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          withCredentials: true
+          withCredentials: true,
         }
       );
       return response.data;
@@ -80,18 +80,14 @@ export const useCheckEmail = () => {
         },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          withCredentials: true
+          withCredentials: true,
         }
       );
       return response.data;
     },
-    onSuccess: () => {
-      openAlert();
-      setTitle("인증확인");
-      setContent("인증되었습니다.");
-    },
+    onSuccess: () => {},
     // TODO: 실패 처리
     onError: (error) => {
       if (axios.isAxiosError(error)) {

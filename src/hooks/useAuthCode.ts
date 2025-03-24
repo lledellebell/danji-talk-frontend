@@ -2,6 +2,7 @@ import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useRegisterStore } from "../stores/registerStore";
 import { useState } from "react";
+import { useAlertStore } from "../stores/alertStore";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5173";
 
@@ -9,6 +10,7 @@ export const useAuthCode = () => {
   const { email, authCode, setAuthCode, setAuthCodeVerified, setError } =
     useRegisterStore();
 
+  const { openAlert, setTitle, setContent } = useAlertStore();
   const [actionButton, setActionButton] = useState({
     label: "인증확인",
     disabled: !authCode,
@@ -27,7 +29,9 @@ export const useAuthCode = () => {
     onSuccess: (data) => {
       if (data.isValid) {
         setAuthCodeVerified(true);
-        setError(null);
+        openAlert();
+        setTitle("인증확인");
+        setContent("인증되었습니다.");
         setActionButton((prev) => ({
           ...prev,
           label: "인증완료",
@@ -35,7 +39,6 @@ export const useAuthCode = () => {
         }));
       } else {
         setAuthCodeVerified(false);
-        setError("잘못된 인증번호입니다. 다시 입력해주세요.");
         setActionButton((prev) => ({
           ...prev,
           disabled: false,
