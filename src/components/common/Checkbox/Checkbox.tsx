@@ -11,14 +11,14 @@ interface CheckboxProps {
   size?: 'small' | 'medium' | 'large';
 }
 
-export const Checkbox = ({ 
-  label, 
-  checked, 
-  onChange, 
+export const Checkbox = ({
+  label,
+  checked,
+  onChange,
   className,
   id,
   disabled = false,
-  size = 'medium'
+  size = 'medium',
 }: CheckboxProps) => {
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -31,7 +31,7 @@ export const Checkbox = ({
   const checkboxId = id || `checkbox-${generateId}`;
 
   return (
-    <div 
+    <div
       className={`${styles.checkbox} ${className || ''} ${disabled ? styles.disabled : ''} ${styles[size]}`}
       role="checkbox"
       aria-checked={checked}
@@ -48,7 +48,7 @@ export const Checkbox = ({
         disabled={disabled}
         aria-labelledby={`${checkboxId}-label`}
       />
-      <label 
+      <label
         id={`${checkboxId}-label`}
         htmlFor={checkboxId}
         className={styles.label}
@@ -58,4 +58,4 @@ export const Checkbox = ({
       </label>
     </div>
   );
-}; 
+};

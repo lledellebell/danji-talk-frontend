@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
-import styles from "./Button.module.scss";
+import { Link } from 'react-router-dom';
+import styles from './Button.module.scss';
 
 type ButtonProps = {
-  className: "primary" | "secondary" | "success" | "danger" | "warning";
+  className?: string | string[];
   label: string;
   active?: boolean;
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
   disabled?: boolean;
-  type?: "button" | "submit" | "reset";
+  type?: 'button' | 'submit' | 'reset';
   href?: string;
-  as?: "button" | "a";
+  as?: 'button' | 'a';
   onClick?: (
     event: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
   ) => void;
@@ -20,34 +20,36 @@ const Button: React.FC<ButtonProps> = ({
   className,
   label,
   active = false,
-  size = "medium",
+  size = 'medium',
   disabled = false,
-  type = "button",
+  type = 'button',
   href,
-  as = "button",
+  as = 'button',
   onClick,
   children,
 }) => {
   const commonProps = {
     className: [
       styles.button,
-      styles[className],
       styles[size],
-      active ? styles.active : "",
+      ...(Array.isArray(className)
+        ? className.map((cls) => styles[cls] || cls)
+        : [styles[className as string]]),
+      active ? styles.active : '',
     ]
       .filter(Boolean)
-      .join(" "),
-    "aria-label": label,
-    "aria-pressed": as === "button" ? active : undefined,
+      .join(' '),
+    'aria-label': label,
+    'aria-pressed': as === 'button' ? active : undefined,
     tabIndex: disabled ? -1 : 0,
     onClick: !disabled ? onClick : undefined,
   };
 
-  if (as === "a") {
+  if (as === 'a') {
     return (
       <Link
         {...commonProps}
-        to={disabled ? "#" : href || "#"}
+        to={disabled ? '#' : href || '#'}
         role="button"
         aria-disabled={disabled}
         onClick={(e) => {

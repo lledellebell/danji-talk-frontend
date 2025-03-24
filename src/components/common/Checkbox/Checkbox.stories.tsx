@@ -8,7 +8,8 @@ const meta: Meta<typeof Checkbox> = {
     layout: 'centered',
     docs: {
       description: {
-        component: '체크박스 컴포넌트는 사용자가 여러 옵션 중에서 선택할 수 있게 해주는 기본적인 폼 요소입니다.',
+        component:
+          '체크박스 컴포넌트는 사용자가 여러 옵션 중에서 선택할 수 있게 해주는 기본적인 폼 요소입니다.',
       },
     },
   },
@@ -93,7 +94,8 @@ export const Large: Story = {
 
 export const LongLabel: Story = {
   args: {
-    label: '이것은 매우 긴 레이블 텍스트입니다. 체크박스의 레이블이 길어질 때 어떻게 표시되는지 확인하기 위한 예시입니다.',
+    label:
+      '이것은 매우 긴 레이블 텍스트입니다. 체크박스의 레이블이 길어질 때 어떻게 표시되는지 확인하기 위한 예시입니다.',
     checked: false,
     size: 'medium',
   },
@@ -101,27 +103,29 @@ export const LongLabel: Story = {
 
 // 여러 체크박스를 그룹으로 보여주는 예시
 export const CheckboxGroup: StoryObj<typeof Checkbox> = {
-  decorators: [(Story) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Checkbox
-        label="옵션 1"
-        checked={false}
-        onChange={() => {}}
-        size="medium"
-      />
-      <Checkbox
-        label="옵션 2"
-        checked={true}
-        onChange={() => {}}
-        size="medium"
-      />
-      <Checkbox
-        label="옵션 3"
-        checked={false}
-        onChange={() => {}}
-        disabled
-        size="medium"
-      />
-    </div>
-  )],
-}; 
+  decorators: [
+    () => (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <Checkbox
+          label="옵션 1"
+          checked={false}
+          onChange={() => {}}
+          size="medium"
+        />
+        <Checkbox
+          label="옵션 2"
+          checked={true}
+          onChange={() => {}}
+          size="medium"
+        />
+        <Checkbox
+          label="옵션 3"
+          checked={false}
+          onChange={() => {}}
+          disabled
+          size="medium"
+        />
+      </div>
+    ),
+  ],
+};

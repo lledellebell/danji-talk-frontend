@@ -5,7 +5,7 @@ $button-padding: 8px 16px;
 $button-transition: background-color 0.3s;
 $button-hover-color: #6fa8dc;
 
-.alert-overlay {
+.alert__overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -18,7 +18,7 @@ $button-hover-color: #6fa8dc;
   z-index: 1000;
 }
 
-.alert-container {
+.alert__container {
   background-color: white;
   border-radius: 12px;
   width: 90%;
@@ -28,39 +28,46 @@ $button-hover-color: #6fa8dc;
   animation: fadeIn 0.3s ease-out;
 }
 
-.alert-header,
-.alert-footer {
+.alert__header,
+.alert__footer {
 }
 
-.alert-footer {
+.alert__footer {
   text-align: right;
 }
 
-.alert-content {
+.alert__content {
+  font-size: 15px;
+  line-height: 22px;
 }
 
-.alert-title,
-.alert-text {
+.alert__title,
+.alert__text {
   width: 100%;
   margin-top: 0;
   text-align: center;
   margin-bottom: 30px;
 }
 
-.button {
-    border: none;
-    border-radius: $button-border-radius;
-    padding: $button-padding;
-    cursor: pointer;
-    transition: $button-transition;
-    height: 40px;
+.alert__title {
+  font-size: 15px;
+  line-height: 22px;
 }
 
-.alert-confirm-button {
-    @extend .button;
-    width: 100%;
-    color: white;
-    background-color: $confirm-button-bg;
+.button {
+  border: none;
+  border-radius: $button-border-radius;
+  padding: $button-padding;
+  cursor: pointer;
+  transition: $button-transition;
+  height: 40px;
+}
+
+.alert__confirm-button {
+  @extend .button;
+  width: 100%;
+  color: white;
+  background-color: $confirm-button-bg;
 
   &:hover {
     background-color: $button-hover-color;
@@ -76,4 +83,4 @@ $button-hover-color: #6fa8dc;
     opacity: 1;
     transform: translateY(0);
   }
-} 
+}
