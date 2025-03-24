@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import Button from '../../components/common/Button/Button';
 import InputField from '../../components/common/InputField/InputField';
+import { useDeleteAccount } from '../../hooks/useDeleteAccount';
 import './DeleteAccountInfo.scss';
 import './DeleteAccountPassword.scss';
 
-const DeleteAccountInfo = () => {
+const DeleteAccountInfo = ({ onConfirm }: { onConfirm: () => void }) => {
   return (
     <div className="delete-account-info">
       <div className="delete-account-info__center">
@@ -37,7 +38,7 @@ const DeleteAccountInfo = () => {
         as="button"
         className="danger"
         label="확인했어요."
-        onClick={() => {}}
+        onClick={onConfirm}
         size="large"
       />
     </div>
@@ -46,6 +47,10 @@ const DeleteAccountInfo = () => {
 
 const DeleteAccountPassword = () => {
   const [password, setPassword] = useState('');
+  const { deleteAccount } = useDeleteAccount();
+  const handleDelete = () => {
+    deleteAccount(password); // 입력받은 비밀번호 전달
+  };
 
   return (
     <div className="delete-account-password">
@@ -77,7 +82,7 @@ const DeleteAccountPassword = () => {
         }`}
         disabled={!password}
         label="탈퇴"
-        onClick={() => {}}
+        onClick={handleDelete}
         size="large"
       />
     </div>
@@ -85,10 +90,15 @@ const DeleteAccountPassword = () => {
 };
 
 export const DeleteAccount = () => {
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
   return (
     <div>
-      <DeleteAccountInfo />
-      <DeleteAccountPassword />
+      {!isConfirmed ? (
+        <DeleteAccountInfo onConfirm={() => setIsConfirmed(true)} />
+      ) : (
+        <DeleteAccountPassword />
+      )}
     </div>
   );
 };
