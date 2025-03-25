@@ -10,6 +10,7 @@ import { DeleteAccount } from './pages/DeleteAccount/DeleteAccount';
 import { useAuthStore } from './stores/authStore';
 import { BoardWrite } from './pages/Board/BoardWrite';
 import { BoardList } from './pages/Board/BoardList';
+import { BoardDetail } from './pages/Board/BoardDetail';
 
 import FindAccount from './pages/FindAccount/FindAccount';
 import ShowEmail from './pages/ShowEmail/ShowEmail';
@@ -93,6 +94,20 @@ function App() {
                 hasIcons={true}
               />
               <BoardList />
+            </>
+          }
+        />
+        <Route
+          path="/detail"
+          element={
+            <>
+              <Header
+                title="무인 택배함 사용법 공유합니다"
+                type="sub"
+                hasBackButton={true}
+                hasIcons={true}
+              />
+              <BoardDetail />
             </>
           }
         />
