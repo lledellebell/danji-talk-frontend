@@ -4,6 +4,7 @@ import favoriteIcon from '../../assets/board/favorite.svg';
 import heartIcon from '../../assets/board/heart.svg';
 import replyIcon from '../../assets/board/reply.svg';
 import moreVerticalIcon from '../../assets/board/moreVertical.svg';
+import profileIcon from '../../assets/board/profile.svg';
 
 import styles from './BoardDetail.module.scss';
 
@@ -79,386 +80,64 @@ export const BoardDetail = () => {
         </div>
         <hr />
       </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-start',
-          alignItems: 'flex-start',
-          alignSelf: 'stretch',
-          flexGrow: 0,
-          flexShrink: 0,
-          gap: 20,
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            alignSelf: 'stretch',
-            flexGrow: 0,
-            flexShrink: 0,
-            position: 'relative',
-            paddingLeft: 4,
-            paddingRight: 4,
-          }}
-        >
-          <p
-            style={{
-              flexGrow: 1,
-              width: 342,
-              fontSize: 16,
-              fontWeight: 600,
-              textAlign: 'left',
-              color: '#111',
-            }}
-          >
-            댓글 (22)
-          </p>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            alignSelf: 'stretch',
-            flexGrow: 0,
-            flexShrink: 0,
-            gap: 20,
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-              alignSelf: 'stretch',
-              flexGrow: 0,
-              flexShrink: 0,
-              position: 'relative',
-              gap: 12,
-              paddingTop: 4,
-              paddingBottom: 4,
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                alignSelf: 'stretch',
-                flexGrow: 0,
-                flexShrink: 0,
-                position: 'relative',
-                gap: 8,
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'flex-start',
-                  flexGrow: 1,
-                  position: 'relative',
-                  gap: 4,
-                }}
-              >
-                <p
-                  style={{
-                    alignSelf: 'stretch',
-                    flexGrow: 0,
-                    flexShrink: 0,
-                    width: 270,
-                    fontSize: 12,
-                    fontWeight: 600,
-                    textAlign: 'left',
-                    color: '#111',
-                  }}
-                >
-                  한예빈
-                </p>
-                <p
-                  style={{
-                    alignSelf: 'stretch',
-                    flexGrow: 0,
-                    flexShrink: 0,
-                    width: 270,
-                    fontSize: 12,
-                    textAlign: 'left',
-                    color: '#505050',
-                  }}
-                >
-                  3시간 전
-                </p>
-              </div>
-            </div>
-            <p
-              style={{
-                alignSelf: 'stretch',
-                flexGrow: 0,
-                flexShrink: 0,
-                width: 350,
-                fontSize: 14,
-                textAlign: 'left',
-                color: '#111',
-              }}
-            >
-              <span
-                style={{
-                  alignSelf: 'stretch',
-                  flexGrow: 0,
-                  flexShrink: 0,
-                  width: 350,
-                  fontSize: 14,
-                  textAlign: 'left',
-                  color: '#111',
-                }}
-              >
-                정말 유익한 정보네요! 너무 감사합니다.
-              </span>
-              <br />
-              <span
-                style={{
-                  alignSelf: 'stretch',
-                  flexGrow: 0,
-                  flexShrink: 0,
-                  width: 350,
-                  fontSize: 14,
-                  textAlign: 'left',
-                  color: '#111',
-                }}
-              >
-                저도 사용법을 잘 몰랐는데, 다음에 한 번 사용해봐야겠어요.
-              </span>
-            </p>
-            <p
-              style={{
-                alignSelf: 'stretch',
-                flexGrow: 0,
-                flexShrink: 0,
-                width: 350,
-                fontSize: 12,
-                textAlign: 'left',
-                color: '#505050',
-              }}
-            >
-              댓글쓰기
-            </p>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-              alignSelf: 'stretch',
-              flexGrow: 0,
-              flexShrink: 0,
-              position: 'relative',
-              gap: 12,
-              paddingTop: 4,
-              paddingBottom: 4,
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start',
-                flexGrow: 1,
-                position: 'relative',
-                gap: 12,
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  alignSelf: 'stretch',
-                  flexGrow: 0,
-                  flexShrink: 0,
-                  position: 'relative',
-                  gap: 8,
-                }}
-              >
-                <img
-                  style={{ flexGrow: 0, flexShrink: 0 }}
-                  src="ellipse-11-3.png"
-                />
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'flex-start',
-                    flexGrow: 1,
-                    position: 'relative',
-                    gap: 4,
-                  }}
-                >
-                  <p
-                    style={{
-                      alignSelf: 'stretch',
-                      flexGrow: 0,
-                      flexShrink: 0,
-                      width: 238,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      textAlign: 'left',
-                      color: '#111',
-                    }}
-                  >
-                    김지수
-                  </p>
-                  <p
-                    style={{
-                      alignSelf: 'stretch',
-                      flexGrow: 0,
-                      flexShrink: 0,
-                      width: 238,
-                      fontSize: 12,
-                      textAlign: 'left',
-                      color: '#505050',
-                    }}
-                  >
-                    방금 전
-                  </p>
-                </div>
-              </div>
-              <p
-                style={{
-                  alignSelf: 'stretch',
-                  flexGrow: 0,
-                  flexShrink: 0,
-                  width: 318,
-                  fontSize: 14,
-                  textAlign: 'left',
-                  color: '#111',
-                }}
-              >
-                저도 이번에 알았어요. 굿굿!!
-              </p>
-              <p
-                style={{
-                  alignSelf: 'stretch',
-                  flexGrow: 0,
-                  flexShrink: 0,
-                  width: 318,
-                  fontSize: 12,
-                  textAlign: 'left',
-                  color: '#505050',
-                }}
-              >
-                댓글쓰기
-              </p>
-            </div>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start',
-              alignItems: 'flex-start',
-              alignSelf: 'stretch',
-              flexGrow: 0,
-              flexShrink: 0,
-              position: 'relative',
-              gap: 12,
-              paddingTop: 4,
-              paddingBottom: 4,
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                alignSelf: 'stretch',
-                flexGrow: 0,
-                flexShrink: 0,
-                position: 'relative',
-                gap: 8,
-              }}
-            >
+      <div className={styles['comment-container']}>
+        <span>댓글(22)</span>
+        <div className={styles['comment-body-container']}>
+          <div className={styles['comment-header']}>
+            <div className={styles['comment-info']}>
               <img
-                style={{ flexGrow: 0, flexShrink: 0 }}
-                src="ellipse-11-2.png"
+                className={styles['comment-profile-img']}
+                src={profileIcon}
+                alt="프로필"
               />
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'flex-start',
-                  flexGrow: 1,
-                  position: 'relative',
-                  gap: 4,
-                }}
-              >
-                <p
-                  style={{
-                    alignSelf: 'stretch',
-                    flexGrow: 0,
-                    flexShrink: 0,
-                    width: 270,
-                    fontSize: 12,
-                    fontWeight: 600,
-                    textAlign: 'left',
-                    color: '#111',
-                  }}
-                >
-                  이혁준
-                </p>
-                <p
-                  style={{
-                    alignSelf: 'stretch',
-                    flexGrow: 0,
-                    flexShrink: 0,
-                    width: 270,
-                    fontSize: 12,
-                    textAlign: 'left',
-                    color: '#505050',
-                  }}
-                >
-                  방금 전
-                </p>
+              <div className={styles['comment-author']}>
+                <span className={styles['comment-name']}>한예빈</span>
+                <span className={styles['comment-time']}>3시간 전</span>
               </div>
             </div>
-            <p
-              style={{
-                alignSelf: 'stretch',
-                flexGrow: 0,
-                flexShrink: 0,
-                width: 350,
-                fontSize: 14,
-                textAlign: 'left',
-                color: '#111',
-              }}
-            >
-              222 동의합니다~ 유용한 정보였어요~
-            </p>
-            <p
-              style={{
-                alignSelf: 'stretch',
-                flexGrow: 0,
-                flexShrink: 0,
-                width: 350,
-                fontSize: 12,
-                textAlign: 'left',
-                color: '#505050',
-              }}
-            >
-              댓글쓰기
-            </p>
+            <img src={moreVerticalIcon} alt="더보기" />
           </div>
+
+          <div className={styles['comment-body']}>
+            정말 유익한 정보네요! 너무 감사합니다. 저도 사용법을 잘 몰랐는데,
+            다음에 한 번 사용해봐야겠어요.
+          </div>
+          <div className={styles['comment-footer']}>댓글쓰기</div>
         </div>
       </div>
-      ;
+      <div className={styles['reply-container']}>
+        <div className={styles['reply-icon-container']}>
+          <img src={replyIcon} alt="답글 아이콘" />
+        </div>
+        <div className={styles['reply-body-container']}>
+          <div className={styles['reply-header']}>
+            <div className={styles['reply-info']}>
+              <img
+                className={styles['comment-profile-img']}
+                src={profileIcon}
+                alt="프로필"
+              />
+              <div className={styles['reply-author']}>
+                <span className={styles['reply-name']}>김지수</span>
+                <span className={styles['reply-time']}>방금 전</span>
+              </div>
+            </div>
+            <img src={moreVerticalIcon} alt="더보기" />
+          </div>
+
+          <div className={styles['reply-body']}>
+            저도 이번에 알았어요. 굿굿!!
+          </div>
+          <div className={styles['reply-footer']}>댓글쓰기</div>
+        </div>
+      </div>
+      <div className={styles['comment-input-container']}>
+        <input
+          type="text"
+          placeholder="단지님, 댓글을 작성해보세요!"
+          className={styles['comment-input']}
+        />
+      </div>
     </div>
   );
 };
