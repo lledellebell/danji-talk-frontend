@@ -1,21 +1,21 @@
-import axios from "axios";
-import { useRegisterStore } from "../stores/registerStore";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
-import { useDialogStore } from "../stores/dialogStore";
-import { useAlertStore } from "../stores/alertStore";
-
-// DuckDNS URL 사용
-const API_URL = import.meta.env.VITE_API_URL || "https://danjitalk.duckdns.org";
+import axios from 'axios';
+import { useRegisterStore } from '../stores/registerStore';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useDialogStore } from '../stores/dialogStore';
+import { useAlertStore } from '../stores/alertStore';
 
 export const useCheckEmail = () => {
   const { openDialog, closeDialog } = useDialogStore();
   const { openAlert, setTitle, setContent } = useAlertStore();
   const { email, setEmail, setEmailCheckStatus, setAuthCode } =
     useRegisterStore();
-  const [actionButton, setActionButton] = useState({
-    label: "중복확인",
-    disabled: !email,
+  const [actionButton, setActionButton] = useState<{
+    label: string;
+    disabled: boolean;
+  } | null>({
+    label: '중복확인',
+    disabled: false,
   });
 
   const checkEmail = () => {
@@ -23,7 +23,10 @@ export const useCheckEmail = () => {
       return;
     }
     openDialog();
-    setActionButton((prev) => ({ ...prev, disabled: true }));
+    setActionButton((prev) => ({
+      label: prev?.label || '중복확인',
+      disabled: true,
+    }));
     checkEmailMutation.mutate();
   };
 
@@ -36,10 +39,10 @@ export const useCheckEmail = () => {
     mutationFn: async () => {
       const response = await axios.post(
         `/api/member/check-email-duplication`,
-        { mail: email },
+        { email: email },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           withCredentials: true,
         }
@@ -48,12 +51,9 @@ export const useCheckEmail = () => {
     },
     // TODO: 성공 처리
     onSuccess: () => {
-      setEmailCheckStatus("checked");
+      setEmailCheckStatus('checked');
       openDialog();
-      setActionButton((prev) => ({
-        ...prev,
-        disabled: false,
-      }));
+      setActionButton(null);
     },
     // TODO: 실패 처리
     onError: (error) => {
@@ -64,7 +64,7 @@ export const useCheckEmail = () => {
         }
       }
       setActionButton((prev) => ({
-        ...prev,
+        label: prev?.label || '중복확인',
         disabled: false,
       }));
     },
@@ -80,7 +80,7 @@ export const useCheckEmail = () => {
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           withCredentials: true,
         }
@@ -93,7 +93,7 @@ export const useCheckEmail = () => {
       if (axios.isAxiosError(error)) {
         if (error.response) {
           openAlert();
-          setContent(error.response?.data?.message || "인증 코드 전송 실패");
+          setContent(error.response?.data?.message || '인증 코드 전송 실패');
         }
       }
     },
@@ -103,10 +103,10 @@ export const useCheckEmail = () => {
     const newEmail = e.target.value;
 
     setEmail(newEmail);
-    setEmailCheckStatus("initial");
-    setAuthCode("");
+    setEmailCheckStatus('initial');
+    setAuthCode('');
     setActionButton((prev) => ({
-      ...prev,
+      label: prev?.label || '중복확인',
       disabled: !newEmail,
     }));
   };
