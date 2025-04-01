@@ -14,6 +14,7 @@ $color-border-hover: #999;
 $color-label: #111;
 $color-text: #333;
 $color-text-secondary: #666;
+$color-success: #28a745;
 
 // Font sizes
 $font-size-large: 16px;
@@ -303,6 +304,13 @@ $spacing-xsmall: 4px;
     @media screen and (max-width: $breakpoint-mobile) {
       font-size: $font-size-small;
     }
+  }
+
+  &__success-text {
+    margin-top: $spacing-xsmall;
+    font-size: $font-size-small;
+    line-height: 1.5;
+    color: $color-success;
   }
 }
 

@@ -47,7 +47,7 @@ const RegisterForm = ({
     setPhoneNumber,
   } = useRegisterStore();
 
-  const { checkEmailActionButton, sendEmailCode, handleEmailChange } =
+  const { checkEmailActionButton, sendEmailCode, handleEmailChange, successMessage } =
     useCheckEmail();
   const { authCodeActionButton, handleAuthCodeChange } = useAuthCode();
   const { closeDialog } = useDialogStore();
@@ -74,6 +74,7 @@ const RegisterForm = ({
         placeholder="4~15자 이내로 입력해주세요"
         required
         autoComplete="email"
+        success={successMessage}
       />
       {emailCheckStatus === 'checked' && (
         <InputField

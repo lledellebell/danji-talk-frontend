@@ -30,7 +30,7 @@ export const useRegister = () => {
       return response.data;
     },
     onSuccess: () => {
-      navigate('/login');
+      navigate('/register-success');
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {

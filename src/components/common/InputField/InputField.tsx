@@ -12,6 +12,7 @@ interface InputFieldProps
   required?: boolean;
   disabled?: boolean;
   error?: string;
+  success?: string;
   helperText?: string;
   validation?: (value: string) => string | undefined;
   minLength?: number;
@@ -78,6 +79,7 @@ export const InputField = ({
   required = false,
   disabled = false,
   error,
+  success,
   helperText,
   minLength,
   pattern,
@@ -149,7 +151,16 @@ export const InputField = ({
           {error}
         </span>
       )}
-      {helperText && !error && (
+      {success && !error && (
+        <span
+          id={`${id}-success`}
+          className={styles['input-field__success-text']}
+          role="status"
+        >
+          {success}
+        </span>
+      )}
+      {helperText && !error && !success && (
         <span className={styles['input-field__helper-text']}>{helperText}</span>
       )}
     </div>
