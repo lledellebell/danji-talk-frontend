@@ -105,7 +105,29 @@ $spacing-xsmall: 5px;
 
 .submit-button {
   margin-top: 20px;
-  @include button-styles($color-disabled, #c0c0c0);
+  width: 100%;
+  padding: $spacing-small;
+  border: none;
+  border-radius: 6px;
+  font-size: $font-size-large;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: $color-disabled;
+  color: #c0c0c0;
+
+  &:not(:disabled) {
+    background-color: #96bbff;
+    color: $color-white;
+
+    &:hover {
+      background-color: darken(#96bbff, 5%);
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 
   @media screen and (max-width: $breakpoint-mobile) {
     font-size: $font-size-medium;

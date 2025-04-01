@@ -17,7 +17,8 @@ export const useCheckEmail = () => {
     label: '중복확인',
     disabled: false,
   });
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
 
   const checkEmail = () => {
     if (!email) {
@@ -27,7 +28,8 @@ export const useCheckEmail = () => {
       label: prev?.label || '중복확인',
       disabled: true,
     }));
-    setSuccessMessage(null);
+    setSuccessMessage(undefined);
+    setErrorMessage(undefined);
     checkEmailMutation.mutate();
   };
 
@@ -55,20 +57,17 @@ export const useCheckEmail = () => {
       openDialog();
       setActionButton(null);
       setSuccessMessage('사용 가능한 이메일입니다.');
+      setErrorMessage(undefined);
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {
-        if (error.response) {
-          openAlert();
-          setTitle('실패');
-          setContent(error.response.data?.message || '이메일 중복 확인 실패');
-        }
+        setErrorMessage('이미 등록된 이메일입니다. 다시 시도해주세요.');
       }
       setActionButton((prev) => ({
         label: prev?.label || '중복확인',
         disabled: false,
       }));
-      setSuccessMessage(null);
+      setSuccessMessage(undefined);
     },
   });
 
@@ -112,7 +111,8 @@ export const useCheckEmail = () => {
     setEmail(newEmail);
     setEmailCheckStatus('initial');
     setAuthCode('');
-    setSuccessMessage(null);
+    setSuccessMessage(undefined);
+    setErrorMessage(undefined);
     setActionButton({
       label: '중복확인',
       disabled: !newEmail,
@@ -125,6 +125,7 @@ export const useCheckEmail = () => {
     handleEmailChange,
     checkEmailActionButton: actionButton ? { ...actionButton, onClick: checkEmail } : undefined,
     isCheckingEmail: checkEmailMutation.isPending,
-    successMessage: successMessage || undefined,
+    successMessage,
+    errorMessage,
   };
 };

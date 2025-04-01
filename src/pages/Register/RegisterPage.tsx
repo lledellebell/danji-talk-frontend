@@ -16,8 +16,8 @@ const SignupPrompt = () => (
   </p>
 );
 
-const RegisterButton = ({ isLoading }: { isLoading: boolean }) => (
-  <button type="submit" className={styles['submit-button']}>
+const RegisterButton = ({ isLoading, disabled }: { isLoading: boolean; disabled: boolean }) => (
+  <button type="submit" className={styles['submit-button']} disabled={disabled || isLoading}>
     {isLoading ? '회원가입 중...' : '회원가입'}
   </button>
 );
@@ -35,6 +35,7 @@ const RegisterForm = ({
     email,
     emailCheckStatus,
     authCode,
+    authCodeVerified,
     password,
     confirmPassword,
     name,
@@ -47,11 +48,23 @@ const RegisterForm = ({
     setPhoneNumber,
   } = useRegisterStore();
 
-  const { checkEmailActionButton, sendEmailCode, handleEmailChange, successMessage } =
+  const { checkEmailActionButton, sendEmailCode, handleEmailChange, successMessage, errorMessage } =
     useCheckEmail();
   const { authCodeActionButton, handleAuthCodeChange } = useAuthCode();
   const { closeDialog } = useDialogStore();
   const { isOpen, title, content, closeAlert } = useAlertStore();
+
+  const isFormValid = Boolean(
+    email &&
+    emailCheckStatus === 'checked' &&
+    authCode &&
+    authCodeVerified &&
+    password &&
+    confirmPassword &&
+    name &&
+    nickname &&
+    phoneNumber
+  );
 
   return (
     <form className={styles['register-form']} onSubmit={onSubmit}>
@@ -75,6 +88,7 @@ const RegisterForm = ({
         required
         autoComplete="email"
         success={successMessage}
+        error={errorMessage}
       />
       {emailCheckStatus === 'checked' && (
         <InputField
@@ -145,7 +159,7 @@ const RegisterForm = ({
         required
         autoComplete="phoneNumber"
       />
-      <RegisterButton isLoading={isLoading} />
+      <RegisterButton isLoading={isLoading} disabled={!isFormValid} />
     </form>
   );
 };
