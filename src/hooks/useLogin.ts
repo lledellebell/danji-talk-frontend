@@ -3,14 +3,6 @@ import { useAuthStore } from '../stores/authStore';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 
-interface User {
-  id: number;
-  username: string;
-  password: string;
-  email: string;
-}
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 export const useLogin = () => {
   const { email, password, setEmail, setError, setIsLoggedIn } = useAuthStore();

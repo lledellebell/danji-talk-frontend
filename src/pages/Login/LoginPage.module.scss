@@ -23,7 +23,7 @@ $font-size-small: 12px;
 $spacing-large: 20px;
 $spacing-medium: 16px;
 $spacing-small: 12px;
-$spacing-xsmall: 8px;
+$spacing-xsmall: 4px;
 
 // Mixin
 @mixin flex-center {
@@ -96,16 +96,20 @@ $spacing-xsmall: 8px;
   flex-direction: column;
 
   > *:not(:first-child) {
-    margin-top: 20px;
+    margin-top: 24px;
   }
 }
 
 .login-form__submit-button {
   @include button-styles(#EAF1FF, #d4dff5);
+  padding: $spacing-medium;
+  font-size: $font-size-large;
+  height: 56px;
 
   @media screen and (max-width: $breakpoint-mobile) {
     font-size: $font-size-medium;
-    padding: $spacing-small $spacing-medium;
+    padding: $spacing-small;
+    height: 48px;
   }
 }
 
@@ -141,33 +145,34 @@ $spacing-xsmall: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  @include apply-spacing($spacing-xsmall !important, 0, 54px, 0);
+  @include apply-spacing($spacing-small !important, 0, 60px, 0);
 
   .login-options__save-id-label {
     display: flex;
     align-items: center;
-    gap: $spacing-xsmall;
+    gap: $spacing-small;
     cursor: pointer;
 
     input[type='checkbox'] {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
     }
 
-    label{
+    label {
       color: #999;
+      font-size: $font-size-medium;
     }
   }
 
   .login-options__find-links {
     display: flex;
-    gap: $spacing-xsmall;
-    @include apply-spacing(0, 0, 0, 0);
+    gap: $spacing-small;
 
     a {
       color: #999;
       text-decoration: none;
       font-size: $font-size-medium;
+      padding: $spacing-xsmall;
 
       &:hover {
         text-decoration: underline;
@@ -181,22 +186,23 @@ $spacing-xsmall: 8px;
 }
 
 .signup-link {
-  height: 24px;
+  height: 32px;
   text-align: center;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 24px;
+  font-size: $font-size-medium;
+  line-height: 32px;
   color: $color-text-secondary;
-  @include apply-spacing(0 !important, 0, 0, 0);
+  @include apply-spacing($spacing-medium !important, 0, 0, 0);
 
   a {
     font: inherit;
     color: #97BBFF;
     text-decoration: none;
     font-weight: 500;
-    font-size: 13px;
-    line-height: 18px;
-    margin-left: 4px;
+    font-size: $font-size-medium;
+    line-height: 24px;
+    margin-left: $spacing-xsmall;
+    padding: $spacing-xsmall;
 
     &:hover {
       text-decoration: underline;
@@ -207,7 +213,7 @@ $spacing-xsmall: 8px;
 .divider {
   display: flex;
   align-items: center;
-  margin: 32px 0 20px;
+  margin: 40px 0 24px;
 }
 
 .divider__line {
@@ -217,8 +223,9 @@ $spacing-xsmall: 8px;
 }
 
 .divider__text {
-  margin: 0 10px;
+  margin: 0 $spacing-medium;
   color: $color-text-secondary;
+  font-size: $font-size-medium;
 }
 
 @mixin svg-transition(

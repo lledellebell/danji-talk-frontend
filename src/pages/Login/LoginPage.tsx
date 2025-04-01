@@ -286,10 +286,12 @@ const LoginForm = ({
     <form className={styles['login-form']} onSubmit={onSubmit}>
       <InputField
         label="이메일"
+        id="email"
         name="email"
+        type="email"
         value={email}
         onChange={(e) => {
-          const newEmail = e.target.value;
+          const newEmail = e.target.value.trim();
           setEmail(newEmail);
           if (newEmail && !isValidEmail(newEmail)) {
             setError('이메일 형식이 올바르지 않습니다. 예: example@domain.com');
@@ -300,10 +302,13 @@ const LoginForm = ({
         placeholder="이메일을 입력하세요"
         required
         autoComplete="email"
+        aria-invalid={errorMessage ? "true" : "false"}
+        aria-describedby={errorMessage ? "email-error" : undefined}
         error={errorMessage || undefined}
       />
       <InputField
         label="비밀번호"
+        id="password"
         type="password"
         name="password"
         value={password}
@@ -311,10 +316,11 @@ const LoginForm = ({
         placeholder="비밀번호를 입력하세요"
         required
         autoComplete="current-password"
+        aria-invalid={error === '비밀번호가 올바르지 않습니다.' ? "true" : "false"}
+        aria-describedby={error === '비밀번호가 올바르지 않습니다.' ? "password-error" : undefined}
         showPasswordToggle
         error={error === '비밀번호가 올바르지 않습니다.' ? error : undefined}
       />
-
       <LoginOptions saveId={saveId} onSaveIdChange={setSaveId} />
       <LoginButton isLoading={isLoading} />
       <SignupPrompt />
