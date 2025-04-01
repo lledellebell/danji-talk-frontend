@@ -37,8 +37,8 @@ const validateUsername = (username: string): string | null => {
   if (username.length > 20) {
     return '이름은 최대 20자 이하이어야 합니다.';
   }
-  if (/[^a-zA-Z가-힣]/.test(username)) {
-    return '이름에는 문자만 입력할 수 있습니다.';
+  if (/[!@#$%^&*(),.?":{}|<>]/.test(username)) {
+    return '이름에는 특수문자를 입력할 수 없습니다.';
   }
   return null;
 };
