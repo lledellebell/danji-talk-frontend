@@ -18,28 +18,19 @@ export const useLogin = () => {
 
   const loginMutation = useMutation({
     mutationFn: async () => {
-      const response = await axios.get(`${API_URL}/users`);
+      const response = await axios.post('/api/login', {
+        loginId: email,
+        password: password
+      }, {
+        withCredentials: true
+      });
       return response.data;
     },
-    onSuccess: (users: User[]) => {
-      const userExists = users.find((u: User) => u.email === email);
-      if (!userExists) {
-        setError('이메일이 올바르지 않습니다. 다시 확인해주세요.');
-        return;
-      }
-
-      const user = users.find(
-        (u: User) => u.email === email && u.password === password
-      );
-
-      if (user) {
-        setIsLoggedIn(true);
-        setEmail(email);
-        localStorage.setItem('isLoggedIn', 'true');
-        navigate('/');
-      } else {
-        setError('비밀번호가 올바르지 않습니다.');
-      }
+    onSuccess: () => {
+      setIsLoggedIn(true);
+      setEmail(email);
+      localStorage.setItem('isLoggedIn', 'true');
+      navigate('/');
     },
     onError: (error) => {
       console.error('Login error:', error);
@@ -47,7 +38,7 @@ export const useLogin = () => {
         setError(
           !error.response
             ? '네트워크 연결을 확인해주세요.'
-            : '로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
+            : error.response.data?.message || '로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
         );
       }
     },
