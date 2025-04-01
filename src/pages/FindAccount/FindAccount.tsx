@@ -13,20 +13,9 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'https://danjitalk.duckdns.org',
-  withCredentials: true,
   headers: {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+    'Content-Type': 'application/json'
   }
-});
-
-api.interceptors.request.use((config) => {
-  if (config.method === 'options') {
-    config.headers['Access-Control-Request-Method'] = 'POST';
-    config.headers['Access-Control-Request-Headers'] = 'content-type';
-  }
-  return config;
 });
 
 const validatePhone = (phone: string): string | null => {
@@ -92,7 +81,7 @@ const FindAccount: React.FC = () => {
       });
 
       if (response.status === 200) {
-        setUserEmail(response.data.email);
+        setUserEmail(response.data.data);
         navigate('/show-email');
       }
     } catch (error: unknown) {
