@@ -11,8 +11,22 @@ export default defineConfig({
       '/api': {
         target: 'https://danjitalk.duckdns.org',
         changeOrigin: true,
-        secure: true,
-        // rewrite: (path) => path.replace(/^\/api/, ''),
+        secure: false,
+        ws: true,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+        configure: (proxy) => {
+          proxy.on('error', (err) => {
+            console.log('proxy error', err);
+          });
+          proxy.on('proxyReq', (req) => {
+            console.log('타겟 서버로 요청:', req.method, req.path);
+          });
+          proxy.on('proxyRes', (proxyRes, req) => {
+            console.log('타겟 서버로부터 응답:', proxyRes.statusCode, req.url);
+          });
+        },
       },
     },
   },
