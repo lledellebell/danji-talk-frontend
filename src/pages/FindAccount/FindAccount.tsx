@@ -5,25 +5,24 @@ import TabWrapper from '../../components/common/Tab/TabWrapper';
 import styles from './FindAccount.module.scss';
 import InputField from '../../components/common/InputField/InputField';
 import Button from '../../components/common/Button/Button';
-import { useUsers } from '../../hooks/useUsers';
 import { useAccountStore } from '../../stores/useAccountStore';
 import Alert from '../../components/common/Alert/Alert';
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../stores/userStore';
+import axios from 'axios';
 
-interface User {
-  id: string;
-  username: string;
-  email: string;
-  phone?: string;
-}
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: true, 
+  headers: {
+    'Content-Type': 'application/json',
+  }
+});
 
 const validatePhone = (phone: string): string | null => {
-  if (!/^\d+$/.test(phone)) {
-    return '전화번호는 숫자만 포함해야 합니다.';
-  }
-  if (phone.length < 10 || phone.length > 11) {
-    return '전화번호는 10자리 또는 11자리여야 합니다.';
+  const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+  if (!phoneRegex.test(phone)) {
+    return '전화번호 형식이 올바르지 않습니다. (예: 123-456-7890)';
   }
   return null;
 };
@@ -46,7 +45,6 @@ const validateUsername = (username: string): string | null => {
 
 const FindAccount: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const { data, isLoading } = useUsers();
   const { phone, setPhone } = useAccountStore();
   const [phoneError, setPhoneError] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState(false);
@@ -77,41 +75,35 @@ const FindAccount: React.FC = () => {
       return;
     }
 
-    setUsernameError(null);
-    setPhoneError(null);
+    try {
+      const response = await api.post('/api/member/find-id', {
+        name: username,
+        phoneNumber: phone
+      });
 
-    if (data) {
-      const phoneMatch = data.users.find((user: User) => user.phone === phone);
-
-      if (!phoneMatch) {
-        setAttemptCount((prev) => prev + 1);
-        setAlertContent(
-          attemptCount >= 4
-            ? '입력하신 정보로 등록된 계정을 찾을 수 없습니다.<br><u>회원가입</u>을 진행하시겠습니까?'
-            : '입력하신 정보로 등록된 계정을 찾을 수 없습니다.<br>정보를 다시 확인하고 입력해주세요.'
-        );
-        setShowAlert(true);
-        return;
+      if (response.status === 200) {
+        setUserEmail(response.data.email);
+        navigate('/show-email');
       }
-
-      if (phoneMatch.username !== username) {
-        setAttemptCount((prev) => prev + 1);
-        setAlertContent(
-          '전화번호는 맞지만 이름이 틀렸습니다. 다시 확인해주세요.'
-        );
-        setShowAlert(true);
-        return;
-      }
-
-      setUserEmail(phoneMatch.email);
-      navigate('/show-email');
+    } catch (error: unknown) {
+      console.error('계정 찾기 실패:', error);
+      setAttemptCount((prev) => prev + 1);
+      setAlertContent(
+        axios.isAxiosError(error) && error.response?.status === 404
+          ? '입력하신 정보로 등록된 계정을 찾을 수 없습니다.<br><u>회원가입</u>을 진행하시겠습니까?'
+          : '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
+      );
+      setShowAlert(true);
     }
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPhone = e.target.value;
-    setPhone(newPhone);
-    setPhoneError(validatePhone(newPhone));
+    const formatted = newPhone
+      .replace(/\D/g, '')
+      .replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+    setPhone(formatted);
+    setPhoneError(validatePhone(formatted));
   };
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -167,15 +159,13 @@ const FindAccount: React.FC = () => {
               />
 
               <Button
-                label={isLoading ? '로딩 중...' : '다음'}
+                label="다음"
                 onClick={handleFindAccount}
                 className={[
                   styles['find-account-form__button'],
-                  username && phone
-                    ? styles['button-filled']
-                    : styles['button-empty'],
+                  username && phone ? styles['button-filled'] : styles['button-empty'],
                 ]}
-                disabled={isLoading || !username || !phone}
+                disabled={!username || !phone}
               />
             </div>
           </TabPanel>
