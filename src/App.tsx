@@ -7,7 +7,6 @@ import {
 import { LoginPage } from './pages/Login/LoginPage';
 import { RegisterPage } from './pages/Register/RegisterPage';
 import { RegisterSuccessPage } from './pages/Register/RegisterSuccessPage';
-import { DeleteAccount } from './pages/DeleteAccount/DeleteAccount';
 import { useAuthStore } from './stores/authStore';
 import { BoardWrite } from './pages/Board/BoardWrite';
 import { BoardList } from './pages/Board/BoardList';

@@ -25,35 +25,48 @@ const SubHeader: React.FC<HeaderProps> = ({
   const navigate = useNavigate();
 
   return (
-    <header className={`${styles.header} ${styles['header--sub']}`}>
-      <nav aria-label="보조 헤더 내비게이션">
-        {hasBackButton && (
-          <Link
-            to="#"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate(-1);
-            }}
-            className={styles['header__back-button']}
-            aria-label="뒤로가기"
+    <header className={`${styles.header} ${styles['header--sub']}`} role="banner">
+      <div className={styles.header__container}>
+        <nav className={styles.header__navigation} aria-label="보조 헤더 내비게이션">
+          {hasBackButton && (
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className={styles['header__back-button']}
+              aria-label="이전 페이지로 이동"
+            >
+              <img src={back_icon} alt="" aria-hidden="true" />
+            </button>
+          )}
+        </nav>
+        <h1 className={styles.header__title} id="subheader-title">{title}</h1>
+        {hasText && text && (
+          <button 
+            type="button" 
+            className={styles.header__button}
+            aria-label={text}
           >
-            <img src={back_icon} alt="뒤로가기 아이콘" />
-          </Link>
+            {text}
+          </button>
         )}
-      </nav>
-      <h1 className={styles.header__title}>{title}</h1>
-      {hasText && text && (
-        <button className={styles.header__button}>{text}</button>
-      )}
-      {hasIcons && (
-        <ul className={styles.header__icons} aria-label="사용자 아이콘 목록">
-          {Array.from({ length: iconCount }).map((_, index) => (
-            <li key={index}>
-              <img src={user_icon} alt={`아이콘 ${index + 1}`} />
-            </li>
-          ))}
-        </ul>
-      )}
+        {hasIcons && (
+          <div className={styles.header__icons} role="complementary" aria-label="사용자 프로필 영역">
+            <ul>
+              {Array.from({ length: iconCount }).map((_, index) => (
+                <li key={index}>
+                  <button 
+                    type="button" 
+                    className={styles.header__icon}
+                    aria-label={`사용자 프로필 ${index + 1}`}
+                  >
+                    <img src={user_icon} alt="" aria-hidden="true" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </header>
   );
 };
@@ -62,7 +75,6 @@ const MainHeader: React.FC<HeaderProps> = ({
   title,
   hasBackButton,
   hasIcons,
-  icons,
   iconCount = 2,
   hasText,
   text,
@@ -70,33 +82,45 @@ const MainHeader: React.FC<HeaderProps> = ({
   const navigate = useNavigate();
 
   return (
-    <header className={`${styles.header} ${styles['header--main']}`}>
-      <nav aria-label="메인 헤더 내비게이션">
-        {hasBackButton && (
-          <Link
-            to="#"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate(-1);
-            }}
-            className={styles['header__back-button']}
-            aria-label="뒤로가기"
-          >
-            <img src={back_icon} alt="뒤로가기 아이콘" />
-          </Link>
-        )}
-      </nav>
-      <h1 className={styles.header__title}>{title}</h1>
-      {hasText && text && (
-        <button className={styles.header__button}>{text}</button>
-      )}
-      {hasIcons && (
-        <nav className={styles.header__icons} aria-label="사용자 아이콘">
-          {Array.from({ length: iconCount }).map((_, index) => (
-            <img key={index} src={user_icon} alt={`아이콘 ${index + 1}`} />
-          ))}
+    <header className={`${styles.header} ${styles['header--main']}`} role="banner">
+      <div className={styles.header__container}>
+        <nav className={styles.header__navigation} aria-label="메인 헤더 내비게이션">
+          {hasBackButton && (
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className={styles['header__back-button']}
+              aria-label="이전 페이지로 이동"
+            >
+              <img src={back_icon} alt="" aria-hidden="true" />
+            </button>
+          )}
         </nav>
-      )}
+        <h1 className={styles.header__title} id="mainheader-title">{title}</h1>
+        {hasText && text && (
+          <button 
+            type="button" 
+            className={styles.header__button}
+            aria-label={text}
+          >
+            {text}
+          </button>
+        )}
+        {hasIcons && (
+          <div className={styles.header__icons} role="complementary" aria-label="사용자 프로필 영역">
+            {Array.from({ length: iconCount }).map((_, index) => (
+              <button 
+                key={index}
+                type="button" 
+                className={styles.header__icon}
+                aria-label={`사용자 프로필 ${index + 1}`}
+              >
+                <img src={user_icon} alt="" aria-hidden="true" />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </header>
   );
 };

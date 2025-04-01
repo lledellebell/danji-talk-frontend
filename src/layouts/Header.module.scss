@@ -1,47 +1,81 @@
 .header {
-  height: 56px;
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  box-shadow: 0px 1px 4px 0 rgba(0, 0, 0, 0.04);
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  width: 100%;
+  height: 56px;
+  background-color: #fff;
+  box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.25);
   position: relative;
+  z-index: 10;
+  
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+  }
+
+  &--main, &--sub {
+    height: 56px;
+  }
 
   &__title {
-    font-size: 20px;
-    line-height: 28px;
-    font-weight: 700;
-    color: #000;
+    flex: 1;
     text-align: center;
-    width: 100%;
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  &__back-button {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 0.5rem;
+    cursor: pointer;
+    
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  &__button {
+    padding: 0.5rem 1rem;
+    margin-left: 1rem;
+    cursor: pointer;
   }
 
   &__icons {
     display: flex;
-    gap: 10px;
-    margin-left: auto;
-  }
+    gap: 1rem;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 
-  &__button {
-    font-size: 14px;
-    color: #999;
-    margin-left: auto;
-  }
-
-  // 메인 헤더: 타이틀 중앙 정렬
-  &--main {
-    .header__title {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 16px;
+    img {
+      width: 24px;
+      height: 24px;
     }
   }
-  &--sub {
-    .header__title {
-      position: static;
-      font-size: 14px;
-      margin-left: 0;
-      text-align: left;
+
+  &__navigation {
+    flex-shrink: 0;
+  }
+
+  &__icon {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    
+    &:focus-visible {
+      outline: 2px solid #007bff;
+      border-radius: 4px;
     }
   }
 }
