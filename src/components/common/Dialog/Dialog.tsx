@@ -1,12 +1,11 @@
-import React from "react";
-import styles from "./dialog.module.scss";
-import { useDialogStore } from "../../../stores/dialogStore";
+import React from 'react';
+import styles from './dialog.module.scss';
+import { useDialogStore } from '../../../stores/dialogStore';
 
 export interface DialogProps {
   title: React.ReactNode;
   content: React.ReactNode;
   onClose: () => void;
-  closeDialog: () => void;
   cancelLabel?: string;
   confirmLabel?: string;
   onConfirm?: () => void;

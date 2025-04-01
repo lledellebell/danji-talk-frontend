@@ -60,7 +60,7 @@ const RegisterForm = ({
         content="사용 가능한 이메일입니다."
         confirmLabel="인증번호 전송"
         onClose={closeDialog}
-        closeDialog={sendEmailCode}
+        onConfirm={sendEmailCode}
       />
       {isOpen && (
         <Alert alertTitle={title} alertContent={content} onClose={closeAlert} />

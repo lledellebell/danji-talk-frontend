@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { LoginPage } from './pages/Login/LoginPage';
 import { RegisterPage } from './pages/Register/RegisterPage';
+import { RegisterSuccessPage } from './pages/Register/RegisterSuccessPage';
 import { DeleteAccount } from './pages/DeleteAccount/DeleteAccount';
 import { useAuthStore } from './stores/authStore';
 import { BoardWrite } from './pages/Board/BoardWrite';
@@ -27,6 +28,15 @@ function App() {
           element={isLoggedIn ? <Navigate to="/" replace /> : <LoginPage />}
         />
         <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/register-success"
+          element={
+            <>
+              <Header title="회원가입" type="sub" hasBackButton={true} />
+              <RegisterSuccessPage />
+            </>
+          }
+        />
         <Route
           path="/"
           element={
