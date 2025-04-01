@@ -40,7 +40,7 @@ function App() {
           path="/"
           element={
             <>
-              <Header title="홈페이지" type="main" />
+              <Header title="DANJITALK" type="main" />
               {isLoggedIn ? (
                 <div>홈페이지</div>
               ) : (
