@@ -54,6 +54,12 @@ const FindAccount: React.FC = () => {
   const [username, setUsername] = useState('');
   const [usernameError, setUsernameError] = useState<string | null>(null);
   const usernameInputRef = useRef<HTMLInputElement>(null);
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [verificationCode, setVerificationCode] = useState('');
+  const [verificationCodeError, setVerificationCodeError] = useState<string | null>(null);
+  const [isVerificationSent, setIsVerificationSent] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
     if (usernameError) {
@@ -109,6 +115,54 @@ const FindAccount: React.FC = () => {
     const newUsername = e.target.value;
     setUsername(newUsername);
     setUsernameError(validateUsername(newUsername));
+  };
+
+  const handleSendVerification = async () => {
+    if (!email) {
+      setEmailError('이메일을 입력해주세요.');
+      return;
+    }
+
+    try {
+      await api.post('/api/mail/certification-code/send', {
+        mail: email
+      });
+      setIsVerificationSent(true);
+      setAlertContent('인증번호가 전송되었습니다.');
+      setShowAlert(true);
+    } catch (error) {
+      console.error('인증번호 전송 실패:', error);
+      setAlertContent('인증번호 전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      setShowAlert(true);
+    }
+  };
+
+  const handleVerifyCode = async () => {
+    if (!verificationCode) {
+      setVerificationCodeError('인증번호를 입력해주세요.');
+      return;
+    }
+
+    try {
+      await api.get('/api/mail/certification-code/verify', {
+        params: { 
+          email: email,
+          code: verificationCode 
+        }
+      });
+      setIsVerified(true);
+      setAlertContent('인증이 완료되었습니다.');
+      setShowAlert(true);
+    } catch (error) {
+      console.error('인증번호 확인 실패:', error);
+      setVerificationCodeError('인증번호가 올바르지 않습니다.');
+    }
+  };
+
+  const handleResetPassword = () => {
+    if (isVerified) {
+      navigate('/reset-password', { state: { email } });
+    }
   };
 
   return (
@@ -174,7 +228,58 @@ const FindAccount: React.FC = () => {
             id="tabpanel-1"
             ariaLabelledby="tab-1"
           >
-            비밀번호 찾기
+            <div className={styles['find-account-form']}>
+              <InputField
+                label="이메일"
+                name="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setEmailError(null);
+                }}
+                placeholder="이메일을 입력하세요"
+                required
+                autoComplete="email"
+                className={styles['find-account-form__input-field']}
+                error={emailError}
+                actionButton={{
+                  label: '인증번호 요청',
+                  onClick: handleSendVerification,
+                  disabled: !email
+                }}
+              />
+              
+              {isVerificationSent && (
+                <InputField
+                  label="인증번호"
+                  name="verificationCode"
+                  value={verificationCode}
+                  onChange={(e) => {
+                    setVerificationCode(e.target.value);
+                    setVerificationCodeError(null);
+                  }}
+                  placeholder="인증번호 6자리를 입력하세요"
+                  required
+                  className={styles['find-account-form__input-field']}
+                  error={verificationCodeError}
+                  actionButton={{
+                    label: isVerified ? '인증완료' : '인증확인',
+                    onClick: handleVerifyCode,
+                    disabled: !verificationCode || isVerified
+                  }}
+                />
+              )}
+
+              <Button
+                label="다음"
+                onClick={handleResetPassword}
+                className={[
+                  styles['find-account-form__button'],
+                  isVerified ? styles['button-filled'] : styles['button-empty']
+                ]}
+                disabled={!isVerified}
+              />
+            </div>
           </TabPanel>
         </TabWrapper>
         {showAlert && (
