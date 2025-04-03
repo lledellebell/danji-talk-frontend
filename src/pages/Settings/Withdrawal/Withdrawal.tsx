@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../../stores/authStore';
 import styles from './Withdrawal.module.scss';
+import InputField from '../../../components/common/InputField/InputField';
 
 const Withdrawal = () => {
   const [step, setStep] = useState(1);
@@ -22,18 +23,30 @@ const Withdrawal = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ password }),
-        credentials: 'include',
+        credentials: 'same-origin',
+        body: JSON.stringify({ password })
       });
 
       if (!response.ok) {
-        throw new Error('비밀번호가 일치하지 않습니다.');
+        if (response.status === 401) {
+          throw new Error('비밀번호가 일치하지 않습니다.');
+        } else if (response.status === 403) {
+          throw new Error('진행중인 예약이 있어 탈퇴할 수 없습니다.');
+        }
+        throw new Error('회원탈퇴 처리 중 오류가 발생했습니다.');
       }
 
       logout();
-      navigate('/login', { replace: true });
+      navigate('/login', { 
+        replace: true,
+        state: { message: '회원탈퇴가 완료되었습니다.' }
+      });
     } catch (err) {
-      setError(err instanceof Error ? err.message : '회원탈퇴 처리 중 오류가 발생했습니다.');
+      if (err instanceof TypeError && err.message === 'Failed to fetch') {
+        setError('서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      } else {
+        setError(err instanceof Error ? err.message : '회원탈퇴 처리 중 오류가 발생했습니다.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -87,28 +100,28 @@ const Withdrawal = () => {
           className={styles.form}
           aria-labelledby="withdrawal-form-title"
         >
-          <h1 id="withdrawal-form-title" className="sr-only">회원 탈퇴 비밀번호 확인</h1>
-          <div className={styles.inputGroup}>
-            <label htmlFor="password" className={styles.label}>
-              비밀번호 확인
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="비밀번호를 입력해주세요"
-              className={styles.input}
-              required
-              aria-required="true"
-              aria-describedby={error ? "password-error" : undefined}
-            />
-            {error && (
-              <p id="password-error" className={styles.error} role="alert">
-                {error}
-              </p>
-            )}
+          <div className={styles.warning}>
+            <h1 id="withdrawal-form-title" className={styles.warningTitle}>
+              탈퇴를 진행합니다.
+            </h1>
+            <p className={styles.warningText}>
+              탈퇴를 진행하기 위해 비밀번호를 입력해주세요.
+            </p>
           </div>
+          
+          <InputField
+            id="password"
+            name="password"
+            type="password"
+            label="비밀번호 확인"
+            className={styles.inputField}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="비밀번호를 입력해주세요"
+            required
+            error={error}
+            showPasswordToggle={true}
+          />
 
           <button
             type="submit"
