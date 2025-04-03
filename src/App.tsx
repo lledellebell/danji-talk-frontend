@@ -79,7 +79,7 @@ function App() {
           path="/signup"
           element={
             <>
-              <Header title="회원가입" type="sub" hasBackButton={true} />
+              <RegisterPage />
             </>
           }
         />

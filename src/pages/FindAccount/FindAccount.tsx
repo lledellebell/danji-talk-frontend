@@ -92,13 +92,20 @@ const FindAccount: React.FC = () => {
       }
     } catch (error: unknown) {
       console.error('계정 찾기 실패:', error);
+      const is404Error = axios.isAxiosError(error) && error.response?.status === 404;
       setAttemptCount((prev) => prev + 1);
       setAlertContent(
-        axios.isAxiosError(error) && error.response?.status === 404
+        is404Error
           ? '입력하신 정보로 등록된 계정을 찾을 수 없습니다.<br><u>회원가입</u>을 진행하시겠습니까?'
           : '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
       );
       setShowAlert(true);
+      
+      if (is404Error) {
+        setTimeout(() => {
+          navigate('/signup');
+        }, 2000);
+      }
     }
   };
 
