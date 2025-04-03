@@ -2,7 +2,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
 import styles from './Header.module.scss';
 import back_icon from '../assets/back_icon.svg';
-import user_icon from '../assets/user_icon.svg';
 import { useAuthStore } from '../stores/authStore';
 import Sidebar from './Sidebar';
 
@@ -15,15 +14,14 @@ interface HeaderProps {
   hasUserIcon?: boolean;
   iconCount?: number;
   text?: string;
+  iconComponent?: React.ReactNode;
 }
 
 const SubHeader: React.FC<HeaderProps> = ({
   title,
   hasBackButton,
   hasIcons,
-  iconCount = 1,
-  hasText,
-  text,
+  iconComponent
 }) => {
   const navigate = useNavigate();
 
@@ -43,31 +41,14 @@ const SubHeader: React.FC<HeaderProps> = ({
           )}
         </nav>
         <h1 className={styles.header__title} id="subheader-title">{title}</h1>
-        {hasText && text && (
+        {hasIcons && iconComponent && (
           <button 
             type="button" 
-            className={styles.header__button}
-            aria-label={text}
+            className={styles.header__icon}
+            aria-label="설정"
           >
-            {text}
+            {iconComponent}
           </button>
-        )}
-        {hasIcons && (
-          <div className={styles.header__icons} role="complementary" aria-label="사용자 프로필 영역">
-            <ul>
-              {Array.from({ length: iconCount }).map((_, index) => (
-                <li key={index}>
-                  <button 
-                    type="button" 
-                    className={styles.header__icon}
-                    aria-label={`사용자 프로필 ${index + 1}`}
-                  >
-                    <img src={user_icon} alt="" aria-hidden="true" />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
         )}
       </div>
     </header>
@@ -96,6 +77,7 @@ const MainHeader: React.FC<HeaderProps> = ({ title }) => {
                 viewBox="0 0 24 24" 
                 fill="none" 
                 xmlns="http://www.w3.org/2000/svg"
+                className={styles.header__icon_svg}
               >
                 <path 
                   d="M3 12h18M3 6h18M3 18h18" 
@@ -107,7 +89,7 @@ const MainHeader: React.FC<HeaderProps> = ({ title }) => {
             </button>
           ) : (
             <Link to="/login" className={styles.header__button}>
-              로그인
+              <span className={styles.header__button_text}>로그인</span>
             </Link>
           )}
         </div>
