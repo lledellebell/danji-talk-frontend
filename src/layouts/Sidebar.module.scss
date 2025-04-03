@@ -40,7 +40,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
   z-index: 100;
   opacity: 0;
   animation: fadeIn 0.3s ease-out forwards;
@@ -56,10 +55,10 @@
   right: 0;
   width: 60%;
   height: 100%;
-  background-color: #3C4B66;
+  background-color: #626c82;
   z-index: 101;
   animation: slideIn 0.3s ease-out forwards;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+  border-radius: 5px 0 0 5px;
 
   &.closing {
     animation: slideOut 0.3s ease-in forwards;
@@ -111,11 +110,11 @@
       }
     }
 
-    &:last-child {
-      margin-top: 2rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
+    // &:last-child {
+    //   margin-top: 2rem;
+    //   padding-top: 1rem;
+    //   border-top: 1px solid rgba(255, 255, 255, 0.1);
+    // }
   }
 
   a, button {
