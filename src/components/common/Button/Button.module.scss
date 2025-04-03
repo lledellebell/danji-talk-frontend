@@ -106,8 +106,11 @@ $large-padding: 15px 30px;
   }
 
   &.medium {
+    margin-top: 40px;
     font-size: $medium-font-size;
     padding: $medium-padding;
+    color: #ffffff;
+    background-color: #97bbff;
   }
 
   &.large {

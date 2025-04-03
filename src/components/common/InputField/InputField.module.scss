@@ -90,6 +90,7 @@ $spacing-xsmall: 4px;
 
     &--with-button {
       padding-right: 72px;
+      background-color: #007bff;
 
       @media screen and (max-width: $breakpoint-mobile) {
         padding-right: 64px;
