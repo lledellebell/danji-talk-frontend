@@ -16,6 +16,7 @@ import ShowEmail from './pages/ShowEmail/ShowEmail';
 import Header from './layouts/Header';
 import './styles/App.css';
 import SearchBar from './components/Search/SearchBar';
+import MenuGrid from './components/MenuGrid/MenuGrid';
 
 function App() {
   const { isLoggedIn } = useAuthStore();
@@ -45,7 +46,7 @@ function App() {
               {isLoggedIn ? (
                 <div>
                   <SearchBar />
-                  {/* 나머지 홈페이지 코드 */}
+                  <MenuGrid />
                 </div>
               ) : (
                 <Navigate to="/login" replace />
