@@ -44,22 +44,15 @@ $color-border: #dee2e6;
 // Block
 .find-account-wrapper {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  flex-direction: column;
-  min-height: 100vh;
-  padding: $spacing-large;
+  width: 100%;
+  padding: 2rem;
 }
 
 .find-account-container {
-  padding: $spacing-large;
-  background-color: $color-white;
   width: 100%;
-  margin: 0 auto;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    padding: $spacing-medium;
-  }
+  max-width: 480px;
 }
 
 // Element
@@ -74,32 +67,49 @@ $color-border: #dee2e6;
 .find-account-form {
   display: flex;
   flex-direction: column;
-  gap: $spacing-medium;
-  margin-top: $spacing-large;
-  @media screen and (max-width: $breakpoint-mobile) {
-    gap: $spacing-small;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 2rem 0;
+
+  &__input-field {
+    width: 100%;
+  }
+
+  &__button {
+    margin-top: 1rem;
+    width: 100%;
   }
 }
 
-.find-account-form__input-field {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-medium;
+.email-verification-section,
+.verification-code-section {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  gap: 1rem;
+  width: 100%;
+  align-items: flex-end;
 
-  + .find-account-form__input-field {
-    margin-top: $spacing-medium;
+  .verification-request-button,
+  .verify-code-button {
+    margin-top: 1.5rem;
+    height: 48px;
+    width: 120px;
+    min-width: 120px;
+    white-space: nowrap;
+    padding: 0;
   }
-}
 
-.find-account-form__button {
-  margin-top: $spacing-large;
-  @include button-style($color-background, $color-white, #d0e0ff);
+  :global(.input-field-container) {
+    width: 100%;
+  }
 }
 
 .button-filled {
-  @include button-style($color-primary, $color-white, #7aa3ff);
+  background-color: var(--primary-color);
+  color: white;
 }
 
 .button-empty {
-  @include button-style($color-white, $color-text, #f0f0f0);
+  background-color: var(--disabled-color);
+  color: var(--text-color-secondary);
 }

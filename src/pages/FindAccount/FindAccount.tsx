@@ -58,8 +58,8 @@ const FindAccount: React.FC = () => {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [verificationCode, setVerificationCode] = useState('');
   const [verificationCodeError, setVerificationCodeError] = useState<string | null>(null);
-  const [isVerificationSent, setIsVerificationSent] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
+  const [isEmailVerificationSent, setIsEmailVerificationSent] = useState(false);
+  const [isVerificationCodeValid, setIsVerificationCodeValid] = useState(false);
 
   useEffect(() => {
     if (usernameError) {
@@ -117,50 +117,58 @@ const FindAccount: React.FC = () => {
     setUsernameError(validateUsername(newUsername));
   };
 
-  const handleSendVerification = async () => {
-    if (!email) {
-      setEmailError('이메일을 입력해주세요.');
+  const validateEmail = (email: string): string | null => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return '유효한 이메일 주소를 입력해주세요.';
+    }
+    return null;
+  };
+
+  const handleRequestVerification = async () => {
+    const emailError = validateEmail(email);
+    if (emailError) {
+      setEmailError(emailError);
       return;
     }
 
     try {
-      await api.post('/api/mail/certification-code/send', {
-        mail: email
+      const response = await api.post('/api/member/request-verification', {
+        email: email
       });
-      setIsVerificationSent(true);
-      setAlertContent('인증번호가 전송되었습니다.');
-      setShowAlert(true);
+
+      if (response.status === 200) {
+        setIsEmailVerificationSent(true);
+        setAlertContent('인증번호가 이메일로 전송되었습니다.');
+        setShowAlert(true);
+      }
     } catch (error) {
-      console.error('인증번호 전송 실패:', error);
-      setAlertContent('인증번호 전송에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      setAlertContent('인증번호 전송에 실패했습니다. 다시 시도해주세요.');
       setShowAlert(true);
     }
   };
 
+  // 인증번호 확인
   const handleVerifyCode = async () => {
-    if (!verificationCode) {
-      setVerificationCodeError('인증번호를 입력해주세요.');
-      return;
-    }
-
     try {
-      await api.get('/api/mail/certification-code/verify', {
-        params: { 
-          email: email,
-          code: verificationCode 
-        }
+      const response = await api.post('/api/member/verify-code', {
+        email: email,
+        code: verificationCode
       });
-      setIsVerified(true);
-      setAlertContent('인증이 완료되었습니다.');
-      setShowAlert(true);
+
+      if (response.status === 200) {
+        setIsVerificationCodeValid(true);
+        setAlertContent('인증이 완료되었습니다.');
+        setShowAlert(true);
+      }
     } catch (error) {
-      console.error('인증번호 확인 실패:', error);
-      setVerificationCodeError('인증번호가 올바르지 않습니다.');
+      setVerificationCodeError('잘못된 인증번호입니다. 다시 확인해주세요.');
     }
   };
 
+  // 비밀번호 재설정 페이지로 이동
   const handleResetPassword = () => {
-    if (isVerified) {
+    if (isVerificationCodeValid) {
       navigate('/reset-password', { state: { email } });
     }
   };
@@ -229,55 +237,54 @@ const FindAccount: React.FC = () => {
             ariaLabelledby="tab-1"
           >
             <div className={styles['find-account-form']}>
-              <InputField
-                label="이메일"
-                name="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setEmailError(null);
-                }}
-                placeholder="이메일을 입력하세요"
-                required
-                autoComplete="email"
-                className={styles['find-account-form__input-field']}
-                error={emailError}
-                actionButton={{
-                  label: '인증번호 요청',
-                  onClick: handleSendVerification,
-                  disabled: !email
-                }}
-              />
-              
-              {isVerificationSent && (
+              <div className={styles['email-verification-section']}>
+                <InputField
+                  label="이메일"
+                  name="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setEmailError(validateEmail(e.target.value));
+                  }}
+                  placeholder="이메일을 입력하세요"
+                  required
+                  autoComplete="email"
+                  error={emailError || undefined}
+                />
+                <Button
+                  label="인증번호"
+                  onClick={handleRequestVerification}
+                  disabled={!email || !!emailError}
+                  className={styles['verification-request-button']}
+                />
+              </div>
+
+              <div className={`${styles['verification-code-section']} ${isEmailVerificationSent ? styles['visible'] : ''}`}>
                 <InputField
                   label="인증번호"
                   name="verificationCode"
                   value={verificationCode}
-                  onChange={(e) => {
-                    setVerificationCode(e.target.value);
-                    setVerificationCodeError(null);
-                  }}
+                  onChange={(e) => setVerificationCode(e.target.value)}
                   placeholder="인증번호 6자리를 입력하세요"
                   required
-                  className={styles['find-account-form__input-field']}
-                  error={verificationCodeError}
-                  actionButton={{
-                    label: isVerified ? '인증완료' : '인증확인',
-                    onClick: handleVerifyCode,
-                    disabled: !verificationCode || isVerified
-                  }}
+                  error={verificationCodeError || undefined}
                 />
-              )}
+                <Button
+                  label="확인"
+                  onClick={handleVerifyCode}
+                  disabled={!verificationCode}
+                  className={styles['verify-code-button']}
+                />
+              </div>
 
               <Button
                 label="다음"
                 onClick={handleResetPassword}
+                disabled={!isVerificationCodeValid}
                 className={[
                   styles['find-account-form__button'],
-                  isVerified ? styles['button-filled'] : styles['button-empty']
+                  isVerificationCodeValid ? styles['button-filled'] : styles['button-empty']
                 ]}
-                disabled={!isVerified}
               />
             </div>
           </TabPanel>

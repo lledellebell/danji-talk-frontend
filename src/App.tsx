@@ -15,7 +15,6 @@ import FindAccount from './pages/FindAccount/FindAccount';
 import ShowEmail from './pages/ShowEmail/ShowEmail';
 import Header from './layouts/Header';
 import './styles/App.css';
-import ResetPassword from './pages/ResetPassword/ResetPassword';
 
 function App() {
   const { isLoggedIn } = useAuthStore();
@@ -103,19 +102,6 @@ function App() {
                 hasIcons={true}
               />
               <BoardList />
-            </>
-          }
-        />
-        <Route
-          path="/reset-password"
-          element={
-            <>
-              <Header
-                title="비밀번호 재설정"
-                type="sub"
-                hasBackButton={true}
-              />
-              <ResetPassword />
             </>
           }
         />
