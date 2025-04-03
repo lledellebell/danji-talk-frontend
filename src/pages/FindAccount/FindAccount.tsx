@@ -140,9 +140,13 @@ const FindAccount: React.FC = () => {
     }
 
     try {
+      console.log('인증번호 요청 중...', email);
+
       const response = await api.post('/api/mail/certification-code/send', {
         mail: email
       });
+
+      console.log('서버 응답:', response);
 
       if (response.status === 200) {
         setIsEmailVerificationSent(true);
@@ -150,10 +154,25 @@ const FindAccount: React.FC = () => {
         setShowAlert(true);
       }
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response?.status === 409) {
-        setAlertContent('이미 가입된 이메일입니다.');
+      console.error('인증번호 요청 실패:', error);
+
+      if (axios.isAxiosError(error)) {
+        console.log('에러 상태:', error.response?.status);
+        console.log('에러 데이터:', error.response?.data);
+
+        if (error.response?.status === 409) {
+          setIsEmailVerificationSent(true);
+          setAlertContent('인증번호가 이메일로 전송되었습니다.');
+        } else if (error.response?.status === 404) {
+          setAlertContent('가입되지 않은 이메일입니다. 회원가입을 먼저 진행해주세요.');
+          setTimeout(() => {
+            navigate('/signup');
+          }, 2000);
+        } else {
+          setAlertContent(`인증번호 전송에 실패했습니다. (${error.response?.status || '알 수 없는 에러'})`);
+        }
       } else {
-        setAlertContent('인증번호 전송에 실패했습니다. 다시 시도해주세요.');
+        setAlertContent('서버와의 통신에 실패했습니다. 잠시 후 다시 시도해주세요.');
       }
       setShowAlert(true);
     }
@@ -269,7 +288,7 @@ const FindAccount: React.FC = () => {
                     error={emailError || undefined}
                   />
                   <Button
-                    label={isEmailVerificationSent ? "인증번호 재요청" : "인증번호 요청"}
+                    label={isEmailVerificationSent ? "재요청" : "인증번호 요청"}
                     onClick={handleRequestVerification}
                     disabled={!email || !!emailError}
                     className={`${styles['button-base']}`}

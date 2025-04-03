@@ -1,7 +1,10 @@
 import { useNavigate, Link } from 'react-router-dom';
+import { useState } from 'react';
 import styles from './Header.module.scss';
 import back_icon from '../assets/back_icon.svg';
 import user_icon from '../assets/user_icon.svg';
+import { useAuthStore } from '../stores/authStore';
+import Sidebar from './Sidebar';
 
 interface HeaderProps {
   title: string;
@@ -71,57 +74,49 @@ const SubHeader: React.FC<HeaderProps> = ({
   );
 };
 
-const MainHeader: React.FC<HeaderProps> = ({
-  title,
-  hasBackButton,
-  hasIcons,
-  iconCount = 2,
-  hasText,
-  text,
-}) => {
-  const navigate = useNavigate();
-
+const MainHeader: React.FC<HeaderProps> = ({ title }) => {
+  const { isLoggedIn } = useAuthStore();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  
   return (
-    <header className={`${styles.header} ${styles['header--main']}`} role="banner">
-      <div className={styles.header__container}>
-        <nav className={styles.header__navigation} aria-label="메인 헤더 내비게이션">
-          {hasBackButton && (
-            <button
-              type="button"
-              onClick={() => navigate(-1)}
-              className={styles['header__back-button']}
-              aria-label="이전 페이지로 이동"
+    <>
+      <header className={`${styles.header} ${styles['header--main']}`} role="banner">
+        <div className={styles.header__container}>
+          <h1 className={styles.header__title} id="mainheader-title">{title}</h1>
+          {isLoggedIn ? (
+            <button 
+              type="button" 
+              className={styles.header__icon}
+              aria-label="메뉴 열기"
+              onClick={() => setIsSidebarOpen(true)}
             >
-              <img src={back_icon} alt="" aria-hidden="true" />
-            </button>
-          )}
-        </nav>
-        <h1 className={styles.header__title} id="mainheader-title">{title}</h1>
-        {hasText && text && (
-          <button 
-            type="button" 
-            className={styles.header__button}
-            aria-label={text}
-          >
-            {text}
-          </button>
-        )}
-        {hasIcons && (
-          <div className={styles.header__icons} role="complementary" aria-label="사용자 프로필 영역">
-            {Array.from({ length: iconCount }).map((_, index) => (
-              <button 
-                key={index}
-                type="button" 
-                className={styles.header__icon}
-                aria-label={`사용자 프로필 ${index + 1}`}
+              <svg 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <img src={user_icon} alt="" aria-hidden="true" />
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-    </header>
+                <path 
+                  d="M3 12h18M3 6h18M3 18h18" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          ) : (
+            <Link to="/login" className={styles.header__button}>
+              로그인
+            </Link>
+          )}
+        </div>
+      </header>
+      <Sidebar 
+        isOpen={isSidebarOpen} 
+        onClose={() => setIsSidebarOpen(false)} 
+      />
+    </>
   );
 };
 

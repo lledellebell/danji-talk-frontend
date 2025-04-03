@@ -24,7 +24,7 @@
 
   &__title {
     flex: 1;
-    text-align: center;
+    text-align: left;
     margin: 0;
     font-size: 1.125rem;
     font-weight: 600;
@@ -47,6 +47,13 @@
     padding: 0.5rem 1rem;
     margin-left: 1rem;
     cursor: pointer;
+    text-decoration: none;
+    color: #000;
+    font-size: 1rem;
+    
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   &__icons {
