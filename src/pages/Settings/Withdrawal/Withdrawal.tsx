@@ -1,137 +1,117 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '../../../stores/authStore';
+import { useWithdrawalStore } from '../../../stores/withdrawalStore';
+import { useWithdrawalMutation } from '../../../hooks/useWithdrawal';
 import styles from './Withdrawal.module.scss';
 import InputField from '../../../components/common/InputField/InputField';
 
-const Withdrawal = () => {
-  const [step, setStep] = useState(1);
+const PasswordConfirmationStep = () => {
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-  const { logout } = useAuthStore();
+  const [focused, setFocused] = useState(false);
+  const { error } = useWithdrawalStore();
+  const withdrawal = useWithdrawalMutation();
 
-  const handleWithdrawal = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setIsLoading(true);
-
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/member`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin',
-        body: JSON.stringify({ password })
-      });
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          throw new Error('비밀번호가 일치하지 않습니다.');
-        } else if (response.status === 403) {
-          throw new Error('진행중인 예약이 있어 탈퇴할 수 없습니다.');
-        }
-        throw new Error('회원탈퇴 처리 중 오류가 발생했습니다.');
-      }
-
-      logout();
-      navigate('/login', { 
-        replace: true,
-        state: { message: '회원탈퇴가 완료되었습니다.' }
-      });
-    } catch (err) {
-      if (err instanceof TypeError && err.message === 'Failed to fetch') {
-        setError('서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.');
-      } else {
-        setError(err instanceof Error ? err.message : '회원탈퇴 처리 중 오류가 발생했습니다.');
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    withdrawal.mutate(password);
   };
 
-  if (step === 1) {
-    return (
-      <main className={styles.withdrawal}>
-        <div className={styles.content}>
-          <section className={styles.warning} aria-labelledby="warning-title">
-            <h1 id="warning-title" className={styles.warningTitle}>잠시만요!</h1>
-            <p className={styles.warningText}>회원 탈퇴 전 꼭 확인해주세요.</p>
-          </section>
+  return (
+    <form 
+      onSubmit={handleSubmit} 
+      className={styles.form}
+      aria-labelledby="withdrawal-form-title"
+    >
+      <header className={styles.warning}>
+        <h1 id="withdrawal-form-title" className={styles.warningTitle}>
+          탈퇴를 진행합니다.
+        </h1>
+        <p className={styles.warningText}>
+          회원님의 정보 보호를 위해 <strong>비밀번호를 한 번 더 확인</strong>합니다.
+          <br />
+          <strong className={styles.dangerText}>탈퇴 후에는 복구가 불가능</strong>하니 신중하게 진행해 주세요.
+        </p>
+      </header>
 
-          <section className={styles.warningList} aria-label="회원 탈퇴 주의사항">
-            <article className={styles.warningItem}>
-              <h2>개인 이용 내역 삭제</h2>
-              <p className={styles.warningItemText}>
-                탈퇴 시 회원님의 정보는 모두 사라집니다.
-                <br />
-                단지톡을 다시 이용하고자 할 경우 회원가입을 다시해주셔야 합니다.
-              </p>
-            </article>
-            <article className={styles.warningItem}>
-              <h2>예약내역 보유시 탈퇴 불가</h2>
-              <p className={styles.warningItemText}>
-                회원님의 예약 내역이 존재하고, 아직 예약일이 지나지 않았을 경우 탈퇴가 불가능합니다. 
-                예약 내역을 삭제 후 진행해주세요.
-              </p>
-            </article>
-          </section>
+      <div 
+        className={`${styles.inputWrapper} ${focused ? styles.focused : ''}`}
+        role="group"
+        aria-labelledby="password-label"
+      >
+        <InputField
+          id="password"
+          name="password"
+          type="password"
+          label="비밀번호 확인"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          placeholder="비밀번호를 입력해주세요"
+          required
+          error={error ?? undefined}
+          showPasswordToggle={true}
+          aria-required="true"
+          aria-invalid={!!error}
+          aria-describedby={error ? "password-error" : undefined}
+          disabled={withdrawal.isPending}
+        />
+      </div>
 
-          <button
-            type="button"
-            className={styles.confirmButton}
-            onClick={() => setStep(2)}
-            aria-label="회원 탈퇴 확인"
-          >
-            탈퇴하기
-          </button>
-        </div>
-      </main>
-    );
-  }
+      <button
+        type="submit"
+        className={styles.submitButton}
+        disabled={!password || withdrawal.isPending}
+        aria-busy={withdrawal.isPending}
+      >
+        {withdrawal.isPending ? '처리중...' : '회원 탈퇴'}
+      </button>
+    </form>
+  );
+};
+
+const Withdrawal = () => {
+  const { step, setStep } = useWithdrawalStore();
 
   return (
     <main className={styles.withdrawal}>
       <div className={styles.content}>
-        <form 
-          onSubmit={handleWithdrawal} 
-          className={styles.form}
-          aria-labelledby="withdrawal-form-title"
-        >
-          <div className={styles.warning}>
-            <h1 id="withdrawal-form-title" className={styles.warningTitle}>
-              탈퇴를 진행합니다.
-            </h1>
-            <p className={styles.warningText}>
-              탈퇴를 진행하기 위해 비밀번호를 입력해주세요.
-            </p>
-          </div>
-          
-          <InputField
-            id="password"
-            name="password"
-            type="password"
-            label="비밀번호 확인"
-            className={styles.inputField}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="비밀번호를 입력해주세요"
-            required
-            error={error}
-            showPasswordToggle={true}
-          />
+        {step === 1 ? (
+          <>
+            <section className={styles.warning} aria-labelledby="warning-title">
+              <h1 id="warning-title" className={styles.warningTitle}>잠시만요!</h1>
+              <p className={styles.warningText}>회원 탈퇴 전 꼭 확인해주세요.</p>
+            </section>
 
-          <button
-            type="submit"
-            className={styles.submitButton}
-            disabled={!password || isLoading}
-            aria-busy={isLoading}
-          >
-            {isLoading ? '처리중...' : '회원 탈퇴'}
-          </button>
-        </form>
+            <section className={styles.warningList} aria-label="회원 탈퇴 주의사항">
+              <article className={styles.warningItem}>
+                <h2>개인 이용 내역 삭제</h2>
+                <p className={styles.warningItemText}>
+                  탈퇴 시 회원님의 정보는 모두 사라집니다.
+                  <br />
+                  단지톡을 다시 이용하고자 할 경우 회원가입을 다시해주셔야 합니다.
+                </p>
+              </article>
+              <article className={styles.warningItem}>
+                <h2>예약내역 보유시 탈퇴 불가</h2>
+                <p className={styles.warningItemText}>
+                  회원님의 예약 내역이 존재하고, 아직 예약일이 지나지 않았을 경우 탈퇴가 불가능합니다. 
+                  예약 내역을 삭제 후 진행해주세요.
+                </p>
+              </article>
+            </section>
+
+            <button
+              type="button"
+              className={styles.confirmButton}
+              onClick={() => setStep(2)}
+              aria-label="회원 탈퇴 확인"
+            >
+              탈퇴하기
+            </button>
+          </>
+        ) : (
+          <PasswordConfirmationStep />
+        )}
       </div>
     </main>
   );
