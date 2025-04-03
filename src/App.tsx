@@ -20,6 +20,7 @@ import MenuGrid from './components/MenuGrid/MenuGrid';
 import MyPage from './pages/MyPage/MyPage';
 import Favorites from './pages/Favorites/Favorites';
 import Settings from './pages/Settings/Settings';
+import Withdrawal from './pages/Settings/Withdrawal/Withdrawal';
 
 function App() {
   const { isLoggedIn } = useAuthStore();
@@ -176,6 +177,23 @@ function App() {
                   hasBackButton={true}
                 />
                 <Settings />
+              </>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/settings/withdrawal"
+          element={
+            isLoggedIn ? (
+              <>
+                <Header 
+                  title="회원탈퇴" 
+                  type="sub"
+                  hasBackButton={true}
+                />
+                <Withdrawal />
               </>
             ) : (
               <Navigate to="/login" replace />
