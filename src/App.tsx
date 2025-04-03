@@ -19,6 +19,7 @@ import SearchBar from './components/Search/SearchBar';
 import MenuGrid from './components/MenuGrid/MenuGrid';
 import MyPage from './pages/MyPage/MyPage';
 import Favorites from './pages/Favorites/Favorites';
+import Settings from './pages/Settings/Settings';
 
 function App() {
   const { isLoggedIn } = useAuthStore();
@@ -158,6 +159,23 @@ function App() {
                   hasBackButton={true}
                 />
                 <Favorites />
+              </>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            isLoggedIn ? (
+              <>
+                <Header 
+                  title="설정" 
+                  type="sub"
+                  hasBackButton={true}
+                />
+                <Settings />
               </>
             ) : (
               <Navigate to="/login" replace />
