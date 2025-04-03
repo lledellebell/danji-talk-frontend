@@ -6,7 +6,9 @@
   background-color: white;
   margin: 20px;
   position: relative;
-  border: 1px solid #EDEDED;
+  border: none;
+  box-shadow: 0px 1px 5px 1px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
   border-radius: 12px;
   overflow: hidden;
   row-gap: 8px;
