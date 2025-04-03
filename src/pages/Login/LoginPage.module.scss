@@ -1,9 +1,3 @@
-// Breakpoints
-$breakpoint-mobile: 360px;
-$breakpoint-tablet: 768px;
-$breakpoint-desktop: 1024px;
-
-// Colors
 $color-primary: #007bff;
 $color-primary-hover: #0056b3;
 $color-error: #d91c1c;
@@ -55,22 +49,9 @@ $spacing-xsmall: 4px;
   }
 }
 
-// Mixin for spacing
-@mixin apply-spacing($top: 0, $right: 0, $bottom: 0, $left: 0) {
-  margin-top: $top;
-  margin-right: $right;
-  margin-bottom: $bottom;
-  margin-left: $left;
-}
-
 .login-container {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: column;
   min-height: 100vh;
-  padding: $spacing-large;
-  background-color: $color-white;
+  padding: 20px;
 }
 
 .login-form-wrapper {
@@ -82,13 +63,7 @@ $spacing-xsmall: 4px;
   font-size: 24px;
   font-weight: 600;
   color: $color-text;
-  @include apply-spacing(0, 0, $spacing-large, 0);
   text-align: center;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    font-size: 20px;
-    @include apply-spacing(0, 0, $spacing-medium, 0);
-  }
 }
 
 .login-form {
@@ -105,18 +80,11 @@ $spacing-xsmall: 4px;
   padding: $spacing-medium;
   font-size: $font-size-large;
   height: 56px;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    font-size: $font-size-medium;
-    padding: $spacing-small;
-    height: 48px;
-  }
 }
 
 .login-form__error-message {
   color: $color-error;
   text-align: center;
-  @include apply-spacing($spacing-small, 0, 0, 0);
   animation: fadeIn 0.3s ease-in-out;
 }
 
@@ -145,7 +113,6 @@ $spacing-xsmall: 4px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  @include apply-spacing($spacing-small !important, 0, 60px, 0);
 
   .login-options__save-id-label {
     display: flex;
@@ -192,7 +159,6 @@ $spacing-xsmall: 4px;
   font-size: $font-size-medium;
   line-height: 32px;
   color: $color-text-secondary;
-  @include apply-spacing($spacing-medium !important, 0, 0, 0);
 
   a {
     font: inherit;
@@ -210,6 +176,7 @@ $spacing-xsmall: 4px;
   }
 }
 
+/** 구분선 **/
 .divider {
   display: flex;
   align-items: center;
@@ -226,102 +193,4 @@ $spacing-xsmall: 4px;
   margin: 0 $spacing-medium;
   color: $color-text-secondary;
   font-size: $font-size-medium;
-}
-
-@mixin svg-transition(
-  $stroke-dashoffset,
-  $stroke-dasharray,
-  $fill-color,
-  $delay,
-  $fill-delay
-) {
-  stroke-dashoffset: $stroke-dashoffset;
-  stroke-dasharray: $stroke-dasharray;
-  fill: $fill-color;
-  transition:
-    stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) $delay,
-    fill 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) $fill-delay;
-}
-
-svg .svg-elem-1 {
-  @include svg-transition(
-    550.1838989257812px,
-    550.1838989257812px,
-    transparent,
-    0s,
-    0.8s
-  );
-}
-
-svg.active .svg-elem-1 {
-  stroke-dashoffset: 0;
-}
-
-svg .svg-elem-2 {
-  @include svg-transition(
-    626.6798095703125px,
-    626.6798095703125px,
-    transparent,
-    0.12s,
-    0.9s
-  );
-}
-
-svg.active .svg-elem-2 {
-  stroke-dashoffset: 0;
-  fill: rgb(255, 255, 255);
-}
-
-svg .svg-elem-3 {
-  @include svg-transition(
-    1390.3553466796875px,
-    1390.3553466796875px,
-    transparent,
-    0.24s,
-    1s
-  );
-}
-
-svg.active .svg-elem-3 {
-  stroke-dashoffset: 0;
-  fill: rgb(151, 187, 255);
-}
-
-svg .svg-elem-4 {
-  @include svg-transition(
-    514.2296142578125px,
-    514.2296142578125px,
-    transparent,
-    0.36s,
-    1.1s
-  );
-}
-
-svg.active .svg-elem-4 {
-  stroke-dashoffset: 0;
-  fill: rgb(255, 255, 255);
-}
-
-svg .svg-elem-5 {
-  @include svg-transition(
-    22.936912536621094px,
-    22.936912536621094px,
-    transparent,
-    0.48s,
-    1.2s
-  );
-}
-
-svg.active .svg-elem-5 {
-  stroke-dashoffset: 0;
-  fill: rgb(151, 187, 255);
-}
-
-svg .svg-elem-6 {
-  @include svg-transition(650px, 650px, transparent, 0.6s, 1.3s);
-}
-
-svg.active .svg-elem-6 {
-  stroke-dashoffset: 0;
-  fill: rgb(255, 255, 255);
 }

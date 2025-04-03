@@ -13,9 +13,6 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
         ws: true,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
         configure: (proxy) => {
           proxy.on('error', (err) => {
             console.log('proxy error', err);
