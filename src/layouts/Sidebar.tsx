@@ -94,7 +94,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <Link to="/notices">공지사항</Link>
             </li>
             <li>
-              <Link to="/favorites">단지 즐겨찾기</Link>
+              <Link to="/favorites">즐겨찾기</Link>
             </li>
             <li>
               <Link to="/mypage">마이페이지</Link>
