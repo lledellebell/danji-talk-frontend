@@ -1,0 +1,77 @@
+.favorites {
+  padding: 1rem;
+}
+
+.favoriteList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.favoriteItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #EDEDED;
+  background: white;
+}
+
+.favoriteContent {
+  flex: 1;
+}
+
+.favoriteName {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.favoriteAddress {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.favoriteButton {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: #97BBFF;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 56px); 
+  padding: 2rem;
+  text-align: center;
+}
+
+.emptyIcon {
+  width: 114px; 
+  height: auto;
+  margin-bottom: 20px;
+  opacity: 0.8; 
+}
+
+.emptyText {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.emptySubText {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #666;
+} 

@@ -18,6 +18,7 @@ import './styles/App.css';
 import SearchBar from './components/Search/SearchBar';
 import MenuGrid from './components/MenuGrid/MenuGrid';
 import MyPage from './pages/MyPage/MyPage';
+import Favorites from './pages/Favorites/Favorites';
 
 function App() {
   const { isLoggedIn } = useAuthStore();
@@ -144,6 +145,23 @@ function App() {
               />
               <BoardList />
             </>
+          }
+        />
+        <Route
+          path="/favorites"
+          element={
+            isLoggedIn ? (
+              <>
+                <Header 
+                  title="즐겨찾기" 
+                  type="sub"
+                  hasBackButton={true}
+                />
+                <Favorites />
+              </>
+            ) : (
+              <Navigate to="/login" replace />
+            )
           }
         />
       </Routes>
