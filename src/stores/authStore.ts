@@ -27,7 +27,7 @@ interface KakaoAuthResponse {
 }
 
 interface AuthState {
-  isAuthenticated: boolean;
+  isLoggedIn: boolean;
   email: string;
   password: string;
   error: string | null;
@@ -35,12 +35,12 @@ interface AuthState {
   setPassword: (password: string) => void;
   setError: (error: string | null) => void;
   resetAuth: () => void;
-  login: (token: string) => void;
+  login: () => void;
   logout: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  isAuthenticated: false,
+  isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
   email: '',
   password: '',
   error: null,
@@ -48,13 +48,13 @@ export const useAuthStore = create<AuthState>((set) => ({
   setPassword: (password) => set({ password }),
   setError: (error) => set({ error }),
   resetAuth: () => set({ email: '', password: '', error: null }),
-  login: (token) => {
-    localStorage.setItem('token', token);
-    set({ isAuthenticated: true, error: null });
+  login: () => {
+    localStorage.setItem('isLoggedIn', 'true');
+    set({ isLoggedIn: true, error: null });
   },
   logout: () => {
-    localStorage.removeItem('token');
-    set({ isAuthenticated: false, email: '', password: '' });
+    localStorage.removeItem('isLoggedIn');
+    set({ isLoggedIn: false, email: '', password: '' });
   }
 }));
 
@@ -91,7 +91,7 @@ const handleKakaoLoginSuccess = async (
     });
 
     Cookies.set('token', loginResponse.data.token, { path: '/' });
-    useAuthStore.getState().login(loginResponse.data.token);
+    useAuthStore.getState().login();
 
     navigate('/home');
   } catch (error) {
