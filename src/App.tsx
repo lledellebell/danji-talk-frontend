@@ -15,6 +15,7 @@ import FindAccount from './pages/FindAccount/FindAccount';
 import ShowEmail from './pages/ShowEmail/ShowEmail';
 import Header from './layouts/Header';
 import './styles/App.css';
+import SearchBar from './components/Search/SearchBar';
 
 function App() {
   const { isLoggedIn } = useAuthStore();
@@ -42,7 +43,10 @@ function App() {
             <>
               <Header title="DANJITALK" type="main" />
               {isLoggedIn ? (
-                <div>홈페이지</div>
+                <div>
+                  <SearchBar />
+                  {/* 나머지 홈페이지 코드 */}
+                </div>
               ) : (
                 <Navigate to="/login" replace />
               )}
