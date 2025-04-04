@@ -27,7 +27,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 0 0 1rem;
     }
 
     .header__title {
@@ -88,16 +87,15 @@
     position: relative;
     transition: background-color 0.2s ease;
 
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-
+    &:hover,
     &:active {
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: transparent
     }
   }
 
   &__icon {
+    margin-right: -15px;
+
     &_svg {
       width: 24px;
       height: 24px;
