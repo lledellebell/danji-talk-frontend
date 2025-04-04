@@ -83,7 +83,11 @@ export const BoardList = () => {
                 commentCount,
                 thumbnailFileUrl,
               }) => (
-                <div key={feedId} className={styles['boardItem']}>
+                <div
+                  key={feedId}
+                  className={styles['boardItem']}
+                  onClick={() => navigate(`/comunity/feed/${feedId}`)}
+                >
                   <div className={styles['boardItem__header']}>
                     <div className={styles['boardItem__content']}>
                       <span className={styles['boardItem__content-title']}>
