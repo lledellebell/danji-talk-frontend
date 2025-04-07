@@ -133,15 +133,15 @@ export const BoardList = () => {
                     </div>
                   </div>
                   <hr />
-                  <div
-                    className={styles['board__write-icon']}
-                    onClick={() => navigate('/write')}
-                  >
-                    <img src={writeIcon} alt="글쓰기" />
-                  </div>
                 </div>
               )
             )}
+            <div
+              className={styles['board__write-icon']}
+              onClick={() => navigate('/write')}
+            >
+              <img src={writeIcon} alt="글쓰기" />
+            </div>
           </div>
         </TabPanel>
         <TabPanel

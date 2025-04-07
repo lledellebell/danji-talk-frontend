@@ -19,10 +19,21 @@
     border-radius: 6px;
   }
 
+  .board-write__image-label {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
   .board-write__image {
     display: flex;
     align-items: flex-end;
     gap: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    &::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      border-radius: 3px;
+    }
 
     .board-write__image-description {
       margin: 0;
@@ -46,5 +57,27 @@
   &__icon {
     width: 24px;
     height: 24px;
+  }
+}
+
+.board-write__image-preview {
+  width: 70px;
+  height: 70px;
+  position: relative;
+
+  img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  button {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    color: black;
+    font-size: 10px;
+    cursor: pointer;
   }
 }

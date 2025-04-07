@@ -1,7 +1,8 @@
 import Header from '../../layouts/Header';
 import styles from './BoardWrite.module.scss';
+import { useRef } from 'react';
 import { InputField } from '../../components/common/InputField/InputField';
-import { useState } from 'react';
+import { useBoardWrite } from '../../hooks/useBoardWrite';
 
 const NotImage = () => {
   return (
@@ -25,16 +26,35 @@ const NotImage = () => {
   );
 };
 
-// Todo: 게시글 작성 API 연동 && 에러 처리
+// Todo: 게시글 작성 API 연동 && 에러 처리 && 이미지 삭제 버튼 UI 확인
 export const BoardWrite = () => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const {
+    title,
+    setTitle,
+    content,
+    setContent,
+    images,
+    handleImageUpload,
+    handleImageDelete,
+    feedType,
+    setFeedType,
+    apartmentId,
+    setApartmentId,
+    handleSubmit,
+    isLoading,
+  } = useBoardWrite();
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const triggerImageUpload = () => {
+    fileInputRef.current?.click();
+  };
 
   return (
     <div>
       <Header
         title="글쓰기"
-        type="main"
+        type="sub"
         hasBackButton={true}
         hasText={true}
         text="등록"
@@ -54,15 +74,36 @@ export const BoardWrite = () => {
           onChange={(e) => setContent(e.target.value)}
           placeholder="내용을 입력해주세요."
         ></textarea>
-        <span>사진첨부</span>
+        <span className={styles['board-write__image-label']}>사진첨부</span>
         <div className={styles['board-write__image']}>
-          <NotImage />
-          <p className={styles['board-write__image-description']}>
-            390 * 460
-            <br /> 최대 10장의 이미지 첨부가 가능합니다.
-          </p>
+          {images.length === 0 && (
+            <div onClick={triggerImageUpload}>
+              <NotImage />
+            </div>
+          )}
+          {images.length === 0 && (
+            <p className={styles['board-write__image-description']}>
+              390 * 460
+              <br /> 최대 10장의 이미지 첨부가 가능합니다.
+            </p>
+          )}
+          {images.map((file, idx) => (
+            <div key={idx} className={styles['board-write__image-preview']}>
+              <img src={URL.createObjectURL(file)} alt={`upload-${idx}`} />
+              <button onClick={() => handleImageDelete(idx)}>삭제</button>
+            </div>
+          ))}
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            onChange={(e) => handleImageUpload(e.target.files)}
+          />
         </div>
       </div>
+      <button onClick={handleSubmit}>임의 등록 버튼</button>
     </div>
   );
 };
