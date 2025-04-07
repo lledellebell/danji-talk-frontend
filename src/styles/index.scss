@@ -65,6 +65,7 @@
 html {
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  background-color: var(--color-background);
 }
 
 body {
@@ -75,6 +76,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-background);
   color: var(--color-text);
+  position: relative;
+  overflow-x: hidden;
 }
 
 // SVG styles
@@ -95,11 +98,12 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #E4EDFF 0%, #F0F5FF 100%);
+  background: rgba(228, 237, 255, 0.95); // 살짝 투명하게
   gap: 8rem;
   padding: var(--spacing-xl);
   position: relative;
   overflow: hidden;
+  z-index: 1;
   
   // 배경 패턴 효과
   &::before {
@@ -110,6 +114,7 @@ body {
       radial-gradient(circle at 1px 1px, rgba(151, 187, 255, 0.1) 1px, transparent 0);
     background-size: 24px 24px;
     pointer-events: none;
+    z-index: 0;
   }
 
   &.mobile-view {
@@ -296,8 +301,8 @@ body {
         &::before {
           content: '';
           position: absolute;
-          left: 2px;
-          top: 2px;
+          left: 1px;
+          top: 1px;
           width: 12px;
           height: 5px;
           background-color: var(--color-text);
@@ -308,7 +313,7 @@ body {
           content: '';
           position: absolute;
           right: -3px;
-          top: 3px;
+          top: 2px;
           width: 2px;
           height: 3px;
           background-color: var(--color-text);
@@ -353,6 +358,7 @@ body {
       .network {
         display: flex;
         gap: 1px;
+        align-items: flex-end;
         
         .bar {
           width: 3px;
@@ -398,59 +404,12 @@ body {
       position: relative;
       width: 75px;
       height: 75px;
-      margin-bottom: var(--spacing-md);
+      margin-bottom: var(--spacing-xs);
       
       .app-logo {
         width: 100%;
         height: 100%;
-        filter: drop-shadow(0 5px 8px rgba(151, 187, 255, 0.25));
-        transition: transform var(--transition-normal);
-        border-radius: 16px;
         position: relative;
-        z-index: 1;
-      }
-      
-      // 빛 효과 요소
-      .shine-effect {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 16px;
-        z-index: 2;
-        pointer-events: none;
-        background: transparent;
-        overflow: hidden;
-        
-        &::after {
-          content: '';
-          position: absolute;
-          top: -150%;
-          left: -150%;
-          width: 300%;
-          height: 300%;
-          background: linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.4) 40%,
-            rgba(255, 255, 255, 0.9) 50%,
-            rgba(255, 255, 255, 0.4) 60%,
-            rgba(255, 255, 255, 0) 100%
-          );
-          transform: rotate(45deg) translate(0, 0);
-          animation: shineAnimation 15s ease-in-out infinite;
-        }
-      }
-      
-      &:hover {
-        .app-logo {
-          transform: scale(1.05);
-        }
-        
-        .shine-effect::after {
-          animation-duration: 2s;
-        }
       }
     }
 
@@ -458,7 +417,7 @@ body {
       text-align: center;
       
       .app-title {
-        font-size: 2.25rem;
+        font-size: var(--font-size-xl);
         line-height: 1.2;
         margin-bottom: var(--spacing-xs);
         background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
@@ -591,7 +550,7 @@ body {
         margin: 0 auto;
         
         &:hover {
-          transform: translateY(-5px);
+          transform: translateY(-3px);
           box-shadow: 
             0 12px 25px rgba(151, 187, 255, 0.2),
             0 5px 10px rgba(151, 187, 255, 0.1);
@@ -605,22 +564,21 @@ body {
         font-size: var(--font-size-xs);
         position: relative;
         display: inline-block;
-        padding-bottom: 4px;
+        padding-bottom: 8px;
+        text-align: center;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
         
         &::after {
           content: '';
           position: absolute;
-          bottom: 0;
+          bottom: 6px;
           left: 50%;
-          width: 0;
+          width: 100%;  
           height: 2px;
           background: var(--color-primary);
           transform: translateX(-50%);
-          transition: width 0.3s ease;
-        }
-        
-        &:hover::after {
-          width: 70%;
         }
       }
     }
@@ -638,7 +596,7 @@ body {
   align-items: center;
   text-align: center;
   position: relative;
-  cursor: pointer;
+  cursor: initial;
   box-sizing: border-box;
   
   box-shadow: 
@@ -646,7 +604,7 @@ body {
     0 4px 8px rgba(151, 187, 255, 0.05);
   
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-1px);
     background: linear-gradient(
       135deg,
       rgba(151, 187, 255, 0.1) 0%,
@@ -750,7 +708,6 @@ body {
     // PC 브라우저에서 작은 화면일 때 스타일
     .device-frame {
       // 디바이스 프레임 유지 (PC 브라우저의 작은 화면)
-      
       &::before,
       &::after,
       .ios-status-bar {
@@ -1031,4 +988,61 @@ body {
 .pc-view .app-container, 
 body:not(.mobile-view):not(.device-frame) .app-container {
   padding-top: 0;
+}
+
+// 헥사곤(육각형) 패턴
+.background-hexagon {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  background-image: 
+    repeating-linear-gradient(
+      120deg,
+      rgba(151, 187, 255, 0.08) 0,
+      rgba(151, 187, 255, 0.08) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    repeating-linear-gradient(
+      60deg,
+      rgba(151, 187, 255, 0.08) 0,
+      rgba(151, 187, 255, 0.08) 1px,
+      transparent 1px,
+      transparent 60px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(151, 187, 255, 0.08) 0,
+      rgba(151, 187, 255, 0.08) 1px,
+      transparent 1px,
+      transparent 60px
+    );
+  background-size: 70px 120px;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.8;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.2) 20%,
+      rgba(255, 255, 255, 0.6) 60%,
+      rgba(255, 255, 255, 0.9) 85%,
+      rgba(255, 255, 255, 1) 100%
+    );
+  }
+}
+
+// 모바일에서는 패턴 숨김
+.mobile-view .background-hexagon{
+  display: none;
 }

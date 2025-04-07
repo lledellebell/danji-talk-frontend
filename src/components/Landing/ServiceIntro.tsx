@@ -12,7 +12,6 @@ const ServiceIntro = () => {
       <div className="intro-header">
         <div className="logo-wrapper">
           <img src={Logo} className="app-logo" alt="단지톡 로고" />
-          <div className="shine-effect"></div>
         </div>
         <div className="title-wrapper">
           <h1 className="app-title">단지톡</h1>
