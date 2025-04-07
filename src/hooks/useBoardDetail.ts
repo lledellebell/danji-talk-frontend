@@ -6,7 +6,7 @@ export const useBoardDetail = (feedId: number) => {
     queryKey: ['boardDetail', feedId],
     queryFn: async () => {
       const response = await axios.get(`/api/community/feeds/${feedId}`);
-      return response.data;
+      return response.data.data;
     },
     enabled: !!feedId,
   });

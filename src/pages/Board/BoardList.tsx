@@ -5,8 +5,8 @@ import TabPanel from '../../components/common/Tab/TabPanel';
 import Tab from '../../components/common/Tab/Tab';
 import eyeIcon from '../../assets/board/eye.svg';
 import commentIcon from '../../assets/board/comment.svg';
-import favoriteIcon from '../../assets/board/favorite.svg';
-import heartIcon from '../../assets/board/heart.svg';
+import favoriteEmptyIcon from '../../assets/board/favorite-empty.svg';
+import heartEmptyIcon from '../../assets/board/heart-empty.svg';
 import writeIcon from '../../assets/board/write.svg';
 import { useBoardData } from '../../hooks/useBoardData';
 import { formatDate } from '../../utils/formatDate';
@@ -86,7 +86,7 @@ export const BoardList = () => {
                 <div
                   key={feedId}
                   className={styles['boardItem']}
-                  onClick={() => navigate(`/comunity/feed/${feedId}`)}
+                  onClick={() => navigate(`/community/feed/${feedId}`)}
                 >
                   <div className={styles['boardItem__header']}>
                     <div className={styles['boardItem__content']}>
@@ -118,11 +118,11 @@ export const BoardList = () => {
                       <span className={styles['boardItem__footer-text']}>
                         {'조회수'}
                       </span>
-                      <img src={heartIcon} alt="좋아요" />
+                      <img src={heartEmptyIcon} alt="좋아요" />
                       <span className={styles['boardItem__footer-text']}>
                         {reactionCount ?? 0}
                       </span>
-                      <img src={favoriteIcon} alt="즐겨찾기" />
+                      <img src={favoriteEmptyIcon} alt="즐겨찾기" />
                       <span className={styles['boardItem__footer-text']}>
                         {bookmarkCount ?? 0}
                       </span>

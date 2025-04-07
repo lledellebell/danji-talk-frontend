@@ -10,6 +10,7 @@ import { RegisterSuccessPage } from './pages/Register/RegisterSuccessPage';
 import { useAuthStore } from './stores/authStore';
 import { BoardWrite } from './pages/Board/BoardWrite';
 import { BoardList } from './pages/Board/BoardList';
+import { BoardDetail } from './pages/Board/BoardDetail';
 import { ChatList } from './pages/Chat/ChatList';
 
 import FindAccount from './pages/FindAccount/FindAccount';
@@ -156,6 +157,14 @@ function App() {
                 hasIcons={true}
               />
               <BoardList />
+            </>
+          }
+        />
+        <Route
+          path="/community/feed/:feedId"
+          element={
+            <>
+              <BoardDetail />
             </>
           }
         />
