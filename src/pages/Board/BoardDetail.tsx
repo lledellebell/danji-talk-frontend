@@ -71,6 +71,33 @@ const HeaderIcon = () => {
   );
 };
 
+interface BoardImageProps {
+  s3List?: { fullUrl: string }[];
+}
+
+const BoardImage = ({ s3List }: BoardImageProps) => {
+  if (!s3List || s3List.length === 0) {
+    return (
+      <div className={styles['boardItem__footer-img']}>
+        <NotImage />
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles['boardItem__footer-img']}>
+      {s3List.map((img, idx) => (
+        <img
+          key={idx}
+          src={img.fullUrl}
+          alt={`첨부 이미지 ${idx}`}
+          className={styles['boardItem__footer-img-preview']}
+        />
+      ))}
+    </div>
+  );
+};
+
 const CommentList = ({ comments }: CommentListProps) => {
   return (
     <div className={styles['comment-container']}>
@@ -169,21 +196,27 @@ export const BoardDetail = () => {
             </div>
             <div className={styles['boardItem__footer-icons-small']}>
               <img src={eyeIcon} alt="조회수" />
-              <span className={styles['boardItem__footer-text']}>34</span>
+              <span className={styles['boardItem__footer-text']}>
+                {data.viewCount}
+              </span>
               <img src={heartEmptyIcon} alt="좋아요" />
-              <span className={styles['boardItem__footer-text']}>36</span>
+              <span className={styles['boardItem__footer-text']}>
+                {data.reactionCount}
+              </span>
               <img src={favoriteEmptyIcon} alt="즐겨찾기" />
-              <span className={styles['boardItem__footer-text']}>77</span>
+              <span className={styles['boardItem__footer-text']}>
+                {data.bookmarkCount}
+              </span>
               <img src={commentIcon} alt="댓글" />
-              <span className={styles['boardItem__footer-text']}>77</span>
+              <span className={styles['boardItem__footer-text']}>
+                {data.commentCount}
+              </span>
             </div>
           </div>
           <div className={styles['boardItem__footer-content']}>
             {data.contents}
           </div>
-          <div className={styles['boardItem__footer-img']}>
-            <NotImage />
-          </div>
+          <BoardImage s3List={data.s3ObjectResponseDtoList} />
           <div className={styles['boardItem__footer-icons-large']}>
             <img
               src={data.isReacted ? heartFilledIcon : heartEmptyIcon}
