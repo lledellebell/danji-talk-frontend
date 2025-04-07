@@ -109,7 +109,7 @@ const LoginOptions = ({
       checked={saveId}
       onChange={(e) => onSaveIdChange(e.target.checked)}
       className={styles['login-options__save-id-label']}
-      size="small"
+      size="medium"
     />
     <div className={styles['login-options__find-links']}>
       <Link to="/find-account">

@@ -4,14 +4,14 @@ $color-error: #d91c1c;
 $color-error-hover: #b71515;
 $color-white: #ffffff;
 $color-text: #333333;
-$color-text-secondary: #666666;
+$color-text-secondary: #C0C0C0;
 $color-border: #e0e0e0;
 $color-disabled: #999999;
 
 // Font sizes
 $font-size-large: 16px;
 $font-size-medium: 14px;
-$font-size-small: 12px;
+$font-size-small: 13px;
 
 // Spacing
 $spacing-large: 20px;
@@ -71,15 +71,20 @@ $spacing-xsmall: 4px;
   flex-direction: column;
 
   > *:not(:first-child) {
-    margin-top: 24px;
+    margin-top: 20px;
   }
 }
 
 .login-form__submit-button {
-  @include button-styles(#EAF1FF, #d4dff5);
-  padding: $spacing-medium;
+  @include button-styles(#EAF1FF, #97BBFF);
+  padding: $spacing-small $spacing-medium;
   font-size: $font-size-large;
-  height: 56px;
+  color: #C0C0C0;
+  height: 52px;
+
+  &:hover {
+    color: #fff;
+  }
 }
 
 .login-form__error-message {
@@ -113,6 +118,8 @@ $spacing-xsmall: 4px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 54px;
+  margin-top: 8px !important;
 
   .login-options__save-id-label {
     display: flex;
@@ -127,7 +134,7 @@ $spacing-xsmall: 4px;
 
     label {
       color: #999;
-      font-size: $font-size-medium;
+      font-size: calc($font-size-medium + 1px);
     }
   }
 
@@ -138,8 +145,9 @@ $spacing-xsmall: 4px;
     a {
       color: #999;
       text-decoration: none;
-      font-size: $font-size-medium;
-      padding: $spacing-xsmall;
+      font-size: calc($font-size-medium + 1px);
+      font-weight: 500;
+      padding: 0;
 
       &:hover {
         text-decoration: underline;
@@ -155,17 +163,18 @@ $spacing-xsmall: 4px;
 .signup-link {
   height: 32px;
   text-align: center;
-  font-weight: 400;
-  font-size: $font-size-medium;
+  font-weight: 500;
+  font-size: $font-size-small;
   line-height: 32px;
   color: $color-text-secondary;
+  margin-top: 0 !important;
 
   a {
     font: inherit;
     color: #97BBFF;
     text-decoration: none;
-    font-weight: 500;
-    font-size: $font-size-medium;
+    font-weight: 600;
+    font-size: $font-size-small;
     line-height: 24px;
     margin-left: $spacing-xsmall;
     padding: $spacing-xsmall;
@@ -180,7 +189,7 @@ $spacing-xsmall: 4px;
 .divider {
   display: flex;
   align-items: center;
-  margin: 40px 0 24px;
+  margin: 32px 0 20px;
 }
 
 .divider__line {
