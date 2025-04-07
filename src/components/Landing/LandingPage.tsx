@@ -163,7 +163,7 @@ const LandingPage = () => {
               path="/find-account"
               element={
                 <>
-                  <Header title="계정찾기" type="sub" hasBackButton={true} />
+                  <Header title="아이디/비밀번호 찾기" type="sub" hasBackButton={true} />
                   <FindAccount />
                 </>
               }

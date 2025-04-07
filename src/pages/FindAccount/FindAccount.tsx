@@ -288,10 +288,10 @@ const FindAccount: React.FC = () => {
                     error={emailError || undefined}
                   />
                   <Button
-                    label={isEmailVerificationSent ? "재요청" : "인증번호 요청"}
+                    label={isEmailVerificationSent ? "재요청" : "인증번호"}
                     onClick={handleRequestVerification}
                     disabled={!email || !!emailError}
-                    className={`${styles['button-base']}`}
+                    className={`${styles['input-with-button__button']}`}
                   />
                 </div>
 
@@ -310,7 +310,7 @@ const FindAccount: React.FC = () => {
                     label="확인"
                     onClick={handleVerifyCode}
                     disabled={!verificationCode}
-                    className={`${styles['button-base']}`}
+                    className={`${styles['input-with-button__button']}`}
                   />
                 </div>
               </div>

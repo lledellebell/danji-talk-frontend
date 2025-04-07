@@ -94,6 +94,11 @@ $spacing-xsmall: 4px;
     color: #fff;
     opacity: 0.7;
   }
+
+  &:hover {
+    background-color: #97BBFF;
+    color: #fff;
+  }
 }
 
 .login-form__error-message {
