@@ -81,9 +81,18 @@ $spacing-xsmall: 4px;
   font-size: $font-size-large;
   color: #C0C0C0;
   height: 52px;
-
-  &:hover {
+  transition: all 0.2s ease-in-out;
+  
+  &--valid {
     color: #fff;
+    background-color: #97BBFF;
+  }
+  
+  &:disabled {
+    background-color: $color-disabled;
+    cursor: not-allowed;
+    color: #fff;
+    opacity: 0.7;
   }
 }
 

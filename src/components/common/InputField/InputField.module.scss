@@ -75,6 +75,11 @@ $spacing-xsmall: 4px;
     &--error::after {
       background-color: $color-error;
     }
+
+    &--error:focus-within::after {
+      background-color: $color-error;
+      transform: scaleX(1);
+    }
   }
 
   &__input {
@@ -101,22 +106,32 @@ $spacing-xsmall: 4px;
       color: $color-error;
       border-bottom-color: $color-error;
 
-      &:hover {
-        border-bottom-color: $color-error-hover;
-      }
-
       &:focus {
         border-bottom-color: $color-error;
+        outline: none;
 
         & + .input-field__password-toggle {
           color: $color-error;
           border-color: $color-error;
+          border-bottom-color: $color-error;
         }
 
         & + .input-field__action-button {
-          color: $color-error;
+          color: white;
           border-color: $color-error;
+          background-color: $color-error;
         }
+      }
+      
+      & + .input-field__password-toggle {
+        color: $color-error;
+        border-bottom-color: $color-error;
+      }
+      
+      & + .input-field__action-button {
+        color: white;
+        border-color: $color-error;
+        background-color: $color-error;
       }
     }
 
@@ -124,27 +139,12 @@ $spacing-xsmall: 4px;
       border-bottom-color: #97BBFF;
       outline: none;
 
-      & + .input-field__password-toggle {
+      &:not(.input-field__input--error) + .input-field__password-toggle {
         color: $color-primary;
         border-color: $color-primary;
       }
 
-      & + .input-field__action-button {
-        color: #fff;
-        border-color: #97BBFF;
-        background-color: #97BBFF;
-      }
-    }
-
-    &:hover:not(:disabled) {
-      border-bottom-color: $color-border-hover;
-
-      & + .input-field__password-toggle {
-        color: $color-text-secondary;
-        border-color: $color-text-secondary;
-      }
-
-      & + .input-field__action-button {
+      &:not(.input-field__input--error) + .input-field__action-button {
         color: #fff;
         border-color: #97BBFF;
         background-color: #97BBFF;
@@ -198,27 +198,24 @@ $spacing-xsmall: 4px;
     transition: all 0.2s ease-in-out;
     border-bottom: 1px solid #1E2533;
 
-    &:hover:not(:disabled) {
-      color: $color-text;
-    }
-
     &:focus {
       outline: none;
       color: $color-primary;
     }
 
-    &:active {
-    }
-
     &--error {
       color: $color-error;
-
-      &:hover:not(:disabled) {
-        color: $color-error-hover;
-      }
+      border-bottom-color: $color-error;
 
       &:focus {
         color: $color-error;
+        border-bottom-color: $color-error;
+        outline: none;
+      }
+      
+      svg {
+        fill: $color-error;
+        stroke: $color-error;
       }
     }
 
@@ -261,10 +258,6 @@ $spacing-xsmall: 4px;
       background-color: #fff;
     }
 
-    &:hover:not(:disabled) {
-      color: #d4dff5;
-    }
-
     &:focus {
       outline: none;
       color: #d4dff5;
@@ -276,14 +269,15 @@ $spacing-xsmall: 4px;
     }
 
     &--error {
-      color: $color-error;
-
-      &:hover:not(:disabled) {
-        color: $color-error-hover;
-      }
+      color: white;
+      background-color: $color-error;
+      border-color: $color-error;
 
       &:focus {
-        color: $color-error;
+        color: white;
+        background-color: $color-error;
+        border-color: $color-error;
+        outline: none;
       }
     }
   }

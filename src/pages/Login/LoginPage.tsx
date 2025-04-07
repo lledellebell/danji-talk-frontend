@@ -44,6 +44,9 @@ const LoginForm = () => {
     return emailRegex.test(email);
   };
 
+  // 유효한 입력 여부 확인
+  const isValidInputs = email && password && !emailError;
+
   return (
     <form className={styles['login-form']} onSubmit={handleSubmit}>
       <InputField
@@ -86,7 +89,7 @@ const LoginForm = () => {
       <LoginOptions saveId={saveId} onSaveIdChange={setSaveId} />
       <button
         type="submit"
-        className={styles['login-form__submit-button']}
+        className={`${styles['login-form__submit-button']} ${isValidInputs ? styles['login-form__submit-button--valid'] : ''}`}
         disabled={loginMutation.isPending}
       >
         {loginMutation.isPending ? '로그인 중...' : '로그인'}
