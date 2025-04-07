@@ -78,8 +78,9 @@
         display: flex;
         justify-content: flex-end;
         gap: 12px;
-        margin-top: 8px;
+        margin-top: 12px;
         margin-bottom: 8px;
+
         img {
           width: 24px;
           height: 24px;
@@ -95,6 +96,10 @@
         background: #f9fbff;
         box-shadow: 0px 0px 2px 0 rgba(0, 0, 0, 0.08);
         padding: 12px;
+      }
+
+      &-img {
+        margin-top: 12px;
       }
     }
   }
@@ -154,6 +159,7 @@ hr {
 
 .reply-container {
   display: flex;
+  margin-top: 20px;
 }
 
 .reply-body-container {
@@ -229,5 +235,22 @@ hr {
     outline: none;
     flex-grow: 1;
     background: transparent;
+  }
+}
+
+.not-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  gap: 10px;
+  border-radius: 6px;
+  background: #ededed;
+  box-shadow: 0px 4px 4px 0 rgba(0, 0, 0, 0.25);
+
+  &__icon {
+    width: 24px;
+    height: 24px;
   }
 }

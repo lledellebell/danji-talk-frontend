@@ -10,3 +10,27 @@ export interface BoardItem {
   commentCount?: number;
   thumbnailFileUrl?: string;
 }
+
+export interface CommentMember {
+  memberId: number;
+  nickname: string;
+  fileId: string | null;
+}
+
+export interface Comment {
+  commentId: number;
+  feedId: number;
+  contents: string;
+  commentMemberResponseDto: CommentMember;
+  childrenCommentDto: Comment[];
+}
+
+export interface CommentListProps {
+  comments: {
+    content: Comment[];
+    page: number;
+    size: number;
+    totalElements: number;
+    totalPages: number;
+  };
+}
