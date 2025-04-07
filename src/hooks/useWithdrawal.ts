@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useWithdrawalStore } from '../stores/withdrawalStore';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../stores/authStore';
 
 // 환경 변수에서 API URL 직접 가져오기
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://danjitalk.duckdns.org';
@@ -41,6 +42,8 @@ export const useWithdrawalMutation = () => {
         
         // 성공 처리 - 유틸리티 함수 사용
         clearBrowserData();
+        // 로그아웃 처리 추가
+        useAuthStore.getState().logout();
         navigate('/');
         return true;
       } catch (error: unknown) {

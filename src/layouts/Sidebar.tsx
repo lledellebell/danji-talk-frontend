@@ -10,7 +10,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
-  const { logout } = useAuthStore();
+  const { isLoggedIn, logout } = useAuthStore();
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = useCallback(() => {
@@ -43,6 +43,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     handleClose();
     setTimeout(() => {
       logout();
+      navigate('/login');
+    }, 300);
+  };
+
+  const handleLogin = () => {
+    handleClose();
+    setTimeout(() => {
       navigate('/login');
     }, 300);
   };
@@ -115,9 +122,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <Link to="/register-complex">단지 등록</Link>
             </li>
             <li>
-              <button type="button" onClick={handleLogout}>
-                로그아웃
-              </button>
+              {isLoggedIn ? (
+                <button type="button" onClick={handleLogout}>
+                  로그아웃
+                </button>
+              ) : (
+                <button type="button" onClick={handleLogin}>
+                  로그인
+                </button>
+              )}
             </li>
           </ul>
         </nav>
