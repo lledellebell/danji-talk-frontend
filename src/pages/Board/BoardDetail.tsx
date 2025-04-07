@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useBoardDetail } from '../../hooks/useBoardDetail';
 import { useCommentList } from '../../hooks/useCommentList';
-import { CommentListProps, CommentMember, Comment } from '../../types/board';
+import { CommentListProps } from '../../types/board';
 import eyeIcon from '../../assets/board/eye.svg';
 import commentIcon from '../../assets/board/comment.svg';
 import favoriteEmptyIcon from '../../assets/board/favorite-empty.svg';
