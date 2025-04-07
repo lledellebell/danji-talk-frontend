@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import styles from './alert.module.scss';
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -15,9 +16,37 @@ const Alert: React.FC<AlertProps> = ({
   onClose,
   onConfirm,
 }) => {
+  const [isPc, setIsPc] = useState(false);
+  const [deviceFrame, setDeviceFrame] = useState<HTMLElement | null>(null);
+
+  // PC 환경 감지 및 device-frame 요소 찾기
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        setIsPc(window.innerWidth >= 768);
+      };
+      
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      
+      // device-frame 요소 찾기
+      const frame = document.querySelector('.device-frame') as HTMLElement;
+      setDeviceFrame(frame);
+      
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, []);
+
+  // 오버레이 클래스 결정: PC + device-frame 존재 시 특별 클래스 추가
+  const overlayClass = isPc && deviceFrame 
+    ? `${styles['alert__overlay']} ${styles['alert__overlay--in-frame']}` 
+    : styles['alert__overlay'];
+
   return (
     <div
-      className={styles['alert__overlay']}
+      className={overlayClass}
       role="alertdialog"
       aria-labelledby="alert__title"
       aria-describedby="alert__content"

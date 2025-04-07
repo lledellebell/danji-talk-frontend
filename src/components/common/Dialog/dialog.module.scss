@@ -21,6 +21,9 @@ $font-color: #333;
 $cancel-button-text-color: #333;
 $confirm-button-text-color: #fff;
 
+// PC 환경 변수
+$pc-breakpoint: 768px;
+
 // 미디어 쿼리 추가
 @media (max-width: 600px) {
   .dialog__container {
@@ -45,6 +48,15 @@ $confirm-button-text-color: #fff;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    
+    // PC 환경의 device-frame 내부 다이얼로그
+    &--in-frame {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      z-index: 100;
+    }
   }
 
   &__container {
