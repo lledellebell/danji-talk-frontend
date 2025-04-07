@@ -11,6 +11,20 @@ export interface BoardItem {
   thumbnailFileUrl?: string;
 }
 
+interface CommentMember {
+  memberId: number;
+  nickname: string;
+  fileId: string | null;
+}
+
+export interface Comment {
+  commentId: number;
+  feedId: number;
+  contents: string;
+  commentMemberResponseDto: CommentMember;
+  childrenCommentDto: Comment[];
+}
+
 export interface CommentListProps {
   comments: {
     content: Comment[];
