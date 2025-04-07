@@ -15,6 +15,7 @@ interface HeaderProps {
   iconCount?: number;
   text?: string;
   iconComponent?: React.ReactNode;
+  onIconClick?: () => void;
 }
 
 const SubHeader: React.FC<HeaderProps> = ({
