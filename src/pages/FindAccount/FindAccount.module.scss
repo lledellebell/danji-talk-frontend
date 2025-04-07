@@ -1,17 +1,59 @@
-$spacing-large: 24px;
-$spacing-medium: 16px;
+$spacing-xxs: 4px;
+$spacing-xs: 6px;
 $spacing-small: 8px;
-$breakpoint-mobile: 768px;
+$spacing-medium: 10px;
+$spacing-large: 20px;
+$spacing-xl: 32px;
+$spacing-xxl: 40px;
+
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
 $color-white: #fff;
 $color-text: #333;
-$color-primary: #97bbff;
-$color-background: #ebf1ff;
-$color-border: #dee2e6;
+$color-text-secondary: #666;
+$color-primary: #97BBFF;
+$color-primary-light: #d4e0ff;
+$color-primary-dark: #5D7FFF;
+$color-background: #f8faff;
+$color-border: #e0e5f2;
+$color-shadow: rgba(151, 187, 255, 0.2);
+$color-error: #ff6b6b;
+$color-success: #63e6be;
+
+$font-size-sm: 0.875rem;    // 14px
+$font-size-base: 1rem;      // 16px
+$font-size-md: 1.125rem;    // 18px
+$font-size-lg: 1.25rem;     // 20px
+$font-size-xl: 1.5rem;      // 24px
+$font-size-xxl: 2rem;       // 32px
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: $breakpoint-mobile) { @content; }
+  } @else if $breakpoint == tablet {
+    @media (max-width: $breakpoint-tablet) { @content; }
+  } @else if $breakpoint == desktop {
+    @media (min-width: $breakpoint-desktop) { @content; }
+  }
+}
 
 @mixin flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 @mixin apply-spacing($top: 0, $right: 0, $bottom: 0, $left: 0) {
@@ -21,75 +63,164 @@ $color-border: #dee2e6;
   margin-left: $left;
 }
 
-@mixin button-style($bg-color, $text-color, $hover-bg-color: $bg-color) {
+@mixin button-style($bg-color: $color-primary, $text-color: $color-white, $hover-bg-color: $color-primary-dark) {
   background-color: $bg-color;
   color: $text-color;
-  border: 1px solid $color-border;
+  border: none;
   padding: $spacing-medium;
-  border-radius: 4px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: $font-size-base;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  background-color: var(--color-primary);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px $color-shadow;
+  text-align: center;
 
   &:hover {
     background-color: $hover-bg-color;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px $color-shadow;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px $color-shadow;
+  }
+
+  &:disabled {
+    background-color: #e0e0e0;
+    color: #999;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+}
+
+@mixin card-style {
+  background-color: $color-white;
+  border-radius: 12px;
+  padding: $spacing-large;
+}
+
+@mixin input-base {
+  width: 100%;
+  padding: $spacing-medium;
+  border-radius: 8px;
+  border: 1px solid $color-border;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+    outline: none;
   }
 }
 
 .find-account-wrapper {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
   width: 100%;
   min-height: 100vh;
-  padding: 2rem;
-  background-color: var(--color-background);
 }
 
 .find-account-container {
+  @include card-style;
   width: 100%;
-  max-width: 480px;
+  margin: 0 auto;
+  
+  @include respond-to(mobile) {
+    padding: $spacing-medium;
+  }
 }
 
 .find-account-title {
-  font-size: 2rem;
+  font-size: $font-size-xl;
   font-weight: 600;
   color: $color-text;
-  @include apply-spacing(0, 0, $spacing-large, 0);
   text-align: center;
+  margin-bottom: $spacing-large;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -$spacing-small;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background-color: $color-primary;
+    border-radius: 3px;
+  }
 }
 
 .find-account-form {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  @include flex-column;
   width: 100%;
-  padding: 1.5rem 0;
+  gap: $spacing-large;
+  margin-top: $spacing-xxl;
 
   &__input-field {
     width: 100%;
   }
 
   &__button {
+    @include button-style;
     width: 100%;
-    height: 48px;
+    height: 52px;
+    margin-top: $spacing-large;
   }
 }
 
 .input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  @include flex-column;
+  gap: $spacing-large;
+  margin-bottom: $spacing-medium;
 }
 
 .input-with-button {
   display: grid;
-  grid-template-columns: 1fr 120px;
-  gap: 0.75rem;
+  grid-template-columns: 1fr 91px;
+  gap: $spacing-medium;
   align-items: flex-start;
 
   :global(.input-field-container) {
     width: 100%;
   }
+
+  &__button {
+    @include button-style($color-primary-light, $color-primary-dark);
+    height: 52px;
+    min-width: 91px;
+    padding: 0 $spacing-medium;
+    margin-top: 25px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+}
+
+.result-message {
+  @include flex-column;
+  margin-top: $spacing-large;
+  padding: $spacing-medium;
+  border-radius: 8px;
+  text-align: center;
+  
+  &--success {
+    background-color: rgba($color-success, 0.1);
+    color: $color-success;
+  }
+  
+  &--error {
+    background-color: rgba($color-error, 0.1);
+    color: $color-error;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out;
 }
 

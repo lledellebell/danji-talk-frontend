@@ -1,37 +1,43 @@
 .withdrawal {
   position: relative;
-  padding: 20px;
-  min-height: calc(100vh - 56px);
+  padding: 20px 20px 60px 20px;
+  height: 100%;
 }
 
-.content {
+.withdrawal__content {
   max-width: 600px;
   margin: 0 auto;
+  height: 100%;
 }
 
-.warning {
+.withdrawal__warning {
   padding: 40px 0 40px;
   text-align: center;
 
-  + .inputField {
+  + .withdrawal__input-field {
     margin-top: 20px;
   }
 }
 
-.warningTitle {
+.withdrawal__warning-title {
   font-size: 16px;
   line-height: 24px;
-  margin: 0 0 4px;
+  margin: 0 0 12px;
   font-weight: 600;
 }
 
-.warningText {
+.withdrawal__warning-text {
   font-size: 15px;
   line-height: 22px;
   color: #505050;
 }
 
-.warningItem {
+.withdrawal__warning-text--danger {
+  color: #D91C1C;
+  font-weight: 600;
+}
+
+.withdrawal__warning-item {
   background-color: #F9FBFF;
   border-radius: 6px;
   padding: 12px;
@@ -49,13 +55,13 @@
   }
 }
 
-.warningItemText {
+.withdrawal__warning-item-text {
   font-size: 14px;
   line-height: 20px;
   color: #111;
 }
 
-.submitButton {
+.withdrawal__submit-button {
   position: absolute;
   bottom: 20px;
   left: 50%;
@@ -83,12 +89,31 @@
   }
 }
 
-.confirmButton {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 40px);
+.withdrawal__container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+.withdrawal__main-content {
+  flex: 1;
+  padding: 20px;
+  padding-bottom: calc(20px + 46px + 32px); /* 기본 패딩 + 버튼 높이 + 버튼 컨테이너 패딩 */
+}
+
+.withdrawal__button-wrapper {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px 20px;
+  background-color: #fff;
+  z-index: 10;
+}
+
+.withdrawal__confirm-button {
+  width: 100%;
   padding: 14px 12px;
   background-color: #D91C1C;
   color: #fff;
@@ -100,13 +125,24 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   
-  
   &:hover:not(:disabled) {
-    background-color: #FF2222;
+    background-color: #c31616;
   }
 
   &:disabled {
     background-color: #CCCCCC;
     cursor: not-allowed;
   }
+}
+
+.withdrawal__form {
+  width: 100%;
+}
+
+.withdrawal__input-wrapper {
+  margin-top: 0px;
+}
+
+.withdrawal__input-wrapper--focused {
+  // outline: 1px solid #D1E0FF;
 }

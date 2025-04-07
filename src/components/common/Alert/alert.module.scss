@@ -5,6 +5,9 @@ $button-padding: 8px 16px;
 $button-transition: background-color 0.3s;
 $button-hover-color: #6fa8dc;
 
+// PC 환경 변수
+$pc-breakpoint: 768px;
+
 .alert__overlay {
   position: fixed;
   top: 0;
@@ -16,6 +19,15 @@ $button-hover-color: #6fa8dc;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  
+  // PC 환경의 device-frame 내부 얼럿
+  &--in-frame {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    z-index: 100;
+  }
 }
 
 .alert__container {

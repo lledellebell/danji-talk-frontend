@@ -1,77 +1,107 @@
-.favorites {
-  padding: 1rem;
-}
+// 변수 정의
+$color-primary: #97BBFF;
+$color-text-primary: #333;
+$color-text-secondary: #666;
+$color-border: #EDEDED;
+$color-background: white;
 
-.favoriteList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 2rem;
 
-.favoriteItem {
+$font-size-normal: 16px;
+$font-size-small: 14px;
+
+$font-weight-normal: 400;
+$font-weight-bold: 600;
+
+$mobile-breakpoint: 768px;
+
+// 믹스인 정의
+@mixin flex-center {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  border-bottom: 1px solid #EDEDED;
-  background: white;
+  justify-content: center;
 }
 
-.favoriteContent {
-  flex: 1;
+@mixin text-style($size, $weight, $color) {
+  font-size: $size;
+  font-weight: $weight;
+  color: $color;
 }
 
-.favoriteName {
-  margin: 0 0 0.25rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
-}
+// 컴포넌트 스타일
+.favorites {
+  padding: $spacing-md;
 
-.favoriteAddress {
-  margin: 0;
-  font-size: 0.875rem;
-  color: #666;
-}
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
 
-.favoriteButton {
-  background: none;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
-  color: #97BBFF;
-  
-  &:hover {
-    opacity: 0.8;
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-md;
+    border-bottom: 1px solid $color-border;
+    background: $color-background;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__name {
+    margin: 0 0 $spacing-xs;
+    @include text-style($font-size-normal, $font-weight-bold, $color-text-primary);
+  }
+
+  &__address {
+    margin: 0;
+    @include text-style($font-size-small, $font-weight-normal, $color-text-secondary);
+  }
+
+  &__button {
+    background: none;
+    border: none;
+    padding: $spacing-sm;
+    cursor: pointer;
+    color: $color-primary;
+    
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }
 
-.emptyState {
-  display: flex;
+.empty-state {
+  @include flex-center;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: calc(100vh - 56px); 
-  padding: 2rem;
+  min-height: calc(100vh - 157px);
+  padding: $spacing-lg;
   text-align: center;
-}
 
-.emptyIcon {
-  width: 114px; 
-  height: auto;
-  margin-bottom: 20px;
-  opacity: 0.8; 
-}
+  @media (max-width: $mobile-breakpoint) {
+    min-height: calc(100vh - 100px);
+  }
 
-.emptyText {
-  margin: 0 0 0.5rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #333;
-}
+  &__icon {
+    width: 120px; 
+    height: auto;
+    margin-bottom: $spacing-md;
+    opacity: 0.8; 
+  }
 
-.emptySubText {
-  margin: 0;
-  font-size: 0.875rem;
-  color: #666;
+  &__text {
+    margin: 0 0 $spacing-xs;
+    @include text-style($font-size-normal, $font-weight-bold, $color-text-primary);
+  }
+
+  &__subtext {
+    margin: 0;
+    @include text-style($font-size-normal, $font-weight-normal, $color-text-secondary);
+  }
 } 

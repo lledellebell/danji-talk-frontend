@@ -1,12 +1,43 @@
-$primary-color: #2196f3;
+$primary-color: #97BBFF;
 $disabled-color: #e0e0e0;
-$border-color: #1565c0;
-$hover-border-color: #1976d2;
-$hover-bg-color: #e8f4fd;
+$border-color: #97BBFF;
+$hover-border-color: #97BBFF;
 $font-color: #444;
 $font-family: 'Arial', sans-serif;
 $font-size: 16px;
 $font-weight: 500;
+
+@keyframes checkAnimation {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes rippleEffect {
+  0% {
+    box-shadow: 0 0 0 0 rgba(151, 187, 255, 0.3);
+    transform: scale(0.95);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(151, 187, 255, 0);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(151, 187, 255, 0);
+    transform: scale(1);
+  }
+}
 
 .checkbox {
   display: inline-flex;
@@ -15,6 +46,11 @@ $font-weight: 500;
   margin-right: 8px;
   cursor: pointer;
   user-select: none;
+
+  &.focused:not(.disabled) .checkmark {
+    box-shadow: 0 0 0 3px rgba(151, 187, 255, 0.3);
+    border-color: $primary-color;
+  }
 
   // disabled 상태일 때 부모 요소에 적용할 클래스
   &.disabled {
@@ -37,22 +73,26 @@ $font-weight: 500;
   .input:checked + .label .checkmark {
     background-color: $primary-color;
     border-color: $primary-color;
+    animation: rippleEffect 0.3s ease-out forwards;
   }
 
   .input:checked + .label .checkmark:after {
     transform: translate(-50%, -50%) scale(1);
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: checkAnimation 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+    opacity: 1;
   }
 
   // 체크되지 않은 상태
   .input:not(:checked) + .label .checkmark {
-    background-color: #f5f5f5;
+    background-color: white;
     border-color: #ccc;
+    transition: all 0.15s ease-out;
   }
 
   .input:not(:checked) + .label .checkmark:after {
     transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0;
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
   }
 
   // disabled 상태
@@ -61,8 +101,9 @@ $font-weight: 500;
     border-color: #bdbdbd;
   }
 
-  .input:disabled + .label .checkmark:after {
-    transform: translate(-50%, -50%) scale(0);
+  .input:focus-visible + .label .checkmark {
+    box-shadow: 0 0 0 3px rgba(151, 187, 255, 0.3);
+    border-color: $primary-color;
   }
 
   &.small .checkmark {
@@ -92,9 +133,11 @@ $font-weight: 500;
     margin-top: -2px;
     border-radius: 50%;
     margin-right: 8px;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    background-color: #f0f0f0;
+    padding: 2px;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: white;
     border: 2px solid $border-color;
+    will-change: transform, box-shadow, background-color, border-color;
 
     &:after {
       content: '';
@@ -104,20 +147,12 @@ $font-weight: 500;
       left: 50%;
       width: 14px;
       height: 14px;
-      transform: translate(-50%, -50%) scale(2);
+      transform: translate(-50%, -50%) scale(0);
       background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M20.285 6.709l-11.997 12-5.285-5.3 1.415-1.415 3.87 3.87L18.87 5.294z'/></svg>")
         no-repeat center center;
       background-size: contain;
-      transition: transform 0.3s ease-in-out;
+      will-change: transform, opacity;
     }
-  }
-
-  &:hover:not(.disabled) .label .checkmark {
-    border-color: $hover-border-color;
-    background-color: $hover-bg-color;
-    transition:
-      border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-      background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .label {
@@ -129,5 +164,9 @@ $font-weight: 500;
     font-weight: $font-weight;
     color: $font-color;
     vertical-align: middle;
+
+    &:active .checkmark {
+      transform: scale(0.95);
+    }
   }
 }

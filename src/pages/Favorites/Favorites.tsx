@@ -17,15 +17,15 @@ const Favorites = () => {
 
   if (favorites.length === 0) {
     return (
-      <div className={styles.emptyState}>
+      <div className={styles['empty-state']}>
         <img 
           src={logo} 
           alt="" 
-          className={styles.emptyIcon}
+          className={styles['empty-state__icon']}
           aria-hidden="true"
         />
-        <p className={styles.emptyText}>즐겨찾기가 비어있습니다.</p>
-        <p className={styles.emptySubText}>
+        <p className={styles['empty-state__text']}>즐겨찾기가 비어있습니다.</p>
+        <p className={styles['empty-state__subtext']}>
           관심 있는 단지를 즐겨찾기에 추가해보세요!
         </p>
       </div>
@@ -34,16 +34,16 @@ const Favorites = () => {
 
   return (
     <div className={styles.favorites}>
-      <ul className={styles.favoriteList}>
+      <ul className={styles['favorites__list']}>
         {favorites.map((item) => (
-          <li key={item.id} className={styles.favoriteItem}>
-            <div className={styles.favoriteContent}>
-              <h3 className={styles.favoriteName}>{item.name}</h3>
-              <p className={styles.favoriteAddress}>{item.address}</p>
+          <li key={item.id} className={styles['favorites__item']}>
+            <div className={styles['favorites__content']}>
+              <h3 className={styles['favorites__name']}>{item.name}</h3>
+              <p className={styles['favorites__address']}>{item.address}</p>
             </div>
             <button
               type="button"
-              className={styles.favoriteButton}
+              className={styles['favorites__button']}
               onClick={() => {
                 // 즐겨찾기 제거 로직
                 setFavorites(favorites.filter(fav => fav.id !== item.id));

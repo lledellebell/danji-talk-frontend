@@ -1,4 +1,4 @@
-import { ChangeEvent, useId } from 'react';
+import { ChangeEvent, useId, KeyboardEvent, useState } from 'react';
 import styles from './Checkbox.module.scss';
 
 interface CheckboxProps {
@@ -20,10 +20,19 @@ export const Checkbox = ({
   disabled = false,
   size = 'medium',
 }: CheckboxProps) => {
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (disabled) return;
+    
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      onChange(e as unknown as ChangeEvent<HTMLInputElement>);
+      const inputElement = document.getElementById(checkboxId) as HTMLInputElement;
+      if (inputElement) {
+        const event = new MouseEvent('change', { bubbles: true });
+        Object.defineProperty(event, 'target', { value: inputElement, enumerable: true });
+        onChange(event as unknown as ChangeEvent<HTMLInputElement>);
+      }
     }
   };
 
@@ -32,12 +41,14 @@ export const Checkbox = ({
 
   return (
     <div
-      className={`${styles.checkbox} ${className || ''} ${disabled ? styles.disabled : ''} ${styles[size]}`}
+      className={`${styles.checkbox} ${className || ''} ${disabled ? styles.disabled : ''} ${styles[size]} ${isFocused ? styles.focused : ''}`}
       role="checkbox"
       aria-checked={checked}
       aria-disabled={disabled}
-      tabIndex={0}
-      onKeyPress={handleKeyPress}
+      tabIndex={disabled ? -1 : 0}
+      onKeyDown={handleKeyDown}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
     >
       <input
         type="checkbox"
@@ -47,6 +58,7 @@ export const Checkbox = ({
         className={styles.input}
         disabled={disabled}
         aria-labelledby={`${checkboxId}-label`}
+        onFocus={(e) => e.stopPropagation()}
       />
       <label
         id={`${checkboxId}-label`}

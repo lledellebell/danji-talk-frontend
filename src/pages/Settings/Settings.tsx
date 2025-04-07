@@ -48,20 +48,20 @@ const Settings = () => {
   return (
     <div className={styles.settings}>
       {settingSections.map((section) => (
-        <section key={section.title} className={styles.section}>
-          <h2 className={styles.sectionTitle}>{section.title}</h2>
-          <ul className={styles.menuList}>
+        <section key={section.title} className={styles['settings__section']}>
+          <h2 className={styles['settings__section-title']}>{section.title}</h2>
+          <ul className={styles['settings__menu-list']}>
             {section.items.map((item) => (
-              <li key={item.path} className={styles.menuItem}>
-                <Link to={item.path} className={styles.menuLink}>
-                  <span className={styles.menuLabel}>{item.label}</span>
+              <li key={item.path} className={styles['settings__menu-item']}>
+                <Link to={item.path} className={styles['settings__menu-link']}>
+                  <span className={styles['settings__menu-label']}>{item.label}</span>
                   <svg
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className={styles.menuIcon}
+                    className={styles['settings__menu-icon']}
                   >
                     <path
                       d="M9 18L15 12L9 6"

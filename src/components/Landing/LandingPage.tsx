@@ -19,6 +19,12 @@ import { useMediaQuery } from '../../hooks/useMediaQuery';
 import Facilities from '../../pages/Facilities/Facilities';
 import { useNavigate } from 'react-router-dom';
 import Withdrawal from '../../pages/Settings/Withdrawal/Withdrawal';
+import PostsPage from '../../pages/MyPage/Posts';
+import ScrapsPage from '../../pages/MyPage/Scraps';
+import ChatsPage from '../../pages/MyPage/Chats';
+import VehiclesPage from '../../pages/MyPage/Vehicles';
+import Profile from '../../pages/Settings/Profile/Profile';
+import Favorites from '../../pages/Favorites/Favorites';
 
 const LandingPage = () => {
   const { isLoggedIn } = useAuthStore();
@@ -138,7 +144,12 @@ const LandingPage = () => {
                   <Navigate to="/login" replace />
                 )
               }
-            />
+            >
+              <Route path="posts" element={<PostsPage />} />
+              <Route path="scraps" element={<ScrapsPage />} />
+              <Route path="chats" element={<ChatsPage />} />
+              <Route path="vehicles" element={<VehiclesPage />} />
+            </Route>
             <Route
               path="/settings"
               element={
@@ -156,7 +167,7 @@ const LandingPage = () => {
               path="/find-account"
               element={
                 <>
-                  <Header title="계정찾기" type="sub" hasBackButton={true} />
+                  <Header title="아이디/비밀번호 찾기" type="sub" hasBackButton={true} />
                   <FindAccount />
                 </>
               }
@@ -186,6 +197,32 @@ const LandingPage = () => {
                   <Navigate to="/login" replace />
                 )
               }
+            />
+            <Route
+              path="/settings/profile"
+              element={
+                isLoggedIn ? (
+                  <>
+                    <Header title="개인 정보 변경" type="sub" hasBackButton={true} />
+                    <Profile />
+                  </>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
+            <Route 
+              path="/favorites" 
+              element={
+                isLoggedIn ? (
+                  <>
+                    <Header title="즐겨찾기" type="sub" hasBackButton={true} />
+                    <Favorites />
+                  </>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
             />
           </Routes>
         </div>

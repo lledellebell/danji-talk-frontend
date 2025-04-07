@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styles from './Header.module.scss';
 import back_icon from '../assets/back_icon.svg';
 import { useAuthStore } from '../stores/authStore';
-import Sidebar from './Sidebar';
+import Sidebar from '../components/Sidebar/Sidebar';
 
 interface HeaderProps {
   title: string;
@@ -65,7 +65,11 @@ const MainHeader: React.FC<HeaderProps> = ({ title }) => {
     <>
       <header className={`${styles.header} ${styles['header--main']}`} role="banner">
         <div className={styles.header__container}>
-          <h1 className={styles.header__title} id="mainheader-title">{title}</h1>
+          <h1 className={styles.header__title} id="mainheader-title">
+            <Link to="/" className={styles.header__title_link}>
+              {title}
+            </Link>
+            </h1>
           {isLoggedIn ? (
             <button 
               type="button" 
