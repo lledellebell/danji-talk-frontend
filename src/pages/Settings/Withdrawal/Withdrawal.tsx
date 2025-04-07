@@ -26,7 +26,9 @@ const PasswordConfirmationStep = () => {
           탈퇴를 진행합니다.
         </h1>
         <p className={styles['withdrawal__warning-text']}>
-          회원님의 정보 보호를 위해 <strong>비밀번호를 한 번 더 확인</strong>합니다.
+          회원님의 정보 보호를 위해
+          <br />
+          <strong>비밀번호를 한 번 더 확인</strong>합니다.
           <br />
           <strong className={styles['withdrawal__warning-text--danger']}>탈퇴 후에는 복구가 불가능</strong>하니 신중하게 진행해 주세요.
         </p>

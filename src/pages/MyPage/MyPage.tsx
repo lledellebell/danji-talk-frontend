@@ -1,12 +1,13 @@
 import styles from './MyPage.module.scss';
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { useUserStore } from '../../stores/userStore';
 
 import WriteIcon from '../../assets/mypage/Write.svg';
 import BookmarkIcon from '../../assets/mypage/Bookmark.svg';
 import MailIcon from '../../assets/mypage/Mail.svg';
 import BrowserIcon from '../../assets/mypage/Browser.svg';
-
+import EditIcon from '../../assets/mypage/Edit.svg';
 interface NavItemProps {
   icon: React.ReactNode;
   label: string;
@@ -48,10 +49,49 @@ const NavIconList: React.FC = () => {
   );
 };
 
+const ProfileSection: React.FC = () => {
+  const navigate = useNavigate();
+  const { userEmail } = useUserStore();
+  
+  const handleEditProfile = () => {
+    navigate('/settings/profile');
+  };
+  
+  return (
+    <div className={styles['profile']}>
+      <div className={styles['profile__info']}>
+        <div className={styles['profile__image-container']}>
+          <div className={styles['profile__image']}>
+            <img 
+              src="https://placehold.co/100" 
+              width={100}
+              height={100}
+              alt="프로필 이미지"
+              className={styles['profile__image-img']} 
+            />
+          </div>
+          <button 
+            className={styles['profile__edit-button']} 
+            onClick={handleEditProfile}
+            aria-label="프로필 수정"
+          >
+            <img width={12} height={12} src={EditIcon} alt="프로필 수정" />
+          </button>
+        </div>
+        <div className={styles['profile__details']}>
+          <span className={styles['profile__name']}>사용자</span>
+          <span className={styles['profile__email']}>{userEmail || 'example@email.com'}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const MyPage = () => {
   return (
     <div className={styles['my-page']}>
-      <h1 className={styles['my-page__title']}>마이페이지</h1>
+      <h1 className={styles['sr-only']}>마이페이지</h1>
+      <ProfileSection />
       <NavIconList />
       <Outlet />
     </div>

@@ -18,6 +18,11 @@ import { useMediaQuery } from '../../hooks/useMediaQuery';
 import Facilities from '../../pages/Facilities/Facilities';
 import { useNavigate } from 'react-router-dom';
 import Withdrawal from '../../pages/Settings/Withdrawal/Withdrawal';
+import PostsPage from '../../pages/MyPage/Posts';
+import ScrapsPage from '../../pages/MyPage/Scraps';
+import ChatsPage from '../../pages/MyPage/Chats';
+import VehiclesPage from '../../pages/MyPage/Vehicles';
+import Profile from '../../pages/Settings/Profile/Profile';
 
 const LandingPage = () => {
   const { isLoggedIn } = useAuthStore();
@@ -134,7 +139,12 @@ const LandingPage = () => {
                   <Navigate to="/login" replace />
                 )
               }
-            />
+            >
+              <Route path="posts" element={<PostsPage />} />
+              <Route path="scraps" element={<ScrapsPage />} />
+              <Route path="chats" element={<ChatsPage />} />
+              <Route path="vehicles" element={<VehiclesPage />} />
+            </Route>
             <Route
               path="/settings"
               element={
@@ -177,6 +187,19 @@ const LandingPage = () => {
                   <>
                     <Header title="회원탈퇴" type="sub" hasBackButton={true} />
                     <Withdrawal />
+                  </>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />
+            <Route
+              path="/settings/profile"
+              element={
+                isLoggedIn ? (
+                  <>
+                    <Header title="개인 정보 변경" type="sub" hasBackButton={true} />
+                    <Profile />
                   </>
                 ) : (
                   <Navigate to="/login" replace />

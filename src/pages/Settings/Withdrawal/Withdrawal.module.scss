@@ -22,7 +22,7 @@
 .withdrawal__warning-title {
   font-size: 16px;
   line-height: 24px;
-  margin: 0 0 4px;
+  margin: 0 0 12px;
   font-weight: 600;
 }
 
@@ -140,9 +140,9 @@
 }
 
 .withdrawal__input-wrapper {
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .withdrawal__input-wrapper--focused {
-  outline: 2px solid #D1E0FF;
+  // outline: 1px solid #D1E0FF;
 }
