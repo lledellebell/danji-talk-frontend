@@ -33,16 +33,6 @@ const ServiceIntro = () => {
         <div className="qr-container">
           <div className="qr-item">
             <QRCodeSVG
-              value="https://github.com/DanjiTalk/danji-talk-backend"
-              size={100}
-              className="qr-code"
-              level="H"
-              includeMargin={true}
-            />
-            <p className="qr-label">Backend Source</p>
-          </div>
-          <div className="qr-item">
-            <QRCodeSVG
               value="https://github.com/DanjiTalk/danji-talk-frontend"
               size={100}
               className="qr-code"
@@ -50,6 +40,16 @@ const ServiceIntro = () => {
               includeMargin={true}
             />
             <p className="qr-label">Frontend Source</p>
+          </div>
+          <div className="qr-item">
+            <QRCodeSVG
+              value="https://github.com/DanjiTalk/danji-talk-backend"
+              size={100}
+              className="qr-code"
+              level="H"
+              includeMargin={true}
+            />
+            <p className="qr-label">Backend Source</p>
           </div>
         </div>
       </div>
