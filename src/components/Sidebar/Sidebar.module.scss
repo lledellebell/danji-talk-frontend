@@ -34,7 +34,7 @@
   }
 }
 
-.overlay {
+.sidebar-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -44,7 +44,7 @@
   opacity: 1;
   z-index: 999;
   
-  &.closing {
+  &--closing {
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -61,53 +61,50 @@
   box-shadow: var(--shadow-lg);
   transform: translateX(0);
   z-index: 1000;
+  border-radius: 30px 0 0 30px;
   overflow-y: auto;
+
+  @media (max-width: 768px) {
+    border-radius: 10px 0 0 10px;
+  }
   
   a, button {
     color: #ffffff;
   }
   
-  &.closing {
+  &--closing {
     transform: translateX(100%);
     transition: transform 0.3s ease;
   }
-}
-
-.closeButton {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
-  color: white;
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: scale(1.1);
-  }
-
-  svg {
+  
+  &__close-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: white;
     transition: transform 0.2s ease;
+
+    svg {
+      transition: transform 0.2s ease;
+    }
   }
-
-  &:hover svg {
-    transform: rotate(90deg);
+  
+  &__nav {
+    padding: 4rem 1rem 2rem;
   }
-}
-
-.nav {
-  padding: 4rem 1rem 2rem;
-
-  ul {
+  
+  &__list {
     list-style: none;
     padding: 0;
     margin: 0;
   }
-
-  li {
-    margin-bottom: 1rem;
+  
+  &__item {
+    margin-bottom: calc(1rem / 2);
     opacity: 0;
     transform: translateX(20px);
     animation: menuItemFadeIn 0.5s ease-out forwards;
@@ -117,31 +114,21 @@
         animation-delay: #{$i * 0.05}s;
       }
     }
-
-    // &:last-child {
-    //   margin-top: 2rem;
-    //   padding-top: 1rem;
-    //   border-top: 1px solid rgba(255, 255, 255, 0.1);
-    // }
   }
-
-  a, button {
+  
+  &__link, &__button {
     display: block;
     width: 100%;
     padding: 0.75rem 1rem;
     color: white;
     text-decoration: none;
     font-size: 1rem;
+    font-weight: 500;
     text-align: left;
     background: none;
     border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      transform: translateX(5px);
-    }
+    transition: color 0.2s ease;
   }
 }
 
@@ -158,7 +145,7 @@
 
 // 모바일 뷰에서의 스타일 조정
 @media (max-width: 768px) {
-  .overlay,
+  .sidebar-overlay,
   .sidebar {
     position: fixed;
   }

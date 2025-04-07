@@ -59,6 +59,11 @@
     white-space: nowrap;
   }
 
+  &__title_link {
+    text-decoration: none;
+    color: inherit;
+  }
+
   &__back-button {
     display: flex;
     align-items: center;

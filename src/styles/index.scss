@@ -24,6 +24,7 @@
   --font-size-3xl: 3rem;     // 48px
   
   // Spacing
+  --spacing-xxs: 0.3rem;
   --spacing-xs: 0.5rem;
   --spacing-sm: 0.75rem;
   --spacing-md: 1rem;
@@ -84,12 +85,8 @@ body {
 .feature-icon {
   width: 1.5rem;
   height: 1.5rem;
-  fill: var(--color-primary);
-  transition: transform var(--transition-fast);
-  
-  &:hover {
-    transform: scale(1.1);
-  }
+  filter: invert(60%) sepia(29%) saturate(1113%) hue-rotate(198deg) brightness(99%) contrast(96%);
+  transition: transform var(--transition-fast), filter var(--transition-fast);
 }
 
 // Layout & Components
@@ -420,9 +417,10 @@ body {
         font-size: var(--font-size-xl);
         line-height: 1.2;
         margin-bottom: var(--spacing-xs);
-        background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+        background: linear-gradient(135deg, #5D7FFF 0%, #97BBFF 60%, #B8D1FF 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        background-clip: text;
         font-weight: 700;
         letter-spacing: -0.02em;
       }
@@ -598,7 +596,6 @@ body {
   position: relative;
   cursor: initial;
   box-sizing: border-box;
-  
   box-shadow: 
     0 2px 4px rgba(151, 187, 255, 0.05),
     0 4px 8px rgba(151, 187, 255, 0.05);
@@ -619,15 +616,14 @@ body {
   .feature-icon {
     width: 24px;
     height: 24px;
-    margin-bottom: var(--spacing-xs);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: var(--spacing-xs);
+    padding: var(--spacing-xxs);
     background: rgba(151, 187, 255, 0.1);
     border-radius: var(--radius-sm);
   }
 
   .feature-label {
-    color: var(--color-text);
+    color: var(--color-text-secondary);
     font-weight: 600;
     font-size: var(--font-size-xs);
     margin-top: var(--spacing-xs);

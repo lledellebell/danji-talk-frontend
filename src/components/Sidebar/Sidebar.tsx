@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Sidebar.module.scss';
-import { useAuthStore } from '../stores/authStore';
+import { useAuthStore } from '../../stores/authStore';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -59,18 +59,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   return (
     <>
       <div 
-        className={`${styles.overlay} ${isClosing ? styles.closing : ''}`}
+        className={`${styles['sidebar-overlay']} ${isClosing ? styles['sidebar-overlay--closing'] : ''}`}
         onClick={handleClose}
         role="presentation"
       />
       <aside 
-        className={`${styles.sidebar} ${isClosing ? styles.closing : ''}`}
+        className={`${styles.sidebar} ${isClosing ? styles['sidebar--closing'] : ''}`}
         role="complementary"
         aria-label="메인 메뉴"
       >
         <button 
           type="button" 
-          className={styles.closeButton}
+          className={styles['sidebar__close-button']}
           onClick={onClose}
           aria-label="메뉴 닫기"
         >
@@ -89,45 +89,45 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             />
           </svg>
         </button>
-        <nav className={styles.nav}>
-          <ul>
-            <li>
-              <Link to="/complex-info">단지정보</Link>
+        <nav className={styles['sidebar__nav']}>
+          <ul className={styles['sidebar__list']}>
+            <li className={styles['sidebar__item']}>
+              <Link to="/complex-info" className={styles['sidebar__link']}>단지정보</Link>
             </li>
-            <li>
-              <Link to="/community">커뮤니티</Link>
+            <li className={styles['sidebar__item']}>
+              <Link to="/community" className={styles['sidebar__link']}>커뮤니티</Link>
             </li>
-            <li>
-              <Link to="/notices">공지사항</Link>
+            <li className={styles['sidebar__item']}>
+              <Link to="/notices" className={styles['sidebar__link']}>공지사항</Link>
             </li>
-            <li>
-              <Link to="/favorites">즐겨찾기</Link>
+            <li className={styles['sidebar__item']}>
+              <Link to="/favorites" className={styles['sidebar__link']}>즐겨찾기</Link>
             </li>
-            <li>
-              <Link to="/mypage">마이페이지</Link>
+            <li className={styles['sidebar__item']}>
+              <Link to="/mypage" className={styles['sidebar__link']}>마이페이지</Link>
             </li>
-            <li>
-              <Link to="/private-info">사설정보</Link>
+            <li className={styles['sidebar__item']}>
+              <Link to="/private-info" className={styles['sidebar__link']}>사설정보</Link>
             </li>
-            <li>
-              <Link to="/chat">채팅</Link>
+            <li className={styles['sidebar__item']}>
+              <Link to="/chat" className={styles['sidebar__link']}>채팅</Link>
             </li>
-            <li>
-              <Link to="/visitor-car">방문차량등록</Link>
+            <li className={styles['sidebar__item']}>
+              <Link to="/visitor-car" className={styles['sidebar__link']}>방문차량등록</Link>
             </li>
-            <li>
-              <Link to="/my-reservations">내 예약 정보</Link>
+            <li className={styles['sidebar__item']}>
+              <Link to="/my-reservations" className={styles['sidebar__link']}>내 예약 정보</Link>
             </li>
-            <li>
-              <Link to="/register-complex">단지 등록</Link>
+            <li className={styles['sidebar__item']}>
+              <Link to="/register-complex" className={styles['sidebar__link']}>단지 등록</Link>
             </li>
-            <li>
+            <li className={styles['sidebar__item']}>
               {isLoggedIn ? (
-                <button type="button" onClick={handleLogout}>
+                <button type="button" className={styles['sidebar__button']} onClick={handleLogout}>
                   로그아웃
                 </button>
               ) : (
-                <button type="button" onClick={handleLogin}>
+                <button type="button" className={styles['sidebar__button']} onClick={handleLogin}>
                   로그인
                 </button>
               )}
