@@ -1,12 +1,13 @@
 .withdrawal {
   position: relative;
-  padding: 20px;
-  min-height: calc(100vh - 56px);
+  padding: 20px 20px 60px 20px;
+  height: 100%;
 }
 
 .content {
   max-width: 600px;
   margin: 0 auto;
+  height: 100%;
 }
 
 .warning {
@@ -83,12 +84,31 @@
   }
 }
 
+.withdrawalContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+.withdrawalContent {
+  flex: 1;
+  padding: 20px;
+  padding-bottom: calc(20px + 46px + 32px); /* 기본 패딩 + 버튼 높이 + 버튼 컨테이너 패딩 */
+}
+
+.buttonWrapper {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px 20px;
+  background-color: #fff;
+  z-index: 10;
+}
+
 .confirmButton {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 40px);
+  width: 100%;
   padding: 14px 12px;
   background-color: #D91C1C;
   color: #fff;
@@ -100,9 +120,9 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   
-  
   &:hover:not(:disabled) {
-    background-color: #FF2222;
+    background-color: #c31616;
+    
   }
 
   &:disabled {

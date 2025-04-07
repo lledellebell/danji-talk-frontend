@@ -56,25 +56,17 @@ const PasswordConfirmationStep = () => {
           disabled={withdrawal.isPending}
         />
       </div>
-
-      <button
-        type="submit"
-        className={styles.submitButton}
-        disabled={!password || withdrawal.isPending}
-        aria-busy={withdrawal.isPending}
-      >
-        {withdrawal.isPending ? '처리중...' : '회원 탈퇴'}
-      </button>
     </form>
   );
 };
 
 const Withdrawal = () => {
   const { step, setStep } = useWithdrawalStore();
-
+  const withdrawal = useWithdrawalMutation();
+  
   return (
-    <main className={styles.withdrawal}>
-      <div className={styles.content}>
+    <div className={styles.withdrawalContainer}>
+      <div className={styles.withdrawalContent}>
         {step === 1 ? (
           <>
             <section className={styles.warning} aria-labelledby="warning-title">
@@ -99,21 +91,34 @@ const Withdrawal = () => {
                 </p>
               </article>
             </section>
-
-            <button
-              type="button"
-              className={styles.confirmButton}
-              onClick={() => setStep(2)}
-              aria-label="회원 탈퇴 확인"
-            >
-              탈퇴하기
-            </button>
           </>
         ) : (
           <PasswordConfirmationStep />
         )}
       </div>
-    </main>
+      
+      <div className={styles.buttonWrapper}>
+        {step === 1 ? (
+          <button 
+            className={styles.confirmButton} 
+            onClick={() => setStep(2)}
+          >
+            확인했어요
+          </button>
+        ) : (
+          <button 
+            className={styles.confirmButton} 
+            onClick={() => {
+              const form = document.querySelector('form');
+              if (form) form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+            }}
+            disabled={withdrawal.isPending}
+          >
+            {withdrawal.isPending ? '처리중...' : '회원 탈퇴'}
+          </button>
+        )}
+      </div>
+    </div>
   );
 };
 
