@@ -26,9 +26,8 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div
-      className={`landing-container ${isMobile || isTablet ? 'mobile-view' : ''}`}
-    >
+    <div className={`landing-container ${(isMobile || isTablet) ? 'mobile-view' : ''}`}>
+      <div className="background-hexagon"></div>
       <DevicePreview>
         <div className="app-container">
           <Routes>
