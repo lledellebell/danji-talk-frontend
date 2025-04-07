@@ -10,6 +10,7 @@ import SearchBar from '../../components/Search/SearchBar';
 import MenuGrid from '../../components/MenuGrid/MenuGrid';
 import { ChatList } from '../../pages/Chat/ChatList';
 import { BoardList } from '../../pages/Board/BoardList';
+import { BoardDetail } from '../../pages/Board/BoardDetail';
 import MyPage from '../../pages/MyPage/MyPage';
 import Settings from '../../pages/Settings/Settings';
 import FindAccount from '../../pages/FindAccount/FindAccount';
@@ -25,7 +26,9 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className={`landing-container ${(isMobile || isTablet) ? 'mobile-view' : ''}`}>
+    <div
+      className={`landing-container ${isMobile || isTablet ? 'mobile-view' : ''}`}
+    >
       <DevicePreview>
         <div className="app-container">
           <Routes>
@@ -83,13 +86,21 @@ const LandingPage = () => {
               }
             />
             <Route
+              path="/community/feed/:feedId"
+              element={
+                <>
+                  <BoardDetail />
+                </>
+              }
+            />
+            <Route
               path="/mypage"
               element={
                 isLoggedIn ? (
                   <>
-                    <Header 
-                      title="마이페이지" 
-                      type="sub" 
+                    <Header
+                      title="마이페이지"
+                      type="sub"
                       hasBackButton={true}
                       hasIcons={true}
                       iconComponent={
@@ -181,4 +192,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage; 
+export default LandingPage;
