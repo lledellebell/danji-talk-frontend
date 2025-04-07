@@ -23,6 +23,7 @@ import ScrapsPage from '../../pages/MyPage/Scraps';
 import ChatsPage from '../../pages/MyPage/Chats';
 import VehiclesPage from '../../pages/MyPage/Vehicles';
 import Profile from '../../pages/Settings/Profile/Profile';
+import Favorites from '../../pages/Favorites/Favorites';
 
 const LandingPage = () => {
   const { isLoggedIn } = useAuthStore();
@@ -205,6 +206,19 @@ const LandingPage = () => {
                   <Navigate to="/login" replace />
                 )
               }
+            />
+            <Route 
+              path="/favorites" 
+              element={
+                isLoggedIn ? (
+                  <>
+                    <Header title="즐겨찾기" type="sub" hasBackButton={true} />
+                    <Favorites />
+                  </>
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              } 
             />
           </Routes>
         </div>
