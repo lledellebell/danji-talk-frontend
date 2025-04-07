@@ -13,21 +13,22 @@ $color-text: #111;
 .register-success-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
+  min-height: calc(100vh - 83px);
   background-color: $color-white;
   padding: $spacing-large;
+  box-sizing: border-box;
+  position: relative;
+  padding-bottom: calc(20px + 46px + 32px); /* 기본 패딩 + 버튼 높이 + 버튼 컨테이너 패딩 */
 }
 
-.register-success-wrapper {
-  padding: $spacing-large;
+.register-success-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   margin: 0 auto;
-
-  @media screen and (max-width: $breakpoint-mobile) {
-    padding: $spacing-medium;
-  }
+  padding-top: $spacing-large;
 
   .logo {
     text-align: center;
@@ -59,25 +60,49 @@ $color-text: #111;
   }
 }
 
-.register-success-button {
-  background-color: $confirm-button-bg;
-  border-radius: $button-border-radius;
-  padding: $button-padding;
-  cursor: pointer;
-  transition: $button-transition;
-  height: 40px;
+.register-success-button-container {
+  position: sticky;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  border: none;
+  padding: 16px 20px;
+  background-color: #fff;
+  z-index: 10;
+  box-sizing: border-box;
+  
+  @media screen and (min-width: $breakpoint-mobile) {
+    &.in-device-frame {
+      position: sticky;
+      bottom: 20px;
+      z-index: 10;
+    }
+  }
+}
+
+.register-success-button {
+  width: 100%;
+  padding: 14px 12px;
+  background-color: $confirm-button-bg;
   color: #fff;
+  border: none;
+  border-radius: 6px;
   font-size: 16px;
+  line-height: 24px;
   font-weight: 500;
-  margin-top: 24px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  
+  &:hover {
+    background-color: $button-hover-color;
+  }
 }
 
-.register-success-button:hover {
-  background-color: $button-hover-color;
+.in-device-frame {
+  position: absolute !important;
+  z-index: 10;
+  max-width: 100%;
 }
