@@ -22,12 +22,19 @@ const ResetPassword: React.FC = () => {
   const [alertContent, setAlertContent] = useState<string | null>(null);
 
   // 비밀번호 유효성 검사
+  // 영문, 숫자, 특수문자 포함 8~16자
   const validatePassword = (password: string): string | null => {
-    if (password.length < 8) {
-      return '비밀번호는 최소 8자 이상이어야 합니다.';
+    if (password.length < 8 || password.length > 16) {
+      return '비밀번호는 8~16자 이내여야 합니다.';
     }
-    if (!/[A-Za-z]/.test(password) || !/[0-9]/.test(password)) {
-      return '비밀번호는 영문자와 숫자를 포함해야 합니다.';
+    if (!/[A-Za-z]/.test(password)) {
+      return '비밀번호는 영문자를 포함해야 합니다.';
+    }
+    if (!/[0-9]/.test(password)) {
+      return '비밀번호는 숫자를 포함해야 합니다.';
+    }
+    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+      return '비밀번호는 특수문자를 포함해야 합니다.';
     }
     return null;
   };
@@ -91,10 +98,19 @@ const ResetPassword: React.FC = () => {
   return (
     <div className={styles['reset-password-wrapper']}>
       <div className={styles['reset-password-container']}>
-        <h1 className={styles['title']}>비밀번호 재설정</h1>
-        <p className={styles['subtitle']}>새로운 비밀번호를 입력해주세요.</p>
+        <h1 className={styles['sr-only']}>비밀번호 재설정</h1>
+        <p className={styles['sr-only']}>새로운 비밀번호를 입력해주세요.</p>
         
         <div className={styles['reset-password-form']}>
+          {/* 인증한 이메일 정보 */}
+          <InputField
+            label="이메일"
+            name="email"
+            value={email}
+            onChange={() => {}}
+            disabled
+            className={styles['input-field']}
+          />
           <InputField
             label="새 비밀번호"
             name="password"
@@ -111,6 +127,7 @@ const ResetPassword: React.FC = () => {
             required
             className={styles['input-field']}
             error={passwordError || undefined}
+            showPasswordToggle={true}
           />
           
           <InputField
@@ -126,17 +143,20 @@ const ResetPassword: React.FC = () => {
             required
             className={styles['input-field']}
             error={confirmPasswordError || undefined}
+            showPasswordToggle={true}
           />
           
-          <Button
-            label="비밀번호 변경"
-            onClick={handleResetPassword}
-            className={[
-              styles['submit-button'],
-              password && confirmPassword ? styles['button-filled'] : styles['button-empty']
-            ]}
-            disabled={!password || !confirmPassword}
-          />
+          <div className={styles['button-container']}>
+            <Button
+              label="다음"
+              onClick={handleResetPassword}
+              className={[
+                styles['submit-button'],
+                password && confirmPassword ? styles['button-filled'] : styles['button-empty']
+              ]}
+              disabled={!password || !confirmPassword}
+            />
+          </div>
         </div>
         
         {showAlert && (

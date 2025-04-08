@@ -25,6 +25,7 @@ import ChatsPage from '../../pages/MyPage/Chats';
 import VehiclesPage from '../../pages/MyPage/Vehicles';
 import Profile from '../../pages/Settings/Profile/Profile';
 import Favorites from '../../pages/Favorites/Favorites';
+import ResetPassword from '../../pages/ResetPassword/ResetPassword';
 
 const LandingPage = () => {
   const { isLoggedIn } = useAuthStore();
@@ -169,6 +170,15 @@ const LandingPage = () => {
                 <>
                   <Header title="아이디/비밀번호 찾기" type="sub" hasBackButton={true} />
                   <FindAccount />
+                </>
+              }
+            />
+            <Route
+              path="/reset-password"
+              element={
+                <>
+                  <Header title="비밀번호 재설정" type="sub" hasBackButton={true} />
+                  <ResetPassword />
                 </>
               }
             />
