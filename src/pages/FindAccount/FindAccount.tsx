@@ -368,7 +368,7 @@ const FindAccount: React.FC = () => {
                 onClick={handleResetPassword}
                 disabled={!isVerificationCodeValid}
                 className={[
-                  styles['submit-button'],
+                  styles['find-account-form__button'],
                   isVerificationCodeValid ? styles['button-filled'] : styles['button-empty']
                 ]}
               />
