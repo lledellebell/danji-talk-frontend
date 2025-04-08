@@ -11,12 +11,11 @@ import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../stores/userStore';
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://danjitalk.duckdns.org',
-  headers: {
-    'Content-Type': 'application/json'
-  }
-});
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://danjitalk.duckdns.org';
+const IS_DEV = import.meta.env.VITE_NODE_ENV === 'development' || window.location.hostname === 'localhost';
+
+console.log('API 기본 URL:', API_BASE_URL);
+console.log('개발 환경?', IS_DEV);
 
 const validatePhone = (phone: string): string | null => {
   const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
@@ -80,31 +79,66 @@ const FindAccount: React.FC = () => {
       return;
     }
 
+    // 개발 환경이고 모의 데이터를 사용하려는 경우
+    if (IS_DEV && import.meta.env.VITE_USE_MOCK_API === 'true') {
+      console.log('모의 API 응답 사용');
+      
+      // 테스트 계정 정보와 일치하는지 확인
+      if (username === 'Alice' && phone === '123-456-7893') {
+        setUserEmail('alice@example.com');
+        navigate('/show-email');
+        return;
+      } else {
+        setAlertContent('입력하신 정보와 일치하는 계정을 찾을 수 없습니다.');
+        setShowAlert(true);
+        return;
+      }
+    }
+
     try {
-      const response = await api.post('/api/member/find-id', {
+      const apiUrl = IS_DEV 
+        ? `${API_BASE_URL}/api/member/find-id`
+        : '/api/member/find-id';
+      
+      console.log('요청 URL:', apiUrl);
+      console.log('요청 본문:', { name: username, phoneNumber: phone });
+      
+      const response = await axios.post(apiUrl, {
         name: username,
         phoneNumber: phone
+      }, {
+        withCredentials: true
       });
 
+      // 성공 케이스
       if (response.status === 200) {
         setUserEmail(response.data.data);
         navigate('/show-email');
       }
     } catch (error: unknown) {
       console.error('계정 찾기 실패:', error);
-      const is404Error = axios.isAxiosError(error) && error.response?.status === 404;
-      setAttemptCount((prev) => prev + 1);
-      setAlertContent(
-        is404Error
-          ? '입력하신 정보로 등록된 계정을 찾을 수 없습니다.<br><u>회원가입</u>을 진행하시겠습니까?'
-          : '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
-      );
-      setShowAlert(true);
       
-      if (is404Error) {
-        setTimeout(() => {
-          navigate('/register');
-        }, 2000);
+      if (axios.isAxiosError(error)) {
+        // 404 오류는 "사용자를 찾을 수 없음"으로 처리
+        if (error.response?.status === 404) {
+          setAlertContent(
+            '입력하신 정보와 일치하는 계정을 찾을 수 없습니다.<br>' +
+            '정확한 이름과 전화번호를 입력했는지 확인해주세요.<br>' +
+            '계정이 없으시면 <u>회원가입</u>을 진행해주세요.'
+          );
+          setShowAlert(true);
+          
+          // 회원가입으로 이동 버튼 활성화
+          setAttemptCount((prev) => prev + 1);
+        } else {
+          // 기타 오류
+          const errorMessage = error.response?.data?.message || '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+          setAlertContent(errorMessage);
+          setShowAlert(true);
+        }
+      } else {
+        setAlertContent('서비스 이용 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        setShowAlert(true);
       }
     }
   };
@@ -142,8 +176,14 @@ const FindAccount: React.FC = () => {
     try {
       console.log('인증번호 요청 중...', email);
 
-      const response = await api.post('/api/mail/certification-code/send', {
+      const apiUrl = IS_DEV 
+        ? `${API_BASE_URL}/api/mail/certification-code/send`
+        : '/api/mail/certification-code/send';
+      
+      const response = await axios.post(apiUrl, {
         mail: email
+      }, {
+        withCredentials: true
       });
 
       console.log('서버 응답:', response);
@@ -161,6 +201,7 @@ const FindAccount: React.FC = () => {
         console.log('에러 데이터:', error.response?.data);
 
         if (error.response?.status === 409) {
+          console.log('정상적인 케이스: 비밀번호 찾기 - 이미 가입된 이메일');
           setIsEmailVerificationSent(true);
           setAlertContent('인증번호가 이메일로 전송되었습니다.');
         } else if (error.response?.status === 404) {
@@ -169,7 +210,8 @@ const FindAccount: React.FC = () => {
             navigate('/register');
           }, 2000);
         } else {
-          setAlertContent(`인증번호 전송에 실패했습니다. (${error.response?.status || '알 수 없는 에러'})`);
+          const errorMessage = error.response?.data?.message || `인증번호 전송에 실패했습니다. (${error.response?.status || '알 수 없는 에러'})`;
+          setAlertContent(errorMessage);
         }
       } else {
         setAlertContent('서버와의 통신에 실패했습니다. 잠시 후 다시 시도해주세요.');
@@ -181,9 +223,15 @@ const FindAccount: React.FC = () => {
   // 인증번호 확인
   const handleVerifyCode = async () => {
     try {
-      const response = await api.post('/api/member/verify-code', {
+      const apiUrl = IS_DEV 
+        ? `${API_BASE_URL}/api/member/verify-code`
+        : '/api/member/verify-code';
+      
+      const response = await axios.post(apiUrl, {
         email: email,
         code: verificationCode
+      }, {
+        withCredentials: true
       });
 
       if (response.status === 200) {
