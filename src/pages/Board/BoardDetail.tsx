@@ -1,6 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useBoardDetail } from '../../hooks/useBoardDetail';
 import { useCommentList } from '../../hooks/useCommentList';
+import { useReaction } from '../../hooks/useReaction';
+import { useBookMark } from '../../hooks/useBookMark';
 import { CommentListProps } from '../../types/board';
 import eyeIcon from '../../assets/board/eye.svg';
 import commentIcon from '../../assets/board/comment.svg';
@@ -14,6 +16,7 @@ import profileIcon from '../../assets/board/profile.svg';
 import { formatDate } from '../../utils/formatDate';
 import Header from '../../layouts/Header';
 import styles from './BoardDetail.module.scss';
+import { useEffect, useState } from 'react';
 
 const NotImage = () => {
   return (
@@ -165,6 +168,42 @@ export const BoardDetail = () => {
   const { data: commentList, isLoading: commentLoading } = useCommentList(
     Number(feedId)
   );
+  const [isReacted, setIsReacted] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const { postReaction, deleteReaction } = useReaction(Number(feedId));
+  const { postBookMark, deleteBookMark } = useBookMark(Number(feedId));
+
+  useEffect(() => {
+    if (data) {
+      setIsReacted(data.isReacted);
+      setIsBookmarked(data.isBookmarked);
+    }
+  }, [data]);
+
+  const handleReaction = () => {
+    if (isReacted) {
+      deleteReaction(undefined, {
+        onSuccess: () => setIsReacted(false),
+      });
+    } else {
+      postReaction(undefined, {
+        onSuccess: () => setIsReacted(true),
+      });
+    }
+  };
+
+  const handleBookmark = () => {
+    if (isBookmarked) {
+      deleteBookMark(undefined, {
+        onSuccess: () => setIsBookmarked(false),
+      });
+    } else {
+      postBookMark(undefined, {
+        onSuccess: () => setIsBookmarked(true),
+      });
+    }
+  };
 
   if (isLoading) return <div>로딩중</div>;
   if (commentLoading) return <div>로딩중</div>;
@@ -219,12 +258,14 @@ export const BoardDetail = () => {
           <BoardImage s3List={data.s3ObjectResponseDtoList} />
           <div className={styles['boardItem__footer-icons-large']}>
             <img
-              src={data.isReacted ? heartFilledIcon : heartEmptyIcon}
+              src={isReacted ? heartFilledIcon : heartEmptyIcon}
               alt="좋아요"
+              onClick={handleReaction}
             />
             <img
-              src={data.isBookmarked ? favoriteFilledIcon : favoriteEmptyIcon}
+              src={isBookmarked ? favoriteFilledIcon : favoriteEmptyIcon}
               alt="즐겨찾기"
+              onClick={handleBookmark}
             />
           </div>
           <hr />
