@@ -103,7 +103,7 @@ const FindAccount: React.FC = () => {
       
       if (is404Error) {
         setTimeout(() => {
-          navigate('/signup');
+          navigate('/register');
         }, 2000);
       }
     }
@@ -166,7 +166,7 @@ const FindAccount: React.FC = () => {
         } else if (error.response?.status === 404) {
           setAlertContent('가입되지 않은 이메일입니다. 회원가입을 먼저 진행해주세요.');
           setTimeout(() => {
-            navigate('/signup');
+            navigate('/register');
           }, 2000);
         } else {
           setAlertContent(`인증번호 전송에 실패했습니다. (${error.response?.status || '알 수 없는 에러'})`);
@@ -333,7 +333,7 @@ const FindAccount: React.FC = () => {
             alertContent={alertContent}
             onClose={() => setShowAlert(false)}
             onConfirm={
-              attemptCount >= 5 ? () => navigate('/signup') : undefined
+              attemptCount >= 5 ? () => navigate('/register') : undefined
             }
             confirmLabel={attemptCount >= 5 ? '회원 가입' : undefined}
           />
