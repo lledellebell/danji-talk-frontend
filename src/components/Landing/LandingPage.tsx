@@ -26,6 +26,7 @@ import VehiclesPage from '../../pages/MyPage/Vehicles';
 import Profile from '../../pages/Settings/Profile/Profile';
 import Favorites from '../../pages/Favorites/Favorites';
 import ResetPassword from '../../pages/ResetPassword/ResetPassword';
+import ShowEmail from '../../pages/ShowEmail/ShowEmail';
 
 const LandingPage = () => {
   const { isLoggedIn } = useAuthStore();
@@ -170,6 +171,15 @@ const LandingPage = () => {
                 <>
                   <Header title="아이디/비밀번호 찾기" type="sub" hasBackButton={true} />
                   <FindAccount />
+                </>
+              }
+            />
+            <Route 
+              path="/show-email"
+              element={
+                <>
+                  <Header title="아이디/비밀번호 찾기" type="sub" hasBackButton={true} />
+                  <ShowEmail />
                 </>
               }
             />
