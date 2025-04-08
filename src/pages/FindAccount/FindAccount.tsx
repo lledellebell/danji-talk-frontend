@@ -278,28 +278,30 @@ const FindAccount: React.FC = () => {
             ariaLabelledby="tab-0"
           >
             <div className={styles['find-account-form']}>
-              <InputField
-                label="이름"
-                name="username"
-                value={username}
-                onChange={handleUsernameChange}
-                placeholder="이름을 입력하세요"
-                required
-                autoComplete="name"
-                className={styles['find-account-form__input-field']}
-                error={usernameError || undefined}
-              />
-              <InputField
-                label="전화번호"
-                name="phone"
-                value={phone}
-                onChange={handlePhoneChange}
-                placeholder="-를 제외하고 입력해주세요"
-                required
-                autoComplete="tel"
-                className={styles['find-account-form__input-field']}
-                error={phoneError || undefined}
-              />
+              <div className={styles['find-account-form__content']}>
+                <InputField
+                  label="이름"
+                  name="username"
+                  value={username}
+                  onChange={handleUsernameChange}
+                  placeholder="이름을 입력하세요"
+                  required
+                  autoComplete="name"
+                  className={styles['find-account-form__input-field']}
+                  error={usernameError || undefined}
+                />
+                <InputField
+                  label="전화번호"
+                  name="phone"
+                  value={phone}
+                  onChange={handlePhoneChange}
+                  placeholder="-를 제외하고 입력해주세요"
+                  required
+                  autoComplete="tel"
+                  className={styles['find-account-form__input-field']}
+                  error={phoneError || undefined}
+                />
+              </div>
 
               <Button
                 label="다음"
@@ -319,47 +321,49 @@ const FindAccount: React.FC = () => {
             ariaLabelledby="tab-1"
           >
             <div className={styles['find-account-form']}>
-              <div className={styles['input-group']}>
-                <div className={styles['input-with-button']}>
-                  <InputField
-                    label="이메일"
-                    name="email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      setEmailError(validateEmail(e.target.value));
-                    }}
-                    placeholder="이메일을 입력하세요"
-                    required
-                    autoComplete="email"
-                    className={styles['input-field']}
-                    error={emailError || undefined}
-                  />
-                  <Button
-                    label={isEmailVerificationSent ? "재요청" : "인증번호"}
-                    onClick={handleRequestVerification}
-                    disabled={!email || !!emailError}
-                    className={`${styles['input-with-button__button']}`}
-                  />
-                </div>
+              <div className={styles['find-account-form__content']}>
+                <div className={styles['input-group']}>
+                  <div className={styles['input-with-button']}>
+                    <InputField
+                      label="이메일"
+                      name="email"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        setEmailError(validateEmail(e.target.value));
+                      }}
+                      placeholder="이메일을 입력하세요"
+                      required
+                      autoComplete="email"
+                      className={styles['input-field']}
+                      error={emailError || undefined}
+                    />
+                    <Button
+                      label={isEmailVerificationSent ? "재요청" : "인증번호"}
+                      onClick={handleRequestVerification}
+                      disabled={!email || !!emailError}
+                      className={`${styles['input-with-button__button']}`}
+                    />
+                  </div>
 
-                <div className={styles['input-with-button']}>
-                  <InputField
-                    label="인증번호"
-                    name="verificationCode"
-                    value={verificationCode}
-                    onChange={(e) => setVerificationCode(e.target.value)}
-                    placeholder="인증번호 6자리를 입력하세요"
-                    required
-                    className={styles['input-field']}
-                    error={verificationCodeError || undefined}
-                  />
-                  <Button
-                    label="확인"
-                    onClick={handleVerifyCode}
-                    disabled={!verificationCode}
-                    className={`${styles['input-with-button__button']}`}
-                  />
+                  <div className={styles['input-with-button']}>
+                    <InputField
+                      label="인증번호"
+                      name="verificationCode"
+                      value={verificationCode}
+                      onChange={(e) => setVerificationCode(e.target.value)}
+                      placeholder="인증번호 6자리를 입력하세요"
+                      required
+                      className={styles['input-field']}
+                      error={verificationCodeError || undefined}
+                    />
+                    <Button
+                      label="확인"
+                      onClick={handleVerifyCode}
+                      disabled={!verificationCode}
+                      className={`${styles['input-with-button__button']}`}
+                    />
+                  </div>
                 </div>
               </div>
 
