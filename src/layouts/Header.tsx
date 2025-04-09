@@ -28,6 +28,7 @@ const SubHeader: React.FC<HeaderProps> = ({
   buttonText,
   hasRightButton,
   onClickButton,
+  onIconClick,
 }) => {
   const navigate = useNavigate();
 
@@ -65,7 +66,7 @@ const SubHeader: React.FC<HeaderProps> = ({
             type="button"
             className={styles.header__icon}
             aria-label="설정"
-            // onClick={() => navigate('/settings')}
+            onClick={onIconClick}
           >
             {iconComponent}
           </button>
