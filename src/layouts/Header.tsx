@@ -65,7 +65,7 @@ const SubHeader: React.FC<HeaderProps> = ({
             type="button"
             className={styles.header__icon}
             aria-label="설정"
-            onClick={() => navigate('/settings')}
+            // onClick={() => navigate('/settings')}
           >
             {iconComponent}
           </button>
