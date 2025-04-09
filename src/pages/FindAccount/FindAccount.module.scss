@@ -118,17 +118,19 @@ $font-size-xxl: 2rem;       // 32px
 
 .find-account-wrapper {
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .find-account-container {
   @include card-style;
   width: 100%;
-  margin: 0 auto;
-  
-  @include respond-to(mobile) {
-    padding: $spacing-medium;
-  }
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: $spacing-large;
 }
 
 .find-account-title {
@@ -155,25 +157,35 @@ $font-size-xxl: 2rem;       // 32px
 .find-account-form {
   @include flex-column;
   width: 100%;
+  min-height: calc(100% - 140px);
   gap: $spacing-large;
-  margin-top: $spacing-xxl;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
 
-  &__input-field {
-    width: 100%;
+  @include respond-to(tablet) {
+    min-height: calc(100% - 100px);
+  }
+  
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-large;
   }
 
   &__button {
     @include button-style;
     width: 100%;
     height: 52px;
-    margin-top: $spacing-large;
+    margin-top: auto;
   }
 }
 
 .input-group {
   @include flex-column;
   gap: $spacing-large;
-  margin-bottom: $spacing-medium;
+  flex: 1;
 }
 
 .input-with-button {
@@ -223,4 +235,3 @@ $font-size-xxl: 2rem;       // 32px
 .animate-fade-in {
   animation: fade-in 0.4s ease-out;
 }
-
