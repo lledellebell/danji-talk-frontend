@@ -41,36 +41,63 @@ const NotImage = () => {
 };
 
 const HeaderIcon = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
-        stroke="#999999"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
-        stroke="#999999"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
-        stroke="#999999"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <div className={styles['icon-menu']}>
+      <div onClick={toggleMenu} className={styles['icon-menu__icon']}>
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 13C12.5523 13 13 12.5523 13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13Z"
+            stroke="#999999"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M12 6C12.5523 6 13 5.55228 13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5C11 5.55228 11.4477 6 12 6Z"
+            stroke="#999999"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M12 20C12.5523 20 13 19.5523 13 19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19C11 19.5523 11.4477 20 12 20Z"
+            stroke="#999999"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+
+      {isOpen && (
+        <div className={styles['icon-menu__menu']}>
+          <span
+            className={`${styles['icon-menu__menu-item']} ${styles['icon-menu__menu-item-top']}`}
+          >
+            수정
+          </span>
+          <span className={styles['icon-menu__menu-item']}>삭제</span>
+        </div>
+      )}
+
+      {/* {isOpen && (
+        <div className={styles['icon-menu__menu']}>
+          <span className={styles['icon-menu__menu-item']}>신고</span>
+        </div>
+      )} */}
+    </div>
   );
 };
 
@@ -102,6 +129,12 @@ const BoardImage = ({ s3List }: BoardImageProps) => {
 };
 
 const CommentList = ({ comments }: CommentListProps) => {
+  const [openMenuId, setOpenMenuId] = useState<number | null>(null);
+
+  const toggleMenu = (commentId: number) => {
+    setOpenMenuId((prev) => (prev === commentId ? null : commentId));
+  };
+
   return (
     <div className={styles['comment-container']}>
       <span>댓글({comments.totalElements})</span>
@@ -121,13 +154,37 @@ const CommentList = ({ comments }: CommentListProps) => {
                 <span className={styles['comment-name']}>
                   {comment.commentMemberResponseDto.nickname}
                 </span>
-                <span className={styles['comment-time']}>3시간 전</span>
+                <span className={styles['comment-time']}>
+                  {formatDate(comment.createdAt)}
+                </span>
               </div>
             </div>
-            <img src={moreVerticalIcon} alt="더보기" />
+            <div className={styles['reply-menu-wrapper']}>
+              <img
+                src={moreVerticalIcon}
+                alt="더보기"
+                onClick={() => toggleMenu(comment.commentId)}
+                className={styles['reply-menu-icon']}
+              />
+              {openMenuId === comment.commentId && (
+                <div className={styles['reply-menu']}>
+                  <span
+                    className={`${styles['reply-menu-item']} ${styles['reply-menu-item-top']}`}
+                  >
+                    수정
+                  </span>
+                  <span className={styles['reply-menu-item']}>삭제</span>
+                </div>
+              )}
+              {/* {openMenuId === comment.commentId && (
+                <div className={styles['reply-menu']}>
+                  <span className={styles['reply-menu-item']}>신고</span>
+                </div>
+              )} */}
+            </div>
           </div>
           <div className={styles['comment-body']}>{comment.contents}</div>
-          <div className={styles['comment-footer']}>댓글쓰기</div>
+          <button className={styles['comment-footer']}>댓글쓰기</button>
           {comment.childrenCommentDto.length > 0 &&
             comment.childrenCommentDto.map((child) => (
               <div key={child.commentId} className={styles['reply-container']}>
@@ -146,13 +203,39 @@ const CommentList = ({ comments }: CommentListProps) => {
                         <span className={styles['reply-name']}>
                           {child.commentMemberResponseDto.nickname}
                         </span>
-                        <span className={styles['reply-time']}>방금 전</span>
+                        <span className={styles['reply-time']}>
+                          {formatDate(comment.createdAt)}
+                        </span>
                       </div>
                     </div>
-                    <img src={moreVerticalIcon} alt="더보기" />
+                    <div className={styles['reply-menu-wrapper']}>
+                      <img
+                        src={moreVerticalIcon}
+                        alt="더보기"
+                        onClick={() => toggleMenu(child.commentId)}
+                        className={styles['reply-menu-icon']}
+                      />
+                      {openMenuId === child.commentId && (
+                        <div className={styles['reply-menu']}>
+                          <span
+                            className={`${styles['reply-menu-item']} ${styles['reply-menu-item-top']}`}
+                          >
+                            수정
+                          </span>
+                          <span className={styles['reply-menu-item']}>
+                            삭제
+                          </span>
+                        </div>
+                      )}
+                      {/* {openMenuId === comment.commentId && (
+                        <div className={styles['reply-menu']}>
+                          <span className={styles['reply-menu-item']}>신고</span>
+                        </div>
+                      )} */}
+                    </div>
                   </div>
                   <div className={styles['reply-body']}>{child.contents}</div>
-                  <div className={styles['reply-footer']}>댓글쓰기</div>
+                  <button className={styles['reply-footer']}>댓글쓰기</button>
                 </div>
               </div>
             ))}
@@ -236,19 +319,19 @@ export const BoardDetail = () => {
             <div className={styles['boardItem__footer-icons-small']}>
               <img src={eyeIcon} alt="조회수" />
               <span className={styles['boardItem__footer-text']}>
-                {data.viewCount}
+                {data.viewCount ?? 0}
               </span>
               <img src={heartEmptyIcon} alt="좋아요" />
               <span className={styles['boardItem__footer-text']}>
-                {data.reactionCount}
+                {data.reactionCount ?? 0}
               </span>
               <img src={favoriteEmptyIcon} alt="즐겨찾기" />
               <span className={styles['boardItem__footer-text']}>
-                {data.bookmarkCount}
+                {data.bookmarkCount ?? 0}
               </span>
               <img src={commentIcon} alt="댓글" />
               <span className={styles['boardItem__footer-text']}>
-                {data.commentCount}
+                {data.commentCount ?? 0}
               </span>
             </div>
           </div>

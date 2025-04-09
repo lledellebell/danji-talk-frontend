@@ -261,3 +261,70 @@ hr {
   object-fit: cover;
   border-radius: 6px;
 }
+
+.icon-menu {
+  position: relative;
+  display: inline-block;
+
+  &__icon {
+    cursor: pointer;
+  }
+
+  &__menu {
+    position: absolute;
+    width: 80px;
+    top: 28px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+
+    &-item {
+      display: block;
+      padding: 6px 0;
+      font-size: 15px;
+      text-align: center;
+      cursor: pointer;
+
+      &-top {
+        border-bottom: 1px solid #ededed;
+      }
+    }
+  }
+}
+
+.reply-menu-wrapper {
+  position: relative;
+}
+
+.reply-menu-icon {
+  cursor: pointer;
+}
+
+.reply-menu {
+  position: absolute;
+  width: 80px;
+  top: 28px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+
+  &-item {
+    display: block;
+    padding: 6px 0;
+    font-size: 15px;
+    text-align: center;
+    cursor: pointer;
+
+    &-top {
+      border-bottom: 1px solid #ededed;
+    }
+  }
+}

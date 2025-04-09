@@ -5,6 +5,7 @@ export interface BoardItem {
   nickName: string;
   localDateTime: string;
   views?: number;
+  viewCount?: number;
   reactionCount?: number;
   bookmarkCount?: number;
   commentCount?: number;
@@ -21,6 +22,7 @@ export interface Comment {
   commentId: number;
   feedId: number;
   contents: string;
+  createdAt: string;
   commentMemberResponseDto: CommentMember;
   childrenCommentDto: Comment[];
 }
