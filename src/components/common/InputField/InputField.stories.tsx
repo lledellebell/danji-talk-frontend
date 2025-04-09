@@ -85,7 +85,7 @@ const meta = {
       control: "boolean",
       table: {
         type: { summary: "boolean" },
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     required: {
@@ -93,7 +93,7 @@ const meta = {
       control: "boolean",
       table: {
         type: { summary: "boolean" },
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     showPasswordToggle: {
@@ -102,7 +102,7 @@ const meta = {
       control: 'boolean',
       table: {
         type: { summary: "boolean" },
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' },
       },
     },
     actionButton: {

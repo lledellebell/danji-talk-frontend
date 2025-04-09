@@ -12,7 +12,7 @@ export const useBookMark = (feedId: number) => {
     onSuccess: () => {
       // 북마크 등록 성공
     },
-    onError: (error) => {
+    onError: (_error) => {
       // 에러 처리
     },
   });
@@ -27,7 +27,7 @@ export const useBookMark = (feedId: number) => {
     onSuccess: () => {
       // 북마크 해제 성공
     },
-    onError: (error) => {
+    onError: (_error) => {
       // 에러 처리
     },
   });
