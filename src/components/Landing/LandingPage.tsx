@@ -87,7 +87,6 @@ const LandingPage = () => {
               element={
                 isLoggedIn ? (
                   <>
-                    <Header title="커뮤니티" type="sub" hasBackButton={true} />
                     <BoardList />
                   </>
                 ) : (
@@ -169,16 +168,24 @@ const LandingPage = () => {
               path="/find-account"
               element={
                 <>
-                  <Header title="아이디/비밀번호 찾기" type="sub" hasBackButton={true} />
+                  <Header
+                    title="아이디/비밀번호 찾기"
+                    type="sub"
+                    hasBackButton={true}
+                  />
                   <FindAccount />
                 </>
               }
             />
-            <Route 
+            <Route
               path="/show-email"
               element={
                 <>
-                  <Header title="아이디/비밀번호 찾기" type="sub" hasBackButton={true} />
+                  <Header
+                    title="아이디/비밀번호 찾기"
+                    type="sub"
+                    hasBackButton={true}
+                  />
                   <ShowEmail />
                 </>
               }
@@ -187,7 +194,11 @@ const LandingPage = () => {
               path="/reset-password"
               element={
                 <>
-                  <Header title="비밀번호 재설정" type="sub" hasBackButton={true} />
+                  <Header
+                    title="비밀번호 재설정"
+                    type="sub"
+                    hasBackButton={true}
+                  />
                   <ResetPassword />
                 </>
               }
@@ -223,7 +234,11 @@ const LandingPage = () => {
               element={
                 isLoggedIn ? (
                   <>
-                    <Header title="개인 정보 변경" type="sub" hasBackButton={true} />
+                    <Header
+                      title="개인 정보 변경"
+                      type="sub"
+                      hasBackButton={true}
+                    />
                     <Profile />
                   </>
                 ) : (
@@ -231,8 +246,8 @@ const LandingPage = () => {
                 )
               }
             />
-            <Route 
-              path="/favorites" 
+            <Route
+              path="/favorites"
               element={
                 isLoggedIn ? (
                   <>
@@ -242,7 +257,7 @@ const LandingPage = () => {
                 ) : (
                   <Navigate to="/login" replace />
                 )
-              } 
+              }
             />
           </Routes>
         </div>
