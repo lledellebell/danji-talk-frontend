@@ -7,17 +7,6 @@ import { useEffect } from 'react';
 import { useKakaoLogin } from '../../../stores/authStore';
 import { useNavigate } from 'react-router-dom';
 
-declare global {
-  interface Kakao {
-    init: (key: string) => void;
-    isInitialized: () => boolean;
-  }
-
-  interface Window {
-    Kakao: Kakao;
-  }
-}
-
 const KakaoLoginIcon = () => {
   return <img src={KakaoIcon} alt="카카오 로그인 하기" />;
 };

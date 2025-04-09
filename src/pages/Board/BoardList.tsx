@@ -19,7 +19,7 @@ export const BoardList = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   const apartmentId = 1;
-  const { data, isLoading, isError, error } = useBoardData(apartmentId);
+  const { data } = useBoardData(apartmentId);
 
   const boardData: BoardItem[] = data?.feedDtoList || [];
   // if (isError) return <p>에러 발생: {error.message}</p>;

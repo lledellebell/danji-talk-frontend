@@ -36,12 +36,7 @@ export const BoardWrite = () => {
     images,
     handleImageUpload,
     handleImageDelete,
-    feedType,
-    setFeedType,
-    apartmentId,
-    setApartmentId,
     handleSubmit,
-    isLoading,
   } = useBoardWrite();
 
   const fileInputRef = useRef<HTMLInputElement>(null);

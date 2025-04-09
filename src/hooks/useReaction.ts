@@ -8,7 +8,7 @@ export const useReaction = (feedId: number) => {
       return response.data;
     },
     onSuccess: () => {},
-    onError: (error) => {},
+    onError: (_error) => {},
   });
 
   const deleteReactionMutation = useMutation({
@@ -19,7 +19,7 @@ export const useReaction = (feedId: number) => {
     onSuccess: () => {
       // 취소 성공 후 처리
     },
-    onError: (error) => {
+    onError: (_error) => {
       // 취소 에러 처리
     },
   });

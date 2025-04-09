@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import Cookies from 'js-cookie';
 import { kakaoLoginRequest } from '../api/api';
 import { useNavigate } from 'react-router-dom';
+import { KakaoAuthResponse } from '../types/kakao';
 
 declare global {
   interface Window {
@@ -18,14 +19,6 @@ declare global {
   }
 }
 
-interface KakaoAuthResponse {
-  access_token: string;
-  token_type: string;
-  refresh_token: string;
-  expires_in: number;
-  scope: string;
-}
-
 interface AuthState {
   isLoggedIn: boolean;
   email: string;
@@ -37,6 +30,7 @@ interface AuthState {
   resetAuth: () => void;
   login: () => void;
   logout: () => void;
+  setIsLoggedIn: (value: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -55,7 +49,8 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: () => {
     localStorage.removeItem('isLoggedIn');
     set({ isLoggedIn: false, email: '', password: '' });
-  }
+  },
+  setIsLoggedIn: (value) => set({ isLoggedIn: value }),
 }));
 
 export const useKakaoLogin = () => {
