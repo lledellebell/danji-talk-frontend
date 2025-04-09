@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 export const useBoardWrite = () => {
   const [title, setTitle] = useState('');
@@ -8,6 +9,8 @@ export const useBoardWrite = () => {
   const [images, setImages] = useState<File[]>([]);
   const [feedType, setFeedType] = useState<'FEED' | 'QUESTION'>('FEED');
   const [apartmentId, setApartmentId] = useState<number>(1);
+
+  const navigate = useNavigate();
 
   const boardWriteMutation = useMutation({
     mutationFn: async (formData: FormData) => {
@@ -19,7 +22,7 @@ export const useBoardWrite = () => {
       return response.data;
     },
     onSuccess: () => {
-      // TODO: 페이지 이동 등 후처리
+      navigate('/community');
       console.log('게시글 등록 성공');
     },
     onError: (error: any) => {
