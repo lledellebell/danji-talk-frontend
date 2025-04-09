@@ -57,7 +57,10 @@ export const BoardWrite = () => {
         type="sub"
         hasBackButton={true}
         hasText={true}
-        text="등록"
+        hasRightButton={true}
+        hasIcons={true}
+        buttonText={'등록'}
+        onClickButton={handleSubmit}
       />
       <div className={styles['board-write']}>
         <InputField
@@ -103,7 +106,6 @@ export const BoardWrite = () => {
           />
         </div>
       </div>
-      <button onClick={handleSubmit}>임의 등록 버튼</button>
     </div>
   );
 };
