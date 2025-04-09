@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="./src/assets/logo.svg" alt="단지톡 로고" width="100" />
+</p>
+
+
 # 단지톡 (DanjiTalk) - 아파트 커뮤니티 채팅 서비스
 
 ![image](https://github.com/user-attachments/assets/2447891f-6d52-4564-9112-c25d8a6bf361)
