@@ -1,8 +1,10 @@
 import Header from '../../layouts/Header';
 import styles from './BoardWrite.module.scss';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { InputField } from '../../components/common/InputField/InputField';
 import { useBoardWrite } from '../../hooks/useBoardWrite';
+import { useBoardDetail } from '../../hooks/useBoardDetail';
 
 const NotImage = () => {
   return (
@@ -28,16 +30,45 @@ const NotImage = () => {
 
 // Todo: 게시글 작성 API 연동 && 에러 처리 && 이미지 삭제 버튼 UI 확인
 export const BoardWrite = () => {
+  const { feedId } = useParams();
+  const editMode = !!feedId;
   const {
     title,
     setTitle,
     content,
     setContent,
     images,
+    setImages,
     handleImageUpload,
     handleImageDelete,
     handleSubmit,
-  } = useBoardWrite();
+    setFeedType,
+    setApartmentId,
+  } = useBoardWrite(Number(feedId));
+
+  const { data: boardDetail } = useBoardDetail(Number(feedId));
+
+  useEffect(() => {
+    if (editMode && boardDetail) {
+      setTitle(boardDetail.title);
+      setContent(boardDetail.contents);
+      setFeedType(boardDetail.feedType);
+      setApartmentId(boardDetail.apartmentId);
+
+      if (
+        boardDetail.s3ObjectResponseDtoList &&
+        boardDetail.s3ObjectResponseDtoList.length > 0
+      ) {
+        const urls = boardDetail.s3ObjectResponseDtoList.map(
+          (img: { fullUrl: string; url: string }) => ({
+            fullUrl: img.fullUrl,
+            url: img.url,
+          })
+        );
+        setImages(urls);
+      }
+    }
+  }, [editMode, boardDetail]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -48,13 +79,13 @@ export const BoardWrite = () => {
   return (
     <div>
       <Header
-        title="글쓰기"
+        title={editMode ? '글 수정' : '글쓰기'}
         type="sub"
         hasBackButton={true}
         hasText={true}
         hasRightButton={true}
         hasIcons={true}
-        buttonText={'등록'}
+        buttonText={editMode ? '수정' : '등록'}
         onClickButton={handleSubmit}
       />
       <div className={styles['board-write']}>
@@ -85,12 +116,21 @@ export const BoardWrite = () => {
               <br /> 최대 10장의 이미지 첨부가 가능합니다.
             </p>
           )}
-          {images.map((file, idx) => (
-            <div key={idx} className={styles['board-write__image-preview']}>
-              <img src={URL.createObjectURL(file)} alt={`upload-${idx}`} />
-              <button onClick={() => handleImageDelete(idx)}>삭제</button>
-            </div>
-          ))}
+          {images.map((image, idx) => {
+            const imageUrl =
+              typeof image === 'string'
+                ? image
+                : image instanceof File
+                  ? URL.createObjectURL(image)
+                  : image.fullUrl;
+            return (
+              <div key={idx} className={styles['board-write__image-preview']}>
+                <img src={imageUrl} alt={`upload-${idx}`} />
+                <button onClick={() => handleImageDelete(idx)}>삭제</button>
+              </div>
+            );
+          })}
+
           <input
             type="file"
             accept="image/*"
