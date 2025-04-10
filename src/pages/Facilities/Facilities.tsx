@@ -1,7 +1,7 @@
 import useUnderConstructionAlert from '../../hooks/useUnderConstructionAlert';
 
 const Facilities = () => {
-  useUnderConstructionAlert('시설 정보');
+  useUnderConstructionAlert('시설정보');
 
   return (
     <>
