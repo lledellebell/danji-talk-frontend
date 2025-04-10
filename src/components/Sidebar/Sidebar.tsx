@@ -107,7 +107,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               <Link to="/mypage" className={styles['sidebar__link']}>마이페이지</Link>
             </li>
             <li className={styles['sidebar__item']}>
-              <Link to="/private-info" className={styles['sidebar__link']}>사설정보</Link>
+              <Link to="/facilities" className={styles['sidebar__link']}>시설정보</Link>
             </li>
             <li className={styles['sidebar__item']}>
               <Link to="/chat" className={styles['sidebar__link']}>채팅</Link>

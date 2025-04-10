@@ -1,9 +1,13 @@
+import useUnderConstructionAlert from '../../hooks/useUnderConstructionAlert';
+
 const Facilities = () => {
+  useUnderConstructionAlert('시설 정보');
+
   return (
-    <div className="facilities-page">
-      <h2>시설관리</h2>
-      {/* 시설관리 관련 컨텐츠 */}
-    </div>
+    <>
+      <div style={{ padding: '20px', textAlign: 'center' }}>
+      </div>
+    </>
   );
 };
 
