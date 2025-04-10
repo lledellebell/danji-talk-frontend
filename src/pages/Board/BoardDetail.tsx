@@ -1,9 +1,12 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useBoardDetail } from '../../hooks/useBoardDetail';
 import { useCommentList } from '../../hooks/useCommentList';
 import { useReaction } from '../../hooks/useReaction';
 import { useBookMark } from '../../hooks/useBookMark';
+import { useDeleteBoard } from '../../hooks/useDeleteBoard';
 import { CommentListProps } from '../../types/board';
+import { useNavigate } from 'react-router-dom';
 import eyeIcon from '../../assets/board/eye.svg';
 import commentIcon from '../../assets/board/comment.svg';
 import favoriteEmptyIcon from '../../assets/board/favorite-empty.svg';
@@ -16,7 +19,6 @@ import profileIcon from '../../assets/board/profile.svg';
 import { formatDate } from '../../utils/formatDate';
 import Header from '../../layouts/Header';
 import styles from './BoardDetail.module.scss';
-import { useEffect, useState } from 'react';
 
 const NotImage = () => {
   return (
@@ -40,11 +42,23 @@ const NotImage = () => {
   );
 };
 
-const HeaderIcon = () => {
+const HeaderIcon = ({
+  feedId,
+  isAuthor,
+}: {
+  feedId: number;
+  isAuthor: boolean;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { deleteBoard } = useDeleteBoard();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const handleDelete = () => {
+    deleteBoard(feedId);
   };
 
   return (
@@ -83,20 +97,28 @@ const HeaderIcon = () => {
 
       {isOpen && (
         <div className={styles['icon-menu__menu']}>
-          <span
-            className={`${styles['icon-menu__menu-item']} ${styles['icon-menu__menu-item-top']}`}
-          >
-            수정
-          </span>
-          <span className={styles['icon-menu__menu-item']}>삭제</span>
+          {isAuthor ? (
+            <>
+              <span
+                className={`${styles['icon-menu__menu-item']} ${styles['icon-menu__menu-item-top']}`}
+                onClick={() => {
+                  navigate(`/write/${feedId}`);
+                }}
+              >
+                수정
+              </span>
+              <span
+                className={styles['icon-menu__menu-item']}
+                onClick={handleDelete}
+              >
+                삭제
+              </span>
+            </>
+          ) : (
+            <span className={styles['icon-menu__menu-item']}>신고</span>
+          )}
         </div>
       )}
-
-      {/* {isOpen && (
-        <div className={styles['icon-menu__menu']}>
-          <span className={styles['icon-menu__menu-item']}>신고</span>
-        </div>
-      )} */}
     </div>
   );
 };
@@ -298,7 +320,9 @@ export const BoardDetail = () => {
         type="sub"
         hasBackButton={true}
         hasIcons={true}
-        iconComponent={<HeaderIcon />}
+        iconComponent={
+          <HeaderIcon feedId={Number(feedId)} isAuthor={data.isAuthor} />
+        }
       />
       <div className={styles['board']}>
         <div className={styles['boardItem']}>
