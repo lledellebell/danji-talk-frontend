@@ -25,7 +25,7 @@ const ChatPage = () => (
 
 const FacilitiesPage = () => (
   <>
-    <Header title="시설관리" type="sub" hasBackButton={true} />
+    <Header title="시설정보" type="sub" hasBackButton={true} />
     <Facilities />
   </>
 );

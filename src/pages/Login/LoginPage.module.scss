@@ -47,7 +47,7 @@ $spacing-xsmall: 4px;
 }
 
 .login-container {
-  padding: 20px;
+  padding: 20px 20px 54px;
 }
 
 .login-form-wrapper {
@@ -186,7 +186,6 @@ $spacing-xsmall: 4px;
     font-weight: 600;
     font-size: $font-size-small;
     line-height: 24px;
-    margin-left: $spacing-xsmall;
     padding: $spacing-xsmall;
 
     &:hover {

@@ -1,7 +1,12 @@
 @use "sass:map";
 
-// Variables
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+// TODO: 다른 페이지도 그룹화 필요
 $colors: (
+  primary-dark: #85aaef,
   primary: #97BBFF,
   white: #fff,
   text: #111
@@ -47,43 +52,38 @@ $layout: (
   transition: all 0.2s ease-in-out;
 }
 
-.show-email-container {
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: $breakpoint-mobile) { @content; }
+  } @else if $breakpoint == tablet {
+    @media (max-width: $breakpoint-tablet) { @content; }
+  } @else if $breakpoint == desktop {
+    @media (min-width: $breakpoint-desktop) { @content; }
+  }
+}
+
+.show-email__container {
   @include flex-column;
   align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  background-color: map.get($colors, white);
-  padding: map.get($spacing, md);
-  box-sizing: border-box;
+  overflow-y: auto;
+  height: 100%;
+  padding: map.get($spacing, lg) map.get($spacing, lg) 54px;
+
+  @include respond-to(desktop) {
+    height: calc(100% - 74px);
+  }
 }
 
-.show-email-wrapper {
-  @include flex-column;
+.logo {
+  text-align: center;
   width: 100%;
-  margin: 0 auto;
-  min-height: calc(100vh - 180px);
-  box-sizing: border-box;
-  gap: map.get($spacing, md);
-  position: relative;
-  padding-bottom: calc(#{map.get($layout, button-height)} + #{map.get($spacing, md)} * 2);
-
-  @media (max-width: map.get($breakpoints, tablet)) {
-    min-height: calc(100vh - 80px);
-  }
-
-  .logo {
-    text-align: center;
-    width: 100%;
-    object-fit: contain;
-    margin-top: 150px;
-    max-width: map.get($layout, logo-max-width);
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  object-fit: contain;
+  margin-top: 150px;
+  max-width: map.get($layout, logo-max-width);
+  height: auto;
 }
 
-.show-email-text {
+.show-email__text {
   flex: 1;
   font-size: 16px;
   font-weight: 400;
@@ -98,21 +98,22 @@ $layout: (
   }
 }
 
-.button-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.show-email__button-wrapper {
   width: 100%;
-  padding: map.get($spacing, md) 0;
-  background-color: map.get($colors, white);
+  height: 52px;
+  min-width: 91px;
+  margin-top: auto;
 }
 
-.show-email-button {
+.show-email__button {
   @include button-base;
   @include center-content;
   background-color: map.get($colors, primary);
   color: map.get($colors, white);
   text-decoration: none;
-  padding: map.get($spacing, sm) 0;
+  padding: 0 map.get($spacing, md);
+
+  &:hover {
+    background-color: map.get($colors, primary-dark);
+  }
 }
