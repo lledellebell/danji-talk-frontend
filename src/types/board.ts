@@ -36,4 +36,5 @@ export interface CommentListProps {
     totalElements: number;
     totalPages: number;
   };
+  feedId: string;
 }

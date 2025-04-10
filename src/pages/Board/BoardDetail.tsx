@@ -6,6 +6,7 @@ import { useReaction } from '../../hooks/useReaction';
 import { useBookMark } from '../../hooks/useBookMark';
 import { useDeleteBoard } from '../../hooks/useDeleteBoard';
 import { useDeleteComment } from '../../hooks/useDeleteComment';
+import { useAddComment } from '../../hooks/useAddComment';
 import { CommentListProps } from '../../types/board';
 import { useNavigate } from 'react-router-dom';
 import eyeIcon from '../../assets/board/eye.svg';
@@ -151,9 +152,15 @@ const BoardImage = ({ s3List }: BoardImageProps) => {
   );
 };
 
-const CommentList = ({ comments }: CommentListProps) => {
+const CommentList = ({ comments, feedId }: CommentListProps) => {
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
+  const [replyTargetId, setReplyTargetId] = useState<number | undefined>(
+    undefined
+  );
+  const [newComment, setNewComment] = useState('');
   const { deleteComment } = useDeleteComment();
+
+  const { addComment } = useAddComment();
 
   const toggleMenu = (commentId: number) => {
     setOpenMenuId((prev) => (prev === commentId ? null : commentId));
@@ -161,6 +168,22 @@ const CommentList = ({ comments }: CommentListProps) => {
 
   const handleDelete = (feedId: number, commentId: number) => {
     deleteComment({ feedId, commentId });
+  };
+
+  const handleAddComment = () => {
+    if (!newComment.trim()) {
+      alert('댓글을 입력해주세요.');
+      return;
+    }
+
+    addComment({
+      feedId: Number(feedId),
+      contents: newComment,
+      parentId: replyTargetId,
+    });
+
+    setReplyTargetId(undefined);
+    setNewComment('');
   };
 
   return (
@@ -220,7 +243,12 @@ const CommentList = ({ comments }: CommentListProps) => {
             </div>
           </div>
           <div className={styles['comment-body']}>{comment.contents}</div>
-          <button className={styles['comment-footer']}>댓글쓰기</button>
+          <button
+            className={styles['comment-footer']}
+            onClick={() => setReplyTargetId(comment.commentId)}
+          >
+            댓글쓰기
+          </button>
           {comment.childrenCommentDto.length > 0 &&
             comment.childrenCommentDto.map((child) => (
               <div key={child.commentId} className={styles['reply-container']}>
@@ -279,12 +307,30 @@ const CommentList = ({ comments }: CommentListProps) => {
                     </div>
                   </div>
                   <div className={styles['reply-body']}>{child.contents}</div>
-                  <button className={styles['reply-footer']}>댓글쓰기</button>
+                  <button
+                    className={styles['reply-footer']}
+                    onClick={() => setReplyTargetId(child.commentId)}
+                  >
+                    댓글쓰기
+                  </button>
                 </div>
               </div>
             ))}
         </div>
       ))}
+      <div className={styles['comment-input-container']}>
+        <input
+          type="text"
+          placeholder="단지님, 댓글을 작성해보세요!"
+          className={styles['comment-input']}
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleAddComment();
+          }}
+        />
+        <button onClick={handleAddComment}>{'작성'}</button>
+      </div>
     </div>
   );
 };
@@ -399,14 +445,7 @@ export const BoardDetail = () => {
           </div>
           <hr />
         </div>
-        <CommentList comments={commentList} />
-        <div className={styles['comment-input-container']}>
-          <input
-            type="text"
-            placeholder="단지님, 댓글을 작성해보세요!"
-            className={styles['comment-input']}
-          />
-        </div>
+        <CommentList comments={commentList} feedId={feedId!} />
       </div>
     </>
   );
