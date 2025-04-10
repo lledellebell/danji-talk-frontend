@@ -25,6 +25,7 @@ export interface Comment {
   createdAt: string;
   commentMemberResponseDto: CommentMember;
   childrenCommentDto: Comment[];
+  isAuthor: boolean;
 }
 
 export interface CommentListProps {

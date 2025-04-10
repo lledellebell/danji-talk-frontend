@@ -5,6 +5,7 @@ import { useCommentList } from '../../hooks/useCommentList';
 import { useReaction } from '../../hooks/useReaction';
 import { useBookMark } from '../../hooks/useBookMark';
 import { useDeleteBoard } from '../../hooks/useDeleteBoard';
+import { useDeleteComment } from '../../hooks/useDeleteComment';
 import { CommentListProps } from '../../types/board';
 import { useNavigate } from 'react-router-dom';
 import eyeIcon from '../../assets/board/eye.svg';
@@ -152,9 +153,14 @@ const BoardImage = ({ s3List }: BoardImageProps) => {
 
 const CommentList = ({ comments }: CommentListProps) => {
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
+  const { deleteComment } = useDeleteComment();
 
   const toggleMenu = (commentId: number) => {
     setOpenMenuId((prev) => (prev === commentId ? null : commentId));
+  };
+
+  const handleDelete = (feedId: number, commentId: number) => {
+    deleteComment({ feedId, commentId });
   };
 
   return (
@@ -190,19 +196,27 @@ const CommentList = ({ comments }: CommentListProps) => {
               />
               {openMenuId === comment.commentId && (
                 <div className={styles['reply-menu']}>
-                  <span
-                    className={`${styles['reply-menu-item']} ${styles['reply-menu-item-top']}`}
-                  >
-                    수정
-                  </span>
-                  <span className={styles['reply-menu-item']}>삭제</span>
+                  {comment.isAuthor ? (
+                    <>
+                      <span
+                        className={`${styles['reply-menu-item']} ${styles['reply-menu-item-top']}`}
+                      >
+                        수정
+                      </span>
+                      <span
+                        className={styles['reply-menu-item']}
+                        onClick={() =>
+                          handleDelete(comment.feedId, comment.commentId)
+                        }
+                      >
+                        삭제
+                      </span>
+                    </>
+                  ) : (
+                    <span className={styles['reply-menu-item']}>신고</span>
+                  )}
                 </div>
               )}
-              {/* {openMenuId === comment.commentId && (
-                <div className={styles['reply-menu']}>
-                  <span className={styles['reply-menu-item']}>신고</span>
-                </div>
-              )} */}
             </div>
           </div>
           <div className={styles['comment-body']}>{comment.contents}</div>
@@ -239,21 +253,29 @@ const CommentList = ({ comments }: CommentListProps) => {
                       />
                       {openMenuId === child.commentId && (
                         <div className={styles['reply-menu']}>
-                          <span
-                            className={`${styles['reply-menu-item']} ${styles['reply-menu-item-top']}`}
-                          >
-                            수정
-                          </span>
-                          <span className={styles['reply-menu-item']}>
-                            삭제
-                          </span>
+                          {child.isAuthor ? (
+                            <>
+                              <span
+                                className={`${styles['reply-menu-item']} ${styles['reply-menu-item-top']}`}
+                              >
+                                수정
+                              </span>
+                              <span
+                                className={styles['reply-menu-item']}
+                                onClick={() =>
+                                  handleDelete(child.feedId, child.commentId)
+                                }
+                              >
+                                삭제
+                              </span>
+                            </>
+                          ) : (
+                            <span className={styles['reply-menu-item']}>
+                              신고
+                            </span>
+                          )}
                         </div>
                       )}
-                      {/* {openMenuId === comment.commentId && (
-                        <div className={styles['reply-menu']}>
-                          <span className={styles['reply-menu-item']}>신고</span>
-                        </div>
-                      )} */}
                     </div>
                   </div>
                   <div className={styles['reply-body']}>{child.contents}</div>

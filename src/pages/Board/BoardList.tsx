@@ -15,8 +15,6 @@ import { formatDate } from '../../utils/formatDate';
 import { BoardItem } from '../../types/board';
 import { useNavigate } from 'react-router-dom';
 
-// TODO:  필터 셀렉트 박스 추가
-
 const HeaderIcon = () => {
   return (
     <svg
