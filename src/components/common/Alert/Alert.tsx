@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styles from './alert.module.scss';
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -16,30 +16,53 @@ const Alert: React.FC<AlertProps> = ({
   onClose,
   onConfirm,
 }) => {
-  const [isPc, setIsPc] = useState(false);
-  const [deviceFrame, setDeviceFrame] = useState<HTMLElement | null>(null);
-
-  // PC 환경 감지 및 device-frame 요소 찾기
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const handleResize = () => {
-        setIsPc(window.innerWidth >= 768);
-      };
-      
-      handleResize();
-      window.addEventListener('resize', handleResize);
-      
-      // device-frame 요소 찾기
-      const frame = document.querySelector('.device-frame') as HTMLElement;
-      setDeviceFrame(frame);
-      
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      };
+    const appContainer = document.querySelector('.app-container') as HTMLElement;
+    const deviceFrame = document.querySelector('.device-frame') as HTMLElement;
+    const isPc = window.innerWidth >= 768;
+    
+    const scrollPosition = window.scrollY;
+    
+    if (appContainer) {
+      appContainer.style.overflow = 'hidden';
     }
+    
+    if (deviceFrame) {
+      deviceFrame.style.overflow = 'hidden';
+    }
+    
+    if (!isPc) {
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = `-${scrollPosition}px`;
+    }
+    
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    
+    return () => {
+      if (appContainer) {
+        appContainer.style.overflow = '';
+      }
+      
+      if (deviceFrame) {
+        deviceFrame.style.overflow = '';
+      }
+      
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      
+      if (!isPc) {
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.top = '';
+        window.scrollTo(0, scrollPosition);
+      }
+    };
   }, []);
 
-  // 오버레이 클래스 결정: PC + device-frame 존재 시 특별 클래스 추가
+  const isPc = window.innerWidth >= 768;
+  const deviceFrame = document.querySelector('.device-frame');
   const overlayClass = isPc && deviceFrame 
     ? `${styles['alert__overlay']} ${styles['alert__overlay--in-frame']}` 
     : styles['alert__overlay'];
