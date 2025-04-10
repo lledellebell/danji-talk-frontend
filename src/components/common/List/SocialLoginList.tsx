@@ -3,9 +3,8 @@ import SocialLoginListItem from '../ListItem/SocialLoginListItem';
 import KakaoIcon from '../../../assets/social/kakao.svg';
 import GoogleIcon from '../../../assets/social/google.svg';
 import NaverIcon from '../../../assets/social/naver.svg';
-import { useEffect } from 'react';
-import { useKakaoLogin } from '../../../stores/authStore';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Alert from '../Alert/Alert';
 
 const KakaoLoginIcon = () => {
   return <img src={KakaoIcon} alt="카카오 로그인 하기" />;
@@ -28,14 +27,16 @@ const socialAccounts = [
 ];
 
 const SocialLoginList: React.FC = () => {
-  const navigate = useNavigate();
-  const handleKakaoLogin = useKakaoLogin();
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertContent, setAlertContent] = useState('');
 
   const handleSocialLogin = (provider: string) => {
-    if (provider === KAKAO_LOGIN_LABEL) {
-      handleKakaoLogin();
-      navigate('/');
-    }
+    setAlertContent(`${provider.replace(' 하기', '')} 기능은 아직 구현 중입니다. 곧 서비스될 예정이니 조금만 기다려주세요!`);
+    setShowAlert(true);
+  };
+
+  const handleAlertClose = () => {
+    setShowAlert(false);
   };
 
   useEffect(() => {
@@ -56,22 +57,33 @@ const SocialLoginList: React.FC = () => {
   }, []);
 
   return (
-    <ul
-      className={styles['social-login-list']}
-      aria-label="소셜 로그인 버튼 목록"
-    >
-      {socialAccounts.map((account) => (
-        <SocialLoginListItem key={account.id}>
-          <button
-            className={styles['social-login-button']}
-            aria-label={account.ariaLabel}
-            onClick={() => handleSocialLogin(account.ariaLabel)}
-          >
-            {account.text}
-          </button>
-        </SocialLoginListItem>
-      ))}
-    </ul>
+    <>
+      <ul
+        className={styles['social-login-list']}
+        aria-label="소셜 로그인 버튼 목록"
+      >
+        {socialAccounts.map((account) => (
+          <SocialLoginListItem key={account.id}>
+            <button
+              className={styles['social-login-button']}
+              aria-label={account.ariaLabel}
+              onClick={() => handleSocialLogin(account.ariaLabel)}
+            >
+              {account.text}
+            </button>
+          </SocialLoginListItem>
+        ))}
+      </ul>
+
+      {showAlert && (
+        <Alert
+          alertTitle="안내"
+          alertContent={alertContent}
+          onClose={handleAlertClose}
+          confirmLabel="확인"
+        />
+      )}
+    </>
   );
 };
 
