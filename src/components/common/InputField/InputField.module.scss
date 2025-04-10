@@ -5,16 +5,27 @@ $breakpoint-desktop: 1024px;
 
 // Colors
 $color-primary: #007bff;
-$color-primary-hover: #0056b3;
+$color-primary-light: #97BBFF;
+$color-primary-dark: #0056b3;
+$color-primary-lightest: #EAF1FF;
+$color-primary-text: #d4dff5;
+
 $color-error: #d91c1c;
-$color-error-hover: #b71515;
-$color-disabled: #999;
-$color-border: #e0e0e0;
-$color-border-hover: #999;
-$color-label: #111;
-$color-text: #333;
-$color-text-secondary: #666;
+$color-error-dark: #b71515;
 $color-success: #28a745;
+
+$color-text-primary: #111;
+$color-text-secondary: #666;
+$color-text-disabled: #999;
+$color-text-tertiary: #C0C0C0;
+
+$color-border: #1E2533;
+$color-border-light: #e0e0e0;
+$color-border-hover: #999;
+
+$color-background-transparent: transparent;
+$color-background-button: #EAF1FF;
+$color-white: #fff;
 
 // Font sizes
 $font-size-large: 16px;
@@ -27,6 +38,19 @@ $spacing-medium: 8px;
 $spacing-small: 6px;
 $spacing-xsmall: 4px;
 
+// Dimensions
+$input-height: 52px;
+$border-radius: 6px;
+$border-width: 1px;
+
+// Transitions
+$transition-default: all 0.2s ease-in-out;
+$transition-slow: all 0.3s ease;
+$transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Z-index
+$z-index-border: 1;
+
 .input-field {
   display: flex;
   flex-direction: column;
@@ -36,13 +60,9 @@ $spacing-xsmall: 4px;
     font-size: $font-size-large;
     line-height: 24px;
     font-weight: 600;
-    color: $color-label;
+    color: $color-text-primary;
     transform-origin: left;
-    transition: transform 0.2s ease-in-out;
-
-    @media screen and (max-width: $breakpoint-mobile) {
-      font-size: $font-size-small;
-    }
+    transition: $transition-default;
 
     &--error {
       color: $color-error;
@@ -53,6 +73,7 @@ $spacing-xsmall: 4px;
     position: relative;
     display: flex;
     align-items: center;
+    min-height: $input-height;
 
     &::after {
       content: '';
@@ -60,12 +81,12 @@ $spacing-xsmall: 4px;
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: 1;
-      height: 1px;
+      z-index: $z-index-border;
+      height: $border-width;
       width: 100%;
       background-color: $color-primary;
       transform: scaleX(0);
-      transition: transform 0.3s ease;
+      transition: $transition-slow;
     }
 
     &:focus-within::after {
@@ -84,18 +105,18 @@ $spacing-xsmall: 4px;
 
   &__input {
     padding: 15px 0;
-    font-size: 15px;
+    font-size: $font-size-medium;
     line-height: 22px;
     border: none;
-    border-bottom: 1px solid #1E2533;
-    color: #111;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    background-color: transparent;
+    border-bottom: $border-width solid $color-border;
+    color: $color-text-primary;
+    transition: $transition-fast;
+    background-color: $color-background-transparent;
     width: 100%;
+    height: $input-height;
 
     &--with-button {
       padding-right: 72px;
-      background-color: #007bff;
 
       @media screen and (max-width: $breakpoint-mobile) {
         padding-right: 64px;
@@ -117,7 +138,7 @@ $spacing-xsmall: 4px;
         }
 
         & + .input-field__action-button {
-          color: white;
+          color: $color-white;
           border-color: $color-error;
           background-color: $color-error;
         }
@@ -129,14 +150,14 @@ $spacing-xsmall: 4px;
       }
       
       & + .input-field__action-button {
-        color: white;
+        color: $color-white;
         border-color: $color-error;
         background-color: $color-error;
       }
     }
 
     &:focus {
-      border-bottom-color: #97BBFF;
+      border-bottom-color: $color-primary-light;
       outline: none;
 
       &:not(.input-field__input--error) + .input-field__password-toggle {
@@ -145,9 +166,9 @@ $spacing-xsmall: 4px;
       }
 
       &:not(.input-field__input--error) + .input-field__action-button {
-        color: #fff;
-        border-color: #97BBFF;
-        background-color: #97BBFF;
+        color: $color-white;
+        border-color: $color-primary-light;
+        background-color: $color-primary-light;
       }
     }
 
@@ -155,7 +176,7 @@ $spacing-xsmall: 4px;
       cursor: not-allowed;
       border-bottom-style: solid;
       opacity: 0.7;
-      color: $color-disabled;
+      color: $color-text-disabled;
 
       & + .input-field__password-toggle {
         color: $color-text-secondary;
@@ -177,26 +198,32 @@ $spacing-xsmall: 4px;
       }
 
       & + .input-field__action-button {
-        color: #fff;
-        border-color: #97BBFF;
-        background-color: #97BBFF;
+        color: $color-white;
+        border-color: $color-primary-light;
+        background-color: $color-primary-light;
       }
     }
   }
 
   &__password-toggle {
-    position: relative;
+    position: absolute;
+    right: 0;
+    top: 0;
     background: none;
-    margin-top: 14px;
     border: none;
     padding: 9px;
+    height: $input-height;
     cursor: pointer;
     color: $color-text-secondary;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease-in-out;
-    border-bottom: 1px solid #1E2533;
+    transition: $transition-default;
+    border-bottom: $border-width solid $color-border;
+
+    @media screen and (max-width: $breakpoint-mobile) {
+      padding: 9px 6px;
+    }
 
     &:focus {
       outline: none;
@@ -231,20 +258,31 @@ $spacing-xsmall: 4px;
   }
 
   &__action-button {
-    position: relative;
+    position: absolute;
+    right: 0;
+    top: 0;
     background: none;
     border: none;
     padding: 11px 16px;
+    height: $input-height;
     cursor: pointer;
-    color: #C0C0C0;
+    color: $color-text-tertiary;
     font-size: 14px;
     line-height: 20px;
     font-weight: 500;
     white-space: nowrap;
-    border-radius: 6px;
-    transition: all 0.2s ease-in-out;
-    background-color: #EAF1FF;
-    margin-left: 10px;
+    border-radius: $border-radius;
+    transition: $transition-default;
+    background-color: $color-background-button;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0;
+
+    @media screen and (max-width: $breakpoint-mobile) {
+      padding: 11px 10px;
+      font-size: $font-size-small;
+    }
 
     &::after {
       content: '';
@@ -252,29 +290,29 @@ $spacing-xsmall: 4px;
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: 1;
-      height: 1px;
+      z-index: $z-index-border;
+      height: $border-width;
       width: 100%;
-      background-color: #fff;
+      background-color: $color-white;
     }
 
     &:focus {
       outline: none;
-      color: #d4dff5;
+      color: $color-primary-text;
     }
 
     &:disabled {
-      color: $color-disabled;
+      color: $color-text-disabled;
       cursor: not-allowed;
     }
 
     &--error {
-      color: white;
+      color: $color-white;
       background-color: $color-error;
       border-color: $color-error;
 
       &:focus {
-        color: white;
+        color: $color-white;
         background-color: $color-error;
         border-color: $color-error;
         outline: none;
@@ -282,12 +320,19 @@ $spacing-xsmall: 4px;
     }
   }
 
+  &__input--with-password-toggle + &__action-button {
+    right: 40px;
+    
+    @media screen and (max-width: $breakpoint-mobile) {
+      right: 32px;
+    }
+  }
+
   &__error-text {
-    margin-top: 4px;
+    margin-top: $spacing-xsmall;
     color: $color-error;
-    font-size: 15px;
-    line-height: 22px;
     font-size: $font-size-medium;
+    line-height: 22px;
     animation: slideIn 0.3s ease-out;
   }
 

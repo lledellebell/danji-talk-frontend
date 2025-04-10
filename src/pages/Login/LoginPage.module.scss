@@ -8,18 +8,15 @@ $color-text-secondary: #C0C0C0;
 $color-border: #e0e0e0;
 $color-disabled: #999999;
 
-// Font sizes
 $font-size-large: 16px;
 $font-size-medium: 14px;
 $font-size-small: 13px;
 
-// Spacing
 $spacing-large: 20px;
 $spacing-medium: 16px;
 $spacing-small: 12px;
 $spacing-xsmall: 4px;
 
-// Mixin
 @mixin flex-center {
   display: flex;
   justify-content: center;
@@ -81,6 +78,11 @@ $spacing-xsmall: 4px;
   color: #C0C0C0;
   height: 52px;
   transition: all 0.2s ease-in-out;
+
+  &:hover {
+    color: #fff;
+    background-color: #97BBFF;
+  }
   
   &--valid {
     color: #fff;
