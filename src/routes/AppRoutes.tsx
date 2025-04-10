@@ -27,6 +27,9 @@ import Header from '../layouts/Header';
 import { ChatList } from '../pages/Chat/ChatList';
 import Facilities from '../pages/Facilities/Facilities';
 import Favorites from '../pages/Favorites/Favorites';
+import MyReservations from '../pages/MyReservations/MyReservations';
+import Notices from '../pages/Notices/Notices';
+import VisitorCar from '../pages/VisitorCar/VisitorCar';
 
 const HomePage = () => (
   <>
@@ -76,6 +79,9 @@ const AppRoutes = () => {
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/facilities" element={<FacilitiesPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path="/my-reservations" element={<MyReservations />} />
+        <Route path="/visitor-car" element={<VisitorCar />} />
+        <Route path="/notices" element={<Notices />} />
       </Route>
       
       {/* 커뮤니티 라우트 */}

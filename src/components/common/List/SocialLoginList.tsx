@@ -3,8 +3,8 @@ import SocialLoginListItem from '../ListItem/SocialLoginListItem';
 import KakaoIcon from '../../../assets/social/kakao.svg';
 import GoogleIcon from '../../../assets/social/google.svg';
 import NaverIcon from '../../../assets/social/naver.svg';
-import { useEffect, useState } from 'react';
-import Alert from '../Alert/Alert';
+import { useEffect } from 'react';
+import { useAlertStore } from '../../../stores/alertStore';
 
 const KakaoLoginIcon = () => {
   return <img src={KakaoIcon} alt="카카오 로그인 하기" />;
@@ -27,16 +27,12 @@ const socialAccounts = [
 ];
 
 const SocialLoginList: React.FC = () => {
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertContent, setAlertContent] = useState('');
+  const { setTitle, setContent, openAlert } = useAlertStore();
 
   const handleSocialLogin = (provider: string) => {
-    setAlertContent(`${provider.replace(' 하기', '')} 기능은 아직 구현 중입니다. 곧 서비스될 예정이니 조금만 기다려주세요!`);
-    setShowAlert(true);
-  };
-
-  const handleAlertClose = () => {
-    setShowAlert(false);
+    setTitle('안내');
+    setContent(`${provider.replace(' 하기', '')} 기능은 현재 개발 중입니다.<br />빠른 시일 내에 서비스 제공 예정입니다.`);
+    openAlert();
   };
 
   useEffect(() => {
@@ -74,15 +70,6 @@ const SocialLoginList: React.FC = () => {
           </SocialLoginListItem>
         ))}
       </ul>
-
-      {showAlert && (
-        <Alert
-          alertTitle="안내"
-          alertContent={alertContent}
-          onClose={handleAlertClose}
-          confirmLabel="확인"
-        />
-      )}
     </>
   );
 };
