@@ -27,6 +27,7 @@ import Profile from '../../pages/Settings/Profile/Profile';
 import Favorites from '../../pages/Favorites/Favorites';
 import ResetPassword from '../../pages/ResetPassword/ResetPassword';
 import ShowEmail from '../../pages/ShowEmail/ShowEmail';
+import { Complexes } from '../../pages/Complexes/Complexes';
 
 const LandingPage = () => {
   const { isLoggedIn } = useAuthStore();
@@ -187,6 +188,15 @@ const LandingPage = () => {
                     hasBackButton={true}
                   />
                   <ShowEmail />
+                </>
+              }
+            />
+            <Route
+              path="/register-complex"
+              element={
+                <>
+                  <Header title="단지 등록" type="sub" hasBackButton={true} />
+                  <Complexes />
                 </>
               }
             />

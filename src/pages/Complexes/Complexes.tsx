@@ -1,6 +1,7 @@
 import styles from './Complexes.module.scss';
 import { InputField } from '../../components/common/InputField/InputField';
-import { useState } from 'react';
+import { useRef } from 'react';
+import { useComplexForm } from '../../hooks/useComplexeForm';
 
 // {
 //     "name": "아파트 이름",
@@ -34,94 +35,132 @@ const NotImage = () => {
 };
 
 export const Complexes = () => {
-  const [name, setName] = useState('');
-  const [region, setRegion] = useState('');
-  const [location, setLocation] = useState('');
-  const [totalUnit, setTotalUnit] = useState('');
-  const [parkingCapacity, setParkingCapacity] = useState('');
-  const [buildingRange, setBuildingRange] = useState('');
+  const { values, handlers, actions } = useComplexForm();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const regionActionButton = {
-    label: '검색',
-    onClick: () => setRegion('1'),
-    disabled: false,
+  const triggerImageUpload = () => {
+    fileInputRef.current?.click();
   };
 
-  const buildingRangeActionButton = {
-    label: '설정',
-    onClick: () => setRegion('1'),
-    disabled: false,
+  const handleImageUpload = (files: FileList | null) => {
+    if (!files) return;
+    const e = {
+      target: { files },
+    } as React.ChangeEvent<HTMLInputElement>;
+    handlers.handleImageChange(e);
+  };
+
+  const handleImageDelete = (idx: number) => {
+    const newImages = [...values.images];
+    newImages.splice(idx, 1);
+    handlers.handleImageChange({
+      target: { files: FileListFromArray(newImages) },
+    } as any);
+  };
+
+  const FileListFromArray = (files: File[]) => {
+    const dataTransfer = new DataTransfer();
+    files.forEach((file) => dataTransfer.items.add(file));
+    return dataTransfer.files;
   };
 
   return (
-    <form className={styles['complexes-form']}>
+    <form
+      className={styles['complexes-form']}
+      onSubmit={(e) => {
+        e.preventDefault();
+        actions.handleSubmit();
+      }}
+    >
       <InputField
         label="단지명"
         name="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={values.name}
+        onChange={(e) => handlers.setName(e.target.value)}
         placeholder="단지명을 입력해주세요"
         required
-        autoComplete="region"
       />
       <InputField
         label="주소"
         name="region"
-        value={region}
-        onChange={(e) => setRegion(e.target.value)}
-        actionButton={regionActionButton}
+        value={values.region}
+        onChange={(e) => handlers.setRegion(e.target.value)}
+        actionButton={actions.regionActionButton}
         placeholder="주소를 입력해주세요"
         required
-        autoComplete="region"
       />
       <InputField
         label="상세주소"
         name="location"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
+        value={values.location}
+        onChange={(e) => handlers.setLocation(e.target.value)}
         placeholder="상세주소를 입력해주세요"
         required
-        autoComplete="location"
       />
       <InputField
         label="세대 수"
         name="totalUnit"
-        value={totalUnit}
-        onChange={(e) => setTotalUnit(e.target.value)}
+        value={values.totalUnit}
+        onChange={(e) => handlers.setTotalUnit(e.target.value)}
         placeholder="세대 수를 입력해주세요 (숫자만 입력)"
         required
-        autoComplete="totalUnit"
       />
       <InputField
         label="주차 가능 대수"
         name="parkingCapacity"
-        value={parkingCapacity}
-        onChange={(e) => setParkingCapacity(e.target.value)}
+        value={values.parkingCapacity}
+        onChange={(e) => handlers.setParkingCapacity(e.target.value)}
         placeholder="주차 가능 대수를 입력해주세요 (숫자만 입력)"
         required
-        autoComplete="parkingCapacity"
       />
       <InputField
         label="동"
         name="buildingRange"
-        value={buildingRange}
-        onChange={(e) => setBuildingRange(e.target.value)}
-        actionButton={buildingRangeActionButton}
+        value={values.buildingRange}
+        onChange={(e) => handlers.setBuildingRange(e.target.value)}
+        actionButton={actions.buildingRangeActionButton}
         placeholder="단지 동을 설정해주세요"
         required
-        autoComplete="buildingRange"
       />
       <div className={styles['complexes-image-container']}>
         <span>단지 이미지</span>
         <div className={styles['complexes-image']}>
-          <NotImage />
-          <p className={styles['complexes-image-description']}>
-            390 * 460
-            <br /> 최대 10장의 이미지 첨부가 가능합니다.
-          </p>
+          {values.images.length === 0 && (
+            <div onClick={triggerImageUpload}>
+              <NotImage />
+            </div>
+          )}
+          {values.images.length === 0 && (
+            <p className={styles['complexes-image-description']}>
+              390 * 460
+              <br /> 최대 10장의 이미지 첨부가 가능합니다.
+            </p>
+          )}
+          {values.images.map((file, idx) => (
+            <div key={idx} className={styles['complexes-image-preview']}>
+              <img src={URL.createObjectURL(file)} alt={`upload-${idx}`} />
+              <button type="button" onClick={() => handleImageDelete(idx)}>
+                삭제
+              </button>
+            </div>
+          ))}
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            onChange={(e) => handleImageUpload(e.target.files)}
+          />
         </div>
       </div>
-      <button className={styles['submit-button']}>등록</button>
+      <button
+        type="submit"
+        className={styles['submit-button']}
+        disabled={actions.isLoading}
+      >
+        {actions.isLoading ? '등록 중...' : '등록'}
+      </button>
     </form>
   );
 };
