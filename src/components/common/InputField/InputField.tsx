@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { useId, useState, useEffect, useRef } from 'react';
 import styles from './InputField.module.scss';
 
 interface InputFieldProps
@@ -90,37 +90,74 @@ export const InputField = ({
 }: InputFieldProps) => {
   const id = useId();
   const [showPassword, setShowPassword] = useState(false);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
+  
+  useEffect(() => {
+    if (type === 'password' && passwordInputRef.current) {
+      passwordInputRef.current.value = value || '';
+    }
+  }, [type, value]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e);
+  };
 
   const handleTogglePassword = () => {
     setShowPassword((prev) => !prev);
   };
-
+  
+  const renderPasswordInput = () => (
+    <input
+      id={id}
+      ref={passwordInputRef}
+      type={showPassword ? "text" : "password"}
+      name={name}
+      onChange={handleChange}
+      placeholder={placeholder}
+      required={required}
+      disabled={disabled}
+      minLength={minLength}
+      pattern={pattern}
+      className={`${styles['input-field__input']} ${error ? styles['input-field__input--error'] : ''} ${
+        showPasswordToggle ? styles['input-field__input--with-password-toggle'] : ''
+      }`}
+      aria-invalid={!!error}
+      aria-errormessage={error ? `${id}-error` : undefined}
+      autoComplete="current-password"
+      data-lpignore="true"
+      {...rest}
+    />
+  );
+  
+  const renderRegularInput = () => (
+    <input
+      id={id}
+      type={type}
+      name={name}
+      value={value}
+      onChange={handleChange}
+      placeholder={placeholder}
+      required={required}
+      disabled={disabled}
+      minLength={minLength}
+      pattern={pattern}
+      className={`${styles['input-field__input']} ${error ? styles['input-field__input--error'] : ''} ${
+        actionButton ? styles['input-field__wrapper--with-button'] : ''
+      }`}
+      aria-invalid={!!error}
+      aria-errormessage={error ? `${id}-error` : undefined}
+      {...rest}
+    />
+  );
+  
   return (
-    <div className={`${styles['input-field']} ${className}`}>
+    <div className={`${styles['input-field']} ${className || ''}`}>
       <label htmlFor={id} className={styles['input-field__label']}>
         {label}
       </label>
       <div className={styles['input-field__wrapper']}>
-        <input
-          id={id}
-          type={type === "password" && showPassword ? "text" : type}
-          name={name}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-          required={required}
-          disabled={disabled}
-          minLength={minLength}
-          pattern={pattern}
-          className={`${styles['input-field__input']} ${error ? styles['input-field__input--error'] : ''} ${
-            (type === 'password' && showPasswordToggle) || actionButton
-              ? styles['input-field__wrapper--with-button']
-              : ''
-          }`}
-          aria-invalid={!!error}
-          aria-errormessage={error ? `${id}-error` : undefined}
-          {...rest}
-        />
+        {type === 'password' ? renderPasswordInput() : renderRegularInput()}
+        
         {type === "password" && showPasswordToggle && (
           <button
             type="button"
@@ -131,6 +168,7 @@ export const InputField = ({
             {showPassword ? <EyeOffIcon /> : <EyeIcon />}
           </button>
         )}
+        
         {actionButton && (
           <button
             type="button"
