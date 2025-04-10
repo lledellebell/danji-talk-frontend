@@ -104,6 +104,7 @@ const LandingPage = () => {
               }
             />
             <Route path="/write" element={<BoardWrite />} />
+            <Route path="/write/:feedId" element={<BoardWrite />} />
             <Route
               path="/mypage"
               element={
