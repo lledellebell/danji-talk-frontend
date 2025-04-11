@@ -4,6 +4,7 @@ import { useMediaQuery } from '../../hooks/useMediaQuery';
 import AppRoutes from '../../routes/AppRoutes';
 import Alert from '../common/Alert/Alert';
 import { useAlertStore } from '../../stores/alertStore';
+import MobileBanner from '../common/Banner/MobileBanner';
 
 const LandingPage = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
@@ -17,6 +18,7 @@ const LandingPage = () => {
       <div className="background-hexagon"></div>
       <DevicePreview>
         <div className="app-container">
+          <MobileBanner />
           <AppRoutes />
           {isOpen && (
             <Alert
