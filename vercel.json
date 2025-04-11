@@ -1,5 +1,23 @@
 {
+    "headers": [
+      {
+        "source": "/(.*)\\.js$",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/javascript"
+          }
+        ]
+      }
+    ],
     "rewrites": [
-      { "source": "/(.*)", "destination": "/index.html" }
+      { 
+        "source": "/danji-talk-frontend/:path*",
+        "destination": "/:path*"
+      },
+      { 
+        "source": "/(.*)", 
+        "destination": "/index.html" 
+      }
     ]
-  }
+  } 
