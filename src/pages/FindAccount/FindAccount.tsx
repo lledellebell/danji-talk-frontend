@@ -14,8 +14,8 @@ import axios from 'axios';
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://danjitalk.duckdns.org';
 const IS_DEV = import.meta.env.VITE_NODE_ENV === 'development' || window.location.hostname === 'localhost';
 
-console.log('API 기본 URL:', API_BASE_URL);
-console.log('개발 환경?', IS_DEV);
+// console.log('API 기본 URL:', API_BASE_URL);
+// console.log('개발 환경?', IS_DEV);
 
 const validatePhone = (phone: string): string | null => {
   const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;

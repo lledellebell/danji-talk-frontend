@@ -42,7 +42,7 @@ const SocialLoginList: React.FC = () => {
 
     if (hasKakaoLogin && window.Kakao) {
       const appKey = import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY;
-      console.log('Kakao App Key:', appKey);
+      // console.log('Kakao App Key:', appKey);
 
       if (!appKey) {
         console.error('카카오 앱 키가 설정되지 않았습니다. 환경 변수를 확인하세요.');
@@ -52,7 +52,7 @@ const SocialLoginList: React.FC = () => {
       try {
         if (!window.Kakao.isInitialized()) {
           window.Kakao.init(appKey);
-          console.log('카카오 SDK 초기화 성공:', window.Kakao.isInitialized());
+          // console.log('카카오 SDK 초기화 성공:', window.Kakao.isInitialized());
         } else {
           console.log('카카오 SDK는 이미 초기화되었습니다.');
         }
