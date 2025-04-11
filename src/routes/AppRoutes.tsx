@@ -4,6 +4,8 @@ import MainRoutes from './MainRoutes';
 import SettingsRoutes from './SettingsRoutes';
 import CommunityRoutes from './CommunityRoutes';
 import MyPageRoutes from './MyPageRoutes';
+import ComplexRoutes from './ComplexRoutes';
+import ComplexInfo from '../pages/Complex/ComplexInfo';
 import { LoginPage } from '../pages/Login/LoginPage';
 import { RegisterPage } from '../pages/Register/RegisterPage';
 import { RegisterSuccessPage } from '../pages/Register/RegisterSuccessPage';
@@ -30,6 +32,7 @@ import Favorites from '../pages/Favorites/Favorites';
 import MyReservations from '../pages/MyReservations/MyReservations';
 import Notices from '../pages/Notices/Notices';
 import VisitorCar from '../pages/VisitorCar/VisitorCar';
+import RegisterComplex from '../pages/Complex/RegisterComplex';
 
 const HomePage = () => (
   <>
@@ -105,6 +108,12 @@ const AppRoutes = () => {
         <Route path="/settings" element={<Settings />} />
         <Route path="/settings/withdrawal" element={<Withdrawal />} />
         <Route path="/settings/profile" element={<Profile />} />
+      </Route>
+
+      {/* 단지 라우트 */}
+      <Route element={<ComplexRoutes />}>
+        <Route path="/complex-info" element={<ComplexInfo />} />
+        <Route path="/register-complex" element={<RegisterComplex />} />
       </Route>
     </Routes>
   );
