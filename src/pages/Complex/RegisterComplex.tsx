@@ -1,7 +1,7 @@
 import InputField from '../../components/common/InputField/InputField';
 import Header from '../../layouts/Header';
 import styles from './RegisterComplex.module.scss';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, ChangeEvent } from 'react';
 
 const RegisterComplex = () => {
   const [complexName, setComplexName] = useState('');
@@ -14,7 +14,11 @@ const RegisterComplex = () => {
   const [isDongSettingOpen, setIsDongSettingOpen] = useState(false);
   const [dongCount, setDongCount] = useState('');
   const [startDongNumber, setStartDongNumber] = useState('');
+  const [previewDongInfo, setPreviewDongInfo] = useState('');
   const addressModalRef = useRef<HTMLDivElement>(null);
+  const [complexImages, setComplexImages] = useState<File[]>([]);
+  const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const handleAddressSearch = () => {
     setIsAddressModalOpen(true);
@@ -92,11 +96,111 @@ const RegisterComplex = () => {
     setIsDongSettingOpen(false);
   };
 
+  useEffect(() => {
+    if (dongCount && startDongNumber) {
+      const start = parseInt(startDongNumber);
+      const count = parseInt(dongCount);
+      if (count > 0) {
+        const end = start + count - 1;
+        setPreviewDongInfo(`${start}동 ~ ${end}동 (총 ${count}개 동)`);
+      }
+    } else {
+      setPreviewDongInfo('');
+    }
+  }, [dongCount, startDongNumber]);
+
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      
+      // 최대 10개 파일로 제한
+      const totalFiles = [...complexImages, ...newFiles];
+      if (totalFiles.length > 10) {
+        alert('최대 10개의 이미지만 업로드할 수 있습니다.');
+        return;
+      }
+      
+      // 이미지 파일만 허용
+      const validFiles = newFiles.filter(file => 
+        file.type.startsWith('image/')
+      );
+      
+      if (validFiles.length !== newFiles.length) {
+        alert('이미지 파일만 업로드할 수 있습니다.');
+      }
+      
+      // 원본 이미지 크기 확인 및 크기 정보 표시
+      validFiles.forEach(file => {
+        const img = new Image();
+        const objectUrl = URL.createObjectURL(file);
+        
+        img.onload = () => {
+          console.log(`원본 이미지 크기: ${img.width}x${img.height}`);
+          // 여기서 이미지 크기를 저장하거나 표시할 수 있습니다
+          URL.revokeObjectURL(objectUrl);
+        };
+        
+        img.src = objectUrl;
+      });
+      
+      // 새 파일 추가
+      setComplexImages(prev => [...prev, ...validFiles]);
+      
+      // 이미지 미리보기 URL 생성
+      const newImageUrls = validFiles.map(file => URL.createObjectURL(file));
+      setImagePreviewUrls(prev => [...prev, ...newImageUrls]);
+    }
+    
+    // 파일 input 초기화 (같은 파일 재선택 가능하게)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+  
+  const handleImageDelete = (index: number) => {
+    // 미리보기 URL 객체 해제
+    URL.revokeObjectURL(imagePreviewUrls[index]);
+    
+    // 이미지 및 미리보기 URL 배열에서 제거
+    setComplexImages(prev => prev.filter((_, i) => i !== index));
+    setImagePreviewUrls(prev => prev.filter((_, i) => i !== index));
+  };
+  
+  const handleImageUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  // 폼 제출 핸들러 추가
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // 필수 입력값 검증
+    if (!complexName || !address || !households || !parkingSpaces || !dongInfo) {
+      alert('필수 입력 항목을 모두 입력해주세요.');
+      return;
+    }
+    
+    // 여기에 API 호출 또는 데이터 처리 로직 추가
+    console.log('단지 등록 데이터:', {
+      complexName,
+      address,
+      detailAddress,
+      households,
+      parkingSpaces,
+      dongInfo,
+      complexImages
+    });
+    
+    // 성공 후 처리 (예: 홈 화면으로 이동)
+    alert('단지가 성공적으로 등록되었습니다.');
+    // navigate('/'); // 라우터로 이동하는 경우
+  };
+
   return (
     <>
       <Header title="단지 등록" type="sub" hasBackButton={true} />
       <div className={styles['register-complex__container']}>
-        <form>
+        <form onSubmit={handleSubmit}>
           <h2 className={styles['sr-only']}>단지 등록</h2>
           <div className={styles['register-complex__form-group']}>
             <InputField
@@ -174,6 +278,79 @@ const RegisterComplex = () => {
                 설정
               </button>
             </div>
+            <div className={styles['register-complex__image-container']}>
+              <div className={styles['register-complex__image-header']}>
+                <label className={styles['register-complex__image-label']}>
+                  단지 이미지
+                </label>
+                <span className={styles['register-complex__image-info']}>
+                  * 최대 10장의 이미지 첨부가 가능합니다.
+                </span>
+              </div>
+              
+              <div className={styles['register-complex__image-scroll-container']}>
+                <div className={styles['register-complex__image-scroll']}>
+                  {/* 이미지 추가 버튼을 맨 앞에 배치 */}
+                  {imagePreviewUrls.length < 10 && (
+                    <button
+                      type="button"
+                      className={styles['register-complex__image-upload']}
+                      onClick={handleImageUploadClick}
+                      aria-label="이미지 업로드"
+                    >
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.5 3H7.8C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8V16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H17C17.93 21 18.395 21 18.7765 20.8978C19.8117 20.6204 20.6204 19.8117 20.8978 18.7765C21 18.395 21 17.93 21 17M19 8V2M16 5H22M10.5 8.5C10.5 9.60457 9.60457 10.5 8.5 10.5C7.39543 10.5 6.5 9.60457 6.5 8.5C6.5 7.39543 7.39543 6.5 8.5 6.5C9.60457 6.5 10.5 7.39543 10.5 8.5ZM14.99 11.9181L6.53115 19.608C6.05536 20.0406 5.81747 20.2568 5.79643 20.4442C5.77819 20.6066 5.84045 20.7676 5.96319 20.8755C6.10478 21 6.42628 21 7.06929 21H16.456C17.8951 21 18.6147 21 19.1799 20.7582C19.8894 20.4547 20.4547 19.8894 20.7582 19.1799C21 18.6147 21 17.8951 21 16.456C21 15.9717 21 15.7296 20.9471 15.5042C20.8805 15.2208 20.753 14.9554 20.5733 14.7264C20.4303 14.5442 20.2412 14.3929 19.8631 14.0905L17.0658 11.8527C16.6874 11.5499 16.4982 11.3985 16.2898 11.3451C16.1061 11.298 15.9129 11.3041 15.7325 11.3627C15.5279 11.4291 15.3486 11.5921 14.99 11.9181Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                  )}
+                  
+                  {/* 업로드된 이미지들 */}
+                  {imagePreviewUrls.map((url, index) => (
+                    <div key={index} className={styles['register-complex__image-item']}>
+                      <img 
+                        src={url} 
+                        alt={`단지 이미지 ${index + 1}`} 
+                        className={styles['register-complex__image-preview']}
+                      />
+                      <button
+                        type="button"
+                        className={styles['register-complex__image-delete']}
+                        onClick={() => handleImageDelete(index)}
+                        aria-label="이미지 삭제"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M18 6L6 18M6 6l12 12" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                        </svg>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <span className={styles['register-complex__image-size-info']}>
+                * 권장 이미지 크기: 390 x 460 픽셀
+              </span>
+              
+              <input
+                type="file"
+                ref={fileInputRef}
+                className={styles['register-complex__image-input']}
+                accept="image/*"
+                multiple
+                onChange={handleImageUpload}
+                aria-label="단지 이미지 업로드"
+              />
+            </div>
+
+            {/* 등록 버튼 - 고정 위치로 배치 */}
+            <div className={styles['register-complex__submit-container']}>
+              <button 
+                type="submit" 
+                className={styles['register-complex__submit-button']}
+              >
+                등록하기
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -218,10 +395,11 @@ const RegisterComplex = () => {
                 onChange={handleStartDongNumberChange}
                 inputMode="numeric"
               />
-              {/* TODO: 여기서부터 */}
-              <div>
-                <strong>예시</strong>
-                <p>101~123</p>
+            </div>
+            <div className={styles['register-complex__dong-layer-preview']}>
+              <strong>미리보기</strong>
+              <div className={styles['register-complex__dong-layer-preview-content']}>
+                {previewDongInfo || '동 수와 시작 동 번호를 입력하면 미리보기가 표시됩니다'}
               </div>
             </div>
             <div className={styles['register-complex__dong-layer-buttons']}>
