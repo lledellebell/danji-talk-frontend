@@ -74,7 +74,7 @@
   }
 
   &__dong-layer {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -83,6 +83,25 @@
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: flex-end;
+    overflow: hidden;
+
+    @media (min-width: 1024px) {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 100%;
+      max-height: 100%;
+      margin: auto;
+      overflow: auto;
+    }
+
+    @media (max-width: 1023px) {
+      bottom: 0;
+      top: 0;
+      min-height: 100%;
+    }
   }
 
   &__dong-layer-content {
@@ -322,10 +341,21 @@
     cursor: pointer;
     transition: background-color 0.2s;
     
+    &:hover:not(:disabled) {
+      background-color: #7DA8FF;
+    }
+    
     &:disabled {
       background-color: #ccc;
       cursor: not-allowed;
     }
+  }
+
+  &__error-message {
+    color: #e53935;
+    font-size: 14px;
+    margin-bottom: 8px;
+    text-align: center;
   }
 }
 .sr-only {
@@ -346,5 +376,12 @@
   to {
     transform: translateY(0);
   }
+}
+
+:gloabal(.body-no-scroll) {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 

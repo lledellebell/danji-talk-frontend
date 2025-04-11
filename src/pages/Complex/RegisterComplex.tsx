@@ -2,6 +2,29 @@ import InputField from '../../components/common/InputField/InputField';
 import Header from '../../layouts/Header';
 import styles from './RegisterComplex.module.scss';
 import { useState, useEffect, useRef, ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useComplexStore } from '../../stores/complexStore';
+
+const toggleScrollLock = (lock: boolean) => {
+  const isPc = window.innerWidth >= 1024;
+  
+  if (isPc) {
+    const appContainer = document.querySelector('.app-container');
+    if (appContainer) {
+      if (lock) {
+        appContainer.classList.add('body-no-scroll');
+      } else {
+        appContainer.classList.remove('body-no-scroll');
+      }
+    }
+  } else {
+    if (lock) {
+      document.body.classList.add('body-no-scroll');
+    } else {
+      document.body.classList.remove('body-no-scroll');
+    }
+  }
+};
 
 const RegisterComplex = () => {
   const [complexName, setComplexName] = useState('');
@@ -20,8 +43,15 @@ const RegisterComplex = () => {
   const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
+  const { registerComplex, isLoading: isStoreLoading, error: storeError } = useComplexStore();
+  const navigate = useNavigate();
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
   const handleAddressSearch = () => {
     setIsAddressModalOpen(true);
+    toggleScrollLock(true);
   };
   
   useEffect(() => {
@@ -42,12 +72,14 @@ const RegisterComplex = () => {
   const handleModalBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       setIsAddressModalOpen(false);
+      toggleScrollLock(false);
     }
   };
 
   const handleDongSettingBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       setIsDongSettingOpen(false);
+      toggleScrollLock(false);
     }
   };
 
@@ -75,10 +107,12 @@ const RegisterComplex = () => {
 
   const handleDongSettingOpen = () => {
     setIsDongSettingOpen(true);
+    toggleScrollLock(true);
   };
 
   const handleDongSettingCancel = () => {
     setIsDongSettingOpen(false);
+    toggleScrollLock(false);
   };
 
   const handleDongSettingComplete = () => {
@@ -86,14 +120,16 @@ const RegisterComplex = () => {
       const start = parseInt(startDongNumber);
       const count = parseInt(dongCount);
       if (count <= 0) {
-        // 오류 처리
         return;
       }
       
-      const dongNumbers = Array.from({ length: count }, (_, i) => start + i);
-      setDongInfo(`${dongCount}개 동 (${dongNumbers.join(', ')}동)`);
+      // 서버에서 기대하는 형식으로 변경
+      const end = start + count - 1;
+      // "101동 ~ 123동 (23개동)" 형식으로 설정
+      setDongInfo(`${start}동 ~ ${end}동 (${count}개동)`);
     }
     setIsDongSettingOpen(false);
+    toggleScrollLock(false);
   };
 
   useEffect(() => {
@@ -120,7 +156,6 @@ const RegisterComplex = () => {
         return;
       }
       
-      // 이미지 파일만 허용
       const validFiles = newFiles.filter(file => 
         file.type.startsWith('image/')
       );
@@ -129,24 +164,20 @@ const RegisterComplex = () => {
         alert('이미지 파일만 업로드할 수 있습니다.');
       }
       
-      // 원본 이미지 크기 확인 및 크기 정보 표시
       validFiles.forEach(file => {
         const img = new Image();
         const objectUrl = URL.createObjectURL(file);
         
         img.onload = () => {
           console.log(`원본 이미지 크기: ${img.width}x${img.height}`);
-          // 여기서 이미지 크기를 저장하거나 표시할 수 있습니다
           URL.revokeObjectURL(objectUrl);
         };
         
         img.src = objectUrl;
       });
       
-      // 새 파일 추가
       setComplexImages(prev => [...prev, ...validFiles]);
       
-      // 이미지 미리보기 URL 생성
       const newImageUrls = validFiles.map(file => URL.createObjectURL(file));
       setImagePreviewUrls(prev => [...prev, ...newImageUrls]);
     }
@@ -158,10 +189,8 @@ const RegisterComplex = () => {
   };
   
   const handleImageDelete = (index: number) => {
-    // 미리보기 URL 객체 해제
     URL.revokeObjectURL(imagePreviewUrls[index]);
     
-    // 이미지 및 미리보기 URL 배열에서 제거
     setComplexImages(prev => prev.filter((_, i) => i !== index));
     setImagePreviewUrls(prev => prev.filter((_, i) => i !== index));
   };
@@ -170,31 +199,77 @@ const RegisterComplex = () => {
     fileInputRef.current?.click();
   };
 
-  // 폼 제출 핸들러 추가
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // 필수 입력값 검증
     if (!complexName || !address || !households || !parkingSpaces || !dongInfo) {
-      alert('필수 입력 항목을 모두 입력해주세요.');
+      setError('필수 입력 항목을 모두 입력해주세요.');
       return;
     }
     
-    // 여기에 API 호출 또는 데이터 처리 로직 추가
-    console.log('단지 등록 데이터:', {
-      complexName,
-      address,
-      detailAddress,
-      households,
-      parkingSpaces,
-      dongInfo,
-      complexImages
-    });
-    
-    // 성공 후 처리 (예: 홈 화면으로 이동)
-    alert('단지가 성공적으로 등록되었습니다.');
-    // navigate('/'); // 라우터로 이동하는 경우
+    try {
+      setIsSubmitting(true);
+      setError(null);
+      
+      const formData = new FormData();
+      
+      const requestDto = {
+        name: complexName,
+        region: address,
+        location: detailAddress,
+        totalUnit: parseInt(households),
+        parkingCapacity: parseInt(parkingSpaces),
+        buildingRange: dongInfo
+      };
+      
+      // JSON 문자열로 변환하여 FormData에 추가
+      formData.append('requestDto', new Blob([JSON.stringify(requestDto)], { 
+        type: 'application/json' 
+      }), 'requestDto.json');
+      
+      // 반드시 'multipartFileList' 필드명 사용
+      complexImages.forEach(file => {
+        formData.append('multipartFileList', file);
+      });
+      
+      const success = await registerComplex(formData);
+      
+      if (success) {
+        navigate('/'); 
+      } else {
+        setError(storeError || '단지 등록 중 오류가 발생했습니다.');
+      }
+
+      console.log('제출할 데이터:', {
+        name: complexName,
+        region: address,
+        location: detailAddress,
+        totalUnit: parseInt(households),
+        parkingCapacity: parseInt(parkingSpaces),
+        buildingRange: dongInfo
+      });
+    } catch (err) {
+      console.error('단지 등록 실패:', err);
+      setError('단지 등록 중 오류가 발생했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const isFormValid = complexName && address && households && parkingSpaces && dongInfo;
+
+  const isSubmittingAny = isSubmitting || isStoreLoading;
+
+  useEffect(() => {
+    return () => {
+      document.body.classList.remove('body-no-scroll');
+      const appContainer = document.querySelector('.app-container');
+      if (appContainer) {
+        appContainer.classList.remove('body-no-scroll');
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -290,7 +365,6 @@ const RegisterComplex = () => {
               
               <div className={styles['register-complex__image-scroll-container']}>
                 <div className={styles['register-complex__image-scroll']}>
-                  {/* 이미지 추가 버튼을 맨 앞에 배치 */}
                   {imagePreviewUrls.length < 10 && (
                     <button
                       type="button"
@@ -342,13 +416,14 @@ const RegisterComplex = () => {
               />
             </div>
 
-            {/* 등록 버튼 - 고정 위치로 배치 */}
             <div className={styles['register-complex__submit-container']}>
+              {error && <p className={styles['register-complex__error-message']}>{error}</p>}
               <button 
                 type="submit" 
                 className={styles['register-complex__submit-button']}
+                disabled={isSubmittingAny || !isFormValid}
               >
-                등록하기
+                {isSubmittingAny ? '등록 중...' : '등록하기'}
               </button>
             </div>
           </div>

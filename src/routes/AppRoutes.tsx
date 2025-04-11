@@ -33,12 +33,14 @@ import MyReservations from '../pages/MyReservations/MyReservations';
 import Notices from '../pages/Notices/Notices';
 import VisitorCar from '../pages/VisitorCar/VisitorCar';
 import RegisterComplex from '../pages/Complex/RegisterComplex';
+import Home from '../pages/Home/Home';
 
 const HomePage = () => (
   <>
     <Header title="DANJITALK" type="main" />
     <SearchBar />
     <MenuGrid />
+    <Home />
   </>
 );
 
