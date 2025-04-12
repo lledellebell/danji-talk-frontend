@@ -378,10 +378,17 @@
   }
 }
 
-:gloabal(.body-no-scroll) {
+:global(.body-no-scroll) {
   overflow: hidden !important;
   position: fixed !important;
   width: 100% !important;
-  height: 100% !important;
+  height: 100%;
+  
+  @media (min-width: 1024px) {
+    max-width: 375px;
+    border-radius: 48px;
+    bottom: 30px;
+    height: calc(100% - 62px) !important;
+  }
 }
 
