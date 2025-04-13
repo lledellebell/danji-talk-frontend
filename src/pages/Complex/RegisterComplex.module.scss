@@ -277,9 +277,11 @@
     flex-shrink: 0;
     width: 80px;
     height: 80px;
-    border: 1px dashed #ccc;
+    // border: 1px dashed #ccc;
+    border: 1px solid #EDEDED;
     border-radius: 8px;
-    background-color: #f9f9f9;
+    // background-color: #f9f9f9;
+    background-color: #EDEDED;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -294,7 +296,8 @@
     svg {
       width: 24px;
       height: 24px;
-      color: #666;
+      // color: #666;
+      color: #fff;
     }
     
     span {
