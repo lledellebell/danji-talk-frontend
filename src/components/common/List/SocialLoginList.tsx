@@ -31,15 +31,12 @@ const SocialLoginList: React.FC = () => {
 
   const handleSocialLogin = (provider: string) => {
     if (provider === KAKAO_LOGIN_LABEL) {
-      // 카카오 로그인 처리
       try {
         const apiBaseUrl = import.meta.env.VITE_API_URL || '';
-        const frontendUrl = window.location.origin;
-        const redirectUrl = `${apiBaseUrl}/oauth2/authorization/kakao?redirect_uri=${encodeURIComponent(`${frontendUrl}/oauth/redirect`)}`;
+        const kakaoAuthUrl = `${apiBaseUrl}/oauth2/authorization/kakao`;
         
-        // console.log('카카오 로그인 리다이렉트:', redirectUrl);
-        window.location.href = redirectUrl;
-        
+        console.log('카카오 로그인 페이지로 이동:', kakaoAuthUrl);
+        window.location.href = kakaoAuthUrl;
       } catch (error: unknown) {
         console.error('카카오 로그인 처리 중 오류:', error);
         setTitle('오류');

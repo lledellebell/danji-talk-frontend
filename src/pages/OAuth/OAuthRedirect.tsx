@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAlertStore } from '../../stores/alertStore';
+import axios from 'axios';
 
 const OAuthRedirect = () => {
   const location = useLocation();
@@ -8,93 +9,63 @@ const OAuthRedirect = () => {
   const { setTitle, setContent, openAlert } = useAlertStore();
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const status = params.get('status');
-    const socialCode = params.get('social-code');
-    const hasError = params.get('error') || location.pathname.includes('/login') && location.search.includes('error');
-    
-    // * 임시 로그인 처리
-    // 백엔드에서 /login?error로 리다이렉트된 경우 처리
-    if (hasError || location.pathname.includes('@')) {
-      console.error('소셜 로그인 과정에서 에러가 발생했습니다:', location.pathname, location.search);
-      
-      setTimeout(() => {
-        setTitle('로그인 실패');
-        setContent('소셜 로그인 과정에서 오류가 발생했습니다. 다시 시도해 주세요.');
-        openAlert();
-        
-        if (import.meta.env.DEV) {
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('tempLoginMode', 'true');
-          navigate('/home');
+    const processLogin = async () => {
+      try {
+        const params = new URLSearchParams(location.search);
+        const status = params.get('status');
+        const code = params.get('social-code');
+
+        if (status === 'success' && code) {
+          console.log('✅ 받은 uuid:', code);
+
+          try {
+            // 백엔드 API를 호출하여 실제 인증 정보를 교환
+            const response = await axios.get(`https://danjitalk.duckdns.org/api/oauth/exchange?code=${code}`, {
+              withCredentials: true,
+            });
+
+            console.log('🔄 토큰 교환 성공:', response.data);
+
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('socialCode', code);
+            localStorage.setItem('loginType', 'kakao');
+            localStorage.removeItem('prevPath');
+
+            setTitle('로그인 성공');
+            setContent('소셜 계정으로 로그인되었습니다.');
+            openAlert();
+
+            navigate('/home');
+          } catch (exchangeError) {
+            console.error('🔄 토큰 교환 오류:', exchangeError);
+            
+            setTitle('로그인 실패');
+            setContent('인증 정보 교환 중 오류가 발생했습니다.');
+            openAlert();
+            
+            navigate('/login');
+          }
         } else {
+          console.error('소셜 로그인 실패:', { status, code });
+          
+          setTitle('로그인 실패');
+          setContent('소셜 로그인 과정에서 오류가 발생했습니다.');
+          openAlert();
+          
           navigate('/login');
         }
-      }, 1000);
-      return;
-    }
-    
-    // 404 오류 가능성이 있는 상황
-    const has404Error = location.pathname.includes('/error') || 
-                       document.title.includes('Whitelabel Error Page');
-    
-    if (has404Error) {
-      console.error('백엔드 서버에서 404 에러가 발생했습니다.');
-      
-      setTimeout(() => {
-        setTitle('서버 오류');
-        setContent('서버에서 일시적인 오류가 발생했습니다. 다시 시도해 주세요.');
+      } catch (error) {
+        console.error('처리 중 오류 발생:', error);
+        
+        setTitle('오류');
+        setContent('로그인 처리 중 오류가 발생했습니다.');
         openAlert();
         
-        if (import.meta.env.DEV) {
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('tempLoginMode', 'true');
-        }
-        
-        navigate('/home');
-      }, 1000);
-      return;
-    }
-    
-    if (status === 'success' && socialCode) {
-      console.log('소셜 로그인 성공:', socialCode);
-      
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('socialCode', socialCode);
-      localStorage.setItem('loginType', 'kakao');
-      localStorage.removeItem('prevPath');
-      
-      setTimeout(() => {
-        navigate('/home');
-        
-        setTimeout(() => {
-          setTitle('환영합니다');
-          setContent('로그인에 성공했습니다.');
-          openAlert();
-        }, 300);
-      }, 1500);
-    } else if (status || socialCode) {
-      console.error('소셜 로그인 실패:', { status, socialCode });
-      
-      setTimeout(() => {
-        setTitle('로그인 실패');
-        setContent('소셜 로그인 과정에서 오류가 발생했습니다.');
-        openAlert();
-        
-        navigate('/home');
-      }, 1000);
-    } else {
-      // status와 socialCode가 없는 경우 
-      // (예상치 못한 URL로 접근한 경우)
-      console.error('유효하지 않은 리다이렉트 URL:', location.pathname, location.search);
-      
-      setTimeout(() => {
-        setTitle('잘못된 접근');
-        setContent('유효하지 않은 방식으로 접근했습니다.');
-        openAlert();
         navigate('/login');
-      }, 1000);
-    }
+      }
+    };
+
+    processLogin();
   }, [location, navigate, setTitle, setContent, openAlert]);
 
   return (
@@ -104,52 +75,22 @@ const OAuthRedirect = () => {
       alignItems: 'center', 
       height: '100vh',
       flexDirection: 'column',
-      gap: '20px',
+      gap: '16px',
       background: '#f9f9f9'
     }}>
+      <div className="spinner" style={{
+        width: '50px',
+        height: '50px',
+        border: '5px solid rgba(0, 0, 0, 0.1)',
+        borderRadius: '50%',
+        borderTop: '5px solid #3396F4',
+        animation: 'spin 1s linear infinite'
+      }}></div>
       <p style={{ 
-        fontSize: '20px', 
-        fontWeight: '600',
-        color: '#333',
-        marginBottom: '10px'
+        fontSize: '18px', 
+        fontWeight: '500',
+        color: '#333'
       }}>로그인 처리 중...</p>
-      
-      <div style={{
-        width: '280px',
-        height: '8px',
-        backgroundColor: '#e0e0e0',
-        borderRadius: '4px',
-        overflow: 'hidden',
-        position: 'relative'
-      }}>
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          height: '100%',
-          width: '30%',
-          backgroundColor: '#3396F4',
-          borderRadius: '4px',
-          animation: 'progressAnimation 1.5s ease-in-out infinite'
-        }}></div>
-      </div>
-      
-      <style>
-        {`
-          @keyframes progressAnimation {
-            0% { width: 10%; left: 0; }
-            50% { width: 30%; left: 70%; }
-            100% { width: 10%; left: 0; }
-          }
-        `}
-      </style>
-      
-      <p style={{ 
-        fontSize: '16px', 
-        fontWeight: '400',
-        color: '#666',
-        marginTop: '10px'
-      }}>잠시만 기다려 주세요</p>
     </div>
   );
 };
