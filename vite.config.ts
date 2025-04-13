@@ -27,6 +27,8 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
     sourcemap: true,
+    target: 'es2015',
+    minify: 'terser',
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
