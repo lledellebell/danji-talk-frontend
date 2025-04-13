@@ -38,7 +38,7 @@ const SocialLoginList: React.FC = () => {
           const REDIRECT_URI = window.location.origin + '/oauth/kakao/callback';
           window.Kakao.Auth.authorize({
             redirectUri: REDIRECT_URI,
-            scope: 'profile_nickname, profile_image',
+            scope: 'profile_nickname,profile_image',
           });
           // authorize는 리다이렉트 방식이므로 아래 코드는 실행되지 않음
         } catch (error: unknown) {
