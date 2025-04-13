@@ -23,20 +23,27 @@ const KakaoCallback = () => {
       }
 
       try {
-        const CLIENT_ID = import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY;
+        const CLIENT_ID = import.meta.env.VITE_KAKAO_REST_API_KEY || import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY;
         const REDIRECT_URI = window.location.origin + '/oauth/kakao/callback';
+        
+        // console.log('카카오 토큰 요청 파라미터:', {
+        //   grant_type: 'authorization_code',
+        //   client_id: CLIENT_ID,
+        //   redirect_uri: REDIRECT_URI,
+        //   code
+        // });
 
-        // 1. 카카오 API로 토큰 요청
+        // 1. 카카오 API로 토큰 요청 - 수정된 방식으로 요청
+        const formData = new URLSearchParams();
+        formData.append('grant_type', 'authorization_code');
+        formData.append('client_id', CLIENT_ID);
+        formData.append('redirect_uri', REDIRECT_URI);
+        formData.append('code', code);
+
         const tokenResponse = await axios.post(
           'https://kauth.kakao.com/oauth/token',
-          null,
+          formData.toString(),
           {
-            params: {
-              grant_type: 'authorization_code',
-              client_id: CLIENT_ID,
-              redirect_uri: REDIRECT_URI,
-              code
-            },
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
             }
@@ -46,8 +53,17 @@ const KakaoCallback = () => {
         if (tokenResponse.data.access_token) {
           // 2. 백엔드에 카카오 토큰 전송
           try {
-            const backendResponse = await axios.post('/api/auth/kakao', {
+            const apiBaseUrl = import.meta.env.VITE_API_URL || '';
+            const apiPath = '/api/auth/kakao';
+            
+            console.log('백엔드 API 호출:', `${apiBaseUrl}${apiPath}`);
+            
+            // 백엔드 API에 카카오 토큰 전송
+            const backendResponse = await axios.post(`${apiBaseUrl}${apiPath}`, {
               token: tokenResponse.data.access_token
+            }, {
+              withCredentials: true, // CORS 쿠키 전송 활성화
+              timeout: 5000 
             });
 
             if (backendResponse.data.success) {
@@ -61,6 +77,22 @@ const KakaoCallback = () => {
             }
           } catch (error) {
             console.error('백엔드 인증 오류:', error);
+            
+            // 개발 환경
+            if (import.meta.env.DEV) {
+              console.log('개발 환경: 백엔드 연동 없이 임시 로그인 처리');
+              
+              localStorage.setItem('isLoggedIn', 'true');
+              localStorage.setItem('kakaoToken', tokenResponse.data.access_token);
+              
+              setTitle('개발 모드 로그인');
+              setContent('백엔드 연동 없이 임시로 로그인 처리되었습니다.');
+              openAlert();
+              
+              navigate('/');
+              return;
+            }
+            
             setTitle('로그인 실패');
             setContent('서버 인증 과정에서 오류가 발생했습니다.');
             openAlert();
@@ -71,6 +103,32 @@ const KakaoCallback = () => {
         }
       } catch (error) {
         console.error('카카오 인증 오류:', error);
+        
+        // 오류 상세 정보 로깅
+        // if (axios.isAxiosError(error) && error.response) {
+        //   console.error('카카오 오류 상세 정보:', {
+        //     status: error.response.status,
+        //     statusText: error.response.statusText,
+        //     data: error.response.data
+        //   });
+        // }
+        
+        // 개발 환경에서는 임시 로그인 처리
+        if (import.meta.env.DEV) {
+          // console.log('개발 환경: 오류 발생했지만 임시 로그인 처리합니다.');
+          setTitle('개발 모드 로그인');
+          setContent('오류가 발생했지만 개발 모드에서 임시로 로그인 처리되었습니다.');
+          openAlert();
+          
+          // 임시 카카오 토큰 생성 
+          const tempToken = `temp_kakao_token_${Date.now()}`;
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('kakaoToken', tempToken);
+          
+          navigate('/home');
+          return;
+        }
+        
         setTitle('로그인 실패');
         setContent('카카오 인증 과정에서 오류가 발생했습니다.');
         openAlert();
