@@ -7,7 +7,7 @@ import { useLoginMutation } from '../../hooks/useLoginMutation';
 import { ArrowIcon } from '../../components/common/Icons/ArrowIcon';
 import SocialLoginList from '../../components/common/List/SocialLoginList';
 import Header from '../../layouts/Header';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import LogoIcon from '../../assets/logo.svg';
 
 const LoginForm = () => {
@@ -15,6 +15,7 @@ const LoginForm = () => {
   const [saveId, setSaveId] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const loginMutation = useLoginMutation();
+  const location = useLocation();
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('savedEmail');
@@ -35,6 +36,9 @@ const LoginForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!emailError) {
+      if (location.pathname !== '/login') {
+        localStorage.setItem('prevPath', location.pathname);
+      }
       loginMutation.mutate();
     }
   };
