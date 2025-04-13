@@ -5,8 +5,11 @@ const Home = () => {
   const { complexes, fetchComplexes, isLoading, error } = useComplexStore();
 
   useEffect(() => {
-    fetchComplexes();
-  }, [fetchComplexes]);
+    // 데이터가 없을 때만 서버에서 가져오기
+    if (complexes.length === 0 && !isLoading && !error) {
+      fetchComplexes();
+    }
+  }, [complexes.length, fetchComplexes, isLoading, error]);
 
   return (
     <div>
@@ -15,6 +18,8 @@ const Home = () => {
         <p>로딩 중...</p>
       ) : error ? (
         <p>에러: {error}</p>
+      ) : complexes.length === 0 ? (
+        <p>등록된 단지가 없습니다.</p>
       ) : (
         <div className="complex-grid">
           {complexes.map(complex => (

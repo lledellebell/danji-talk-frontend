@@ -40,7 +40,11 @@ export const useComplexStore = create<ComplexState>((set, get) => ({
       set({ complexes: response.data, isLoading: false });
     } catch (error) {
       console.error('단지 목록 조회 실패:', error);
-    //   set({ error: '단지 목록을 불러오는데 실패했습니다.', isLoading: false });
+      set({ 
+        error: '단지 목록을 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.', 
+        isLoading: false,
+        complexes: []  // 빈 배열로 설정하여 UI가 정상적으로 랜더링되도록 함
+      });
     }
   },
   
@@ -70,23 +74,21 @@ export const useComplexStore = create<ComplexState>((set, get) => ({
     try {
       set({ isLoading: true, error: null });
       
-      console.log('FormData 내용:');
-      for (const pair of complexData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
-      
-      await axios.post('https://danjitalk.duckdns.org/api/apartment', complexData, {
-        headers: {} // Content-Type을 명시적으로 설정하지 않음 (브라우저가 자동으로 설정)
+      const response = await axios.post('https://danjitalk.duckdns.org/api/apartment', complexData, {
+        headers: {} 
       });
       
-      // 성공 후 목록 새로고침
-      await get().fetchComplexes();
-      set({ isLoading: false });
+      const newComplex = response.data;
+      
+      set(state => ({
+        complexes: [newComplex, ...state.complexes],
+        isLoading: false
+      }));
+      
       return true;
     } catch (error) {
       console.error('단지 등록 실패:', error);
       
-      // 오류 응답 상세 정보 로깅
       if (axios.isAxiosError(error) && error.response) {
         console.error('오류 상태:', error.response.status);
         console.error('오류 데이터:', error.response.data);
@@ -103,7 +105,6 @@ export const useComplexStore = create<ComplexState>((set, get) => ({
       await axios.put(`https://danjitalk.duckdns.org/api/apartment/${id}`, complexData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-      // 성공 후 목록 및 현재 단지 정보 새로고침
       await get().fetchComplexes();
       if (get().currentComplex?.id === id) {
         await get().fetchComplexById(id);
