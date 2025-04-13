@@ -54,7 +54,7 @@ const KakaoCallback = () => {
           // 2. 백엔드에 카카오 토큰 전송
           try {
             const apiBaseUrl = import.meta.env.VITE_API_URL || '';
-            const apiPath = '/api/auth/kakao';
+            const apiPath = '/oauth2/authorization/kakao';
             
             console.log('백엔드 API 호출:', `${apiBaseUrl}${apiPath}`);
             
