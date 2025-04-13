@@ -28,7 +28,7 @@ export const useAddComment = () => {
         queryKey: ['commentList', variables.feedId],
       });
     },
-    onError: (error) => {
+    onError: () => {
       alert('댓글 등록 중 오류가 발생했습니다.');
     },
   });
