@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 
-export const useBoardData = (apartmentId: number) => {
+export const useBoardData = (apartmentId: number, sort: string = 'ALL') => {
   return useQuery({
-    queryKey: ['boardData', apartmentId],
+    queryKey: ['boardData', apartmentId, sort],
     queryFn: async () => {
       const response = await axios.get(`/api/community/feeds`, {
         params: {
           apartmentId,
-          LocalDateTime: new Date().toISOString(),
+          sort,
         },
       });
       if (response.data.code !== 200) {
@@ -18,7 +18,8 @@ export const useBoardData = (apartmentId: number) => {
       return response.data.data;
     },
     enabled: !!apartmentId,
-    staleTime: 1000 * 60 * 5,
+    refetchOnMount: 'always',
     refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
   });
 };

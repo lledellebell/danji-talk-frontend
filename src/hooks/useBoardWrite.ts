@@ -3,33 +3,48 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-export const useBoardWrite = () => {
+export const useBoardWrite = (feedId?: number) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [images, setImages] = useState<File[]>([]);
+  const [images, setImages] = useState<
+    (File | { fullUrl: string; url: string })[]
+  >([]);
+  const [deleteFileUrls, setDeleteFileUrls] = useState<string[]>([]);
   const [feedType, setFeedType] = useState<'FEED' | 'QUESTION'>('FEED');
   const [apartmentId, setApartmentId] = useState<number>(1);
 
   const navigate = useNavigate();
+  const isEditMode = !!feedId;
 
-  const boardWriteMutation = useMutation({
+  const boardMutation = useMutation({
     mutationFn: async (formData: FormData) => {
-      const response = await axios.post('/api/community/feeds', formData, {
+      const url = isEditMode
+        ? `/api/community/feeds/${feedId}`
+        : '/api/community/feeds';
+      const method = isEditMode ? 'put' : 'post';
+
+      const response = await axios({
+        url,
+        method,
+        data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+
       return response.data;
     },
     onSuccess: () => {
       navigate('/community');
-      console.log('게시글 등록 성공');
+      console.log(isEditMode ? '게시글 수정 성공' : '게시글 등록 성공');
     },
     onError: (error: any) => {
-      console.error('게시글 등록 실패:', error);
+      console.error(
+        isEditMode ? '게시글 수정 실패:' : '게시글 등록 실패:',
+        error
+      );
     },
   });
-
   const handleSubmit = () => {
     if (!title.trim() || !content.trim()) {
       alert('제목과 내용을 입력해주세요.');
@@ -51,10 +66,19 @@ export const useBoardWrite = () => {
     );
 
     images.forEach((file) => {
-      formData.append('multipartFileList', file);
+      if (file instanceof File) {
+        formData.append('multipartFileList', file);
+      }
     });
 
-    boardWriteMutation.mutate(formData);
+    if (isEditMode && deleteFileUrls.length > 0) {
+      const deleteUrlsBlob = new Blob([JSON.stringify(deleteFileUrls)], {
+        type: 'application/json',
+      });
+      formData.append('deleteFileUrls', deleteUrlsBlob);
+    }
+
+    boardMutation.mutate(formData);
   };
 
   const handleImageUpload = (files: FileList | null) => {
@@ -64,7 +88,15 @@ export const useBoardWrite = () => {
   };
 
   const handleImageDelete = (index: number) => {
-    setImages((prev) => prev.filter((_, i) => i !== index));
+    setImages((prev) => {
+      const deletedImage = prev[index];
+
+      if (typeof deletedImage !== 'string' && !(deletedImage instanceof File)) {
+        setDeleteFileUrls((prevUrls) => [...prevUrls, deletedImage.url]);
+      }
+
+      return prev.filter((_, i) => i !== index);
+    });
   };
 
   return {
@@ -81,6 +113,7 @@ export const useBoardWrite = () => {
     handleImageUpload,
     handleImageDelete,
     handleSubmit,
-    isLoading: boardWriteMutation.isPending,
+    isEditMode,
+    isLoading: boardMutation.isPending,
   };
 };

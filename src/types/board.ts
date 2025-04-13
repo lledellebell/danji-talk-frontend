@@ -25,6 +25,7 @@ export interface Comment {
   createdAt: string;
   commentMemberResponseDto: CommentMember;
   childrenCommentDto: Comment[];
+  isAuthor: boolean;
 }
 
 export interface CommentListProps {
@@ -35,4 +36,5 @@ export interface CommentListProps {
     totalElements: number;
     totalPages: number;
   };
+  feedId: string;
 }
