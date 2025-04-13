@@ -236,7 +236,8 @@ const RegisterComplex = () => {
       const success = await registerComplex(formData);
       
       if (success) {
-        navigate('/'); 
+        // alert('단지가 성공적으로 등록되었습니다.');
+        navigate('/');
       } else {
         setError(storeError || '단지 등록 중 오류가 발생했습니다.');
       }
