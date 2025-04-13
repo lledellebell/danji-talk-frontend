@@ -32,25 +32,17 @@ const SocialLoginList: React.FC = () => {
   const handleSocialLogin = (provider: string) => {
     if (provider === KAKAO_LOGIN_LABEL) {
       // 카카오 로그인 처리
-      if (window.Kakao && window.Kakao.Auth) {
-        try {
-          // 인가 코드 방식으로 로그인 구현
-          const REDIRECT_URI = window.location.origin + '/oauth/kakao/callback';
-          window.Kakao.Auth.authorize({
-            redirectUri: REDIRECT_URI,
-            scope: 'profile_nickname,profile_image',
-          });
-          // authorize는 리다이렉트 방식이므로 아래 코드는 실행되지 않음
-        } catch (error: unknown) {
-          console.error('카카오 로그인 처리 중 오류:', error);
-          setTitle('오류');
-          setContent('카카오 로그인 처리 중 오류가 발생했습니다.');
-          openAlert();
-        }
-      } else {
-        console.error('카카오 SDK가 초기화되지 않았습니다.');
+      try {
+        const apiBaseUrl = import.meta.env.VITE_API_URL || '';
+        const redirectUrl = `${apiBaseUrl}/oauth2/authorization/kakao`;
+        
+        console.log('카카오 로그인 리다이렉트:', redirectUrl);
+        window.location.href = redirectUrl;
+        
+      } catch (error: unknown) {
+        console.error('카카오 로그인 처리 중 오류:', error);
         setTitle('오류');
-        setContent('카카오 로그인을 위한 준비가 되지 않았습니다. 잠시 후 다시 시도해주세요.');
+        setContent('카카오 로그인 처리 중 오류가 발생했습니다.');
         openAlert();
       }
     } else {
@@ -62,30 +54,6 @@ const SocialLoginList: React.FC = () => {
   };
 
   useEffect(() => {
-    const hasKakaoLogin = socialAccounts.some(
-      (account) => account.ariaLabel === KAKAO_LOGIN_LABEL
-    );
-
-    if (hasKakaoLogin && window.Kakao) {
-      const appKey = import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY;
-      // console.log('Kakao App Key:', appKey);
-
-      if (!appKey) {
-        console.error('카카오 앱 키가 설정되지 않았습니다. 환경 변수를 확인하세요.');
-        return;
-      }
-
-      try {
-        if (!window.Kakao.isInitialized()) {
-          window.Kakao.init(appKey);
-          // console.log('카카오 SDK 초기화 성공:', window.Kakao.isInitialized());
-        } else {
-          console.log('카카오 SDK는 이미 초기화되었습니다.');
-        }
-      } catch (error) {
-        console.error('카카오 SDK 초기화 중 오류:', error);
-      }
-    }
   }, []);
 
   return (

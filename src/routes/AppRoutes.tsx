@@ -34,15 +34,16 @@ import MyReservations from '../pages/MyReservations/MyReservations';
 import Notices from '../pages/Notices/Notices';
 import VisitorCar from '../pages/VisitorCar/VisitorCar';
 import RegisterComplex from '../pages/Complex/RegisterComplex';
-import Home from '../pages/Home/Home';
+// import Home from '../pages/Home/Home';
 import KakaoCallback from '../pages/OAuth/KakaoCallback';
+import OAuthRedirect from '../pages/OAuth/OAuthRedirect';
 
 const HomePage = () => (
   <>
     <Header title="DANJITALK" type="main" />
     <SearchBar />
     <MenuGrid />
-    <Home />
+    {/* <Home /> */}
   </>
 );
 
@@ -73,6 +74,7 @@ const AppRoutes = () => {
       <Routes>
         {/* OAuth 콜백 라우트 */}
         <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
+        <Route path="/oauth/redirect" element={<OAuthRedirect />} />
         
         {/* 인증 관련 라우트 */}
         <Route element={<AuthRoutes />}>
@@ -87,6 +89,7 @@ const AppRoutes = () => {
         {/* 메인 라우트 */}
         <Route element={<MainRoutes />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/facilities" element={<FacilitiesPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
