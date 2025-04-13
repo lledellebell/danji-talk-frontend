@@ -17,7 +17,7 @@ const OAuthRedirect = () => {
         const code = params.get('social-code');
 
         if (status === 'success' && code) {
-          console.log('✅ 받은 uuid:', code);
+          // console.log('✅ 받은 uuid:', code);
 
           try {
             // 백엔드 API를 호출하여 실제 인증 정보를 교환
