@@ -14,6 +14,11 @@ export interface KakaoSDK {
       success: (response: KakaoAuthResponse) => void;
       fail: (error: Error) => void;
     }) => void;
+    authorize: (options: {
+      redirectUri: string;
+      scope?: string;
+      state?: string;
+    }) => void;
   };
 }
 

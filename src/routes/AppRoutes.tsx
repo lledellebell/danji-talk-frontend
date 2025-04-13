@@ -35,6 +35,7 @@ import Notices from '../pages/Notices/Notices';
 import VisitorCar from '../pages/VisitorCar/VisitorCar';
 import RegisterComplex from '../pages/Complex/RegisterComplex';
 import Home from '../pages/Home/Home';
+import KakaoCallback from '../pages/OAuth/KakaoCallback';
 
 const HomePage = () => (
   <>
@@ -70,6 +71,9 @@ const AppRoutes = () => {
   return (
     <Suspense fallback={<div>로딩 중...</div>}>
       <Routes>
+        {/* OAuth 콜백 라우트 */}
+        <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
+        
         {/* 인증 관련 라우트 */}
         <Route element={<AuthRoutes />}>
           <Route path="/login" element={<LoginPage />} />

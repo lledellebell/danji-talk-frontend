@@ -30,9 +30,35 @@ const SocialLoginList: React.FC = () => {
   const { setTitle, setContent, openAlert } = useAlertStore();
 
   const handleSocialLogin = (provider: string) => {
-    setTitle('안내');
-    setContent(`${provider.replace(' 하기', '')} 기능은 현재 개발 중입니다.<br />빠른 시일 내에 서비스 제공 예정입니다.`);
-    openAlert();
+    if (provider === KAKAO_LOGIN_LABEL) {
+      // 카카오 로그인 처리
+      if (window.Kakao && window.Kakao.Auth) {
+        try {
+          // 인가 코드 방식으로 로그인 구현
+          const REDIRECT_URI = window.location.origin + '/oauth/kakao/callback';
+          window.Kakao.Auth.authorize({
+            redirectUri: REDIRECT_URI,
+            scope: 'profile_nickname',
+          });
+          // authorize는 리다이렉트 방식이므로 아래 코드는 실행되지 않음
+        } catch (error: unknown) {
+          console.error('카카오 로그인 처리 중 오류:', error);
+          setTitle('오류');
+          setContent('카카오 로그인 처리 중 오류가 발생했습니다.');
+          openAlert();
+        }
+      } else {
+        console.error('카카오 SDK가 초기화되지 않았습니다.');
+        setTitle('오류');
+        setContent('카카오 로그인을 위한 준비가 되지 않았습니다. 잠시 후 다시 시도해주세요.');
+        openAlert();
+      }
+    } else {
+      // 다른 소셜 로그인은 개발 중 메시지 표시
+      setTitle('안내');
+      setContent(`${provider.replace(' 하기', '')} 기능은 현재 개발 중입니다.<br />빠른 시일 내에 서비스 제공 예정입니다.`);
+      openAlert();
+    }
   };
 
   useEffect(() => {
