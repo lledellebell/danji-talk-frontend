@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAlertStore } from '../../stores/alertStore';
 import axios from 'axios';
@@ -7,6 +7,7 @@ const OAuthRedirect = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { setTitle, setContent, openAlert } = useAlertStore();
+  const [loadingState, setLoadingState] = useState('loading'); 
 
   useEffect(() => {
     const processLogin = async () => {
@@ -35,7 +36,10 @@ const OAuthRedirect = () => {
             setContent('소셜 계정으로 로그인되었습니다.');
             openAlert();
 
-            navigate('/home');
+            setLoadingState('success');
+            setTimeout(() => {
+              navigate('/home', { replace: true });
+            }, 800);
           } catch (exchangeError) {
             console.error('🔄 토큰 교환 오류:', exchangeError);
             
@@ -78,19 +82,23 @@ const OAuthRedirect = () => {
       gap: '16px',
       background: '#f9f9f9'
     }}>
-      <div className="spinner" style={{
-        width: '50px',
-        height: '50px',
-        border: '5px solid rgba(0, 0, 0, 0.1)',
-        borderRadius: '50%',
-        borderTop: '5px solid #3396F4',
-        animation: 'spin 1s linear infinite'
-      }}></div>
-      <p style={{ 
-        fontSize: '18px', 
-        fontWeight: '500',
-        color: '#333'
-      }}>로그인 처리 중...</p>
+      {loadingState === 'loading' && (
+        <>
+          <div className="spinner" style={{
+            width: '30px',
+            height: '30px',
+            border: '5px solid rgba(0, 0, 0, 0.1)',
+            borderRadius: '50%',
+            borderTop: '5px solid #96bbff',
+            animation: 'spin 1s linear infinite'
+          }}></div>
+          <p style={{ 
+            fontSize: '18px', 
+            fontWeight: '500',
+            color: '#333'
+          }}>로그인 처리 중...</p>
+        </>
+      )}
     </div>
   );
 };
