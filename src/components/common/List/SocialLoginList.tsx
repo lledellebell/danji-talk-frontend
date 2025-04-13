@@ -34,9 +34,10 @@ const SocialLoginList: React.FC = () => {
       // 카카오 로그인 처리
       try {
         const apiBaseUrl = import.meta.env.VITE_API_URL || '';
-        const redirectUrl = `${apiBaseUrl}/oauth2/authorization/kakao`;
+        const frontendUrl = window.location.origin;
+        const redirectUrl = `${apiBaseUrl}/oauth2/authorization/kakao?redirect_uri=${encodeURIComponent(`${frontendUrl}/oauth/redirect`)}`;
         
-        console.log('카카오 로그인 리다이렉트:', redirectUrl);
+        // console.log('카카오 로그인 리다이렉트:', redirectUrl);
         window.location.href = redirectUrl;
         
       } catch (error: unknown) {
