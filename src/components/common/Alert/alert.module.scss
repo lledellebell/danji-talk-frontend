@@ -24,11 +24,24 @@ $pc-breakpoint: 768px;
     z-index: $z-index-alert;
     
     &--in-frame {
-      position: absolute;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: 100vh;
-      border-radius: 0;
-      z-index: $z-index-alert-in-frame;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: $z-index-alert;
+      
+      @media (min-width: 1024px) {
+        position: absolute;
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        z-index: $z-index-alert-in-frame;
+      }
     }
   }
 
