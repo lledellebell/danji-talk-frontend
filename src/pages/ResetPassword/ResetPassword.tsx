@@ -33,7 +33,7 @@ const ResetPassword: React.FC = () => {
     if (!/[0-9]/.test(password)) {
       return '비밀번호는 숫자를 포함해야 합니다.';
     }
-    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+    if (!/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) {
       return '비밀번호는 특수문자를 포함해야 합니다.';
     }
     return null;
@@ -101,7 +101,13 @@ const ResetPassword: React.FC = () => {
         <h1 className={styles['sr-only']}>비밀번호 재설정</h1>
         <p className={styles['sr-only']}>새로운 비밀번호를 입력해주세요.</p>
         
-        <div className={styles['reset-password-form']}>
+        <form 
+          className={styles['reset-password-form']} 
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleResetPassword();
+          }}
+        >
           {/* 인증한 이메일 정보 */}
           <InputField
             label="이메일"
@@ -110,6 +116,7 @@ const ResetPassword: React.FC = () => {
             onChange={() => {}}
             disabled
             className={styles['input-field']}
+            autoComplete="username"
           />
           <InputField
             label="새 비밀번호"
@@ -128,6 +135,7 @@ const ResetPassword: React.FC = () => {
             className={styles['input-field']}
             error={passwordError || undefined}
             showPasswordToggle={true}
+            autoComplete="new-password"
           />
           
           <InputField
@@ -144,10 +152,12 @@ const ResetPassword: React.FC = () => {
             className={styles['input-field']}
             error={confirmPasswordError || undefined}
             showPasswordToggle={true}
+            autoComplete="new-password"
           />
           
           <div className={styles['button-container']}>
             <Button
+              type="submit"
               label="다음"
               onClick={handleResetPassword}
               className={[
@@ -157,7 +167,7 @@ const ResetPassword: React.FC = () => {
               disabled={!password || !confirmPassword}
             />
           </div>
-        </div>
+        </form>
         
         {showAlert && (
           <Alert
