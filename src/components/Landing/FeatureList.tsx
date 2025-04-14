@@ -7,7 +7,7 @@ import InquiryIcon from '../../assets/icons/inquiry.svg';
 const features = [
   { icon: ChatIcon, label: '채팅' },
   { icon: NoticeIcon, label: '공지사항' },
-  { icon: BuildingIcon, label: '시설관리' },
+  { icon: BuildingIcon, label: '시설정보' },
   { icon: InquiryIcon, label: '문의하기' },
   // { icon: SettingsIcon, label: '설정' },
 ];

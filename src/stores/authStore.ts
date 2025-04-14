@@ -4,21 +4,6 @@ import { kakaoLoginRequest } from '../api/api';
 import { useNavigate } from 'react-router-dom';
 import { KakaoAuthResponse } from '../types/kakao';
 
-declare global {
-  interface Window {
-    Kakao: {
-      init: (key: string) => void;
-      isInitialized: () => boolean;
-      Auth: {
-        login: (options: {
-          success: (response: KakaoAuthResponse) => void;
-          fail: (error: Error) => void;
-        }) => void;
-      };
-    };
-  }
-}
-
 interface AuthState {
   isLoggedIn: boolean;
   email: string;

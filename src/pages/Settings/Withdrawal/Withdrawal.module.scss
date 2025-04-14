@@ -1,3 +1,31 @@
+@use "sass:map";
+
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+$spacing: (
+  xs: 8px,
+  sm: 16px,
+  md: 20px,
+  lg: 24px
+);
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: $breakpoint-mobile) { @content; }
+  } @else if $breakpoint == tablet {
+    @media (max-width: $breakpoint-tablet) { @content; }
+  } @else if $breakpoint == desktop {
+    @media (min-width: $breakpoint-desktop) { @content; }
+  }
+}
+
 .withdrawal {
   position: relative;
   padding: 20px 20px 60px 20px;
@@ -90,26 +118,26 @@
 }
 
 .withdrawal__container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  position: relative;
+  @include flex-column;
+  align-items: center;
+  overflow-y: auto;
+  height: 100%;
+  padding: map.get($spacing, lg) map.get($spacing, lg) 54px;
+
+  @include respond-to(desktop) {
+    height: calc(100% - 74px);
+  }
 }
 
-.withdrawal__main-content {
+.withdrawal__main-wrapper {
   flex: 1;
-  padding: 20px;
-  padding-bottom: calc(20px + 46px + 32px); /* 기본 패딩 + 버튼 높이 + 버튼 컨테이너 패딩 */
+  width: 100%;
 }
 
 .withdrawal__button-wrapper {
-  position: sticky;
-  bottom: 0;
-  left: 0;
   width: 100%;
-  padding: 16px 20px;
-  background-color: #fff;
-  z-index: 10;
+  height: 52px;
+  margin-top: auto;
 }
 
 .withdrawal__confirm-button {
@@ -141,8 +169,4 @@
 
 .withdrawal__input-wrapper {
   margin-top: 0px;
-}
-
-.withdrawal__input-wrapper--focused {
-  // outline: 1px solid #D1E0FF;
 }

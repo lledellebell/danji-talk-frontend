@@ -1,6 +1,6 @@
 import styles from './MyPage.module.scss';
 import React, { useState, useEffect } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../stores/userStore';
 import { useAuthStore } from '../../stores/authStore';
 import axios from 'axios';
@@ -186,7 +186,6 @@ const MyPage = () => {
       <h1 className={styles['sr-only']}>마이페이지</h1>
       <ProfileSection />
       <NavIconList />
-      <Outlet />
     </div>
   );
 };

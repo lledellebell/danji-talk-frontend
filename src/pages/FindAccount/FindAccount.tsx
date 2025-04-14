@@ -14,8 +14,8 @@ import axios from 'axios';
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://danjitalk.duckdns.org';
 const IS_DEV = import.meta.env.VITE_NODE_ENV === 'development' || window.location.hostname === 'localhost';
 
-console.log('API 기본 URL:', API_BASE_URL);
-console.log('개발 환경?', IS_DEV);
+// console.log('API 기본 URL:', API_BASE_URL);
+// console.log('개발 환경?', IS_DEV);
 
 const validatePhone = (phone: string): string | null => {
   const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
@@ -208,49 +208,51 @@ const FindAccount: React.FC = () => {
     }
 
     try {
-      console.log('인증번호 요청 중...', email);
-
       const apiUrl = IS_DEV 
         ? `${API_BASE_URL}/api/mail/certification-code/send`
         : '/api/mail/certification-code/send';
       
-      const response = await axios.post(apiUrl, {
-        mail: email
-      }, {
-        withCredentials: true
-      });
-
-      console.log('서버 응답:', response);
-
-      if (response.status === 200) {
+      try {
+        await axios.post(apiUrl, {
+          mail: email,
+          type: 'FIND_PASSWORD'
+        }, {
+          withCredentials: true
+        });
+        
+        // 성공 케이스
         setIsEmailVerificationSent(true);
         setAlertContent('인증번호가 이메일로 전송되었습니다.');
         setShowAlert(true);
-      }
-    } catch (error) {
-      console.error('인증번호 요청 실패:', error);
-
-      if (axios.isAxiosError(error)) {
-        console.log('에러 상태:', error.response?.status);
-        console.log('에러 데이터:', error.response?.data);
-
-        if (error.response?.status === 409) {
-          console.log('정상적인 케이스: 비밀번호 찾기 - 이미 가입된 이메일');
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 409) {
+          // 409는 이미 가입된 이메일인 경우로, 비밀번호 찾기에서는 정상 케이스
           setIsEmailVerificationSent(true);
           setAlertContent('인증번호가 이메일로 전송되었습니다.');
-        } else if (error.response?.status === 404) {
+          setShowAlert(true);
+        } else {
+          // 다른 에러는 상위 catch 블록으로 전달
+          throw error;
+        }
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        // 실제 에러 케이스 처리
+        if (error.response?.status === 404) {
           setAlertContent('가입되지 않은 이메일입니다. 회원가입을 먼저 진행해주세요.');
           setTimeout(() => {
             navigate('/register');
           }, 2000);
         } else {
-          const errorMessage = error.response?.data?.message || `인증번호 전송에 실패했습니다. (${error.response?.status || '알 수 없는 에러'})`;
+          const errorMessage = error.response?.data?.message || 
+            `인증번호 전송에 실패했습니다. (${error.response?.status || '알 수 없는 에러'})`;
           setAlertContent(errorMessage);
         }
+        setShowAlert(true);
       } else {
         setAlertContent('서버와의 통신에 실패했습니다. 잠시 후 다시 시도해주세요.');
+        setShowAlert(true);
       }
-      setShowAlert(true);
     }
   };
 
@@ -299,141 +301,139 @@ const FindAccount: React.FC = () => {
   };
 
   return (
-    <div className={styles['find-account-wrapper']}>
-      <div className={styles['find-account-container']}>
-        <TabWrapper ariaLabel="이메일/비밀번호 찾기">
-          <Tab
-            label="이메일 찾기"
-            index={0}
-            isActive={activeTab === 0}
-            onClick={() => setActiveTab(0)}
-          />
-          <Tab
-            label="비밀번호 찾기"
-            index={1}
-            isActive={activeTab === 1}
-            onClick={() => setActiveTab(1)}
-          />
-          <TabPanel
-            isActive={activeTab === 0}
-            role="tabpanel"
-            id="tabpanel-0"
-            ariaLabelledby="tab-0"
-          >
-            <div className={styles['find-account-form']}>
-              <div className={styles['find-account-form__content']}>
-                <InputField
-                  label="이름"
-                  name="username"
-                  value={username}
-                  onChange={handleUsernameChange}
-                  placeholder="이름을 입력하세요"
-                  required
-                  autoComplete="name"
-                  className={styles['find-account-form__input-field']}
-                  error={usernameError || undefined}
-                />
-                <InputField
-                  label="전화번호"
-                  name="phone"
-                  value={phone}
-                  onChange={handlePhoneChange}
-                  placeholder="-를 제외하고 입력해주세요"
-                  required
-                  autoComplete="tel"
-                  className={styles['find-account-form__input-field']}
-                  error={phoneError || undefined}
-                />
-              </div>
-
-              <Button
-                label="다음"
-                onClick={handleFindAccount}
-                className={[
-                  styles['find-account-form__button'],
-                  username && phone ? styles['button-filled'] : styles['button-empty'],
-                ]}
-                disabled={!username || !phone}
+    <div className={styles['find-account-container']}>
+      <TabWrapper ariaLabel="이메일/비밀번호 찾기">
+        <Tab
+          label="이메일 찾기"
+          index={0}
+          isActive={activeTab === 0}
+          onClick={() => setActiveTab(0)}
+        />
+        <Tab
+          label="비밀번호 찾기"
+          index={1}
+          isActive={activeTab === 1}
+          onClick={() => setActiveTab(1)}
+        />
+        <TabPanel
+          isActive={activeTab === 0}
+          role="tabpanel"
+          id="tabpanel-0"
+          ariaLabelledby="tab-0"
+        >
+          <div className={styles['find-account-form']}>
+            <div className={styles['find-account-form__content']}>
+              <InputField
+                label="이름"
+                name="username"
+                value={username}
+                onChange={handleUsernameChange}
+                placeholder="이름을 입력하세요"
+                required
+                autoComplete="name"
+                className={styles['find-account-form__input-field']}
+                error={usernameError || undefined}
+              />
+              <InputField
+                label="전화번호"
+                name="phone"
+                value={phone}
+                onChange={handlePhoneChange}
+                placeholder="-를 제외하고 입력해주세요"
+                required
+                autoComplete="tel"
+                className={styles['find-account-form__input-field']}
+                error={phoneError || undefined}
               />
             </div>
-          </TabPanel>
-          <TabPanel
-            isActive={activeTab === 1}
-            role="tabpanel"
-            id="tabpanel-1"
-            ariaLabelledby="tab-1"
-          >
-            <div className={styles['find-account-form']}>
-              <div className={styles['find-account-form__content']}>
-                <div className={styles['input-group']}>
-                  <div className={styles['input-with-button']}>
-                    <InputField
-                      label="이메일"
-                      name="email"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                        setEmailError(validateEmail(e.target.value));
-                      }}
-                      placeholder="이메일을 입력하세요"
-                      required
-                      autoComplete="email"
-                      className={styles['input-field']}
-                      error={emailError || undefined}
-                    />
-                    <Button
-                      label={isEmailVerificationSent ? "재요청" : "인증번호"}
-                      onClick={handleRequestVerification}
-                      disabled={!email || !!emailError}
-                      className={`${styles['input-with-button__button']}`}
-                    />
-                  </div>
 
-                  <div className={styles['input-with-button']}>
-                    <InputField
-                      label="인증번호"
-                      name="verificationCode"
-                      value={verificationCode}
-                      onChange={(e) => setVerificationCode(e.target.value)}
-                      placeholder="인증번호 6자리를 입력하세요"
-                      required
-                      className={styles['input-field']}
-                      error={verificationCodeError || undefined}
-                    />
-                    <Button
-                      label="확인"
-                      onClick={handleVerifyCode}
-                      disabled={!verificationCode}
-                      className={`${styles['input-with-button__button']}`}
-                    />
-                  </div>
+            <Button
+              label="다음"
+              onClick={handleFindAccount}
+              className={[
+                styles['find-account-form__button'],
+                username && phone ? styles['button-filled'] : styles['button-empty'],
+              ]}
+              disabled={!username || !phone}
+            />
+          </div>
+        </TabPanel>
+        <TabPanel
+          isActive={activeTab === 1}
+          role="tabpanel"
+          id="tabpanel-1"
+          ariaLabelledby="tab-1"
+        >
+          <div className={styles['find-account-form']}>
+            <div className={styles['find-account-form__content']}>
+              <div className={styles['input-group']}>
+                <div className={styles['input-with-button']}>
+                  <InputField
+                    label="이메일"
+                    name="email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setEmailError(validateEmail(e.target.value));
+                    }}
+                    placeholder="이메일을 입력하세요"
+                    required
+                    autoComplete="email"
+                    className={styles['input-field']}
+                    error={emailError || undefined}
+                  />
+                  <Button
+                    label={isEmailVerificationSent ? "재요청" : "인증번호"}
+                    onClick={handleRequestVerification}
+                    disabled={!email || !!emailError}
+                    className={`${styles['input-with-button__button']}`}
+                  />
+                </div>
+
+                <div className={styles['input-with-button']}>
+                  <InputField
+                    label="인증번호"
+                    name="verificationCode"
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value)}
+                    placeholder="인증번호 6자리를 입력하세요"
+                    required
+                    className={styles['input-field']}
+                    error={verificationCodeError || undefined}
+                  />
+                  <Button
+                    label="확인"
+                    onClick={handleVerifyCode}
+                    disabled={!verificationCode}
+                    className={`${styles['input-with-button__button']}`}
+                  />
                 </div>
               </div>
-
-              <Button
-                label="다음"
-                onClick={handleResetPassword}
-                disabled={!isVerificationCodeValid}
-                className={[
-                  styles['find-account-form__button'],
-                  isVerificationCodeValid ? styles['button-filled'] : styles['button-empty']
-                ]}
-              />
             </div>
-          </TabPanel>
-        </TabWrapper>
-        {showAlert && (
-          <Alert
-            alertTitle="안내"
-            alertContent={alertContent}
-            onClose={() => setShowAlert(false)}
-            onConfirm={
-              attemptCount >= 5 ? () => navigate('/register') : undefined
-            }
-            confirmLabel={attemptCount >= 5 ? '회원 가입' : undefined}
-          />
-        )}
-      </div>
+
+            <Button
+              label="다음"
+              onClick={handleResetPassword}
+              disabled={!isVerificationCodeValid}
+              className={[
+                styles['find-account-form__button'],
+                isVerificationCodeValid ? styles['button-filled'] : styles['button-empty']
+              ]}
+            />
+          </div>
+        </TabPanel>
+      </TabWrapper>
+      {showAlert && (
+        <Alert
+          alertTitle="안내"
+          alertContent={alertContent}
+          onClose={() => setShowAlert(false)}
+          onConfirm={
+            attemptCount >= 5 ? () => navigate('/register') : undefined
+          }
+          confirmLabel={attemptCount >= 5 ? '회원 가입' : undefined}
+        />
+      )}
     </div>
   );
 };

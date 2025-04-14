@@ -3,6 +3,8 @@ import './styles/index.scss';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App.tsx';
 import React from 'react';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 const queryClient = new QueryClient();
 const rootElement = document.getElementById('root');

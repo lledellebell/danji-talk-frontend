@@ -1,88 +1,109 @@
 $confirm-button-bg: #97bbff;
-$padding: 16px;
-$button-border-radius: 4px;
-$button-padding: 8px 16px;
-$button-transition: background-color 0.3s;
-$button-hover-color: #6fa8dc;
+$confirm-button-hover: #789fe6;
+$border-radius-default: 12px;
+$border-radius-button: 4px;
+$padding-container: 20px;
+$padding-button: 8px 16px;
+$z-index-alert: 1000;
+$z-index-alert-in-frame: 100;
+$transition-button: background-color 0.3s;
 
-// PC 환경 변수
 $pc-breakpoint: 768px;
 
-.alert__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  
-  // PC 환경의 device-frame 내부 얼럿
-  &--in-frame {
-    position: absolute;
+.alert {
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 0;
-    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: $z-index-alert;
+    
+    &--in-frame {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: $z-index-alert;
+      
+      @media (min-width: 1024px) {
+        position: absolute;
+        width: 100%;
+        height: calc(100vh + 20px);
+        border-radius: 0;
+        z-index: $z-index-alert-in-frame;
+      }
+    }
   }
-}
 
-.alert__container {
-  background-color: white;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 400px;
-  padding: 20px;
-  overflow: hidden;
-  animation: fadeIn 0.3s ease-out;
-}
+  &__container {
+    background-color: white;
+    border-radius: $border-radius-default;
+    width: 90%;
+    max-width: 400px;
+    padding: $padding-container;
+    overflow: hidden;
+    animation: fadeIn 0.3s ease-out;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
 
-.alert__header,
-.alert__footer {
-}
+  &__header {
+    margin-bottom: $padding-container;
+  }
 
-.alert__footer {
-  text-align: right;
-}
+  &__footer {
+    text-align: right;
+    margin-top: $padding-container;
+  }
 
-.alert__content {
-  font-size: 15px;
-  line-height: 22px;
-}
+  &__content {
+    font-size: 15px;
+    line-height: 22px;
+  }
 
-.alert__title,
-.alert__text {
-  width: 100%;
-  margin-top: 0;
-  text-align: center;
-  margin-bottom: 30px;
-}
+  &__title,
+  &__text {
+    width: 100%;
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: $padding-container;
+  }
 
-.alert__title {
-  font-size: 15px;
-  line-height: 22px;
-}
+  &__title {
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: 700;
+  }
 
-.button {
-  border: none;
-  border-radius: $button-border-radius;
-  padding: $button-padding;
-  cursor: pointer;
-  transition: $button-transition;
-  height: 40px;
-}
+  &__confirm-button {
+    width: 100%;
+    height: 40px;
+    font-weight: 700;
+    color: white;
+    background-color: $confirm-button-bg;
+    border: none;
+    border-radius: $border-radius-button;
+    padding: $padding-button;
+    cursor: pointer;
+    transition: $transition-button;
 
-.alert__confirm-button {
-  @extend .button;
-  width: 100%;
-  color: white;
-  background-color: $confirm-button-bg;
-
-  &:hover {
-    background-color: $button-hover-color;
+    &:hover {
+      background-color: $confirm-button-hover;
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(151, 187, 255, 0.4);
+    }
   }
 }
 

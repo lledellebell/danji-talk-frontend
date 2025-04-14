@@ -68,7 +68,7 @@ const Withdrawal = () => {
   
   return (
     <div className={styles['withdrawal__container']}>
-      <div className={styles['withdrawal__main-content']}>
+      <div className={styles['withdrawal__main-wrapper']}>
         {step === 1 ? (
           <>
             <section className={styles['withdrawal__warning']} aria-labelledby="warning-title">

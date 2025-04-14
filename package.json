@@ -12,11 +12,13 @@
     "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN",
     "server": "json-server --watch ./src/mocks/db.json --port 3001",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,scss,md}'"
+    "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,scss,md}'",
+    "clear-vite": "rm -rf node_modules/.vite"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.64.1",
     "axios": "^1.7.9",
+    "core-js": "^3.41.0",
     "js-cookie": "^3.0.5",
     "json-server": "^1.0.0-beta.3",
     "qrcode.react": "^4.2.0",
@@ -24,6 +26,7 @@
     "react-dom": "^18.3.1",
     "react-responsive": "^10.0.1",
     "react-router-dom": "^7.1.2",
+    "regenerator-runtime": "^0.14.1",
     "sass": "^1.83.4",
     "server": "json-server --watch ./src/server/db.json --port 3001",
     "zustand": "^5.0.3"
@@ -56,6 +59,7 @@
     "globals": "^15.14.0",
     "prettier": "^3.5.3",
     "storybook": "^8.5.0",
+    "terser": "^5.39.0",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.5",

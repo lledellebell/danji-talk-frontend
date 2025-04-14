@@ -4,8 +4,7 @@ import KakaoIcon from '../../../assets/social/kakao.svg';
 import GoogleIcon from '../../../assets/social/google.svg';
 import NaverIcon from '../../../assets/social/naver.svg';
 import { useEffect } from 'react';
-import { useKakaoLogin } from '../../../stores/authStore';
-import { useNavigate } from 'react-router-dom';
+import { useAlertStore } from '../../../stores/alertStore';
 
 const KakaoLoginIcon = () => {
   return <img src={KakaoIcon} alt="카카오 로그인 하기" />;
@@ -28,50 +27,52 @@ const socialAccounts = [
 ];
 
 const SocialLoginList: React.FC = () => {
-  const navigate = useNavigate();
-  const handleKakaoLogin = useKakaoLogin();
+  const { setTitle, setContent, openAlert } = useAlertStore();
 
   const handleSocialLogin = (provider: string) => {
     if (provider === KAKAO_LOGIN_LABEL) {
-      handleKakaoLogin();
-      navigate('/');
+      try {
+        const apiBaseUrl = import.meta.env.VITE_API_URL || '';
+        const kakaoAuthUrl = `${apiBaseUrl}/oauth2/authorization/kakao`;
+        
+        console.log('카카오 로그인 페이지로 이동:', kakaoAuthUrl);
+        window.location.href = kakaoAuthUrl;
+      } catch (error: unknown) {
+        console.error('카카오 로그인 처리 중 오류:', error);
+        setTitle('오류');
+        setContent('카카오 로그인 처리 중 오류가 발생했습니다.');
+        openAlert();
+      }
+    } else {
+      // 다른 소셜 로그인은 개발 중 메시지 표시
+      setTitle('안내');
+      setContent(`${provider.replace(' 하기', '')} 기능은 현재 개발 중입니다.<br />빠른 시일 내에 서비스 제공 예정입니다.`);
+      openAlert();
     }
   };
 
   useEffect(() => {
-    const hasKakaoLogin = socialAccounts.some(
-      (account) => account.ariaLabel === KAKAO_LOGIN_LABEL
-    );
-
-    if (hasKakaoLogin && window.Kakao) {
-      const appKey = import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY;
-      console.log('Kakao App Key:', appKey);
-
-      if (!window.Kakao.isInitialized()) {
-        window.Kakao.init(appKey);
-      } else {
-        console.log('Kakao SDK는 이미 초기화되었습니다.');
-      }
-    }
   }, []);
 
   return (
-    <ul
-      className={styles['social-login-list']}
-      aria-label="소셜 로그인 버튼 목록"
-    >
-      {socialAccounts.map((account) => (
-        <SocialLoginListItem key={account.id}>
-          <button
-            className={styles['social-login-button']}
-            aria-label={account.ariaLabel}
-            onClick={() => handleSocialLogin(account.ariaLabel)}
-          >
-            {account.text}
-          </button>
-        </SocialLoginListItem>
-      ))}
-    </ul>
+    <>
+      <ul
+        className={styles['social-login-list']}
+        aria-label="소셜 로그인 버튼 목록"
+      >
+        {socialAccounts.map((account) => (
+          <SocialLoginListItem key={account.id}>
+            <button
+              className={styles['social-login-button']}
+              aria-label={account.ariaLabel}
+              onClick={() => handleSocialLogin(account.ariaLabel)}
+            >
+              {account.text}
+            </button>
+          </SocialLoginListItem>
+        ))}
+      </ul>
+    </>
   );
 };
 

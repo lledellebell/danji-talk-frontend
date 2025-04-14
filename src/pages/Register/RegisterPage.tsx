@@ -67,9 +67,10 @@ const RegisterForm = ({
   );
 
   return (
-    <form className={styles['register-form']} onSubmit={onSubmit}>
-      <Dialog
-        title="중복확인"
+    <div className={styles['register-form-container']}>
+      <form className={styles['register-form']} onSubmit={onSubmit}>
+        <Dialog
+          title="중복확인"
         content="사용 가능한 이메일입니다."
         confirmLabel="인증번호 전송"
         onClose={closeDialog}
@@ -159,8 +160,10 @@ const RegisterForm = ({
         required
         autoComplete="phoneNumber"
       />
-      <RegisterButton isLoading={isLoading} disabled={!isFormValid} />
-    </form>
+        <RegisterButton isLoading={isLoading} disabled={!isFormValid} />
+      </form>
+      <SignupPrompt />
+    </div>
   );
 };
 
@@ -181,7 +184,6 @@ export const RegisterPage = () => {
         error={error}
         isLoading={isRegistering}
       />
-      <SignupPrompt />
     </>
   );
 };

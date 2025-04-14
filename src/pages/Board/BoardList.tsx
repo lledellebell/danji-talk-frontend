@@ -42,6 +42,7 @@ const HeaderIcon = () => {
     </svg>
   );
 };
+
 export const BoardList = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
