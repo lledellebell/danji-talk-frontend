@@ -1,0 +1,169 @@
+.chat-input {
+  padding: 20px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid #ededed;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+
+  &__field {
+    flex: 1;
+    border: 1px solid #97bbff;
+    border-radius: 6px;
+    height: 52px;
+    padding: 0 12px;
+    font-size: 14px;
+  }
+
+  &__button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.notice-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 20px;
+
+  &__text {
+    align-self: stretch;
+    font-size: 13px;
+    text-align: center;
+    color: #999;
+    line-height: 1.6;
+    word-break: keep-all;
+    white-space: pre-line;
+  }
+}
+
+.date-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 25px;
+  border-radius: 30px;
+  background: rgba(0, 0, 0, 0.3);
+  margin: 0 auto 20px;
+  width: fit-content;
+
+  &__text {
+    font-size: 13px;
+    text-align: center;
+    color: #fff;
+  }
+}
+
+.left-bubble {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 12px;
+  margin: 0 20px;
+
+  &__avatar {
+    flex-shrink: 0;
+  }
+
+  &__content-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  &__bubble {
+    position: relative;
+    display: inline-block;
+    padding: 10px 10px 10px 20px;
+    min-width: 94px;
+    max-width: 75%;
+    width: fit-content;
+
+    &-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    &-text {
+      position: relative;
+      z-index: 2;
+      font-size: 13px;
+      color: #111;
+      line-height: 1.4;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+  }
+
+  &__time {
+    font-size: 12px;
+    color: #505050;
+    text-align: left;
+  }
+}
+
+.right-bubble {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 8px;
+  margin: 0 20px;
+
+  &__time {
+    font-size: 12px;
+    color: #505050;
+    text-align: right;
+  }
+
+  &__bubble {
+    position: relative;
+    padding: 12px 22px 12px 12px;
+    min-width: 94px;
+    max-width: 75%;
+    width: fit-content;
+
+    &-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    &-text {
+      position: relative;
+      z-index: 2;
+      font-size: 14px;
+      color: #111;
+      line-height: 1.4;
+      word-wrap: break-word;
+      white-space: normal;
+    }
+  }
+}
+
+.bubble-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
