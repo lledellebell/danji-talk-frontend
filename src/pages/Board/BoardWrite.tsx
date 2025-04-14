@@ -126,7 +126,23 @@ export const BoardWrite = () => {
             return (
               <div key={idx} className={styles['board-write__image-preview']}>
                 <img src={imageUrl} alt={`upload-${idx}`} />
-                <button onClick={() => handleImageDelete(idx)}>삭제</button>
+                <button onClick={() => handleImageDelete(idx)}>
+                  <svg
+                    width={10}
+                    height={10}
+                    viewBox="0 0 10 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M9 1L1 9M1 1L9 9"
+                      stroke="white"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
               </div>
             );
           })}
