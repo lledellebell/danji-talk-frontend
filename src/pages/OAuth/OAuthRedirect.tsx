@@ -21,7 +21,7 @@ const OAuthRedirect = () => {
 
           try {
             // 백엔드 API를 호출하여 실제 인증 정보를 교환
-            const response = await axios.get(`https://danjitalk.duckdns.org/api/oauth/exchange?code=${code}`, {
+            const response = await axios.get(`/api/oauth/exchange?code=${code}`, {
               withCredentials: true,
             });
 
