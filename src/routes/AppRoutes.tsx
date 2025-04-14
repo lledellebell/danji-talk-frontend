@@ -28,6 +28,7 @@ import SearchBar from '../components/Search/SearchBar';
 import MenuGrid from '../components/MenuGrid/MenuGrid';
 import Header from '../layouts/Header';
 import { ChatList } from '../pages/Chat/ChatList';
+import ChatRoom from '../pages/Chat/ChatRoom';
 import Facilities from '../pages/Facilities/Facilities';
 import Favorites from '../pages/Favorites/Favorites';
 import MyReservations from '../pages/MyReservations/MyReservations';
@@ -75,11 +76,11 @@ const AppRoutes = () => {
         {/* OAuth 콜백 라우트 */}
         <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
         <Route path="/oauth/redirect" element={<OAuthRedirect />} />
-        
+
         {/* 인증 관련 라우트 */}
         <Route element={<AuthRoutes />}>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} /> 
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/register-success" element={<RegisterSuccessPage />} />
           <Route path="/find-account" element={<FindAccount />} />
           <Route path="/show-email" element={<ShowEmail />} />
@@ -91,20 +92,21 @@ const AppRoutes = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/chat" element={<ChatPage />} />
+          <Route path="/chatroom" element={<ChatRoom />} />
           <Route path="/facilities" element={<FacilitiesPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/my-reservations" element={<MyReservations />} />
           <Route path="/visitor-car" element={<VisitorCar />} />
           <Route path="/notices" element={<Notices />} />
         </Route>
-        
+
         {/* 커뮤니티 라우트 */}
         <Route element={<CommunityRoutes />}>
           <Route path="/community" element={<BoardList />} />
           <Route path="/community/feed/:feedId" element={<BoardDetail />} />
           <Route path="/write" element={<BoardWrite />} />
         </Route>
-        
+
         {/* 마이페이지 라우트 */}
         <Route element={<MyPageRoutes />}>
           <Route path="/mypage" element={<MyPage />} />
@@ -113,7 +115,7 @@ const AppRoutes = () => {
           <Route path="/mypage/chats" element={<ChatsPage />} />
           <Route path="/mypage/vehicles" element={<VehiclesPage />} />
         </Route>
-        
+
         {/* 설정 라우트 */}
         <Route element={<SettingsRoutes />}>
           <Route path="/settings" element={<Settings />} />
@@ -131,4 +133,4 @@ const AppRoutes = () => {
   );
 };
 
-export default AppRoutes; 
+export default AppRoutes;
