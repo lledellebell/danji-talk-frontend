@@ -25,7 +25,7 @@ export const useEditComment = () => {
         queryKey: ['commentList', variables.feedId],
       });
     },
-    onError: (error) => {
+    onError: () => {
       alert('댓글 수정 중 오류가 발생했습니다.');
     },
   });
