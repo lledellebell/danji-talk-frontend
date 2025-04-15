@@ -54,7 +54,9 @@ const Settings = () => {
             {section.items.map((item) => (
               <li key={item.path} className={styles['settings__menu-item']}>
                 <Link to={item.path} className={styles['settings__menu-link']}>
-                  <span className={styles['settings__menu-label']}>{item.label}</span>
+                  <span className={styles['settings__menu-label']}>
+                    {item.label}
+                  </span>
                   <svg
                     width="24"
                     height="24"
@@ -81,4 +83,4 @@ const Settings = () => {
   );
 };
 
-export default Settings; 
+export default Settings;

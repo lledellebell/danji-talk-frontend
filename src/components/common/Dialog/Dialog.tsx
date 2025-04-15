@@ -29,14 +29,14 @@ const Dialog: React.FC<DialogProps> = ({
       const handleResize = () => {
         setIsPc(window.innerWidth >= 768);
       };
-      
+
       handleResize();
       window.addEventListener('resize', handleResize);
-      
+
       // device-frame 요소 찾기
       const frame = document.querySelector('.device-frame') as HTMLElement;
       setDeviceFrame(frame);
-      
+
       return () => {
         window.removeEventListener('resize', handleResize);
       };
@@ -44,7 +44,7 @@ const Dialog: React.FC<DialogProps> = ({
   }, []);
 
   if (!isOpen) return null;
-  
+
   // PC 환경에서 device-frame 내부에 Dialog 렌더링
   if (isPc && deviceFrame) {
     return (

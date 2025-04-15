@@ -1,1 +1,158 @@
-.find-account-container{display:flex;flex-direction:column;overflow-y:auto;height:100%;padding:20px 20px 54px}@media(min-width: 1024px){.find-account-container{height:calc(100% - 74px)}}.find-account-title{font-size:1.5rem;font-weight:600;color:#333;text-align:center;margin-bottom:20px;position:relative}.find-account-title::after{content:"";position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:40px;height:3px;background-color:#97bbff;border-radius:3px}.find-account-form{display:flex;flex-direction:column;width:100%;min-height:calc(100% - 40px);gap:20px;display:flex;flex-direction:column;margin-top:40px}.find-account-form__content{flex:1;display:flex;flex-direction:column;gap:20px}.find-account-form__button{background-color:#97bbff;color:#fff;border:none;padding:10px;border-radius:8px;font-weight:500;font-size:1rem;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 8px rgba(151,187,255,.2);text-align:center;width:100%;height:52px;margin-top:auto}.find-account-form__button:hover{background-color:#85aaef;transform:translateY(-1px);box-shadow:0 4px 12px rgba(151,187,255,.2)}.find-account-form__button:active{transform:translateY(0);box-shadow:0 2px 4px rgba(151,187,255,.2)}.find-account-form__button:disabled{background-color:#e0e0e0;color:#999;cursor:not-allowed;box-shadow:none;transform:none}.input-group{display:flex;flex-direction:column;gap:20px;flex:1}.input-with-button{display:grid;grid-template-columns:1fr 91px;gap:10px;align-items:flex-start}.input-with-button :global(.input-field-container){width:100%}.input-with-button__button{background-color:#d4e0ff;color:#85aaef;border:none;padding:10px;border-radius:8px;font-weight:500;font-size:1rem;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 8px rgba(151,187,255,.2);text-align:center;height:52px;min-width:91px;padding:0 10px;margin-top:auto;font-weight:500;white-space:nowrap}.input-with-button__button:hover{background-color:#85aaef;transform:translateY(-1px);box-shadow:0 4px 12px rgba(151,187,255,.2)}.input-with-button__button:active{transform:translateY(0);box-shadow:0 2px 4px rgba(151,187,255,.2)}.input-with-button__button:disabled{background-color:#e0e0e0;color:#999;cursor:not-allowed;box-shadow:none;transform:none}.result-message{display:flex;flex-direction:column;margin-top:20px;padding:10px;border-radius:8px;text-align:center}.result-message--success{background-color:rgba(99,230,190,.1);color:#63e6be}.result-message--error{background-color:rgba(255,107,107,.1);color:#ff6b6b}@keyframes fade-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.animate-fade-in{animation:fade-in .4s ease-out}
+.find-account-container {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100%;
+  padding: 20px 20px 54px;
+}
+@media (min-width: 1024px) {
+  .find-account-container {
+    height: calc(100% - 74px);
+  }
+}
+.find-account-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+.find-account-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background-color: #97bbff;
+  border-radius: 3px;
+}
+.find-account-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: calc(100% - 40px);
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+}
+.find-account-form__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.find-account-form__button {
+  background-color: #97bbff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(151, 187, 255, 0.2);
+  text-align: center;
+  width: 100%;
+  height: 52px;
+  margin-top: auto;
+}
+.find-account-form__button:hover {
+  background-color: #85aaef;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(151, 187, 255, 0.2);
+}
+.find-account-form__button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(151, 187, 255, 0.2);
+}
+.find-account-form__button:disabled {
+  background-color: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+.input-with-button {
+  display: grid;
+  grid-template-columns: 1fr 91px;
+  gap: 10px;
+  align-items: flex-start;
+}
+.input-with-button :global(.input-field-container) {
+  width: 100%;
+}
+.input-with-button__button {
+  background-color: #d4e0ff;
+  color: #85aaef;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(151, 187, 255, 0.2);
+  text-align: center;
+  height: 52px;
+  min-width: 91px;
+  padding: 0 10px;
+  margin-top: auto;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.input-with-button__button:hover {
+  background-color: #85aaef;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(151, 187, 255, 0.2);
+}
+.input-with-button__button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(151, 187, 255, 0.2);
+}
+.input-with-button__button:disabled {
+  background-color: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+.result-message {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+.result-message--success {
+  background-color: rgba(99, 230, 190, 0.1);
+  color: #63e6be;
+}
+.result-message--error {
+  background-color: rgba(255, 107, 107, 0.1);
+  color: #ff6b6b;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out;
+}

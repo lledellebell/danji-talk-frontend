@@ -1,8 +1,8 @@
 declare global {
   interface Window {
     daum: {
-      Postcode: new (config: { 
-        oncomplete: (data: { 
+      Postcode: new (config: {
+        oncomplete: (data: {
           address: string;
           addressType: string;
           userSelectedType: string;
@@ -16,7 +16,7 @@ declare global {
         height?: string;
         embed?: boolean;
         animation?: boolean;
-      }) => { 
+      }) => {
         open: () => void;
         embed: (element: HTMLElement | null) => void;
       };
@@ -24,4 +24,4 @@ declare global {
   }
 }
 
-export {}; 
+export {};

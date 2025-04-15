@@ -4,7 +4,7 @@ $color-error: #d91c1c;
 $color-error-hover: #b71515;
 $color-white: #ffffff;
 $color-text: #333333;
-$color-text-secondary: #C0C0C0;
+$color-text-secondary: #c0c0c0;
 $color-border: #e0e0e0;
 $color-disabled: #999999;
 
@@ -27,7 +27,7 @@ $spacing-xsmall: 4px;
   width: 100%;
   padding: $spacing-small;
   background-color: $bg-color;
-  color: #C0C0C0;
+  color: #c0c0c0;
   border: none;
   border-radius: 10px;
   font-size: 16px;
@@ -72,23 +72,23 @@ $spacing-xsmall: 4px;
 }
 
 .login-form__submit-button {
-  @include button-styles(#EAF1FF, #97BBFF);
+  @include button-styles(#eaf1ff, #97bbff);
   padding: $spacing-small $spacing-medium;
   font-size: $font-size-large;
-  color: #C0C0C0;
+  color: #c0c0c0;
   height: 52px;
   transition: all 0.2s ease-in-out;
 
   &:hover {
     color: #fff;
-    background-color: #97BBFF;
+    background-color: #97bbff;
   }
-  
+
   &--valid {
     color: #fff;
-    background-color: #97BBFF;
+    background-color: #97bbff;
   }
-  
+
   &:disabled {
     background-color: $color-disabled;
     cursor: not-allowed;
@@ -181,7 +181,7 @@ $spacing-xsmall: 4px;
 
   a {
     font: inherit;
-    color: #97BBFF;
+    color: #97bbff;
     text-decoration: none;
     font-weight: 600;
     font-size: $font-size-small;

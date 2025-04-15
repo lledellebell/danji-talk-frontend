@@ -1,4 +1,4 @@
-@use "sass:map";
+@use 'sass:map';
 
 $breakpoint-mobile: 480px;
 $breakpoint-tablet: 768px;
@@ -7,27 +7,27 @@ $breakpoint-desktop: 1024px;
 // TODO: 다른 페이지도 그룹화 필요
 $colors: (
   primary-dark: #85aaef,
-  primary: #97BBFF,
+  primary: #97bbff,
   white: #fff,
-  text: #111
+  text: #111,
 );
 
 $spacing: (
   xs: 8px,
   sm: 16px,
   md: 20px,
-  lg: 24px
+  lg: 24px,
 );
 
 $breakpoints: (
   mobile: 768px,
-  tablet: 1024px
+  tablet: 1024px,
 );
 
 $layout: (
   max-content-width: 480px,
   button-height: 52px,
-  logo-max-width: 200px
+  logo-max-width: 200px,
 );
 
 @mixin flex-column {
@@ -54,11 +54,17 @@ $layout: (
 
 @mixin respond-to($breakpoint) {
   @if $breakpoint == mobile {
-    @media (max-width: $breakpoint-mobile) { @content; }
+    @media (max-width: $breakpoint-mobile) {
+      @content;
+    }
   } @else if $breakpoint == tablet {
-    @media (max-width: $breakpoint-tablet) { @content; }
+    @media (max-width: $breakpoint-tablet) {
+      @content;
+    }
   } @else if $breakpoint == desktop {
-    @media (min-width: $breakpoint-desktop) { @content; }
+    @media (min-width: $breakpoint-desktop) {
+      @content;
+    }
   }
 }
 

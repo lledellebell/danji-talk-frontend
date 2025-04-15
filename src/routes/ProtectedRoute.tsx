@@ -7,7 +7,10 @@ interface ProtectedRouteProps {
   children?: ReactNode;
 }
 
-const ProtectedRoute = ({ redirectPath = '/login', children }: ProtectedRouteProps) => {
+const ProtectedRoute = ({
+  redirectPath = '/login',
+  children,
+}: ProtectedRouteProps) => {
   const { isLoggedIn } = useAuthStore();
 
   if (!isLoggedIn) {
@@ -17,4 +20,4 @@ const ProtectedRoute = ({ redirectPath = '/login', children }: ProtectedRoutePro
   return children ? <>{children}</> : <Outlet />;
 };
 
-export default ProtectedRoute; 
+export default ProtectedRoute;

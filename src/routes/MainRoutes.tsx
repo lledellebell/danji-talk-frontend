@@ -39,7 +39,7 @@ const FavoritesPage = () => (
 
 const MainRoutes = () => {
   const location = useLocation();
-  
+
   // 현재 경로에 따라 적절한 컴포넌트를 렌더링
   const renderContent = () => {
     switch (location.pathname) {
@@ -56,11 +56,7 @@ const MainRoutes = () => {
     }
   };
 
-  return (
-    <ProtectedRoute>
-      {renderContent()}
-    </ProtectedRoute>
-  );
+  return <ProtectedRoute>{renderContent()}</ProtectedRoute>;
 };
 
-export default MainRoutes; 
+export default MainRoutes;

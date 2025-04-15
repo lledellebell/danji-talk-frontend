@@ -1,0 +1,63 @@
+name: 보안 취약점 스캔
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # 매주 월요일 자정에 실행
+  workflow_dispatch:  # 수동 실행 옵션
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 의존성 설치
+        run: npm ci
+        
+      - name: npm 취약점 감사
+        id: npm-audit
+        run: |
+          # 감사 결과를 파일로 저장
+          npm audit --json > npm-audit.json || true
+          
+          # 취약점 수 확인 및 출력
+          VULNERABILITIES=$(cat npm-audit.json | jq '.metadata.vulnerabilities.total')
+          echo "취약점 개수: $VULNERABILITIES"
+          echo "VULN_COUNT=$VULNERABILITIES" >> $GITHUB_ENV
+          
+          # 취약점 목록 생성
+          jq -r '.vulnerabilities | to_entries[] | "\(.key): \(.value.severity) (\(.value.via | map(if type=="object" then .name else . end) | join(", ")))"' npm-audit.json > vulnerabilities.txt
+      
+      - name: 이슈 생성
+        if: env.VULN_COUNT != '0'
+        uses: peter-evans/create-issue-from-file@v4
+        with:
+          title: "보안: npm 패키지 취약점 발견"
+          content-filepath: vulnerabilities.txt
+          labels: security,dependencies
+          body: |
+            ## 보안 취약점 스캔 결과
+            
+            보안 스캔에서 ${{ env.VULN_COUNT }}개의 취약점이 발견되었습니다.
+            아래 목록을 확인하고 `npm run security-update` 명령 또는 Dependabot을 통해 업데이트하세요.
+            
+            ### 취약점 목록:
+            ```
+            $(cat vulnerabilities.txt)
+            ```
+            
+            ### 해결 방법:
+            1. `git pull origin develop`으로 최신 코드를 가져옵니다
+            2. `npm run security-update`를 실행하여 자동 업데이트를 시도합니다
+            3. 테스트 후 수정 사항을 커밋하고 PR을 생성합니다
+      
+      - name: 상태 보고
+        if: env.VULN_COUNT == '0'
+        run: echo "✅ 보안 취약점이 발견되지 않았습니다." 

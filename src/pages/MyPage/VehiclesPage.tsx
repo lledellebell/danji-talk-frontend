@@ -6,15 +6,10 @@ const VehiclesPage = () => {
 
   return (
     <>
-      <Header 
-        title="방문차량 목록" 
-        type="sub" 
-        hasBackButton={true}
-      />
-      <div style={{ padding: '20px', textAlign: 'center' }}>
-      </div>
+      <Header title="방문차량 목록" type="sub" hasBackButton={true} />
+      <div style={{ padding: '20px', textAlign: 'center' }}></div>
     </>
   );
 };
 
-export default VehiclesPage; 
+export default VehiclesPage;

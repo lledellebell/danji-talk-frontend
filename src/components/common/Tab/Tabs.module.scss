@@ -1,5 +1,5 @@
 $color-primary: #84adfa;
-$color-primary-hover: #97BBFF;
+$color-primary-hover: #97bbff;
 $color-text: #999999;
 $color-text-secondary: #666666;
 $color-border: #e0e0e0;
@@ -60,7 +60,7 @@ $transition-slow: 0.3s ease;
     background: none;
     position: relative;
     border-bottom: 1px solid $color-border;
-    transition: 
+    transition:
       color $transition-default,
       border-bottom-color $transition-default;
     font-weight: 500;
@@ -74,7 +74,7 @@ $transition-slow: 0.3s ease;
       color: $color-primary;
       font-weight: 600;
       border-bottom-color: transparent;
-      
+
       &::after {
         transform: scaleX(1);
       }
@@ -85,7 +85,7 @@ $transition-slow: 0.3s ease;
     display: none;
     padding: 0;
     height: 100%;
-    
+
     &--active {
       display: block;
     }

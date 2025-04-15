@@ -1,1 +1,91 @@
-.register-success-container{display:flex;flex-direction:column;min-height:100vh;background-color:#fff;padding:24px;box-sizing:border-box;position:relative;padding-bottom:98px}@media screen and (min-width: 768px){.register-success-container{min-height:calc(100vh - 157px)}}.register-success-content{flex:1;display:flex;flex-direction:column;align-items:center;width:100%;margin:0 auto;padding-top:24px}.register-success-content .logo{text-align:center;width:100%;height:100%;-o-object-fit:contain;object-fit:contain;margin-bottom:24px}.register-success-text{font-size:16px;font-weight:400;text-align:center;color:#111}.register-success-text b{font-weight:700}.register-success-text span{display:block}.register-success-text .title{font-size:20px;font-weight:600;margin-bottom:20px}.register-success-button-container{position:sticky;bottom:0;left:0;width:100%;padding:16px 20px;background-color:#fff;z-index:10;box-sizing:border-box}@media screen and (min-width: 768px){.register-success-button-container.in-device-frame{position:sticky;bottom:0;z-index:10}}.register-success-button{width:100%;padding:14px 12px;background-color:#97bbff;color:#fff;border:none;border-radius:6px;font-size:16px;line-height:24px;font-weight:500;cursor:pointer;transition:background-color .2s ease;text-decoration:none;display:flex;align-items:center;justify-content:center}.register-success-button:hover{background-color:#87aaeb}.in-device-frame{position:absolute !important;z-index:10;max-width:100%}
+.register-success-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #fff;
+  padding: 24px;
+  box-sizing: border-box;
+  position: relative;
+  padding-bottom: 98px;
+}
+@media screen and (min-width: 768px) {
+  .register-success-container {
+    min-height: calc(100vh - 157px);
+  }
+}
+.register-success-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 24px;
+}
+.register-success-content .logo {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+  object-fit: contain;
+  margin-bottom: 24px;
+}
+.register-success-text {
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  color: #111;
+}
+.register-success-text b {
+  font-weight: 700;
+}
+.register-success-text span {
+  display: block;
+}
+.register-success-text .title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.register-success-button-container {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px 20px;
+  background-color: #fff;
+  z-index: 10;
+  box-sizing: border-box;
+}
+@media screen and (min-width: 768px) {
+  .register-success-button-container.in-device-frame {
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+  }
+}
+.register-success-button {
+  width: 100%;
+  padding: 14px 12px;
+  background-color: #97bbff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.register-success-button:hover {
+  background-color: #87aaeb;
+}
+.in-device-frame {
+  position: absolute !important;
+  z-index: 10;
+  max-width: 100%;
+}

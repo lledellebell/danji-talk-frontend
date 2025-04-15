@@ -14,9 +14,9 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-    // 로그인 페이지로 리다이렉트
-    // 이유: 쿠키가 만료되어 401 에러가 발생하는 경우, 로그인 페이지로 리다이렉트하여 사용자가 다시 로그인할 수 있도록 함
-    //   window.location.href = '/login';
+      // 로그인 페이지로 리다이렉트
+      // 이유: 쿠키가 만료되어 401 에러가 발생하는 경우, 로그인 페이지로 리다이렉트하여 사용자가 다시 로그인할 수 있도록 함
+      //   window.location.href = '/login';
     }
     return Promise.reject(error);
   }
@@ -38,11 +38,12 @@ api.interceptors.request.use(
 
 export interface ChatRoom {
   id: string;
-  name: string;          // 채팅방 이름
-  lastMessage?: string;  // 마지막 메시지
-  updatedAt: string;     // 마지막 업데이트 시간
-  unreadCount: number;   // 읽지 않은 메시지 수
-  participants: {        // 참여자 정보
+  name: string; // 채팅방 이름
+  lastMessage?: string; // 마지막 메시지
+  updatedAt: string; // 마지막 업데이트 시간
+  unreadCount: number; // 읽지 않은 메시지 수
+  participants: {
+    // 참여자 정보
     id: string;
     name: string;
     profileImage?: string;
@@ -95,4 +96,4 @@ export const useChatRoomDetail = (id: string) => {
     queryFn: () => chatService.getChatRoomDetail(id),
     retry: false,
   });
-}; 
+};

@@ -6,7 +6,7 @@ const meta = {
   title: 'Components/Common/InputField',
   component: InputField,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       description: {
         component:
@@ -14,85 +14,85 @@ const meta = {
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     label: {
-      description: "입력 필드의 레이블 텍스트",
-      control: "text",
+      description: '입력 필드의 레이블 텍스트',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "필수 값" },
+        type: { summary: 'string' },
+        defaultValue: { summary: '필수 값' },
       },
     },
     type: {
-      description: "입력 필드의 타입을 지정합니다",
-      control: "select",
-      options: ["text", "email", "password", "search"],
+      description: '입력 필드의 타입을 지정합니다',
+      control: 'select',
+      options: ['text', 'email', 'password', 'search'],
       table: {
-        type: { summary: "text | email | password | search" },
-        defaultValue: { summary: "text" },
+        type: { summary: 'text | email | password | search' },
+        defaultValue: { summary: 'text' },
       },
     },
     name: {
-      description: "입력 필드의 name 속성",
-      control: "text",
+      description: '입력 필드의 name 속성',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "필수 값" },
+        type: { summary: 'string' },
+        defaultValue: { summary: '필수 값' },
       },
     },
     value: {
-      description: "입력 필드의 현재 값",
-      control: "text",
+      description: '입력 필드의 현재 값',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "필수 값" },
+        type: { summary: 'string' },
+        defaultValue: { summary: '필수 값' },
       },
     },
     onChange: {
-      description: "값이 변경될 때 호출되는 콜백 함수",
+      description: '값이 변경될 때 호출되는 콜백 함수',
       table: {
-        type: { summary: "(e: React.ChangeEvent<HTMLInputElement>) => void" },
-        defaultValue: { summary: "필수 값" },
+        type: { summary: '(e: React.ChangeEvent<HTMLInputElement>) => void' },
+        defaultValue: { summary: '필수 값' },
       },
     },
     placeholder: {
-      description: "입력 필드의 플레이스홀더 텍스트",
-      control: "text",
+      description: '입력 필드의 플레이스홀더 텍스트',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "undefined" },
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
       },
     },
     error: {
-      description: "에러 메시지. 값이 있으면 에러 상태로 표시됩니다.",
-      control: "text",
+      description: '에러 메시지. 값이 있으면 에러 상태로 표시됩니다.',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "undefined" },
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
       },
     },
     helperText: {
-      description: "입력 필드 아래에 표시되는 도움말 텍스트",
-      control: "text",
+      description: '입력 필드 아래에 표시되는 도움말 텍스트',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "undefined" },
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
       },
     },
     disabled: {
-      description: "입력 필드의 비활성화 여부",
-      control: "boolean",
+      description: '입력 필드의 비활성화 여부',
+      control: 'boolean',
       table: {
-        type: { summary: "boolean" },
+        type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
     },
     required: {
-      description: "필수 입력 필드 여부",
-      control: "boolean",
+      description: '필수 입력 필드 여부',
+      control: 'boolean',
       table: {
-        type: { summary: "boolean" },
+        type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
     },
@@ -101,12 +101,12 @@ const meta = {
         '비밀번호 표시/숨기기 토글 버튼 표시 여부 (type이 password인 경우에만 적용)',
       control: 'boolean',
       table: {
-        type: { summary: "boolean" },
+        type: { summary: 'boolean' },
         defaultValue: { summary: 'false' },
       },
     },
     actionButton: {
-      description: "입력 필드 우측에 표시되는 액션 버튼 설정",
+      description: '입력 필드 우측에 표시되는 액션 버튼 설정',
       table: {
         type: {
           summary:
@@ -117,23 +117,23 @@ const meta = {
   disabled?: boolean; // 버튼 비활성화 여부
 }`,
         },
-        defaultValue: { summary: "undefined" },
+        defaultValue: { summary: 'undefined' },
       },
     },
     minLength: {
-      description: "입력값의 최소 길이",
-      control: "number",
+      description: '입력값의 최소 길이',
+      control: 'number',
       table: {
-        type: { summary: "number" },
-        defaultValue: { summary: "undefined" },
+        type: { summary: 'number' },
+        defaultValue: { summary: 'undefined' },
       },
     },
     pattern: {
-      description: "입력값의 정규식 패턴",
-      control: "text",
+      description: '입력값의 정규식 패턴',
+      control: 'text',
       table: {
-        type: { summary: "string" },
-        defaultValue: { summary: "undefined" },
+        type: { summary: 'string' },
+        defaultValue: { summary: 'undefined' },
       },
     },
   },

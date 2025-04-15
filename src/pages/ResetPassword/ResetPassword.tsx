@@ -6,18 +6,23 @@ import InputField from '../../components/common/InputField/InputField';
 import Button from '../../components/common/Button/Button';
 import Alert from '../../components/common/Alert/Alert';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://danjitalk.duckdns.org';
-const IS_DEV = import.meta.env.VITE_NODE_ENV === 'development' || window.location.hostname === 'localhost';
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || 'https://danjitalk.duckdns.org';
+const IS_DEV =
+  import.meta.env.VITE_NODE_ENV === 'development' ||
+  window.location.hostname === 'localhost';
 
 const ResetPassword: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const email = location.state?.email || '';
-  
+
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState<string | null>(null);
-  const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
+  const [confirmPasswordError, setConfirmPasswordError] = useState<
+    string | null
+  >(null);
   const [showAlert, setShowAlert] = useState(false);
   const [alertContent, setAlertContent] = useState<string | null>(null);
 
@@ -56,37 +61,44 @@ const ResetPassword: React.FC = () => {
       return;
     }
 
-    const confirmPasswordValidationError = validateConfirmPassword(confirmPassword);
+    const confirmPasswordValidationError =
+      validateConfirmPassword(confirmPassword);
     if (confirmPasswordValidationError) {
       setConfirmPasswordError(confirmPasswordValidationError);
       return;
     }
 
     try {
-      const apiUrl = IS_DEV 
+      const apiUrl = IS_DEV
         ? `${API_BASE_URL}/api/member/reset-password`
         : '/api/member/reset-password';
-      
-      await axios.post(apiUrl, {
-        email: email,
-        password: password
-      }, {
-        withCredentials: true
-      });
+
+      await axios.post(
+        apiUrl,
+        {
+          email: email,
+          password: password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
       // 성공 메시지 표시
       setAlertContent('비밀번호가 성공적으로 재설정되었습니다.');
       setShowAlert(true);
-      
+
       // 2초 후 로그인 페이지로 이동
       setTimeout(() => {
         navigate('/login');
       }, 2000);
     } catch (error) {
       console.error('비밀번호 재설정 실패:', error);
-      
+
       if (axios.isAxiosError(error)) {
-        const errorMessage = error.response?.data?.message || '비밀번호 재설정 중 오류가 발생했습니다.';
+        const errorMessage =
+          error.response?.data?.message ||
+          '비밀번호 재설정 중 오류가 발생했습니다.';
         setAlertContent(errorMessage);
       } else {
         setAlertContent('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
@@ -100,9 +112,9 @@ const ResetPassword: React.FC = () => {
       <div className={styles['reset-password-container']}>
         <h1 className={styles['sr-only']}>비밀번호 재설정</h1>
         <p className={styles['sr-only']}>새로운 비밀번호를 입력해주세요.</p>
-        
-        <form 
-          className={styles['reset-password-form']} 
+
+        <form
+          className={styles['reset-password-form']}
           onSubmit={(e) => {
             e.preventDefault();
             handleResetPassword();
@@ -127,7 +139,9 @@ const ResetPassword: React.FC = () => {
               setPassword(e.target.value);
               setPasswordError(validatePassword(e.target.value));
               if (confirmPassword) {
-                setConfirmPasswordError(validateConfirmPassword(confirmPassword));
+                setConfirmPasswordError(
+                  validateConfirmPassword(confirmPassword)
+                );
               }
             }}
             placeholder="새 비밀번호를 입력하세요"
@@ -137,7 +151,7 @@ const ResetPassword: React.FC = () => {
             showPasswordToggle={true}
             autoComplete="new-password"
           />
-          
+
           <InputField
             label="비밀번호 확인"
             name="confirmPassword"
@@ -154,7 +168,7 @@ const ResetPassword: React.FC = () => {
             showPasswordToggle={true}
             autoComplete="new-password"
           />
-          
+
           <div className={styles['button-container']}>
             <Button
               type="submit"
@@ -162,13 +176,15 @@ const ResetPassword: React.FC = () => {
               onClick={handleResetPassword}
               className={[
                 styles['submit-button'],
-                password && confirmPassword ? styles['button-filled'] : styles['button-empty']
+                password && confirmPassword
+                  ? styles['button-filled']
+                  : styles['button-empty'],
               ]}
               disabled={!password || !confirmPassword}
             />
           </div>
         </form>
-        
+
         {showAlert && (
           <Alert
             alertTitle="안내"
@@ -181,4 +197,4 @@ const ResetPassword: React.FC = () => {
   );
 };
 
-export default ResetPassword; 
+export default ResetPassword;

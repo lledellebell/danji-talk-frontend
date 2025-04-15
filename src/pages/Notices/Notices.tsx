@@ -6,15 +6,10 @@ const Notices = () => {
 
   return (
     <>
-      <Header 
-        title="공지사항" 
-        type="sub" 
-        hasBackButton={true}
-      />
-      <div style={{ padding: '20px', textAlign: 'center' }}>
-      </div>
+      <Header title="공지사항" type="sub" hasBackButton={true} />
+      <div style={{ padding: '20px', textAlign: 'center' }}></div>
     </>
   );
 };
 
-export default Notices; 
+export default Notices;

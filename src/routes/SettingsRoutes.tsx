@@ -7,10 +7,10 @@ import ProtectedRoute from './ProtectedRoute';
 
 const SettingsRoutes = () => {
   const location = useLocation();
-  
+
   const renderContent = () => {
     const path = location.pathname;
-    
+
     if (path === '/settings') {
       return (
         <>
@@ -33,15 +33,11 @@ const SettingsRoutes = () => {
         </>
       );
     }
-    
+
     return <Outlet />;
   };
 
-  return (
-    <ProtectedRoute>
-      {renderContent()}
-    </ProtectedRoute>
-  );
+  return <ProtectedRoute>{renderContent()}</ProtectedRoute>;
 };
 
-export default SettingsRoutes; 
+export default SettingsRoutes;
