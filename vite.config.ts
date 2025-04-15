@@ -24,7 +24,7 @@ export default defineConfig({
       '/api': {
         target: 'https://danjitalk.duckdns.org',
         changeOrigin: true,
-        secure: false,
+        secure: true,
         ws: true,
         rewrite: (path) => path.replace(/^\/api/, '/api')
       },
