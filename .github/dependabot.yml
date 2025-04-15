@@ -1,0 +1,32 @@
+version: 2
+updates:
+  # npm 패키지 의존성 업데이트 설정
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # 개발 브랜치에 PR 생성
+    target-branch: "develop"
+    # 보안 업데이트만 활성화
+    open-pull-requests-limit: 10
+    # 보안 이슈 우선순위
+    labels:
+      - "dependencies"
+      - "security"
+    # PR에서 무시할 의존성 패턴
+    ignore:
+      # 메이저 버전은 수동 업데이트
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    # 보안 패치만 PR 생성
+    security-updates-only: true
+
+  # GitHub Actions 업데이트 설정
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "develop"
+    labels:
+      - "dependencies"
+      - "github-actions" 

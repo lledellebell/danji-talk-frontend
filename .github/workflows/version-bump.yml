@@ -1,0 +1,87 @@
+name: 버전 업데이트
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+      - develop
+
+  # 수동 실행 옵션
+  workflow_dispatch:
+    inputs:
+      version_type:
+        description: '업데이트 타입 (major, minor, patch)'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+          - premajor
+          - preminor
+          - prepatch
+          - prerelease
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  version-bump:
+    # PR이 머지됐을 때만 실행 또는 수동 실행일 때
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Git 설정
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      
+      # PR 라벨에 따른 버전 업데이트 타입 결정
+      - name: 버전 업데이트 타입 결정
+        id: bump_type
+        # 수동 실행이면 입력값을 사용, 아니면 PR 라벨에 따라 결정
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "TYPE=${{ github.event.inputs.version_type }}" >> $GITHUB_OUTPUT
+          else
+            PR_LABELS="${{ join(github.event.pull_request.labels.*.name, ' ') }}"
+            if [[ $PR_LABELS == *"feature"* ]] || [[ $PR_LABELS == *"breaking-change"* ]]; then
+              echo "TYPE=minor" >> $GITHUB_OUTPUT
+            elif [[ $PR_LABELS == *"bug"* ]] || [[ $PR_LABELS == *"bugfix"* ]] || [[ $PR_LABELS == *"fix"* ]]; then
+              echo "TYPE=patch" >> $GITHUB_OUTPUT
+            elif [[ $PR_LABELS == *"major"* ]]; then
+              echo "TYPE=major" >> $GITHUB_OUTPUT
+            else
+              echo "TYPE=patch" >> $GITHUB_OUTPUT
+            fi
+          fi
+      
+      # npm version 명령으로 버전 업데이트 및 태그 생성
+      - name: 버전 업데이트
+        run: |
+          # 마지막 커밋 내용 가져오기
+          LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
+          # 버전 업데이트 및 태그 생성
+          npm version ${{ steps.bump_type.outputs.TYPE }} -m "버전 ${{ steps.bump_type.outputs.TYPE }} 업데이트: %s
+
+          $LAST_COMMIT_MSG"
+          
+      # 버전 태그 푸시
+      - name: 태그 푸시
+        run: |
+          git push
+          git push --tags 

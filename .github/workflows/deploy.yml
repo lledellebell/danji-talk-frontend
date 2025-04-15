@@ -1,0 +1,70 @@
+name: 배포
+
+on:
+  release:
+    types: [published]
+  
+  # 수동 실행 옵션
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: '배포 환경'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+jobs:
+  deploy:
+    name: 배포
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment || 'production' }}
+    
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+      
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: 의존성 설치
+        run: npm ci
+        
+      - name: 보안 취약점 검사
+        run: npm audit --production
+        
+      - name: 빌드
+        run: npm run build
+        env:
+          # 환경 변수 설정
+          NODE_ENV: production
+      
+      # Vercel 배포
+      - name: Vercel CLI 설치
+        run: npm install -g vercel@latest
+      
+      - name: Vercel 배포
+        run: |
+          if [ "${{ github.event.inputs.environment || 'production' }}" == "production" ]; then
+            vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
+          else
+            vercel deploy --token=${{ secrets.VERCEL_TOKEN }}
+          fi
+        
+      - name: 배포 알림
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: deployments
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_TITLE: 단지톡 배포 완료
+          SLACK_MESSAGE: |
+            환경: ${{ github.event.inputs.environment || 'production' }}
+            버전: ${{ github.ref_name }}
+            배포자: ${{ github.actor }}
+            상태: ${{ job.status }} 

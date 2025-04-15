@@ -13,7 +13,8 @@
     "server": "json-server --watch ./src/mocks/db.json --port 3001",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,css,scss,md}'",
-    "clear-vite": "rm -rf node_modules/.vite"
+    "clear-vite": "rm -rf node_modules/.vite",
+    "security-update": "node scripts/update-security.js"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.64.1",
