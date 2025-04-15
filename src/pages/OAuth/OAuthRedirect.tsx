@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAlertStore } from '../../stores/alertStore';
+import { useAuthStore } from '../../stores/authStore';
 import axios from 'axios';
 
 const OAuthRedirect = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { setTitle, setContent, openAlert } = useAlertStore();
-  const [loadingState, setLoadingState] = useState('loading');
+  const setIsAuthenticated = useAuthStore((state) => state.login);
 
   useEffect(() => {
     const processLogin = async () => {
@@ -17,8 +18,6 @@ const OAuthRedirect = () => {
         const code = params.get('social-code');
 
         if (status === 'success' && code) {
-          // console.log('✅ 받은 uuid:', code);
-
           try {
             // 백엔드 API를 호출하여 실제 인증 정보를 교환
             const response = await axios.get(
@@ -35,8 +34,9 @@ const OAuthRedirect = () => {
             localStorage.setItem('loginType', 'kakao');
             localStorage.removeItem('prevPath');
 
-            setLoadingState('success');
-            navigate('/home', { replace: true });
+            setIsAuthenticated();
+
+            window.location.href = '/home';
           } catch (exchangeError) {
             console.error('🔄 토큰 교환 오류:', exchangeError);
 
@@ -67,7 +67,7 @@ const OAuthRedirect = () => {
     };
 
     processLogin();
-  }, [location, navigate, setTitle, setContent, openAlert]);
+  }, [location, navigate, setTitle, setContent, openAlert, setIsAuthenticated]);
 
   return (
     <div
@@ -81,30 +81,26 @@ const OAuthRedirect = () => {
         background: '#f9f9f9',
       }}
     >
-      {loadingState === 'loading' && (
-        <>
-          <div
-            className="spinner"
-            style={{
-              width: '30px',
-              height: '30px',
-              border: '5px solid rgba(0, 0, 0, 0.1)',
-              borderRadius: '50%',
-              borderTop: '5px solid #96bbff',
-              animation: 'spin 1s linear infinite',
-            }}
-          ></div>
-          <p
-            style={{
-              fontSize: '18px',
-              fontWeight: '500',
-              color: '#333',
-            }}
-          >
-            로그인 처리 중...
-          </p>
-        </>
-      )}
+      <div
+        className="spinner"
+        style={{
+          width: '30px',
+          height: '30px',
+          border: '5px solid rgba(0, 0, 0, 0.1)',
+          borderRadius: '50%',
+          borderTop: '5px solid #96bbff',
+          animation: 'spin 1s linear infinite',
+        }}
+      ></div>
+      <p
+        style={{
+          fontSize: '18px',
+          fontWeight: '500',
+          color: '#333',
+        }}
+      >
+        로그인 처리 중...
+      </p>
     </div>
   );
 };
