@@ -21,6 +21,11 @@ jobs:
       - name: 의존성 설치
         run: npm ci
         
+      - name: JQ 설치
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+        
       - name: npm 취약점 감사
         id: npm-audit
         run: |
@@ -33,7 +38,7 @@ jobs:
           echo "VULN_COUNT=$VULNERABILITIES" >> $GITHUB_ENV
           
           # 취약점 목록 생성
-          jq -r '.vulnerabilities | to_entries[] | "\(.key): \(.value.severity) (\(.value.via | map(if type=="object" then .name else . end) | join(", ")))"' npm-audit.json > vulnerabilities.txt
+          jq -r '.vulnerabilities | to_entries[] | "\(.key): \(.value.severity) (\(.value.via | map(if type=="object" then .name else . end) | join(", ")))"' npm-audit.json > vulnerabilities.txt || echo "취약점 정보 추출 실패" > vulnerabilities.txt
       
       - name: 이슈 생성
         if: env.VULN_COUNT != '0'

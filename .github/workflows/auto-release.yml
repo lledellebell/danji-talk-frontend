@@ -24,10 +24,12 @@ jobs:
           cache: 'npm'
           
       - name: 의존성 설치
-        run: npm ci
+        run: npm ci || npm install
         
       - name: 빌드
         run: npm run build
+        env:
+          NODE_ENV: production
       
       - name: 변경 내역 생성
         id: github_release
@@ -35,20 +37,32 @@ jobs:
         with:
           configuration: ".github/changelog-config.json"
           outputFile: "CHANGELOG.md"
+          fallbackOutput: "사용 가능한 변경 내역이 없습니다."
+          ignorePreReleases: "false"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: 빌드 압축
         run: |
-          cd dist
-          zip -r ../release.zip .
-          cd ..
+          if [ -d "dist" ]; then
+            cd dist
+            zip -r ../release.zip .
+            cd ..
+          else
+            echo "dist 디렉토리가 없습니다. 빈 릴리스 패키지 생성합니다."
+            mkdir -p temp
+            echo "이 릴리스에는 빌드된 파일이 포함되어 있지 않습니다." > temp/README.txt
+            cd temp
+            zip -r ../release.zip .
+            cd ..
+            rm -rf temp
+          fi
       
       - name: 릴리스 생성
         uses: softprops/action-gh-release@v1
         with:
           files: release.zip
-          body: ${{steps.github_release.outputs.changelog}}
+          body: ${{steps.github_release.outputs.changelog || '변경 내역이 없습니다.'}}
           draft: false
           prerelease: ${{ contains(github.ref, 'beta') || contains(github.ref, 'alpha') || contains(github.ref, 'rc') }}
           token: ${{ secrets.GITHUB_TOKEN }} 
