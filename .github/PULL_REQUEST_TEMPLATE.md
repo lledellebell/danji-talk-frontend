@@ -1,12 +1,3 @@
----
-name: Pull Request
-about: 작업 완료 후 코드 리뷰를 요청하기 위한 템플릿
-title: "[PR] 작업 내용 요약"
-labels: "Pull Request"
-assignees: ''
-
----
-
 ## 📌 작업 개요
 - 이 PR에서 해결한 작업에 대한 간단한 설명을 작성해주세요.
 
