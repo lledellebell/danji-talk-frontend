@@ -13,7 +13,7 @@ jobs:
   dependabot-auto-merge:
     name: Dependabot PR 자동 병합
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    if: github.actor == 'dependabot[bot]'
     steps:
       - name: Dependabot 메타데이터 조회
         id: metadata
@@ -21,11 +21,16 @@ jobs:
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       
+      # GitHub CLI 설치
+      - name: GitHub CLI 설치
+        run: |
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+          sudo apt update
+          sudo apt install gh
+      
       - name: Patch & Minor 업데이트 자동 승인 및 병합
-        if: ${{
-          steps.metadata.outputs.update-type == 'version-update:semver-patch' || 
-          steps.metadata.outputs.update-type == 'version-update:semver-minor'
-        }}
+        if: contains('version-update:semver-patch version-update:semver-minor', steps.metadata.outputs.update-type)
         run: |
           gh pr review --approve "$PR_URL"
           
@@ -43,7 +48,7 @@ jobs:
       
       # 보안 업데이트는 특별히 빠르게 처리
       - name: 보안 업데이트 자동 승인 및 병합
-        if: ${{ steps.metadata.outputs.security-severity == 'high' || steps.metadata.outputs.security-severity == 'critical' }}
+        if: contains(steps.metadata.outputs.security-severity, 'high') || contains(steps.metadata.outputs.security-severity, 'critical')
         run: |
           echo "🔐 높은 심각도의 보안 업데이트를 자동으로 병합합니다"
           gh pr review --approve "$PR_URL"
