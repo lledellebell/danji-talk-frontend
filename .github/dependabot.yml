@@ -6,9 +6,9 @@ updates:
     schedule:
       interval: "weekly"
     # 개발 브랜치에 PR 생성
-    target-branch: "develop"
-    # 보안 업데이트만 활성화
-    open-pull-requests-limit: 10
+    target-branch: "master"
+    # 보안 업데이트 우선 활성화
+    open-pull-requests-limit: 15
     # 보안 이슈 우선순위
     labels:
       - "dependencies"
@@ -18,15 +18,35 @@ updates:
       # 메이저 버전은 수동 업데이트
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
-    # 보안 패치만 PR 생성
-    security-updates-only: true
+    # 취약점 자동 검사 및 PR 생성
+    security-updates-only: false
+    # 자동 병합 설정 활성화
+    assignees:
+      - "dependabot"
+    reviewers:
+      - "DanjiTalk/security-team"
+    # 낮은 취약점도 업데이트 (CVE가 발행된 모든 취약점)
+    vulnerabilities:
+      - severity: "low"
+        update-types: ["security:vulnerability"]
+      - severity: "medium"
+        update-types: ["security:vulnerability"]
+      - severity: "high"
+        update-types: ["security:vulnerability"]
+      - severity: "critical"
+        update-types: ["security:vulnerability"]
 
   # GitHub Actions 업데이트 설정
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-    target-branch: "develop"
+    target-branch: "master"
     labels:
       - "dependencies"
-      - "github-actions" 
+      - "github-actions"
+    # 자동 병합 설정 활성화
+    assignees:
+      - "dependabot"
+    reviewers:
+      - "DanjiTalk/security-team" 
