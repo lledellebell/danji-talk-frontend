@@ -35,14 +35,8 @@ const OAuthRedirect = () => {
             localStorage.setItem('loginType', 'kakao');
             localStorage.removeItem('prevPath');
 
-            setTitle('로그인 성공');
-            setContent('소셜 계정으로 로그인되었습니다.');
-            openAlert();
-
             setLoadingState('success');
-            setTimeout(() => {
-              navigate('/home', { replace: true });
-            }, 800);
+            navigate('/home', { replace: true });
           } catch (exchangeError) {
             console.error('🔄 토큰 교환 오류:', exchangeError);
 
