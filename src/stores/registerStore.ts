@@ -1,8 +1,8 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface RegisterState {
   email: string;
-  emailCheckStatus: "initial" | "checked" | "duplicate";
+  emailCheckStatus: 'initial' | 'checked' | 'duplicate';
   authCode: string;
   authCodeVerified: boolean;
   password: string;
@@ -12,7 +12,7 @@ interface RegisterState {
   phoneNumber: string;
   error: string | null;
   setEmail: (email: string) => void;
-  setEmailCheckStatus: (status: "initial" | "checked" | "duplicate") => void;
+  setEmailCheckStatus: (status: 'initial' | 'checked' | 'duplicate') => void;
   setAuthCodeVerified: (verified: boolean) => void;
   setAuthCode: (authCode: string) => void;
   setPassword: (password: string) => void;
@@ -24,15 +24,15 @@ interface RegisterState {
 }
 
 export const useRegisterStore = create<RegisterState>((set) => ({
-  email: "",
-  emailCheckStatus: "initial",
-  authCode: "",
+  email: '',
+  emailCheckStatus: 'initial',
+  authCode: '',
   authCodeVerified: false,
-  password: "",
-  confirmPassword: "",
-  name: "",
-  nickname: "",
-  phoneNumber: "",
+  password: '',
+  confirmPassword: '',
+  name: '',
+  nickname: '',
+  phoneNumber: '',
   error: null,
   setEmail: (email) => set({ email }),
   setEmailCheckStatus: (status) => set({ emailCheckStatus: status }),

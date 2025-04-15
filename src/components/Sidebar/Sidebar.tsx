@@ -58,76 +58,104 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
   return (
     <>
-      <div 
+      <div
         className={`${styles['sidebar-overlay']} ${isClosing ? styles['sidebar-overlay--closing'] : ''}`}
         onClick={handleClose}
         role="presentation"
       />
-      <aside 
+      <aside
         className={`${styles.sidebar} ${isClosing ? styles['sidebar--closing'] : ''}`}
         role="complementary"
         aria-label="메인 메뉴"
       >
-        <button 
-          type="button" 
+        <button
+          type="button"
           className={styles['sidebar__close-button']}
           onClick={onClose}
           aria-label="메뉴 닫기"
         >
-          <svg 
-            width="24" 
-            height="24" 
-            viewBox="0 0 24 24" 
-            fill="none" 
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path 
-              d="M18 6L6 18M6 6l12 12" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
+            <path
+              d="M18 6L6 18M6 6l12 12"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
             />
           </svg>
         </button>
         <nav className={styles['sidebar__nav']}>
           <ul className={styles['sidebar__list']}>
             <li className={styles['sidebar__item']}>
-              <Link to="/complex-info" className={styles['sidebar__link']}>단지정보</Link>
+              <Link to="/complex-info" className={styles['sidebar__link']}>
+                단지정보
+              </Link>
             </li>
             <li className={styles['sidebar__item']}>
-              <Link to="/community" className={styles['sidebar__link']}>커뮤니티</Link>
+              <Link to="/community" className={styles['sidebar__link']}>
+                커뮤니티
+              </Link>
             </li>
             <li className={styles['sidebar__item']}>
-              <Link to="/notices" className={styles['sidebar__link']}>공지사항</Link>
+              <Link to="/notices" className={styles['sidebar__link']}>
+                공지사항
+              </Link>
             </li>
             <li className={styles['sidebar__item']}>
-              <Link to="/favorites" className={styles['sidebar__link']}>즐겨찾기</Link>
+              <Link to="/favorites" className={styles['sidebar__link']}>
+                즐겨찾기
+              </Link>
             </li>
             <li className={styles['sidebar__item']}>
-              <Link to="/mypage" className={styles['sidebar__link']}>마이페이지</Link>
+              <Link to="/mypage" className={styles['sidebar__link']}>
+                마이페이지
+              </Link>
             </li>
             <li className={styles['sidebar__item']}>
-              <Link to="/facilities" className={styles['sidebar__link']}>시설정보</Link>
+              <Link to="/facilities" className={styles['sidebar__link']}>
+                시설정보
+              </Link>
             </li>
             <li className={styles['sidebar__item']}>
-              <Link to="/chat" className={styles['sidebar__link']}>채팅</Link>
+              <Link to="/chat" className={styles['sidebar__link']}>
+                채팅
+              </Link>
             </li>
             <li className={styles['sidebar__item']}>
-              <Link to="/visitor-car" className={styles['sidebar__link']}>방문차량등록</Link>
+              <Link to="/visitor-car" className={styles['sidebar__link']}>
+                방문차량등록
+              </Link>
             </li>
             <li className={styles['sidebar__item']}>
-              <Link to="/my-reservations" className={styles['sidebar__link']}>내 예약 정보</Link>
+              <Link to="/my-reservations" className={styles['sidebar__link']}>
+                내 예약 정보
+              </Link>
             </li>
             <li className={styles['sidebar__item']}>
-              <Link to="/register-complex" className={styles['sidebar__link']}>단지 등록</Link>
+              <Link to="/register-complex" className={styles['sidebar__link']}>
+                단지 등록
+              </Link>
             </li>
             <li className={styles['sidebar__item']}>
               {isLoggedIn ? (
-                <button type="button" className={styles['sidebar__button']} onClick={handleLogout}>
+                <button
+                  type="button"
+                  className={styles['sidebar__button']}
+                  onClick={handleLogout}
+                >
                   로그아웃
                 </button>
               ) : (
-                <button type="button" className={styles['sidebar__button']} onClick={handleLogin}>
+                <button
+                  type="button"
+                  className={styles['sidebar__button']}
+                  onClick={handleLogin}
+                >
                   로그인
                 </button>
               )}

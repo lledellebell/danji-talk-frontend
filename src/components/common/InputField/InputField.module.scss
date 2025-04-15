@@ -5,9 +5,9 @@ $breakpoint-desktop: 1024px;
 
 // Colors
 $color-primary: #007bff;
-$color-primary-light: #97BBFF;
+$color-primary-light: #97bbff;
 $color-primary-dark: #0056b3;
-$color-primary-lightest: #EAF1FF;
+$color-primary-lightest: #eaf1ff;
 $color-primary-text: #d4dff5;
 
 $color-error: #d91c1c;
@@ -17,14 +17,14 @@ $color-success: #28a745;
 $color-text-primary: #111;
 $color-text-secondary: #666;
 $color-text-disabled: #999;
-$color-text-tertiary: #C0C0C0;
+$color-text-tertiary: #c0c0c0;
 
-$color-border: #1E2533;
+$color-border: #1e2533;
 $color-border-light: #e0e0e0;
 $color-border-hover: #999;
 
 $color-background-transparent: transparent;
-$color-background-button: #EAF1FF;
+$color-background-button: #eaf1ff;
 $color-white: #fff;
 
 // Font sizes
@@ -143,12 +143,12 @@ $z-index-border: 1;
           background-color: $color-error;
         }
       }
-      
+
       & + .input-field__password-toggle {
         color: $color-error;
         border-bottom-color: $color-error;
       }
-      
+
       & + .input-field__action-button {
         color: $color-white;
         border-color: $color-error;
@@ -239,7 +239,7 @@ $z-index-border: 1;
         border-bottom-color: $color-error;
         outline: none;
       }
-      
+
       svg {
         fill: $color-error;
         stroke: $color-error;
@@ -322,7 +322,7 @@ $z-index-border: 1;
 
   &__input--with-password-toggle + &__action-button {
     right: 40px;
-    
+
     @media screen and (max-width: $breakpoint-mobile) {
       right: 32px;
     }

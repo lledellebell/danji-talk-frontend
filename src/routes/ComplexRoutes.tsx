@@ -4,4 +4,4 @@ const ComplexRoutes = () => {
   return <Outlet />;
 };
 
-export default ComplexRoutes; 
+export default ComplexRoutes;

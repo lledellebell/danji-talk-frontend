@@ -29,11 +29,17 @@ $spacing-xsmall: 5px;
 
 @mixin respond-to($breakpoint) {
   @if $breakpoint == mobile {
-    @media (max-width: $breakpoint-mobile) { @content; }
+    @media (max-width: $breakpoint-mobile) {
+      @content;
+    }
   } @else if $breakpoint == tablet {
-    @media (max-width: $breakpoint-tablet) { @content; }
+    @media (max-width: $breakpoint-tablet) {
+      @content;
+    }
   } @else if $breakpoint == desktop {
-    @media (min-width: $breakpoint-desktop) { @content; }
+    @media (min-width: $breakpoint-desktop) {
+      @content;
+    }
   }
 }
 
@@ -205,7 +211,7 @@ $spacing-xsmall: 5px;
     gap: $spacing-xsmall;
     cursor: pointer;
 
-    input[type="checkbox"] {
+    input[type='checkbox'] {
       width: 20px;
       height: 20px;
     }
@@ -277,7 +283,8 @@ $spacing-xsmall: 5px;
   stroke-dashoffset: $stroke-dashoffset;
   stroke-dasharray: $stroke-dasharray;
   fill: $fill-color;
-  transition: stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) $delay,
+  transition:
+    stroke-dashoffset 1s cubic-bezier(0.47, 0, 0.745, 0.715) $delay,
     fill 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) $fill-delay;
 }
 

@@ -9,9 +9,7 @@ const DevicePreview = ({ children }: DevicePreviewProps) => {
     <div className="device-frame">
       <div className="preview-container">
         <div className="ios-status-bar">
-          <div className="ios-status-bar__time">
-            9:41
-          </div>
+          <div className="ios-status-bar__time">9:41</div>
           <div className="ios-status-bar__icons">
             <div className="network">
               <div className="bar"></div>
@@ -29,4 +27,4 @@ const DevicePreview = ({ children }: DevicePreviewProps) => {
   );
 };
 
-export default DevicePreview; 
+export default DevicePreview;

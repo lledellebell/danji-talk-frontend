@@ -17,8 +17,12 @@ export const useCheckEmail = () => {
     label: '중복확인',
     disabled: false,
   });
-  const [successMessage, setSuccessMessage] = useState<string | undefined>(undefined);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  const [successMessage, setSuccessMessage] = useState<string | undefined>(
+    undefined
+  );
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
 
   const checkEmail = () => {
     if (!email) {
@@ -123,7 +127,9 @@ export const useCheckEmail = () => {
     checkEmail,
     sendEmailCode,
     handleEmailChange,
-    checkEmailActionButton: actionButton ? { ...actionButton, onClick: checkEmail } : undefined,
+    checkEmailActionButton: actionButton
+      ? { ...actionButton, onClick: checkEmail }
+      : undefined,
     isCheckingEmail: checkEmailMutation.isPending,
     successMessage,
     errorMessage,

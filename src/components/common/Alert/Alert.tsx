@@ -17,41 +17,43 @@ const Alert: React.FC<AlertProps> = ({
   onConfirm,
 }) => {
   useEffect(() => {
-    const appContainer = document.querySelector('.app-container') as HTMLElement;
+    const appContainer = document.querySelector(
+      '.app-container'
+    ) as HTMLElement;
     const deviceFrame = document.querySelector('.device-frame') as HTMLElement;
     const isPc = window.innerWidth >= 768;
-    
+
     const scrollPosition = window.scrollY;
-    
+
     if (appContainer) {
       appContainer.style.overflow = 'hidden';
     }
-    
+
     if (deviceFrame) {
       deviceFrame.style.overflow = 'hidden';
     }
-    
+
     if (!isPc) {
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
       document.body.style.top = `-${scrollPosition}px`;
     }
-    
+
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
-    
+
     return () => {
       if (appContainer) {
         appContainer.style.overflow = '';
       }
-      
+
       if (deviceFrame) {
         deviceFrame.style.overflow = '';
       }
-      
+
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
-      
+
       if (!isPc) {
         document.body.style.position = '';
         document.body.style.width = '';
@@ -63,9 +65,10 @@ const Alert: React.FC<AlertProps> = ({
 
   const isPc = window.innerWidth >= 768;
   const deviceFrame = document.querySelector('.device-frame');
-  const overlayClass = isPc && deviceFrame 
-    ? `${styles['alert__overlay']} ${styles['alert__overlay--in-frame']}` 
-    : styles['alert__overlay'];
+  const overlayClass =
+    isPc && deviceFrame
+      ? `${styles['alert__overlay']} ${styles['alert__overlay--in-frame']}`
+      : styles['alert__overlay'];
 
   return (
     <div

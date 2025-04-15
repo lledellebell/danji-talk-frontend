@@ -5,10 +5,9 @@ const Facilities = () => {
 
   return (
     <>
-      <div style={{ padding: '20px', textAlign: 'center' }}>
-      </div>
+      <div style={{ padding: '20px', textAlign: 'center' }}></div>
     </>
   );
 };
 
-export default Facilities; 
+export default Facilities;

@@ -93,7 +93,7 @@ export const InputField = ({
   const id = useId();
   const [showPassword, setShowPassword] = useState(false);
   const passwordInputRef = useRef<HTMLInputElement>(null);
-  
+
   useEffect(() => {
     if (type === 'password' && passwordInputRef.current) {
       passwordInputRef.current.value = value || '';
@@ -107,12 +107,12 @@ export const InputField = ({
   const handleTogglePassword = () => {
     setShowPassword((prev) => !prev);
   };
-  
+
   const renderPasswordInput = () => (
     <input
       id={id}
       ref={passwordInputRef}
-      type={showPassword ? "text" : "password"}
+      type={showPassword ? 'text' : 'password'}
       name={name}
       onChange={handleChange}
       placeholder={placeholder}
@@ -121,7 +121,9 @@ export const InputField = ({
       minLength={minLength}
       pattern={pattern}
       className={`${styles['input-field__input']} ${error ? styles['input-field__input--error'] : ''} ${
-        showPasswordToggle ? styles['input-field__input--with-password-toggle'] : ''
+        showPasswordToggle
+          ? styles['input-field__input--with-password-toggle']
+          : ''
       }`}
       aria-invalid={!!error}
       aria-errormessage={error ? `${id}-error` : undefined}
@@ -130,7 +132,7 @@ export const InputField = ({
       {...rest}
     />
   );
-  
+
   const renderRegularInput = () => (
     <input
       id={id}
@@ -151,16 +153,19 @@ export const InputField = ({
       {...rest}
     />
   );
-  
+
   return (
     <div className={`${styles['input-field']} ${className || ''}`}>
-      <label htmlFor={id} className={`${styles['input-field__label']} ${lableClassName || ''}`}>
+      <label
+        htmlFor={id}
+        className={`${styles['input-field__label']} ${lableClassName || ''}`}
+      >
         {label}
       </label>
       <div className={styles['input-field__wrapper']}>
         {type === 'password' ? renderPasswordInput() : renderRegularInput()}
-        
-        {type === "password" && showPasswordToggle && (
+
+        {type === 'password' && showPasswordToggle && (
           <button
             type="button"
             onClick={handleTogglePassword}
@@ -170,7 +175,7 @@ export const InputField = ({
             {showPassword ? <EyeOffIcon /> : <EyeIcon />}
           </button>
         )}
-        
+
         {actionButton && (
           <button
             type="button"

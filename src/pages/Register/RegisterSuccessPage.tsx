@@ -20,29 +20,30 @@ export const RegisterSuccessPage = () => {
     const checkDevice = () => {
       setIsPc(window.innerWidth >= 768);
     };
-    
+
     // device-frame 존재 여부 확인
     const checkDeviceFrame = () => {
       const deviceFrame = document.querySelector('.device-frame');
       setHasDeviceFrame(!!deviceFrame);
     };
-    
+
     checkDevice();
     checkDeviceFrame();
-    
+
     window.addEventListener('resize', checkDevice);
     window.addEventListener('resize', checkDeviceFrame);
-    
+
     return () => {
       window.removeEventListener('resize', checkDevice);
       window.removeEventListener('resize', checkDeviceFrame);
     };
   }, []);
-  
+
   // 버튼 컨테이너 클래스 결정
-  const buttonContainerClass = isPc && hasDeviceFrame
-    ? `${styles['register-success-button-container']} ${styles['in-device-frame']}`
-    : styles['register-success-button-container'];
+  const buttonContainerClass =
+    isPc && hasDeviceFrame
+      ? `${styles['register-success-button-container']} ${styles['in-device-frame']}`
+      : styles['register-success-button-container'];
 
   return (
     <div className={styles['register-success-container']}>

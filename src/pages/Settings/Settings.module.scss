@@ -28,7 +28,7 @@
 }
 
 .settings__menu-item {
-  background-color: #F9FBFF;
+  background-color: #f9fbff;
   &:not(:last-child) {
     border-bottom: 1px solid #fff;
   }
@@ -44,11 +44,11 @@
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: #F8F9FA;
+    background-color: #f8f9fa;
   }
 
   &:active {
-    background-color: #F1F3F5;
+    background-color: #f1f3f5;
   }
 }
 
@@ -60,4 +60,4 @@
 .settings__menu-icon {
   color: #111;
   flex-shrink: 0;
-} 
+}

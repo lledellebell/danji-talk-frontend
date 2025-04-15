@@ -22,7 +22,7 @@ const Home = () => {
         <p>등록된 단지가 없습니다.</p>
       ) : (
         <div className="complex-grid">
-          {complexes.map(complex => (
+          {complexes.map((complex) => (
             <div key={complex.id} className="complex-card">
               <h2>{complex.name}</h2>
               <p>{complex.region}</p>
@@ -35,4 +35,4 @@ const Home = () => {
   );
 };
 
-export default Home; 
+export default Home;

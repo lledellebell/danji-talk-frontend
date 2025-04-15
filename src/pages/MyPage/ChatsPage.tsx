@@ -6,15 +6,10 @@ const ChatsPage = () => {
 
   return (
     <>
-      <Header 
-        title="채팅방 목록" 
-        type="sub" 
-        hasBackButton={true}
-      />
-      <div style={{ padding: '20px', textAlign: 'center' }}>
-      </div>
+      <Header title="채팅방 목록" type="sub" hasBackButton={true} />
+      <div style={{ padding: '20px', textAlign: 'center' }}></div>
     </>
   );
 };
 
-export default ChatsPage; 
+export default ChatsPage;

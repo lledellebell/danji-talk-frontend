@@ -18,7 +18,7 @@ const ServiceIntro = () => {
           <p className="subtitle">아파트 생활의 시작</p>
         </div>
       </div>
-      
+
       <div className="intro-content">
         <div className="description">
           <h2 className="service-title">단지 생활을 더 쉽게</h2>
@@ -26,9 +26,9 @@ const ServiceIntro = () => {
             관리자와 입주민을 위한 스마트한 소통 플랫폼
           </p>
         </div>
-        
+
         <FeatureList />
-        
+
         <div className="qr-container">
           <div className="qr-item">
             <QRCodeSVG
@@ -56,4 +56,4 @@ const ServiceIntro = () => {
   );
 };
 
-export default ServiceIntro; 
+export default ServiceIntro;

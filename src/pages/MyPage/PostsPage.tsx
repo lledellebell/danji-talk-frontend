@@ -6,15 +6,10 @@ const PostsPage = () => {
 
   return (
     <>
-      <Header 
-        title="작성한 글" 
-        type="sub" 
-        hasBackButton={true}
-      />
-      <div style={{ padding: '20px', textAlign: 'center' }}>
-      </div>
+      <Header title="작성한 글" type="sub" hasBackButton={true} />
+      <div style={{ padding: '20px', textAlign: 'center' }}></div>
     </>
   );
 };
 
-export default PostsPage; 
+export default PostsPage;

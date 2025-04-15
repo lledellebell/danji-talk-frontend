@@ -22,7 +22,7 @@ $pc-breakpoint: 768px;
     justify-content: center;
     align-items: center;
     z-index: $z-index-alert;
-    
+
     &--in-frame {
       position: fixed;
       top: 0;
@@ -34,7 +34,7 @@ $pc-breakpoint: 768px;
       justify-content: center;
       align-items: center;
       z-index: $z-index-alert;
-      
+
       @media (min-width: 1024px) {
         position: absolute;
         width: 100%;
@@ -99,7 +99,7 @@ $pc-breakpoint: 768px;
     &:hover {
       background-color: $confirm-button-hover;
     }
-    
+
     &:focus {
       outline: none;
       box-shadow: 0 0 0 2px rgba(151, 187, 255, 0.4);

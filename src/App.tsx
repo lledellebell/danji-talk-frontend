@@ -11,11 +11,11 @@ function App() {
 
   useEffect(() => {
     setIsMounted(true);
-    
+
     const handleError = () => {
       setHasError(true);
     };
-    
+
     window.addEventListener('error', handleError);
     return () => window.removeEventListener('error', handleError);
   }, []);
@@ -29,9 +29,7 @@ function App() {
       <div style={{ padding: 20, textAlign: 'center' }}>
         <h2>문제가 발생했습니다</h2>
         <p>페이지를 새로고침하거나 나중에 다시 시도해주세요.</p>
-        <button onClick={() => window.location.reload()}>
-          새로고침
-        </button>
+        <button onClick={() => window.location.reload()}>새로고침</button>
       </div>
     );
   }

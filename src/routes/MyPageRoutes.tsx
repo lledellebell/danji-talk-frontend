@@ -46,7 +46,7 @@ const MyPageRoutes = () => {
     }
     return null;
   };
-  
+
   return (
     <ProtectedRoute>
       {renderHeader()}
@@ -55,4 +55,4 @@ const MyPageRoutes = () => {
   );
 };
 
-export default MyPageRoutes; 
+export default MyPageRoutes;

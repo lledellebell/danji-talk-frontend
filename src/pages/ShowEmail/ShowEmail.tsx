@@ -6,7 +6,14 @@ import { Link } from 'react-router-dom';
 const Logo = () => {
   return (
     <>
-      <img className={styles['logo']} width={200} height={200} src={logo} loading="lazy" alt="logo" />
+      <img
+        className={styles['logo']}
+        width={200}
+        height={200}
+        src={logo}
+        loading="lazy"
+        alt="logo"
+      />
     </>
   );
 };

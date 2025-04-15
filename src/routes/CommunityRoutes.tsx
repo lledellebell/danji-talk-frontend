@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 
 const CommunityRoutes = () => {
   const location = useLocation();
-  
+
   const renderContent = () => {
     if (location.pathname === '/community') {
       return <BoardList />;
@@ -16,15 +16,11 @@ const CommunityRoutes = () => {
     } else if (location.pathname === '/write') {
       return <BoardWrite />;
     }
-    
+
     return <Outlet />;
   };
 
-  return (
-    <ProtectedRoute>
-      {renderContent()}
-    </ProtectedRoute>
-  );
+  return <ProtectedRoute>{renderContent()}</ProtectedRoute>;
 };
 
-export default CommunityRoutes; 
+export default CommunityRoutes;

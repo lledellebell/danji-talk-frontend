@@ -3,19 +3,22 @@ import { useAuthStore } from '../stores/authStore';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 
-
 export const useLogin = () => {
   const { email, password, setEmail, setError, setIsLoggedIn } = useAuthStore();
   const navigate = useNavigate();
 
   const loginMutation = useMutation({
     mutationFn: async () => {
-      const response = await axios.post('/api/login', {
-        loginId: email,
-        password: password
-      }, {
-        withCredentials: true
-      });
+      const response = await axios.post(
+        '/api/login',
+        {
+          loginId: email,
+          password: password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       return response.data;
     },
     onSuccess: () => {
@@ -30,7 +33,8 @@ export const useLogin = () => {
         setError(
           !error.response
             ? '네트워크 연결을 확인해주세요.'
-            : error.response.data?.message || '로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
+            : error.response.data?.message ||
+                '로그인 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
         );
       }
     },

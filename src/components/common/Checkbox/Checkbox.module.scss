@@ -1,7 +1,7 @@
-$primary-color: #97BBFF;
+$primary-color: #97bbff;
 $disabled-color: #e0e0e0;
-$border-color: #97BBFF;
-$hover-border-color: #97BBFF;
+$border-color: #97bbff;
+$hover-border-color: #97bbff;
 $font-color: #444;
 $font-family: 'Arial', sans-serif;
 $font-size: 16px;
@@ -92,7 +92,9 @@ $font-weight: 500;
   .input:not(:checked) + .label .checkmark:after {
     transform: translate(-50%, -50%) scale(0);
     opacity: 0;
-    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+    transition:
+      transform 0.15s ease-out,
+      opacity 0.15s ease-out;
   }
 
   // disabled 상태

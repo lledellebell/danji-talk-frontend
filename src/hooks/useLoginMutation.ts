@@ -12,7 +12,7 @@ const errorMessages = {
   429: '너무 많은 로그인 시도가 있었습니다. 잠시 후 다시 시도해주세요',
   500: '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요',
   networkError: '인터넷 연결을 확인해주세요',
-  default: '로그인 중 오류가 발생했습니다'
+  default: '로그인 중 오류가 발생했습니다',
 };
 
 export const useLoginMutation = () => {
@@ -27,28 +27,29 @@ export const useLoginMutation = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json'
+            Accept: 'application/json',
           },
           credentials: 'include',
-          body: JSON.stringify({ loginId, password })
+          body: JSON.stringify({ loginId, password }),
         });
 
         if (!response.ok) {
           let errorMessage = errorMessages.default;
-          
+
           if (errorMessages[response.status as keyof typeof errorMessages]) {
-            errorMessage = errorMessages[response.status as keyof typeof errorMessages];
+            errorMessage =
+              errorMessages[response.status as keyof typeof errorMessages];
           }
-          
+
           try {
             const errorData = await response.json();
             if (errorData.message) {
               errorMessage = errorData.message;
             }
           } catch {
-            // 
+            //
           }
-          
+
           throw new Error(errorMessage);
         }
 
@@ -67,7 +68,7 @@ export const useLoginMutation = () => {
     onError: (error: Error) => {
       setError(error.message);
       useAuthStore.getState().setPassword('');
-      
+
       setTimeout(() => {
         if (loginId && password) {
           document.getElementById('password')?.focus();
@@ -77,6 +78,6 @@ export const useLoginMutation = () => {
           document.getElementById('password')?.focus();
         }
       }, 100);
-    }
+    },
   });
-}; 
+};

@@ -13,5 +13,5 @@ export const useWithdrawalStore = create<WithdrawalState>((set) => ({
   error: null,
   setStep: (step) => set({ step, error: null }),
   setError: (error) => set({ error }),
-  resetState: () => set({ step: 1, error: null })
-})); 
+  resetState: () => set({ step: 1, error: null }),
+}));

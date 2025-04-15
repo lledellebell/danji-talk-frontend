@@ -1,1 +1,61 @@
-.show-email__container{display:flex;flex-direction:column;align-items:center;overflow-y:auto;height:100%;padding:24px 24px 54px}@media(min-width: 1024px){.show-email__container{height:calc(100% - 74px)}}.logo{text-align:center;width:100%;-o-object-fit:contain;object-fit:contain;margin-top:150px;max-width:200px;height:auto}.show-email__text{flex:1;font-size:16px;font-weight:400;line-height:1.5;color:#111;text-align:center;word-break:break-word}.show-email__text b{font-weight:700;margin-top:8px}.show-email__button-wrapper{width:100%;height:52px;min-width:91px;margin-top:auto}.show-email__button{width:100%;height:52px;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s ease-in-out;display:flex;align-items:center;justify-content:center;background-color:#97bbff;color:#fff;text-decoration:none;padding:0 20px}.show-email__button:hover{background-color:#85aaef}
+.show-email__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  height: 100%;
+  padding: 24px 24px 54px;
+}
+@media (min-width: 1024px) {
+  .show-email__container {
+    height: calc(100% - 74px);
+  }
+}
+.logo {
+  text-align: center;
+  width: 100%;
+  -o-object-fit: contain;
+  object-fit: contain;
+  margin-top: 150px;
+  max-width: 200px;
+  height: auto;
+}
+.show-email__text {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #111;
+  text-align: center;
+  word-break: break-word;
+}
+.show-email__text b {
+  font-weight: 700;
+  margin-top: 8px;
+}
+.show-email__button-wrapper {
+  width: 100%;
+  height: 52px;
+  min-width: 91px;
+  margin-top: auto;
+}
+.show-email__button {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #97bbff;
+  color: #fff;
+  text-decoration: none;
+  padding: 0 20px;
+}
+.show-email__button:hover {
+  background-color: #85aaef;
+}

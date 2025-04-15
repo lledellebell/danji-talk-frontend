@@ -8,4 +8,4 @@ const LandingPreview: React.FC = () => {
   );
 };
 
-export default LandingPreview; 
+export default LandingPreview;

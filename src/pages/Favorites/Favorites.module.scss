@@ -1,8 +1,8 @@
 // 변수 정의
-$color-primary: #97BBFF;
+$color-primary: #97bbff;
 $color-text-primary: #333;
 $color-text-secondary: #666;
-$color-border: #EDEDED;
+$color-border: #ededed;
 $color-background: white;
 
 $spacing-xs: 0.25rem;
@@ -56,12 +56,20 @@ $mobile-breakpoint: 768px;
 
   &__name {
     margin: 0 0 $spacing-xs;
-    @include text-style($font-size-normal, $font-weight-bold, $color-text-primary);
+    @include text-style(
+      $font-size-normal,
+      $font-weight-bold,
+      $color-text-primary
+    );
   }
 
   &__address {
     margin: 0;
-    @include text-style($font-size-small, $font-weight-normal, $color-text-secondary);
+    @include text-style(
+      $font-size-small,
+      $font-weight-normal,
+      $color-text-secondary
+    );
   }
 
   &__button {
@@ -70,7 +78,7 @@ $mobile-breakpoint: 768px;
     padding: $spacing-sm;
     cursor: pointer;
     color: $color-primary;
-    
+
     &:hover {
       opacity: 0.8;
     }
@@ -89,19 +97,27 @@ $mobile-breakpoint: 768px;
   }
 
   &__icon {
-    width: 120px; 
+    width: 120px;
     height: auto;
     margin-bottom: $spacing-md;
-    opacity: 0.8; 
+    opacity: 0.8;
   }
 
   &__text {
     margin: 0 0 $spacing-xs;
-    @include text-style($font-size-normal, $font-weight-bold, $color-text-primary);
+    @include text-style(
+      $font-size-normal,
+      $font-weight-bold,
+      $color-text-primary
+    );
   }
 
   &__subtext {
     margin: 0;
-    @include text-style($font-size-normal, $font-weight-normal, $color-text-secondary);
+    @include text-style(
+      $font-size-normal,
+      $font-weight-normal,
+      $color-text-secondary
+    );
   }
-} 
+}

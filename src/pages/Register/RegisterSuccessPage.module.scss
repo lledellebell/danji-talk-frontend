@@ -18,7 +18,9 @@ $color-text: #111;
   padding: $spacing-large;
   box-sizing: border-box;
   position: relative;
-  padding-bottom: calc(20px + 46px + 32px); /* 기본 패딩 + 버튼 높이 + 버튼 컨테이너 패딩 */
+  padding-bottom: calc(
+    20px + 46px + 32px
+  ); /* 기본 패딩 + 버튼 높이 + 버튼 컨테이너 패딩 */
 
   @media screen and (min-width: $breakpoint-mobile) {
     min-height: calc(100vh - 157px);
@@ -73,7 +75,7 @@ $color-text: #111;
   background-color: #fff;
   z-index: 10;
   box-sizing: border-box;
-  
+
   @media screen and (min-width: $breakpoint-mobile) {
     &.in-device-frame {
       position: sticky;
@@ -99,7 +101,7 @@ $color-text: #111;
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   &:hover {
     background-color: $button-hover-color;
   }

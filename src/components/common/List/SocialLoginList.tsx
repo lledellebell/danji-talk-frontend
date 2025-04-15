@@ -34,7 +34,7 @@ const SocialLoginList: React.FC = () => {
       try {
         const apiBaseUrl = import.meta.env.VITE_API_URL || '';
         const kakaoAuthUrl = `${apiBaseUrl}/oauth2/authorization/kakao`;
-        
+
         console.log('카카오 로그인 페이지로 이동:', kakaoAuthUrl);
         window.location.href = kakaoAuthUrl;
       } catch (error: unknown) {
@@ -46,13 +46,14 @@ const SocialLoginList: React.FC = () => {
     } else {
       // 다른 소셜 로그인은 개발 중 메시지 표시
       setTitle('안내');
-      setContent(`${provider.replace(' 하기', '')} 기능은 현재 개발 중입니다.<br />빠른 시일 내에 서비스 제공 예정입니다.`);
+      setContent(
+        `${provider.replace(' 하기', '')} 기능은 현재 개발 중입니다.<br />빠른 시일 내에 서비스 제공 예정입니다.`
+      );
       openAlert();
     }
   };
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>

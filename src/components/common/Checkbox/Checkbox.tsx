@@ -24,13 +24,18 @@ export const Checkbox = ({
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (disabled) return;
-    
+
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      const inputElement = document.getElementById(checkboxId) as HTMLInputElement;
+      const inputElement = document.getElementById(
+        checkboxId
+      ) as HTMLInputElement;
       if (inputElement) {
         const event = new MouseEvent('change', { bubbles: true });
-        Object.defineProperty(event, 'target', { value: inputElement, enumerable: true });
+        Object.defineProperty(event, 'target', {
+          value: inputElement,
+          enumerable: true,
+        });
         onChange(event as unknown as ChangeEvent<HTMLInputElement>);
       }
     }

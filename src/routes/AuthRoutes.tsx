@@ -10,7 +10,7 @@ import { useLocation } from 'react-router-dom';
 
 const AuthRoutes = () => {
   const location = useLocation();
-  
+
   const renderContent = () => {
     switch (location.pathname) {
       case '/login':
@@ -27,14 +27,22 @@ const AuthRoutes = () => {
       case '/find-account':
         return (
           <>
-            <Header title="아이디/비밀번호 찾기" type="sub" hasBackButton={true} />
+            <Header
+              title="아이디/비밀번호 찾기"
+              type="sub"
+              hasBackButton={true}
+            />
             <FindAccount />
           </>
         );
       case '/show-email':
         return (
           <>
-            <Header title="아이디/비밀번호 찾기" type="sub" hasBackButton={true} />
+            <Header
+              title="아이디/비밀번호 찾기"
+              type="sub"
+              hasBackButton={true}
+            />
             <ShowEmail />
           </>
         );
@@ -53,4 +61,4 @@ const AuthRoutes = () => {
   return renderContent();
 };
 
-export default AuthRoutes; 
+export default AuthRoutes;

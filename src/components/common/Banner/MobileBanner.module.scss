@@ -10,53 +10,53 @@
   align-items: center;
   font-size: 14px;
   z-index: 10;
-  
+
   &--expanded {
     padding-bottom: 16px;
   }
-  
+
   &__content {
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: space-between;
   }
-  
+
   &__left {
     display: flex;
     align-items: center;
     gap: 12px;
   }
-  
+
   &__right {
     display: flex;
     align-items: center;
     gap: 8px;
   }
-  
+
   &__sources {
     display: flex;
     align-items: center;
     gap: 12px;
   }
-  
+
   &__github-container {
     display: flex;
     align-items: center;
     gap: 2px;
   }
-  
+
   &__github-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     svg {
       width: 18px;
       height: 18px;
     }
   }
-  
+
   &__link {
     display: inline-flex;
     align-items: center;
@@ -68,12 +68,12 @@
     padding: 4px 8px;
     border-radius: 4px;
     transition: background-color 0.2s;
-    
+
     &:active {
       background: rgba(255, 255, 255, 0.2);
     }
   }
-  
+
   &__button {
     display: inline-flex;
     align-items: center;
@@ -88,18 +88,18 @@
     cursor: pointer;
     border-radius: 6px;
     transition: all 0.2s;
-    
+
     &:active {
       background: rgba(255, 255, 255, 0.25);
     }
-    
+
     svg {
       width: 14px;
       height: 14px;
       transition: transform 0.3s ease;
     }
   }
-  
+
   &__close {
     width: 24px;
     height: 24px;
@@ -111,52 +111,54 @@
     color: white;
     cursor: pointer;
     padding: 0;
-    
+
     &:active {
       opacity: 0.7;
     }
-    
+
     svg {
       width: 16px;
       height: 16px;
     }
   }
-  
+
   &__info-container {
     width: 100%;
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.3s ease-out, margin-top 0.3s ease-out;
+    transition:
+      max-height 0.3s ease-out,
+      margin-top 0.3s ease-out;
     margin-top: 0;
-    
+
     &--expanded {
       max-height: 300px;
       margin-top: 12px;
     }
   }
-  
+
   &__info {
     background: rgba(255, 255, 255, 0.15);
     border-radius: 8px;
     font-size: 13px;
     line-height: 1.6;
     padding: 16px;
-    
+
     p {
       margin: 0 0 10px 0;
-      
+
       &:last-child {
         margin-bottom: 0;
       }
     }
-    
+
     strong {
       font-weight: 600;
       color: #fff;
     }
   }
-  
+
   @media (min-width: 1024px) {
     display: none;
   }
-} 
+}

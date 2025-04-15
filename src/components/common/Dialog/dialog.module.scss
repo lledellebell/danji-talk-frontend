@@ -48,7 +48,7 @@ $pc-breakpoint: 768px;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    
+
     // PC 환경의 device-frame 내부 다이얼로그
     &--in-frame {
       position: absolute;
@@ -109,7 +109,11 @@ $pc-breakpoint: 768px;
     color: $cancel-button-text-color;
 
     &:hover {
-      background-color: color.mix(black, $cancel-button-bg, $hover-darken-percentage);
+      background-color: color.mix(
+        black,
+        $cancel-button-bg,
+        $hover-darken-percentage
+      );
     }
   }
 
@@ -119,7 +123,11 @@ $pc-breakpoint: 768px;
     color: $confirm-button-text-color;
 
     &:hover {
-      background-color: color.mix(black, $confirm-button-bg, $hover-darken-percentage);
+      background-color: color.mix(
+        black,
+        $confirm-button-bg,
+        $hover-darken-percentage
+      );
     }
   }
 }

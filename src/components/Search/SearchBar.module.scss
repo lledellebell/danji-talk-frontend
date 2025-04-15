@@ -8,41 +8,41 @@
 .searchInput {
   width: 100%;
   padding: 0.875rem 3rem 0.875rem 1rem;
-  border: 1px solid #97BBFF;
+  border: 1px solid #97bbff;
   border-radius: 8px;
   font-size: 1rem;
   background-color: white;
   transition: all 0.2s ease;
-  
+
   &:focus {
     outline: none;
-    border-color: #97BBFF;
+    border-color: #97bbff;
     box-shadow: 0 0 0 3px rgba(151, 187, 255, 0.1);
   }
 
   &::placeholder {
-    color: #9CA3AF;
+    color: #9ca3af;
   }
 }
 
 .searchButton {
   position: absolute;
-  right: .5rem;
+  right: 0.5rem;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   padding: 0.5rem;
   cursor: pointer;
-  color: #97BBFF;
+  color: #97bbff;
   transition: all 0.2s ease;
 
   &:hover {
-    color: #97BBFF;
+    color: #97bbff;
     transform: translateY(-50%) scale(1.1);
   }
 
   &:active {
     transform: translateY(-50%) scale(0.95);
   }
-} 
+}

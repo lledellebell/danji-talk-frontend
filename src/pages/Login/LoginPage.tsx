@@ -63,7 +63,9 @@ const LoginForm = () => {
           const newEmail = e.target.value.trim();
           setEmail(newEmail);
           if (newEmail && !isValidEmail(newEmail)) {
-            setEmailError('이메일 형식이 올바르지 않습니다. 예: example@domain.com');
+            setEmailError(
+              '이메일 형식이 올바르지 않습니다. 예: example@domain.com'
+            );
           } else {
             setEmailError(null);
           }
@@ -71,8 +73,8 @@ const LoginForm = () => {
         placeholder="이메일을 입력하세요"
         required
         autoComplete="email"
-        aria-invalid={emailError ? "true" : "false"}
-        aria-describedby={emailError ? "email-error" : undefined}
+        aria-invalid={emailError ? 'true' : 'false'}
+        aria-describedby={emailError ? 'email-error' : undefined}
         error={emailError ?? undefined}
       />
       <InputField
@@ -85,8 +87,10 @@ const LoginForm = () => {
         placeholder="비밀번호를 입력하세요"
         required
         autoComplete="current-password"
-        aria-invalid={error === '비밀번호가 올바르지 않습니다.' ? "true" : "false"}
-        aria-describedby={error ? "password-error" : undefined}
+        aria-invalid={
+          error === '비밀번호가 올바르지 않습니다.' ? 'true' : 'false'
+        }
+        aria-describedby={error ? 'password-error' : undefined}
         showPasswordToggle
         error={error ?? undefined}
       />

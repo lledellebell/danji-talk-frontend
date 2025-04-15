@@ -18,9 +18,9 @@ const Favorites = () => {
   if (favorites.length === 0) {
     return (
       <div className={styles['empty-state']}>
-        <img 
-          src={logo} 
-          alt="" 
+        <img
+          src={logo}
+          alt=""
           className={styles['empty-state__icon']}
           aria-hidden="true"
         />
@@ -46,7 +46,7 @@ const Favorites = () => {
               className={styles['favorites__button']}
               onClick={() => {
                 // 즐겨찾기 제거 로직
-                setFavorites(favorites.filter(fav => fav.id !== item.id));
+                setFavorites(favorites.filter((fav) => fav.id !== item.id));
               }}
               aria-label="즐겨찾기 제거"
             >
@@ -73,4 +73,4 @@ const Favorites = () => {
   );
 };
 
-export default Favorites; 
+export default Favorites;

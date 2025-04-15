@@ -25,4 +25,4 @@ const FeatureList = () => {
   );
 };
 
-export default FeatureList; 
+export default FeatureList;
