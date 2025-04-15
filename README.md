@@ -109,7 +109,7 @@ npm run security-update
 릴리스는 GitHub Actions를 통해 자동화되어 있습니다.
 
 ### 버전 업데이트 방법
-1. PR을 main 또는 develop 브랜치에 머지하면 자동으로 버전이 업데이트됩니다.
+1. PR을 master 또는 develop 브랜치에 머지하면 자동으로 버전이 업데이트됩니다.
 2. PR에 다음 라벨 중 하나를 추가하여 버전 업데이트 타입을 지정할 수 있습니다:
    - `major`: 메이저 버전 업데이트 (1.0.0 → 2.0.0)
    - `feature`: 마이너 버전 업데이트 (1.0.0 → 1.1.0)
@@ -149,7 +149,7 @@ src/
 - 이슈 등록: GitHub Issues 사용
 - PR 리뷰: 최소 1명 이상의 승인 필요
 - 브랜치 전략: Git Flow
-  - main: 프로덕션 브랜치
+  - master: 프로덕션 브랜치
   - develop: 개발 브랜치
   - feature/*: 기능 개발
   - hotfix/*: 긴급 수정

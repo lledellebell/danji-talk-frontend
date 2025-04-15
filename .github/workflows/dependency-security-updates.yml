@@ -6,9 +6,14 @@ on:
     - cron: '0 0 * * *'  
   # 수동 실행 옵션도 제공
   workflow_dispatch:
-  # 보안 알림이 발생할 때 자동 실행
-  security:
-    branches: [ master, develop ]
+  # 보안 알림이 발생할 때 자동 실행 (security 이벤트는 GitHub Enterprise에서만 지원)
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+    branches:
+      - master
+      - develop
 
 permissions:
   contents: write
@@ -28,11 +33,12 @@ jobs:
           node-version: '18'
           cache: 'npm'
 
-      - name: Dependabot 업데이트 확인 및 적용
-        uses: dependabot/fetch-metadata@v1
-        id: dependabot-metadata
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      # Dependabot 관련 작업 - GitHub API 액세스에 문제가 있을 수 있음
+      # - name: Dependabot 업데이트 확인 및 적용
+      #   uses: dependabot/fetch-metadata@v1
+      #   id: dependabot-metadata
+      #   with:
+      #     github-token: "${{ secrets.GITHUB_TOKEN }}"
 
       # axios 취약점 업데이트
       - name: axios 업데이트
@@ -78,5 +84,5 @@ jobs:
             
             이 PR은 자동으로 생성되었습니다.
           branch: security-updates
-          base: develop
+          base: master
           labels: security,dependencies 
