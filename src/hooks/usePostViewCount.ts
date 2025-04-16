@@ -8,7 +8,7 @@ export const usePostViewCount = () => {
       return res.data;
     },
     onSuccess: () => {},
-    onError: (error) => {},
+    onError: () => {},
   });
 
   return { postViewCount: viewCountMutaion.mutate };
