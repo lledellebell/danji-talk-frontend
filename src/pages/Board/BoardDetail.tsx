@@ -22,6 +22,7 @@ import { formatDate } from '../../utils/formatDate';
 import Header from '../../layouts/Header';
 import styles from './BoardDetail.module.scss';
 import { useEditComment } from '../../hooks/useEditComment';
+import { usePostViewCount } from '../../hooks/usePostViewCount';
 
 const HeaderIcon = ({
   feedId,
@@ -364,11 +365,14 @@ export const BoardDetail = () => {
   const { data: commentList, isLoading: commentLoading } = useCommentList(
     Number(feedId)
   );
+  const { postViewCount } = usePostViewCount();
   const [isReacted, setIsReacted] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   const { postReaction, deleteReaction } = useReaction(Number(feedId));
   const { postBookMark, deleteBookMark } = useBookMark(Number(feedId));
+
+  const hasPosted = useRef(false);
 
   useEffect(() => {
     if (data) {
@@ -376,6 +380,13 @@ export const BoardDetail = () => {
       setIsBookmarked(data.isBookmarked);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (!hasPosted.current && feedId) {
+      postViewCount(Number(feedId));
+      hasPosted.current = true;
+    }
+  }, [feedId]);
 
   const handleReaction = () => {
     if (isReacted) {
