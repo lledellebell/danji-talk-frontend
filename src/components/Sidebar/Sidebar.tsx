@@ -1,7 +1,8 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './Sidebar.module.scss';
 import { useAuthStore } from '../../stores/authStore';
+import { useSidebarStore } from '../../stores/sidebarStore';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -11,15 +12,12 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuthStore();
-  const [isClosing, setIsClosing] = useState(false);
+  const { menuItems, isClosing, closeSidebar } = useSidebarStore();
 
   const handleClose = useCallback(() => {
-    setIsClosing(true);
-    setTimeout(() => {
-      setIsClosing(false);
-      onClose();
-    }, 300);
-  }, [onClose]);
+    closeSidebar();
+    onClose();
+  }, [closeSidebar, onClose]);
 
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
@@ -71,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <button
           type="button"
           className={styles['sidebar__close-button']}
-          onClick={onClose}
+          onClick={handleClose}
           aria-label="메뉴 닫기"
         >
           <svg
@@ -91,56 +89,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         </button>
         <nav className={styles['sidebar__nav']}>
           <ul className={styles['sidebar__list']}>
-            <li className={styles['sidebar__item']}>
-              <Link to="/complex-info" className={styles['sidebar__link']}>
-                단지정보
-              </Link>
-            </li>
-            <li className={styles['sidebar__item']}>
-              <Link to="/community" className={styles['sidebar__link']}>
-                커뮤니티
-              </Link>
-            </li>
-            <li className={styles['sidebar__item']}>
-              <Link to="/notices" className={styles['sidebar__link']}>
-                공지사항
-              </Link>
-            </li>
-            <li className={styles['sidebar__item']}>
-              <Link to="/favorites" className={styles['sidebar__link']}>
-                즐겨찾기
-              </Link>
-            </li>
-            <li className={styles['sidebar__item']}>
-              <Link to="/mypage" className={styles['sidebar__link']}>
-                마이페이지
-              </Link>
-            </li>
-            <li className={styles['sidebar__item']}>
-              <Link to="/facilities" className={styles['sidebar__link']}>
-                시설정보
-              </Link>
-            </li>
-            <li className={styles['sidebar__item']}>
-              <Link to="/chat" className={styles['sidebar__link']}>
-                채팅
-              </Link>
-            </li>
-            <li className={styles['sidebar__item']}>
-              <Link to="/visitor-car" className={styles['sidebar__link']}>
-                방문차량등록
-              </Link>
-            </li>
-            <li className={styles['sidebar__item']}>
-              <Link to="/my-reservations" className={styles['sidebar__link']}>
-                내 예약 정보
-              </Link>
-            </li>
-            <li className={styles['sidebar__item']}>
-              <Link to="/register-complex" className={styles['sidebar__link']}>
-                단지 등록
-              </Link>
-            </li>
+            {menuItems.map((item) => (
+              <li key={item.path} className={styles['sidebar__item']}>
+                <Link to={item.path} className={styles['sidebar__link']}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
             <li className={styles['sidebar__item']}>
               {isLoggedIn ? (
                 <button
