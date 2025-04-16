@@ -38,7 +38,7 @@ $pc-breakpoint: 768px;
       @media (min-width: 1024px) {
         position: absolute;
         width: 100%;
-        height: calc(100% + 20px);
+        height: calc(100% + 120px);
         border-radius: 0;
         z-index: $z-index-alert-in-frame;
       }
