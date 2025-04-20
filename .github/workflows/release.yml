@@ -25,13 +25,14 @@ jobs:
         id: release
         uses: softprops/action-gh-release@v1
         with:
-          files: 'dist/**'  # 릴리스할 아티팩트 명시
+          files: 'dist/**'
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
           body: |
             ## 개요
             새로운 기능과 버그 수정이 포함된 릴리스입니다.
-          discussion_category_name: 'General' # 토론 카테고리 명시
+          discussion_category_name: 'General'
 
       - name: 릴리스 URL 출력
-        run: echo "릴리스 생성: ${{ steps.release.outputs.html_url }}"
+        run: |
+          echo 릴리스 생성: ${{ steps.release.outputs.html_url }}
