@@ -19,7 +19,7 @@ jobs:
 
       - name: 종속성 설치
         run: npm install
-        working-directory: danji-talk-frontend
+        working-directory: ./
 
       - name: 릴리스 생성
         id: release
