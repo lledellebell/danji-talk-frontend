@@ -15,19 +15,19 @@ jobs:
       - name: Node.js 설정
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '20'
 
       - name: 종속성 설치
         run: npm install
-        working-directory: danji-talk-frontend
+        working-directory: ./
 
       - name: 릴리스 생성
         id: release
         uses: softprops/action-gh-release@v1
         with:
-          files: 'dist/**'
+          files: './**'
           tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          name: ${{ github.ref }}
           body: |
             ## 개요
             새로운 기능과 버그 수정이 포함된 릴리스입니다.
