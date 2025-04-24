@@ -19,9 +19,7 @@ import { useApproveChat } from '../../hooks/useApproveChat';
 import { useRejectChat } from '../../hooks/useRejectChat';
 import { useNavigate } from 'react-router-dom';
 
-const OneToOneChat = ({ directChats }: { directChats: ChatRoom[] }) => {
-  const nav = useNavigate();
-
+const OneToOneChat = () => {
   return (
     <>
       {directChats.map((chat, index) => (

@@ -62,6 +62,7 @@ export interface ChatRoom {
 
 export const chatKeys = {
   all: ['chats'] as const,
+  wsToken: () => [...chatKeys.all, 'ws-token'] as const,
 
   // 1:1 채팅
   direct: () => [...chatKeys.all, 'direct'] as const,
@@ -109,7 +110,13 @@ export const chatService = {
     const response = await api.delete(`/chat/request/${requestId}`);
     return response.data;
   },
+
+  getWsToken: async () => {
+    const response = await api.get('/chat/ws-token');
+    return response.data;
+  },
 };
+
 export const useDirectChats = () => {
   return useQuery({
     queryKey: chatKeys.direct(),
@@ -146,6 +153,14 @@ export const useChatRoomDetail = (id: string) => {
   return useQuery({
     queryKey: chatKeys.room(id),
     queryFn: () => chatService.getChatRoomDetail(id),
+    retry: false,
+  });
+};
+
+export const useWsToken = () => {
+  return useQuery({
+    queryKey: chatKeys.wsToken(),
+    queryFn: chatService.getWsToken,
     retry: false,
   });
 };

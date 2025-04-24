@@ -3,7 +3,7 @@ import styles from './ChatRoom.module.scss';
 import profileIcon from '../../assets/board/profile.svg';
 import { formatDate } from '../../utils/formatDate';
 import { useParams } from 'react-router-dom';
-import { useChatRoomDetail } from '../../services/chatService';
+import { useChatRoomDetail, useWsToken } from '../../services/chatService';
 import { useEffect, useState } from 'react';
 import {
   connectChatSocket,
@@ -164,6 +164,8 @@ const RightBubble = ({ message }: Props) => (
 const ChatRoom = () => {
   const { roomId } = useParams();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const { data: wsTokenData } = useWsToken();
+  const nav = useNavigate();
 
   const {
     data: directChats = [],
@@ -178,13 +180,12 @@ const ChatRoom = () => {
   }, [directChats]);
 
   useEffect(() => {
-    if (!roomId) {
+    if (!roomId || !wsTokenData?.data) {
       return;
     }
-
     console.log('📡 채팅 소켓 연결 시도:', roomId);
 
-    connectChatSocket((roomId, msg: string) => {
+    connectChatSocket(wsTokenData.data, (roomId, msg: string) => {
       const parsedMsg: ChatMessage = JSON.parse(msg);
       console.log('📩 받은 메시지:', parsedMsg, roomId);
       setMessages((prev) => [...prev, parsedMsg]);
@@ -194,7 +195,7 @@ const ChatRoom = () => {
       disconnectChatSocket();
       console.log('❌ 채팅 소켓 연결 종료:', roomId);
     };
-  }, [roomId]);
+  }, [roomId, wsTokenData]);
 
   // 로딩 중인 경우
   if (isDirectChatsLoading) return <div>로딩 중...</div>;
@@ -207,8 +208,6 @@ const ChatRoom = () => {
   const information = directChats?.data?.memberInformationList?.find(
     (member: MemberInfo) => member.id !== myId
   );
-
-  const nav = useNavigate();
 
   return (
     <>
