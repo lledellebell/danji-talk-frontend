@@ -1,7 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { authViewModel, LoginRequest, KakaoLoginRequest } from '../models/AuthViewModel';
-import { useAuthStore } from '../../stores/authStore';
+import { 
+  LoginRequest, 
+  KakaoLoginRequest, 
+  RegisterRequest, 
+  // EmailVerificationResponse 
+} from '../types';
+import { authViewModel } from '../models/AuthViewModel';
+import { useAuthStore } from '../../../stores/authStore';
 
 /**
  * 로그인 기능을 위한 커스텀 훅
@@ -77,6 +83,34 @@ export const useKakaoLogin = () => {
       // 에러 메시지 설정
       setError(error.message);
     },
+  });
+};
+
+/**
+ * 회원가입 기능을 위한 커스텀 훅
+ */
+export const useRegister = () => {
+  const navigate = useNavigate();
+  const { setError } = useAuthStore();
+
+  return useMutation({
+    mutationFn: (data: RegisterRequest) => authViewModel.register(data),
+    onSuccess: () => {
+      // 회원가입 성공 시 로그인 페이지로 이동
+      navigate('/login', { replace: true });
+    },
+    onError: (error: Error) => {
+      setError(error.message);
+    },
+  });
+};
+
+/**
+ * 이메일 인증을 위한 커스텀 훅
+ */
+export const useVerifyEmail = () => {
+  return useMutation({
+    mutationFn: (email: string) => authViewModel.verifyEmail(email),
   });
 };
 

@@ -2,11 +2,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { 
   Board,
-  boardViewModel, 
   BoardListParams, 
   CreateBoardRequest, 
   UpdateBoardRequest 
-} from '../models/BoardViewModel';
+} from '../types';
+import { boardViewModel } from '../models/BoardViewModel';
 
 /**
  * 게시글 목록 조회를 위한 훅
@@ -32,6 +32,16 @@ export const useBoardDetailQuery = (id: string) => {
       }
       return failureCount < 3;
     },
+  });
+};
+
+/**
+ * 게시글 조회수 증가를 위한 훅
+ */
+export const useIncreaseViewCount = () => {
+  return useMutation({
+    mutationFn: (id: string) => boardViewModel.increaseViewCount(id),
+    // 실패해도 사용자 경험에 영향이 없으므로 특별한 처리 없음
   });
 };
 

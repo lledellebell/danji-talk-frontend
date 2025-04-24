@@ -1,50 +1,15 @@
-import { apiClient } from '../client';
-import { API_ENDPOINTS } from '../endpoints';
+import { apiClient } from '../../../api/client';
+import { API_ENDPOINTS } from '../../../api/endpoints';
 import { AxiosError } from 'axios';
-
-export interface Board {
-  id: string;
-  title: string;
-  content: string;
-  author: {
-    id: string;
-    username: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-  viewCount: number;
-  likeCount: number;
-  commentCount: number;
-  isBookmarked: boolean;
-  isLiked: boolean;
-}
-
-export interface BoardListParams {
-  page?: number;
-  limit?: number;
-  search?: string;
-  category?: string;
-}
-
-export interface BoardListResponse {
-  boards: Board[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-}
-
-export interface CreateBoardRequest {
-  title: string;
-  content: string;
-  category?: string;
-}
-
-export interface UpdateBoardRequest {
-  title?: string;
-  content?: string;
-  category?: string;
-}
+import {
+  Board,
+  BoardListParams,
+  BoardListResponse,
+  CreateBoardRequest,
+  UpdateBoardRequest,
+  LikeResponse,
+  BookmarkResponse
+} from '../types';
 
 // 에러 메시지 매핑
 const errorMessages = {
@@ -90,6 +55,18 @@ export class BoardViewModel {
   }
   
   /**
+   * 게시글 조회수 증가
+   */
+  async increaseViewCount(id: string): Promise<void> {
+    try {
+      await apiClient.post(`${API_ENDPOINTS.BOARD.DETAIL(id)}/view`);
+    } catch (error: unknown) {
+      // 조회수 증가 실패는 무시 (사용자 경험에 영향 없음)
+      console.error('조회수 증가 실패:', error);
+    }
+  }
+  
+  /**
    * 게시글 생성
    */
   async createBoard(data: CreateBoardRequest): Promise<Board> {
@@ -130,9 +107,9 @@ export class BoardViewModel {
   /**
    * 게시글 좋아요/좋아요 취소
    */
-  async toggleLike(id: string): Promise<{ isLiked: boolean; likeCount: number }> {
+  async toggleLike(id: string): Promise<LikeResponse> {
     try {
-      const response = await apiClient.post<{ isLiked: boolean; likeCount: number }>(
+      const response = await apiClient.post<LikeResponse>(
         API_ENDPOINTS.REACTION.LIKE(id)
       );
       return response.data;
@@ -145,9 +122,9 @@ export class BoardViewModel {
   /**
    * 게시글 북마크/북마크 취소
    */
-  async toggleBookmark(id: string): Promise<{ isBookmarked: boolean }> {
+  async toggleBookmark(id: string): Promise<BookmarkResponse> {
     try {
-      const response = await apiClient.post<{ isBookmarked: boolean }>(
+      const response = await apiClient.post<BookmarkResponse>(
         API_ENDPOINTS.REACTION.BOOKMARK(id)
       );
       return response.data;

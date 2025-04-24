@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
+import { ApiErrorResponse } from '../api/types';
 
 export const useBoardWrite = (feedId?: number) => {
   const [title, setTitle] = useState('');
@@ -38,7 +40,7 @@ export const useBoardWrite = (feedId?: number) => {
       navigate('/community');
       console.log(isEditMode ? '게시글 수정 성공' : '게시글 등록 성공');
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError<ApiErrorResponse>) => {
       console.error(
         isEditMode ? '게시글 수정 실패:' : '게시글 등록 실패:',
         error

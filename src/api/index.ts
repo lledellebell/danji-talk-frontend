@@ -4,12 +4,7 @@ export * from './client';
 // API 엔드포인트 내보내기
 export * from './endpoints';
 
-// 모델 내보내기
-export * from './models/AuthViewModel';
-export * from './models/BoardViewModel';
+// API 공통 타입 내보내기
+export * from './types';
 
-// 훅 내보내기
-export * from './hooks/useAuth';
-export * from './hooks/useBoardHooks';
-
-// 진입점으로 API와 관련된 모든 기능 통합 제공 
+// !참고: API 관련 비즈니스 로직 및 훅은 features 디렉토리로 이동했습니다.

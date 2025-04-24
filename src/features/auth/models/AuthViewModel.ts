@@ -1,28 +1,14 @@
-import { apiClient } from '../client';
-import { API_ENDPOINTS } from '../endpoints';
+import { apiClient } from '../../../api/client';
+import { API_ENDPOINTS } from '../../../api/endpoints';
 import { AxiosError } from 'axios';
-
-// 로그인 요청 인터페이스
-export interface LoginRequest {
-  loginId: string;
-  password: string;
-}
-
-// 로그인 응답 인터페이스
-export interface LoginResponse {
-  token: string;
-  user: {
-    id: string;
-    email: string;
-    username: string;
-  };
-}
-
-// 카카오 로그인 요청 인터페이스
-export interface KakaoLoginRequest {
-  code: string;
-  redirectUri: string;
-}
+import { 
+  LoginRequest, 
+  LoginResponse, 
+  KakaoLoginRequest,
+  RegisterRequest,
+  RegisterResponse,
+  EmailVerificationResponse
+} from '../types';
 
 // 에러 메시지 매핑
 const errorMessages = {
@@ -106,6 +92,35 @@ export class AuthViewModel {
   }
   
   /**
+   * 회원가입 API 호출
+   */
+  async register(data: RegisterRequest): Promise<RegisterResponse> {
+    try {
+      const response = await apiClient.post<RegisterResponse>(API_ENDPOINTS.AUTH.REGISTER, data);
+      return response.data;
+    } catch (error: unknown) {
+      this.handleError(error);
+      throw new Error('회원가입 중 오류가 발생했습니다');
+    }
+  }
+  
+  /**
+   * 이메일 확인 API 호출
+   */
+  async verifyEmail(email: string): Promise<EmailVerificationResponse> {
+    try {
+      const response = await apiClient.post<EmailVerificationResponse>(
+        API_ENDPOINTS.AUTH.VERIFY_EMAIL, 
+        { email }
+      );
+      return response.data;
+    } catch (error: unknown) {
+      this.handleError(error);
+      throw new Error('이메일 확인 중 오류가 발생했습니다');
+    }
+  }
+  
+  /**
    * 로그아웃
    */
   logout(): void {
@@ -118,6 +133,25 @@ export class AuthViewModel {
    */
   isAuthenticated(): boolean {
     return !!localStorage.getItem('auth_token');
+  }
+  
+  /**
+   * 에러 처리 공통 메서드
+   */
+  private handleError(error: unknown): void {
+    if (error instanceof AxiosError && error.response) {
+      const status = error.response.status;
+      const message = 
+        errorMessages[status as keyof typeof errorMessages] || 
+        error.response.data?.message || 
+        errorMessages.default;
+        
+      throw new Error(message);
+    }
+    
+    if (error instanceof AxiosError && error.request) {
+      throw new Error(errorMessages.networkError);
+    }
   }
 }
 
