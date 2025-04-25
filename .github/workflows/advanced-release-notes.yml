@@ -1,0 +1,90 @@
+name: Advanced Auto Release Notes
+
+on:
+  push:
+    tags:
+      - 'v*' # v로 시작하는 태그가 푸시될 때 실행됩니다
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # GitHub 릴리스를 생성하기 위한 권한
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 전체 커밋 히스토리를 가져옵니다
+
+      - name: Generate categorized release notes
+        id: generate_release_notes
+        run: |
+          # 이전 태그 찾기
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          CURRENT_TAG=${GITHUB_REF#refs/tags/}
+          
+          # 헤더 생성
+          echo "# 릴리스 ${CURRENT_TAG}" > release_notes.md
+          echo "" >> release_notes.md
+          
+          if [ -z "$PREVIOUS_TAG" ]; then
+            echo "## 첫 릴리스" >> release_notes.md
+            RANGE="$(git rev-list --max-parents=0 HEAD)..HEAD"
+          else
+            echo "## ${PREVIOUS_TAG}에서 ${CURRENT_TAG}까지의 변경 사항" >> release_notes.md
+            RANGE="${PREVIOUS_TAG}..HEAD"
+          fi
+          
+          echo "" >> release_notes.md
+          
+          # 기능 추가 - feat: 로 시작하는 커밋
+          echo "### ✨ 새로운 기능" >> release_notes.md
+          git log --pretty=format:"* %s (%h)" ${RANGE} | grep -E "^* feat(\([^)]*\))?:" || echo "* 이번 릴리스에 추가된 새 기능이 없습니다." >> release_notes.md
+          echo "" >> release_notes.md
+          
+          # 버그 수정 - fix: 로 시작하는 커밋
+          echo "### 🐛 버그 수정" >> release_notes.md
+          git log --pretty=format:"* %s (%h)" ${RANGE} | grep -E "^* fix(\([^)]*\))?:" || echo "* 이번 릴리스에 수정된 버그가 없습니다." >> release_notes.md
+          echo "" >> release_notes.md
+          
+          # 문서 - docs: 로 시작하는 커밋
+          echo "### 📝 문서" >> release_notes.md
+          git log --pretty=format:"* %s (%h)" ${RANGE} | grep -E "^* docs(\([^)]*\))?:" || echo "* 이번 릴리스에 수정된 문서가 없습니다." >> release_notes.md
+          echo "" >> release_notes.md
+          
+          # 성능 개선 - perf: 로 시작하는 커밋
+          echo "### ⚡ 성능 개선" >> release_notes.md
+          git log --pretty=format:"* %s (%h)" ${RANGE} | grep -E "^* perf(\([^)]*\))?:" || echo "* 이번 릴리스에 개선된 성능이 없습니다." >> release_notes.md
+          echo "" >> release_notes.md
+          
+          # 리팩토링 - refactor: 로 시작하는 커밋
+          echo "### ♻️ 코드 리팩토링" >> release_notes.md
+          git log --pretty=format:"* %s (%h)" ${RANGE} | grep -E "^* refactor(\([^)]*\))?:" || echo "* 이번 릴리스에 리팩토링된 코드가 없습니다." >> release_notes.md
+          echo "" >> release_notes.md
+          
+          # 스타일 - style: 로 시작하는 커밋 
+          echo "### 💄 UI/스타일 변경" >> release_notes.md
+          git log --pretty=format:"* %s (%h)" ${RANGE} | grep -E "^* style(\([^)]*\))?:" || echo "* 이번 릴리스에 변경된 스타일이 없습니다." >> release_notes.md
+          echo "" >> release_notes.md
+          
+          # 기타 변경 - 위 카테고리에 해당하지 않는 커밋
+          echo "### 🔧 기타 변경사항" >> release_notes.md
+          git log --pretty=format:"* %s (%h)" ${RANGE} | grep -v -E "^* (feat|fix|docs|perf|refactor|style)(\([^)]*\))?:" || echo "* 이번 릴리스에 기타 변경사항이 없습니다." >> release_notes.md
+          
+          # 릴리스 노트 확인
+          cat release_notes.md
+          
+          # 환경 변수에 릴리스 노트 저장
+          RELEASE_NOTES=$(cat release_notes.md)
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          echo "$RELEASE_NOTES" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{ env.RELEASE_NOTES }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
