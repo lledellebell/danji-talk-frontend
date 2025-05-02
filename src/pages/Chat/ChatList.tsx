@@ -62,7 +62,7 @@ const ResponseChat = ({ responseChats }: { responseChats: ChatRoom[] }) => {
   return (
     <>
       {responseChats.map((chat, idx) => (
-        <div className={styles['chat-response']}>
+        <div className={styles['chat-response']} key={idx}>
           <div className={styles['chat-response-container']}>
             <div className={styles['chat-response-info']}>
               <img
@@ -72,19 +72,36 @@ const ResponseChat = ({ responseChats }: { responseChats: ChatRoom[] }) => {
               />
               <div className={styles['chat-response-author']}>
                 <span className={styles['chat-response-name']}>
-                  <span className={styles['chat-response-name']}>한예빈</span>
-                  <span className={styles['chat-response-time']}>3분 전</span>
+                  <span className={styles['chat-response-name']}>
+                    {chat.memberInformation.nickname}
+                  </span>
+                  <span className={styles['chat-response-time']}>
+                    {formatDate(chat.createdAt)}
+                  </span>
                 </span>
                 <span className={styles['chat-response-content']}>
-                  아파트 관련해서 정보 좀 얻고자 연락드렸어요. 혹시 아파트
-                  도서관 사용을 위해 정액권을 끊어야 하나요?
+                  {chat.message}
                 </span>
               </div>
             </div>
             <div className={styles['chat-response-buttons']}>
-              <span className={styles['chat-response-reject']}>거절</span>
+              <span
+                className={styles['chat-response-reject']}
+                onClick={() => {
+                  console.log('거절');
+                }}
+              >
+                거절
+              </span>
               <div className={styles['chat-response-divider']}></div>
-              <span className={styles['chat-response-accept']}>수락</span>
+              <span
+                className={styles['chat-response-accept']}
+                onClick={() => {
+                  console.log('수락');
+                }}
+              >
+                수락
+              </span>
             </div>
           </div>
           <div className={styles['chat-response-bottom-divider']}></div>
@@ -297,7 +314,7 @@ export const ChatList = () => {
           <div className={styles['chat-list__container']}>
             {isResponseChatsLoading ? (
               <div className={styles['chat-list__loading']}>로딩 중...</div>
-            ) : responseChats ? (
+            ) : responseChatsError ? (
               <div className={styles['chat-list__error']}>
                 {handleError(responseChatsError as Error)}
               </div>
