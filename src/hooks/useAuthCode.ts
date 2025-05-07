@@ -21,7 +21,7 @@ export const useAuthCode = () => {
       });
       return response.data;
     },
-    onSuccess: (_data) => {
+    onSuccess: () => {
       setAuthCodeVerified(true);
       openAlert();
       setTitle('인증확인');
