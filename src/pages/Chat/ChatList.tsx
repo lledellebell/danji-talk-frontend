@@ -14,6 +14,8 @@ import {
 } from '../../services/chatService';
 import styles from './ChatList.module.scss';
 import React from 'react';
+import { useApproveChat } from '../../hooks/useApproveChat';
+import { useRejectChat } from '../../hooks/useRejectChat';
 
 const OneToOneChat = ({ directChats }: { directChats: ChatRoom[] }) => {
   return (
@@ -59,6 +61,9 @@ const OneToOneChat = ({ directChats }: { directChats: ChatRoom[] }) => {
 };
 
 const ResponseChat = ({ responseChats }: { responseChats: ChatRoom[] }) => {
+  const { approveChat, isApproving } = useApproveChat();
+  const { rejectChat, isRejecting } = useRejectChat();
+
   return (
     <>
       {responseChats.map((chat, idx) => (
@@ -87,20 +92,16 @@ const ResponseChat = ({ responseChats }: { responseChats: ChatRoom[] }) => {
             <div className={styles['chat-response-buttons']}>
               <span
                 className={styles['chat-response-reject']}
-                onClick={() => {
-                  console.log('거절');
-                }}
+                onClick={() => rejectChat({ requestId: chat.requestId })}
               >
-                거절
+                {isRejecting ? '거절 중...' : '거절'}
               </span>
               <div className={styles['chat-response-divider']}></div>
               <span
                 className={styles['chat-response-accept']}
-                onClick={() => {
-                  console.log('수락');
-                }}
+                onClick={() => approveChat({ requestId: chat.requestId })}
               >
-                수락
+                {isApproving ? '수락 중...' : '수락'}
               </span>
             </div>
           </div>
