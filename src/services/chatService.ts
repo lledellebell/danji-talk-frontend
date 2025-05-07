@@ -45,6 +45,7 @@ export interface ChatRoom {
   lastMessage?: string; // 마지막 메시지
   updatedAt: string; // 마지막 업데이트 시간
   unreadCount: number; // 읽지 않은 메시지 수
+  requestId: string;
   participants: { id: string; name: string; profileImage?: string }[];
   memberInformation: {
     // 참여자 정보
