@@ -3,12 +3,10 @@ import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
-  plugins: [
-    react(),
-    svgr()
-  ],
+  plugins: [react(), svgr()],
   define: {
     __WS_URL__: JSON.stringify(process.env.WS_URL),
+    global: 'globalThis',
   },
   server: {
     host: true,
@@ -26,7 +24,7 @@ export default defineConfig({
         changeOrigin: true,
         secure: true,
         ws: true,
-        rewrite: (path) => path.replace(/^\/api/, '/api')
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
     },
   },
@@ -40,16 +38,16 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: undefined,
-      }
-    }
+      },
+    },
   },
   preview: {
     host: true,
   },
   optimizeDeps: {
-    include: ['react', 'react-dom']
+    include: ['react', 'react-dom'],
   },
   esbuild: {
-    legalComments: 'none'
-  }
+    legalComments: 'none',
+  },
 });
