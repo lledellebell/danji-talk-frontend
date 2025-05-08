@@ -1,6 +1,14 @@
 import Header from '../../layouts/Header';
 import styles from './ChatRoom.module.scss';
 import profileIcon from '../../assets/board/profile.svg';
+import { useParams } from 'react-router-dom';
+import { useChatRoomDetail } from '../../services/chatService';
+import { useEffect } from 'react';
+import {
+  connectChatSocket,
+  disconnectChatSocket,
+  sendChatMessage,
+} from '../../hooks/useChatSocket';
 
 const ChatNotice = () => {
   return (
@@ -110,10 +118,36 @@ const RightBubble = () => {
 };
 
 const ChatRoom = () => {
+  const { roomId } = useParams();
+
+  const {
+    data: directChats = [],
+    isLoading: isDirectChatsLoading,
+    error: directChatsError,
+  } = useChatRoomDetail(roomId!);
+
+  useEffect(() => {
+    if (!roomId) {
+      console.warn('❗ roomId가 없습니다. WebSocket 연결을 건너뜁니다.');
+      return;
+    }
+
+    console.log('📡 채팅 소켓 연결 시도:', roomId);
+
+    connectChatSocket(roomId, (msg) => {
+      console.log('📩 받은 메시지:', msg);
+      // 여기서 메시지 상태 업데이트나 알림 로직 추가 가능
+    });
+  });
+
+  if (isDirectChatsLoading) return <div>로딩 중...</div>;
+
+  const information = directChats?.data?.memberInformationList?.[0];
+
   return (
     <>
       <Header
-        title="한예빈"
+        title={information.nickname}
         type="sub"
         hasBackButton={true}
         hasRightButton={true}

@@ -16,13 +16,19 @@ import styles from './ChatList.module.scss';
 import React from 'react';
 import { useApproveChat } from '../../hooks/useApproveChat';
 import { useRejectChat } from '../../hooks/useRejectChat';
+import { useNavigate } from 'react-router-dom';
 
 const OneToOneChat = ({ directChats }: { directChats: ChatRoom[] }) => {
+  const nav = useNavigate();
+
   return (
     <>
       {directChats.map((chat, index) => (
         <React.Fragment key={index}>
-          <div className={styles['one-to-one-chat']}>
+          <div
+            className={styles['one-to-one-chat']}
+            onClick={() => nav(`/chatroom/${chat.chatroomId}`)}
+          >
             <div className={styles['one-to-one-chat-container']}>
               <div className={styles['one-to-one-chat-info']}>
                 <img
@@ -33,14 +39,14 @@ const OneToOneChat = ({ directChats }: { directChats: ChatRoom[] }) => {
                 <div className={styles['one-to-one-chat-author']}>
                   <div>
                     <span className={styles['one-to-one-chat-name']}>
-                      {chat.name}
+                      {chat.memberInformation.nickname}
                     </span>
                     <span className={styles['one-to-one-chat-time']}>
-                      {chat.time}
+                      {formatDate(chat.messageCreatedAt)}
                     </span>
                   </div>
                   <p className={styles['one-to-one-chat-content']}>
-                    {chat.lastMessage}
+                    {chat.chatMessage}
                   </p>
                 </div>
               </div>
@@ -279,7 +285,7 @@ export const ChatList = () => {
                 1:1 채팅이 없습니다
               </div>
             ) : (
-              <OneToOneChat directChats={directChats} />
+              <OneToOneChat directChats={directChats.data} />
             )}
           </div>
         </TabPanel>
