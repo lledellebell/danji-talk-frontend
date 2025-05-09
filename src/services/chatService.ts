@@ -49,6 +49,7 @@ export interface ChatRoom {
   chatroomId: string;
   chatMessage: string;
   messageCreatedAt: string;
+  status: string;
   participants: { id: string; name: string; profileImage?: string }[];
   memberInformation: {
     // 참여자 정보
