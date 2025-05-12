@@ -65,55 +65,70 @@ const OneToOneChat = ({ directChats }: { directChats: ChatRoom[] }) => {
     </>
   );
 };
-
 const ResponseChat = ({ responseChats }: { responseChats: ChatRoom[] }) => {
   const { approveChat, isApproving } = useApproveChat();
   const { rejectChat, isRejecting } = useRejectChat();
 
+  const statusMap: Record<string, string> = {
+    PENDING: '처리중',
+    APPROVED: '수락됨',
+    REJECTED: '거절됨',
+  };
+
   return (
     <>
-      {responseChats.map((chat, idx) => (
-        <div className={styles['chat-response']} key={idx}>
-          <div className={styles['chat-response-container']}>
-            <div className={styles['chat-response-info']}>
-              <img
-                className={styles['chat-response-profile-img']}
-                src={profileIcon}
-                alt="프로필"
-              />
-              <div className={styles['chat-response-author']}>
-                <span className={styles['chat-response-name']}>
+      {responseChats.map((chat, idx) => {
+        const statusText = statusMap[chat.status] || '알 수 없음';
+
+        return (
+          <div className={styles['chat-response']} key={idx}>
+            <div className={styles['chat-response-container']}>
+              <div className={styles['chat-response-info']}>
+                <img
+                  className={styles['chat-response-profile-img']}
+                  src={profileIcon}
+                  alt="프로필"
+                />
+                <div className={styles['chat-response-author']}>
                   <span className={styles['chat-response-name']}>
                     {chat.memberInformation.nickname}
+                    <span className={styles['chat-response-time']}>
+                      {formatDate(chat.createdAt)}
+                    </span>
                   </span>
-                  <span className={styles['chat-response-time']}>
-                    {formatDate(chat.createdAt)}
+                  <span className={styles['chat-response-content']}>
+                    {chat.message}
                   </span>
-                </span>
-                <span className={styles['chat-response-content']}>
-                  {chat.message}
-                </span>
+                </div>
+              </div>
+              <div className={styles['chat-response-buttons']}>
+                {chat.status === 'PENDING' ? (
+                  <>
+                    <span
+                      className={styles['chat-response-reject']}
+                      onClick={() => rejectChat({ requestId: chat.requestId })}
+                    >
+                      {isRejecting ? '거절 중...' : '거절'}
+                    </span>
+                    <div className={styles['chat-response-divider']}></div>
+                    <span
+                      className={styles['chat-response-accept']}
+                      onClick={() => approveChat({ requestId: chat.requestId })}
+                    >
+                      {isApproving ? '수락 중...' : '수락'}
+                    </span>
+                  </>
+                ) : (
+                  <span className={styles['chat-response-status']}>
+                    {statusText}
+                  </span>
+                )}
               </div>
             </div>
-            <div className={styles['chat-response-buttons']}>
-              <span
-                className={styles['chat-response-reject']}
-                onClick={() => rejectChat({ requestId: chat.requestId })}
-              >
-                {isRejecting ? '거절 중...' : '거절'}
-              </span>
-              <div className={styles['chat-response-divider']}></div>
-              <span
-                className={styles['chat-response-accept']}
-                onClick={() => approveChat({ requestId: chat.requestId })}
-              >
-                {isApproving ? '수락 중...' : '수락'}
-              </span>
-            </div>
+            <div className={styles['chat-response-bottom-divider']}></div>
           </div>
-          <div className={styles['chat-response-bottom-divider']}></div>
-        </div>
-      ))}
+        );
+      })}
     </>
   );
 };
@@ -121,38 +136,52 @@ const ResponseChat = ({ responseChats }: { responseChats: ChatRoom[] }) => {
 const RequestChat = ({ requestChats }: { requestChats: ChatRoom[] }) => {
   return (
     <>
-      {requestChats.map((chat, idx) => (
-        <div key={idx} className={styles['chat-request']}>
-          <div className={styles['chat-request-container']}>
-            <div className={styles['chat-request-info']}>
-              <img
-                className={styles['chat-request-profile-img']}
-                src={profileIcon}
-                alt="프로필"
-              />
-              <div className={styles['chat-request-author']}>
-                <span className={styles['chat-request-name']}>
+      {requestChats.map((chat, idx) => {
+        const statusMap: Record<string, string> = {
+          PENDING: '처리중',
+          APPROVED: '수락됨',
+          REJECTED: '거절됨',
+        };
+
+        const statusText = statusMap[chat.status] || '알 수 없음';
+
+        return (
+          <div key={idx} className={styles['chat-request']}>
+            <div className={styles['chat-request-container']}>
+              <div className={styles['chat-request-info']}>
+                <img
+                  className={styles['chat-request-profile-img']}
+                  src={profileIcon}
+                  alt="프로필"
+                />
+                <div className={styles['chat-request-author']}>
                   <span className={styles['chat-request-name']}>
                     {chat.memberInformation.nickname}
+                    <span className={styles['chat-request-time']}>
+                      {formatDate(chat.createdAt)}
+                    </span>
                   </span>
-                  <span className={styles['chat-request-time']}>
-                    {formatDate(chat.createdAt)}
+                  <span className={styles['chat-request-content']}>
+                    {chat.message}
                   </span>
+                </div>
+              </div>
+              <div className={styles['chat-request-buttons']}>
+                <span className={styles['chat-request-status']}>
+                  {statusText}
                 </span>
-                <span className={styles['chat-request-content']}>
-                  {chat.message}
-                </span>
+                {chat.status === 'PENDING' && (
+                  <>
+                    <div className={styles['chat-request-divider']}></div>
+                    <span className={styles['chat-request-cancel']}>취소</span>
+                  </>
+                )}
               </div>
             </div>
-            <div className={styles['chat-request-buttons']}>
-              <span className={styles['chat-request-status']}>대기중</span>
-              <div className={styles['chat-request-divider']}></div>
-              <span className={styles['chat-request-cancel']}>취소</span>
-            </div>
+            <div className={styles['chat-request-bottom-divider']}></div>
           </div>
-          <div className={styles['chat-request-bottom-divider']}></div>
-        </div>
-      ))}
+        );
+      })}
     </>
   );
 };
