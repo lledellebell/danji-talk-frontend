@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import TabWrapper from '../../components/common/Tab/TabWrapper';
 import TabPanel from '../../components/common/Tab/TabPanel';
 import Tab from '../../components/common/Tab/Tab';
@@ -223,49 +223,6 @@ export const ChatList = () => {
       return '로그인이 필요한 서비스입니다.';
     }
     return error.message;
-  };
-
-  const renderChatItem = (chat: ChatRoom) => {
-    const participant = chat.participants[0];
-
-    return (
-      <div key={chat.id} className={styles['chat']}>
-        <div className={styles['chat__avatar']}>
-          {participant.profileImage ? (
-            <img
-              src={participant.profileImage}
-              alt={participant.name}
-              className={styles['chat__avatar-image']}
-            />
-          ) : (
-            <div className={styles['chat__avatar-placeholder']}>
-              {participant.name.charAt(0)}
-            </div>
-          )}
-        </div>
-        <div className={styles['chat__content']}>
-          <div className={styles['chat__header']}>
-            <div className={styles['chat__name']}>
-              {chat.name || participant.name}
-            </div>
-            <div className={styles['chat__time']}>
-              {new Date(chat.updatedAt).toLocaleString('ko-KR', {
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
-            </div>
-          </div>
-          <div className={styles['chat__footer']}>
-            <div className={styles['chat__message']}>
-              {chat.lastMessage || '새로운 채팅을 시작해보세요'}
-            </div>
-            {chat.unreadCount > 0 && (
-              <div className={styles['chat__badge']}>{chat.unreadCount}</div>
-            )}
-          </div>
-        </div>
-      </div>
-    );
   };
 
   return (
