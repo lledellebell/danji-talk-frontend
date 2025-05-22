@@ -32,7 +32,7 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
     sourcemap: true,
-    target: 'es2015',
+    target: ['es2015', 'safari11'],
     minify: 'terser',
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
@@ -49,5 +49,6 @@ export default defineConfig({
   },
   esbuild: {
     legalComments: 'none',
+    target: ['es2015', 'safari11'],
   },
 });
