@@ -21,6 +21,55 @@ const errorMessages = {
 };
 
 /**
+ * localStorage 사용 가능 여부 확인
+ */
+const isLocalStorageAvailable = (): boolean => {
+  try {
+    const test = '__storage_test__';
+    localStorage.setItem(test, test);
+    localStorage.removeItem(test);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
+/**
+ * 안전한 localStorage 접근
+ */
+const safeLocalStorage = {
+  setItem: (key: string, value: string): void => {
+    if (isLocalStorageAvailable()) {
+      try {
+        localStorage.setItem(key, value);
+      } catch (e) {
+        console.warn('localStorage 저장 실패:', e);
+      }
+    }
+  },
+  getItem: (key: string): string | null => {
+    if (isLocalStorageAvailable()) {
+      try {
+        return localStorage.getItem(key);
+      } catch (e) {
+        console.warn('localStorage 읽기 실패:', e);
+        return null;
+      }
+    }
+    return null;
+  },
+  removeItem: (key: string): void => {
+    if (isLocalStorageAvailable()) {
+      try {
+        localStorage.removeItem(key);
+      } catch (e) {
+        console.warn('localStorage 삭제 실패:', e);
+      }
+    }
+  }
+};
+
+/**
  * 인증 관련 비즈니스 로직을 처리하는 ViewModel
  */
 export class AuthViewModel {
@@ -36,7 +85,7 @@ export class AuthViewModel {
       
       // 로그인 성공 시 토큰 저장
       if (response.data.token) {
-        localStorage.setItem('auth_token', response.data.token);
+        safeLocalStorage.setItem('auth_token', response.data.token);
       }
       
       return response.data;
@@ -72,7 +121,7 @@ export class AuthViewModel {
       
       // 로그인 성공 시 토큰 저장
       if (response.data.token) {
-        localStorage.setItem('auth_token', response.data.token);
+        safeLocalStorage.setItem('auth_token', response.data.token);
       }
       
       return response.data;
@@ -124,7 +173,7 @@ export class AuthViewModel {
    * 로그아웃
    */
   logout(): void {
-    localStorage.removeItem('auth_token');
+    safeLocalStorage.removeItem('auth_token');
     // 필요에 따라 서버에 로그아웃 API 호출 가능
   }
   
@@ -132,7 +181,7 @@ export class AuthViewModel {
    * 사용자가 로그인 상태인지 확인
    */
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('auth_token');
+    return !!safeLocalStorage.getItem('auth_token');
   }
   
   /**
