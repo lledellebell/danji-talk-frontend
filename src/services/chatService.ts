@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const api = axios.create({
   baseURL: '/api',
@@ -102,6 +103,12 @@ export const chatService = {
     const response = await api.get(`/chat/room/${id}`);
     return response.data;
   },
+
+  // 보낸 요청 취소
+  deleteChatRequest: async (requestId: string) => {
+    const response = await api.delete(`/chat/request/${requestId}`);
+    return response.data;
+  },
 };
 export const useDirectChats = () => {
   return useQuery({
@@ -140,5 +147,19 @@ export const useChatRoomDetail = (id: string) => {
     queryKey: chatKeys.room(id),
     queryFn: () => chatService.getChatRoomDetail(id),
     retry: false,
+  });
+};
+
+export const useDeleteChatRequest = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (requestId: string) => chatService.deleteChatRequest(requestId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: chatKeys.directRequest() });
+    },
+    onError: (error) => {
+      console.error('채팅 요청 삭제 실패:', error);
+    },
   });
 };

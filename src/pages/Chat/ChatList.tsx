@@ -11,6 +11,7 @@ import {
   useGroupChats,
   useRequestChats,
   useResponseChats,
+  useDeleteChatRequest,
 } from '../../services/chatService';
 import styles from './ChatList.module.scss';
 import React from 'react';
@@ -134,9 +135,15 @@ const ResponseChat = ({ responseChats }: { responseChats: ChatRoom[] }) => {
 };
 
 const RequestChat = ({ requestChats }: { requestChats: ChatRoom[] }) => {
+  const deleteMutation = useDeleteChatRequest();
+
+  const handleDelete = (requestId: string) => {
+    deleteMutation.mutate(requestId);
+  };
+
   return (
     <>
-      {requestChats.map((chat, idx) => {
+      {requestChats.map((chat) => {
         const statusMap: Record<string, string> = {
           PENDING: '처리중',
           APPROVED: '수락됨',
@@ -146,7 +153,7 @@ const RequestChat = ({ requestChats }: { requestChats: ChatRoom[] }) => {
         const statusText = statusMap[chat.status] || '알 수 없음';
 
         return (
-          <div key={idx} className={styles['chat-request']}>
+          <div key={chat.requestId} className={styles['chat-request']}>
             <div className={styles['chat-request-container']}>
               <div className={styles['chat-request-info']}>
                 <img
@@ -173,7 +180,13 @@ const RequestChat = ({ requestChats }: { requestChats: ChatRoom[] }) => {
                 {chat.status === 'PENDING' && (
                   <>
                     <div className={styles['chat-request-divider']}></div>
-                    <span className={styles['chat-request-cancel']}>취소</span>
+                    <button
+                      className={styles['chat-request-cancel']}
+                      onClick={() => handleDelete(chat.requestId)}
+                      disabled={deleteMutation.isPending}
+                    >
+                      {deleteMutation.isPending ? '취소 중...' : '취소'}
+                    </button>
                   </>
                 )}
               </div>
