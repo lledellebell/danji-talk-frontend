@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface AuthState {
   isLoggedIn: boolean;
@@ -14,22 +15,30 @@ interface AuthState {
   setIsLoggedIn: (value: boolean) => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  isLoggedIn: localStorage.getItem('isLoggedIn') === 'true',
-  email: '',
-  password: '',
-  error: null,
-  setEmail: (email) => set({ email }),
-  setPassword: (password) => set({ password }),
-  setError: (error) => set({ error }),
-  resetAuth: () => set({ email: '', password: '', error: null }),
-  login: () => {
-    localStorage.setItem('isLoggedIn', 'true');
-    set({ isLoggedIn: true, error: null });
-  },
-  logout: () => {
-    localStorage.removeItem('isLoggedIn');
-    set({ isLoggedIn: false, email: '', password: '' });
-  },
-  setIsLoggedIn: (value) => set({ isLoggedIn: value }),
-}));
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      isLoggedIn: false,
+      email: '',
+      password: '',
+      error: null,
+      setEmail: (email) => set({ email }),
+      setPassword: (password) => set({ password }),
+      setError: (error) => set({ error }),
+      resetAuth: () => set({ email: '', password: '', error: null }),
+      login: () => {
+        set({ isLoggedIn: true, error: null });
+      },
+      logout: () => {
+        set({ isLoggedIn: false, email: '', password: '' });
+      },
+      setIsLoggedIn: (value) => {
+        set({ isLoggedIn: value });
+      },
+    }),
+    {
+      name: 'auth-storage',
+      partialize: (state) => ({ isLoggedIn: state.isLoggedIn }),
+    }
+  )
+);

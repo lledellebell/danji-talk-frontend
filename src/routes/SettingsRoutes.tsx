@@ -28,7 +28,7 @@ const SettingsRoutes = () => {
     } else if (path === '/settings/profile') {
       return (
         <>
-          <Header title="개인 정보 변경" type="sub" hasBackButton={true} />
+          <Header title="프로필 수정" type="sub" hasBackButton={true} />
           <Profile />
         </>
       );

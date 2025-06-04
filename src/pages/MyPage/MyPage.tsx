@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../stores/userStore';
 import { useAuthStore } from '../../stores/authStore';
+import api from '../../api/axios';
 import axios from 'axios';
 
 import WriteIcon from '../../assets/mypage/Write.svg';
@@ -10,6 +11,9 @@ import BookmarkIcon from '../../assets/mypage/Bookmark.svg';
 import MailIcon from '../../assets/mypage/Mail.svg';
 import BrowserIcon from '../../assets/mypage/Browser.svg';
 import EditIcon from '../../assets/mypage/Edit.svg';
+
+
+import LogoIcon from '../../assets/logo.svg';
 
 interface NavItemProps {
   icon: React.ReactNode;
@@ -126,54 +130,71 @@ const ProfileSection: React.FC = () => {
   const { userEmail } = useUserStore();
   const { isLoggedIn } = useAuthStore();
   const [userData, setUserData] = useState({
-    profileImage: '',
+    fileId: '',
     name: '사용자',
     nickname: '',
     email: '',
+    phoneNumber: '',
+    apartmentName: '',
+    building: '',
+    unit: '',
+    location: '',
+    region: '',
+    moveInDate: '',
+    numberOfResidents: '',
+    carNumbers: '',
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      const fetchUserProfile = async () => {
-        setIsLoading(true);
-        setError(null);
-
-        try {
-          // TODO: 사용자 프로필 정보를 가져오는 API 엔드포인트 호출
-          const response = await axios.get('/api/member/profile', {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-          });
-
-          if (response.data) {
-            setUserData({
-              profileImage: response.data.profileImage || '',
-              name: response.data.name || '사용자',
-              nickname: response.data.nickname || '',
-              email: response.data.email || userEmail || 'example@email.com',
-            });
-          }
-        } catch (err) {
-          console.error('프로필 정보를 가져오는 중 오류 발생:', err);
-          setError('프로필 정보를 가져오지 못했습니다.');
-
-          setUserData({
-            profileImage: '',
-            name: '사용자',
-            nickname: '',
-            email: userEmail || 'example@email.com',
-          });
-        } finally {
-          setIsLoading(false);
-        }
-      };
-
-      fetchUserProfile();
+    if (!isLoggedIn) {
+      navigate('/login');
+      return;
     }
-  }, [isLoggedIn, userEmail]);
+
+    const fetchUserProfile = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const response = await api.get('/api/member');
+        setUserData({
+          fileId: response.data.data.fileId || '',
+          name: response.data.data.name || '사용자',
+          nickname: response.data.data.nickname || '',
+          email: response.data.data.email || userEmail || 'example@email.com',
+          phoneNumber: response.data.data.phoneNumber || '',
+          apartmentName: response.data.data.apartmentName || '',
+          building: response.data.data.building || '',
+          unit: response.data.data.unit || '',
+          location: response.data.data.location || '',
+          region: response.data.data.region || '',
+          moveInDate: response.data.data.moveInDate || '',
+          numberOfResidents: response.data.data.numberOfResidents || '',
+          carNumbers: response.data.data.carNumbers || '',
+        });
+      } catch (error) {
+        console.error('프로필 정보를 가져오는 중 오류 발생:', error);
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status === 401) {
+            navigate('/login');
+          } else if (error.response?.status === 500) {
+            console.error('서버 응답 데이터:', error.response.data);
+            setError('서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+          } else {
+            setError('프로필 정보를 가져오는데 실패했습니다.');
+          }
+        } else {
+          setError('알 수 없는 오류가 발생했습니다.');
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserProfile();
+  }, [isLoggedIn, userEmail, navigate]);
 
   const handleEditProfile = () => {
     navigate('/settings/profile');
@@ -192,7 +213,7 @@ const ProfileSection: React.FC = () => {
           <div className={styles['profile__image-container']}>
             <div className={styles['profile__image']}>
               <ProfileImage
-                imageUrl={userData.profileImage}
+                imageUrl={userData.fileId ? `/api/files/${userData.fileId}` : ''}
                 userName={userData.name}
               />
             </div>
@@ -210,6 +231,42 @@ const ProfileSection: React.FC = () => {
             </span>
             <span className={styles['profile__email']}>{userData.email}</span>
           </div>
+
+          {/* 등록된 단지 정보 : 단지 정보가 없는 경우 */}
+          {
+            !userData.apartmentName && (
+              <div className={styles['profile__apartment-info-container']}>
+                <div className={styles['profile__apartment-info']}>
+                  {/* app icon */}
+                  <img
+                    src={LogoIcon}
+                    alt="단지 정보"
+                    width={50}
+                    height={50}
+                    className={styles['profile__apartment-icon']}
+                  />
+                  <span className={styles['profile__apartment-name']}>
+                    단지 정보가 없습니다.
+                  </span>
+                </div>
+
+                <button 
+                  className={styles['profile__apartment-button']}
+                  onClick={() => navigate('/register-complex')}
+                >
+                  단지 등록하기
+                </button>
+              </div>
+            )
+          }
+          {/* 등록된 단지 정보: 단지 정보가 있는 경우 */}
+          {
+            userData.apartmentName && (
+              <div className={styles['profile__apartment-info']}>
+                {/* app icon */}
+              </div>
+            )
+          }
         </div>
       )}
     </div>

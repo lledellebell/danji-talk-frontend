@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
+import api from '../api/axios';
 
 interface LoginResponse {
   token: string;
@@ -18,42 +19,21 @@ const errorMessages = {
 export const useLoginMutation = () => {
   const navigate = useNavigate();
   const { email: loginId, password, setError } = useAuthStore();
-  const setIsAuthenticated = useAuthStore((state) => state.login);
+  const { login } = useAuthStore();
 
   return useMutation<LoginResponse>({
     mutationFn: async () => {
       try {
-        const response = await fetch(`/api/login`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          credentials: 'include',
-          body: JSON.stringify({ loginId, password }),
+        const response = await api.post('/api/login', {
+          loginId,
+          password,
         });
 
-        if (!response.ok) {
-          let errorMessage = errorMessages.default;
-
-          if (errorMessages[response.status as keyof typeof errorMessages]) {
-            errorMessage =
-              errorMessages[response.status as keyof typeof errorMessages];
-          }
-
-          try {
-            const errorData = await response.json();
-            if (errorData.message) {
-              errorMessage = errorData.message;
-            }
-          } catch {
-            //
-          }
-
-          throw new Error(errorMessage);
+        if (response.status === 200) {
+          return { token: 'success' };
         }
 
-        return { token: 'success' };
+        throw new Error(errorMessages.default);
       } catch (error) {
         if (error instanceof TypeError && error.message === 'Failed to fetch') {
           throw new Error(errorMessages.networkError);
@@ -62,22 +42,15 @@ export const useLoginMutation = () => {
       }
     },
     onSuccess: () => {
-      setIsAuthenticated();
+      login();
       navigate('/', { replace: true });
     },
-    onError: (error: Error) => {
-      setError(error.message);
-      useAuthStore.getState().setPassword('');
-
-      setTimeout(() => {
-        if (loginId && password) {
-          document.getElementById('password')?.focus();
-        } else if (!loginId) {
-          document.getElementById('email')?.focus();
-        } else {
-          document.getElementById('password')?.focus();
-        }
-      }, 100);
+    onError: (error) => {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError(errorMessages.default);
+      }
     },
   });
 };
