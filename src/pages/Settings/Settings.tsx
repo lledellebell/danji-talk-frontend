@@ -15,7 +15,7 @@ const settingSections: SettingSection[] = [
   {
     title: '사용자 정보',
     items: [
-      { label: '개인 정보 변경', path: '/settings/profile' },
+      { label: '프로필 수정', path: '/settings/profile' },
       { label: '회원 탈퇴', path: '/settings/withdrawal' },
     ],
   },
