@@ -109,6 +109,12 @@ export const chatService = {
     const response = await api.delete(`/chat/request/${requestId}`);
     return response.data;
   },
+
+  // 보낸 요청 취소
+  getWsToken: async () => {
+    const response = await api.post(`/ws/token`);
+    return response.data;
+  },
 };
 export const useDirectChats = () => {
   return useQuery({
@@ -146,6 +152,14 @@ export const useChatRoomDetail = (id: string) => {
   return useQuery({
     queryKey: chatKeys.room(id),
     queryFn: () => chatService.getChatRoomDetail(id),
+    retry: false,
+  });
+};
+
+export const useWsToken = () => {
+  return useQuery({
+    queryKey: [], // 쿼리키 간단하게
+    queryFn: chatService.getWsToken,
     retry: false,
   });
 };

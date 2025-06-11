@@ -4,6 +4,7 @@ let stompClient: Client | null = null;
 let subscriptions: Record<string, StompSubscription> = {};
 
 export const connectChatSocket = (
+  token: string,
   onMessage: (roomId: string, msg: string) => void
 ) => {
   if (stompClient && stompClient.connected) {
@@ -12,7 +13,7 @@ export const connectChatSocket = (
   }
 
   stompClient = new Client({
-    brokerURL: 'ws://localhost:5173/api/ws/chat',
+    brokerURL: `wss://danjitalk.duckdns.org/api/ws/chat?token=${token}`,
     reconnectDelay: 600000,
     debug: (str: string) => console.log('[STOMP]', str),
 

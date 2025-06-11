@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 
 const OneToOneChat = ({ directChats }: { directChats: ChatRoom[] }) => {
   const nav = useNavigate();
-
+  
   return (
     <>
       {directChats.map((chat, index) => (
