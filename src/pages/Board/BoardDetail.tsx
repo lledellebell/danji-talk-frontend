@@ -22,7 +22,16 @@ import { formatDate } from '../../utils/formatDate';
 import Header from '../../layouts/Header';
 import styles from './BoardDetail.module.scss';
 import { useEditComment } from '../../hooks/useEditComment';
+import { useSendChatRequest } from '../../hooks/useSendChatRequest';
 import { usePostViewCount } from '../../hooks/usePostViewCount';
+import Alert from '../../components/common/Alert/chatAlert';
+import ContentAlert from '../../components/common/Alert/ContentAlert';
+
+interface CommentMember {
+  memberId: number;
+  nickname: string;
+  fileId: string | null;
+}
 
 const HeaderIcon = ({
   feedId,
@@ -140,9 +149,17 @@ const CommentList = ({ comments, feedId }: CommentListProps) => {
 
   const [newComment, setNewComment] = useState('');
   const { deleteComment } = useDeleteComment();
+  const [isOpen, setOpen] = useState(false);
+  const [isAlertOpen, setAlertOpen] = useState(false);
+
+  const [selectedMember, setSelectedMember] = useState<CommentMember | null>(
+    null
+  );
 
   const { addComment } = useAddComment();
   const { editComment } = useEditComment();
+  const { sendChatRequest, isSending } = useSendChatRequest();
+
   const toggleMenu = (commentId: number) => {
     setOpenMenuId((prev) => (prev === commentId ? null : commentId));
   };
@@ -195,6 +212,35 @@ const CommentList = ({ comments, feedId }: CommentListProps) => {
 
   return (
     <div className={styles['comment-container']}>
+      {isOpen && (
+        <Alert
+          nickname={selectedMember?.nickname || ''}
+          profile={selectedMember?.fileId || ''}
+          onClose={() => {
+            setOpen(false);
+          }}
+          onConfirm={() => {
+            setOpen(false);
+            setAlertOpen(true);
+          }}
+        />
+      )}
+      {isAlertOpen && (
+        <ContentAlert
+          nickname={selectedMember?.nickname || ''}
+          onClose={() => setAlertOpen(false)}
+          onConfirm={(requestMessage) => {
+            if (!selectedMember?.memberId) {
+              return;
+            }
+            sendChatRequest({
+              receiverId: selectedMember.memberId,
+              message: requestMessage,
+            });
+            setAlertOpen(false);
+          }}
+        />
+      )}
       <span>댓글({comments.totalElements})</span>
       {comments.content.map((comment) => (
         <div
@@ -207,6 +253,10 @@ const CommentList = ({ comments, feedId }: CommentListProps) => {
                 className={styles['comment-profile-img']}
                 src={profileIcon}
                 alt="프로필"
+                onClick={() => {
+                  setSelectedMember(comment.commentMemberResponseDto);
+                  setOpen(true);
+                }}
               />
               <div className={styles['comment-author']}>
                 <span className={styles['comment-name']}>

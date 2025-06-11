@@ -117,3 +117,35 @@ $pc-breakpoint: 768px;
     transform: translateY(0);
   }
 }
+
+.dialog__footer {
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.dialog__button,
+.dialog__confirm-button,
+.dialog__cancel-button {
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  height: 40px;
+}
+.dialog__cancel-button {
+  background-color: #ebf1ff;
+  color: #333;
+}
+.dialog__cancel-button:hover {
+  background-color: #d4d9e6;
+}
+.dialog__confirm-button {
+  background-color: #97bbff;
+  color: #fff;
+}
+.dialog__confirm-button:hover {
+  background-color: #88a8e6;
+}
