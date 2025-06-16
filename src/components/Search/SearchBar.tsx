@@ -1,26 +1,54 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './SearchBar.module.scss';
 
-const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+interface SearchBarProps {
+  onSearch?: (searchTerm: string) => void;
+  initialValue?: string;
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: 검색 로직 구현
-    console.log('단지정보 검색', searchTerm);
+const SearchBar = ({ onSearch, initialValue }: SearchBarProps) => {
+  const [searchTerm, setSearchTerm] = useState(initialValue || '');
+
+  useEffect(() => {
+    if (initialValue !== undefined) {
+      setSearchTerm(initialValue);
+    }
+  }, [initialValue]);
+
+  const handleSearchAction = () => {
+    if (onSearch) {
+      onSearch(searchTerm);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSearchAction();
+    }
   };
 
   return (
-    <form className={styles.searchBar} onSubmit={handleSubmit}>
+    <form className={styles.searchBar}>
+      <label htmlFor="searchInput" className={styles.searchLabel}>
+        단지 검색
+      </label>
       <input
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="단지 검색"
+        onKeyDown={handleKeyDown}
+        placeholder="궁금한 단지를 검색해보세요!"
+        id="searchInput"
         className={styles.searchInput}
         aria-label="단지 검색"
       />
-      <button type="submit" className={styles.searchButton} aria-label="검색">
+      <button
+        type="button"
+        onClick={handleSearchAction}
+        className={styles.searchButton}
+        aria-label="검색"
+      >
         <svg
           width="20"
           height="20"
@@ -37,6 +65,7 @@ const SearchBar = () => {
           />
         </svg>
       </button>
+    
     </form>
   );
 };

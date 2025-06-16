@@ -1,8 +1,20 @@
 .searchBar {
   display: flex;
   align-items: center;
-  margin: 20px;
   position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 20px;
+}
+
+.searchLabel {
+  visibility: hidden;
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
 }
 
 .searchInput {
@@ -27,7 +39,7 @@
 
 .searchButton {
   position: absolute;
-  right: 0.5rem;
+  right: 1.5rem;
   top: 50%;
   transform: translateY(-50%);
   background: none;
