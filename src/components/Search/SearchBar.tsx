@@ -148,13 +148,22 @@ const SearchBar = ({
       </form>
       
       {showAutocomplete && autocompleteData.length > 0 && (
-        <div className={styles['search-bar__dropdown']}>
+        <div className={styles['search-bar__dropdown']} role="listbox" aria-label="검색 제안">
           <ul>
             {autocompleteData.map((item, index) => (
               <li 
                 key={item.id}
                 onClick={() => handleAutocompleteClick(item)}
                 className={`${styles['search-bar__item']} ${index === selectedIndex ? styles['search-bar__item--selected'] : ''}`}
+                role="option"
+                aria-selected={index === selectedIndex}
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleAutocompleteClick(item);
+                  }
+                }}
               >
                 <div className={styles['search-bar__name']}>
                   {highlightText(item.name, searchInput || searchTerm)}

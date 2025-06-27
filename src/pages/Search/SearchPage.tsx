@@ -13,6 +13,7 @@ const SearchPage = () => {
   const navigate = useNavigate();
   
   const {
+    searchResults,
     recentKeywords,
     isLoading,
     error,
@@ -26,6 +27,14 @@ const SearchPage = () => {
   const [favoriteStates, setFavoriteStates] = useState<{ [key: number]: boolean }>({});
   const [searchInput, setSearchInput] = useState(keywordFromUrl || '');
   const [showAutocomplete, setShowAutocomplete] = useState(false);
+  const [localSearchResults, setLocalSearchResults] = useState<Array<{ 
+    id: number; 
+    name: string; 
+    address: string; 
+    imageUrl: string;
+    totalUnit: number;
+    buildingRange: string;
+  }>>([]);
 
   const autocompleteData = [
     { 
@@ -132,8 +141,13 @@ const SearchPage = () => {
 
   useEffect(() => {
     if (keywordFromUrl) {
+      setHasSearched(true);
+      setSearchInput(keywordFromUrl);
       searchDanji(keywordFromUrl);
     } else {
+      setHasSearched(false);
+      setSearchInput('');
+      setLocalSearchResults([]);
       fetchPopularKeywords();
       fetchRecentKeywords();
       fetchRecentApartments();
@@ -160,37 +174,34 @@ const SearchPage = () => {
     setSearchInput(keyword);
     setSearchParams({ keyword });
     
-    let mockResults = [];
+    const searchTerm = keyword.toLowerCase().trim();
+    let mockResults: Array<{
+      id: number;
+      name: string;
+      region: string;
+      imageUrl: string;
+      totalUnit: number;
+      buildingRange: string;
+    }> = [];
     
     const exactMatches = autocompleteData.filter(item =>
-      item.name.toLowerCase() === keyword.toLowerCase()
+      item.name.toLowerCase() === searchTerm
     );
     
-    const partialMatches = autocompleteData.filter(item =>
-      item.name.toLowerCase().includes(keyword.toLowerCase()) ||
-      item.region.toLowerCase().includes(keyword.toLowerCase())
+    const partialNameMatches = autocompleteData.filter(item =>
+      item.name.toLowerCase().includes(searchTerm)
     );
     
-    if (keyword.includes('구') || keyword.includes('동')) {
-      const regionMatches = autocompleteData.filter(item =>
-        item.region.toLowerCase().includes(keyword.toLowerCase())
-      );
+    const regionMatches = autocompleteData.filter(item =>
+      item.region.toLowerCase().includes(searchTerm)
+    );
+    
+    if (exactMatches.length > 0) {
+      mockResults = exactMatches;
+    } else if (partialNameMatches.length > 0) {
+      mockResults = partialNameMatches;
+    } else if (regionMatches.length > 0) {
       mockResults = regionMatches;
-    } else {
-      mockResults = exactMatches.length > 0 ? exactMatches : partialMatches;
-    }
-    
-    if (mockResults.length === 0) {
-      if (keyword.includes('래미')) {
-        mockResults = autocompleteData.filter(item => 
-          item.name.toLowerCase().includes('래미')
-        );
-      }
-      else if (keyword.includes('구') || keyword.includes('동')) {
-        mockResults = autocompleteData.filter(item => 
-          item.region.toLowerCase().includes(keyword.toLowerCase())
-        );
-      }
     }
     
     const finalResults = mockResults.map(item => ({
@@ -204,15 +215,6 @@ const SearchPage = () => {
     
     setLocalSearchResults(finalResults);
   };
-
-  const [localSearchResults, setLocalSearchResults] = useState<Array<{ 
-    id: number; 
-    name: string; 
-    address: string; 
-    imageUrl: string;
-    totalUnit: number;
-    buildingRange: string;
-  }>>([]);
 
   const handleSearchInputChange = (value: string) => {
     setSearchInput(value);
@@ -230,6 +232,10 @@ const SearchPage = () => {
 
   const handleApartmentClick = (apartment: RecentApartment) => {
     navigate(`/complex/${apartment.id}`);
+  };
+
+  const handleSearchResultClick = (result: { id: number; name: string; address: string }) => {
+    navigate(`/complex/${result.id}`);
   };
 
   const handleBack = () => {
@@ -430,7 +436,7 @@ const SearchPage = () => {
             )}
           </>
         )}
-        {!isLoading && !error && hasSearched && localSearchResults.length === 0 && (
+        {!isLoading && !error && hasSearched && searchResults.length === 0 && localSearchResults.length === 0 && (
           <div className={styles['search-page__search-results']}>
             <h2 className={styles['search-page__title']}>
               검색 결과 <span className={styles['search-page__result-count']}>0건</span>
@@ -438,6 +444,7 @@ const SearchPage = () => {
             <p className={styles['search-page__no-results']}>검색 결과가 없습니다.</p>
           </div>
         )}
+        
         {!isLoading && !error && localSearchResults.length > 0 && (
           <div className={styles['search-page__search-results']}>
             <h2 className={styles['search-page__title']}>
@@ -445,7 +452,11 @@ const SearchPage = () => {
             </h2>
             <ul>
               {localSearchResults.map((result) => (
-                <li key={result.id} className={styles['search-page__clickable-item']}>
+                <li 
+                  key={result.id} 
+                  className={styles['search-page__clickable-item']}
+                  onClick={() => handleSearchResultClick(result)}
+                >
                   <div className={styles['search-page__danji-content']}>
                     <div className={styles['search-page__danji-thumbnail']}>
                       <img 
@@ -460,6 +471,52 @@ const SearchPage = () => {
                       <p className={styles['search-page__danji-info']}>
                         {result.totalUnit}세대 | 총 {extractBuildingCount(result.buildingRange)}동
                       </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={(e) => handleFavoriteToggle(result.id, e)}
+                      className={styles['search-page__favorite-button']}
+                      aria-label="즐겨찾기"
+                    >
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path 
+                          d="M10 15.27L16.18 19L14.54 11.97L20 7.24L12.81 6.62L10 0L7.19 6.62L0 7.24L5.46 11.97L3.82 19L10 15.27Z" 
+                          fill={favoriteStates[result.id] ? "#ffb700" : "#fff"} 
+                          strokeWidth={favoriteStates[result.id] ? "2" : "2"}
+                          stroke={favoriteStates[result.id] ? "#ffb700" : "#C0C0C0"}
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        
+        {!isLoading && !error && searchResults.length > 0 && localSearchResults.length === 0 && (
+          <div className={styles['search-page__search-results']}>
+            <h2 className={styles['search-page__title']}>
+              검색 결과 <span className={styles['search-page__result-count']}>{searchResults.length}건</span>
+            </h2>
+            <ul>
+              {searchResults.map((result) => (
+                <li 
+                  key={result.id} 
+                  className={styles['search-page__clickable-item']}
+                  onClick={() => handleSearchResultClick(result)}
+                >
+                  <div className={styles['search-page__danji-content']}>
+                    <div className={styles['search-page__danji-thumbnail']}>
+                      <img 
+                        src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=300&h=300&fit=crop"
+                        alt={result.name}
+                        className={styles['search-page__danji-image']}
+                      />
+                    </div>
+                    <div className={styles['search-page__danji-details']}>
+                      <p className={styles['search-page__danji-name']}>{result.name}</p>
+                      <p className={styles['search-page__danji-address']}>{result.address}</p>
                     </div>
                     <button
                       type="button"
