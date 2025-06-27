@@ -12,14 +12,14 @@ import HomeSearchBar from '../../components/Search/HomeSearchBar';
 import Header from '../../layouts/Header';
 
 const menuItems = [
-  { src: complexInfo, label: '단지정보' },
-  { src: community, label: '커뮤니티' },
-  { src: notice, label: '공지사항' },
-  { src: facilityInfo, label: '시설정보' },
-  { src: myPage, label: '마이페이지' },
-  { src: favorites, label: '즐겨찾기' },
-  { src: chat, label: '채팅' },
-  { src: visitorVehicle, label: '방문차량등록' },
+  { src: complexInfo, label: '단지정보', path: '/complex-info' },
+  { src: community, label: '커뮤니티', path: '/community' },
+  { src: notice, label: '공지사항', path: '/notices' },
+  { src: facilityInfo, label: '시설정보', path: '/facilities' },
+  { src: myPage, label: '마이페이지', path: '/mypage' },
+  { src: favorites, label: '즐겨찾기', path: '/favorites' },
+  { src: chat, label: '채팅', path: '/chat' },
+  { src: visitorVehicle, label: '방문차량등록', path: '/visitor-car' },
 ];
 
 const HomePage = () => {
@@ -31,16 +31,26 @@ const HomePage = () => {
     }
   };
 
+  const handleMenuItemClick = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <>
       <Header title="DANJITALK" type="main" />
       <HomeSearchBar onSearch={handleSearch} />
       <div className={styles.menuContainer}>
         {menuItems.map((item, index) => (
-          <div key={index} className={styles.menuItem}>
-            <img src={item.src} alt={item.label} />
+          <button 
+            key={index} 
+            className={styles.menuItem}
+            onClick={() => handleMenuItemClick(item.path)}
+            type="button"
+            aria-label={`${item.label} 페이지로 이동`}
+          >
+            <img src={item.src} alt="" />
             <span>{item.label}</span>
-          </div>
+          </button>
         ))}
       </div>
     </>
