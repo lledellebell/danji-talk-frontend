@@ -17,8 +17,8 @@ $font-weight-normal: 400;
 $font-weight-bold: 600;
 
 $mobile-breakpoint: 768px;
+$tablet-breakpoint: 1024px;
 
-// 믹스인 정의
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -31,7 +31,6 @@ $mobile-breakpoint: 768px;
   color: $color;
 }
 
-// 컴포넌트 스타일
 .favorites {
   padding: $spacing-md;
 
@@ -88,12 +87,22 @@ $mobile-breakpoint: 768px;
 .empty-state {
   @include flex-center;
   flex-direction: column;
-  min-height: calc(100vh - 157px);
+  min-height: 60vh;
   padding: $spacing-lg;
   text-align: center;
 
-  @media (max-width: $mobile-breakpoint) {
-    min-height: calc(100vh - 100px);
+  @media (min-width: $tablet-breakpoint) {
+    min-height: 50vh;
+    padding: $spacing-lg * 2;
+  }
+
+  @media (min-width: $mobile-breakpoint) and (max-width: #{$tablet-breakpoint - 1px}) {
+    min-height: 55vh;
+  }
+
+  @media (max-width: #{$mobile-breakpoint - 1px}) {
+    min-height: calc(100vh - 120px);
+    padding: $spacing-lg;
   }
 
   &__icon {
@@ -101,6 +110,11 @@ $mobile-breakpoint: 768px;
     height: auto;
     margin-bottom: $spacing-md;
     opacity: 0.8;
+
+    @media (min-width: $tablet-breakpoint) {
+      width: 140px;
+      margin-bottom: $spacing-lg;
+    }
   }
 
   &__text {
@@ -110,6 +124,11 @@ $mobile-breakpoint: 768px;
       $font-weight-bold,
       $color-text-primary
     );
+
+    @media (min-width: $tablet-breakpoint) {
+      font-size: 18px;
+      margin-bottom: $spacing-sm;
+    }
   }
 
   &__subtext {
@@ -119,5 +138,10 @@ $mobile-breakpoint: 768px;
       $font-weight-normal,
       $color-text-secondary
     );
+
+    @media (min-width: $tablet-breakpoint) {
+      font-size: 16px;
+      line-height: 1.6;
+    }
   }
 }

@@ -7,6 +7,7 @@ $button-hover-color: #87aaeb;
 $spacing-large: 24px;
 $spacing-medium: 16px;
 $breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
 $color-white: #fff;
 $color-text: #111;
 
@@ -20,9 +21,18 @@ $color-text: #111;
   position: relative;
   padding-bottom: calc(
     20px + 46px + 32px
-  ); /* 기본 패딩 + 버튼 높이 + 버튼 컨테이너 패딩 */
+  );
 
-  @media screen and (min-width: $breakpoint-mobile) {
+  @media screen and (min-width: $breakpoint-tablet) {
+    min-height: 70vh;
+    padding: $spacing-large * 2;
+  }
+
+  @media screen and (min-width: $breakpoint-mobile) and (max-width: #{$breakpoint-tablet - 1px}) {
+    min-height: 80vh;
+  }
+
+  @media screen and (max-width: #{$breakpoint-mobile - 1px}) {
     min-height: calc(100vh - 157px);
   }
 }
@@ -42,6 +52,11 @@ $color-text: #111;
     height: 100%;
     object-fit: contain;
     margin-bottom: $spacing-large;
+
+    @media screen and (min-width: $breakpoint-tablet) {
+      max-width: 300px;
+      margin-bottom: $spacing-large * 1.5;
+    }
   }
 }
 
@@ -50,6 +65,11 @@ $color-text: #111;
   font-weight: 400;
   text-align: center;
   color: $color-text;
+
+  @media screen and (min-width: $breakpoint-tablet) {
+    font-size: 18px;
+    line-height: 1.6;
+  }
 
   b {
     font-weight: 700;
@@ -63,6 +83,11 @@ $color-text: #111;
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 20px;
+
+    @media screen and (min-width: $breakpoint-tablet) {
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
   }
 }
 
@@ -101,6 +126,13 @@ $color-text: #111;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media screen and (min-width: $breakpoint-tablet) {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    font-size: 18px;
+  }
 
   &:hover {
     background-color: $button-hover-color;

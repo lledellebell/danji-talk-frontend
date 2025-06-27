@@ -6,6 +6,21 @@ import React from 'react';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
+import 'core-js/features/promise';
+import 'core-js/features/array/find';
+import 'core-js/features/array/includes';
+import 'core-js/features/object/assign';
+import 'core-js/features/string/includes';
+
+const setVH = () => {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+};
+
+setVH();
+window.addEventListener('resize', setVH);
+window.addEventListener('orientationchange', setVH);
+
 const queryClient = new QueryClient();
 const rootElement = document.getElementById('root');
 

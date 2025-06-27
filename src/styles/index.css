@@ -39,6 +39,7 @@
   --device-frame-width: 24px;
   --notch-width: 180px;
   --notch-height: 30px;
+  --vh: 1vh;
 }
 *,
 *::before,
@@ -51,6 +52,10 @@ html {
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
   background-color: var(--color-background);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 body {
   font-family: var(--font-family);
@@ -62,6 +67,15 @@ body {
   color: var(--color-text);
   position: relative;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
+  min-height: -webkit-fill-available;
+}
+@supports (-webkit-touch-callout: none) {
+  .landing-container,
+  .mobile-view .app-container {
+    min-height: -webkit-fill-available;
+  }
 }
 .feature-icon {
   width: 1.5rem;
