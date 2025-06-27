@@ -80,13 +80,34 @@
   .register-complex__dong-layer {
     position: absolute;
     top: 0;
-    bottom: 0;
     left: 0;
-    right: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    z-index: 1000;
+  }
+  
+  .device-frame .register-complex__dong-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     max-width: 100%;
     max-height: 100%;
-    margin: auto;
-    overflow: auto;
+  }
+  
+  .pc-view .register-complex__dong-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
   }
 }
 @media (max-width: 1023px) {
@@ -102,6 +123,35 @@
   border-radius: 50px 50px 0 0;
   padding: 50px 40px;
   animation: slideUp 0.3s ease-out;
+}
+@media (min-width: 1024px) {
+  .register-complex__dong-layer-content {
+    width: 90%;
+    max-width: 400px;
+    border-radius: 16px;
+    padding: 30px;
+    margin: 20px;
+    animation: fadeIn 0.3s ease-out;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-height: 762px;
+    overflow-y: auto;
+  }
+  
+  .device-frame .register-complex__dong-layer-content {
+    width: 85%;
+    max-width: 320px;
+    padding: 25px;
+    margin: 15px;
+    max-height: 70vh;
+  }
+  
+  .pc-view .register-complex__dong-layer-content {
+    width: 90%;
+    max-width: 400px;
+    padding: 30px;
+    margin: 20px;
+    max-height: 80vh;
+  }
 }
 .register-complex__dong-layer-form {
   display: flex;
@@ -327,6 +377,16 @@
     transform: translateY(0);
   }
 }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 :global(.body-no-scroll) {
   overflow: hidden !important;
   position: fixed !important;
@@ -339,5 +399,11 @@
     border-radius: 48px;
     bottom: 30px;
     height: calc(100% - 62px) !important;
+  }
+  
+  .device-frame .app-container {
+    height: 762px !important;
+    max-height: 762px !important;
+    overflow: hidden;
   }
 }

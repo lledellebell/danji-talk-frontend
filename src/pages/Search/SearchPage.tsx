@@ -5,7 +5,14 @@ import { useSearch } from '../../features/search/hooks/useSearch';
 import { RecentApartment } from '../../types/search';
 import styles from './SearchPage.module.scss';
 import Spinner from '../../components/common/Spinner/Spinner';
+import Toast from '../../components/common/Toast/Toast';
 import back_icon from '../../assets/back_icon.svg';
+import { 
+  autocompleteData, 
+  recentApartmentsData, 
+  recommendedKeywords, 
+  popularKeywordsData 
+} from '../../data/apartments';
 
 const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -27,6 +34,8 @@ const SearchPage = () => {
   const [favoriteStates, setFavoriteStates] = useState<{ [key: number]: boolean }>({});
   const [searchInput, setSearchInput] = useState(keywordFromUrl || '');
   const [showAutocomplete, setShowAutocomplete] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [isToastVisible, setIsToastVisible] = useState(false);
   const [localSearchResults, setLocalSearchResults] = useState<Array<{ 
     id: number; 
     name: string; 
@@ -35,105 +44,6 @@ const SearchPage = () => {
     totalUnit: number;
     buildingRange: string;
   }>>([]);
-
-  const autocompleteData = [
-    { 
-      id: 1, 
-      name: '래미안원베일리', 
-      region: '서울시 서초구 반포동', 
-      imageUrl: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=300&h=300&fit=crop',
-      totalUnit: 2990,
-      buildingRange: '101동 ~ 123동 (23개동)'
-    },
-    { 
-      id: 2, 
-      name: '래미안아파트', 
-      region: '서울시 강남구 역삼동', 
-      imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&h=300&fit=crop',
-      totalUnit: 1500,
-      buildingRange: '101동 ~ 115동 (15개동)'
-    },
-    { 
-      id: 3, 
-      name: '래미안빌라', 
-      region: '서울시 마포구 합정동', 
-      imageUrl: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=300&h=300&fit=crop',
-      totalUnit: 800,
-      buildingRange: '101동 ~ 108동 (8개동)'
-    },
-    { 
-      id: 4, 
-      name: '래미안타워', 
-      region: '서울시 송파구 잠실동', 
-      imageUrl: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=300&h=300&fit=crop',
-      totalUnit: 2000,
-      buildingRange: '101동 ~ 120동 (20개동)'
-    },
-    { 
-      id: 5, 
-      name: '래미안하이츠', 
-      region: '서울시 영등포구 여의도동', 
-      imageUrl: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=300&h=300&fit=crop',
-      totalUnit: 1200,
-      buildingRange: '101동 ~ 112동 (12개동)'
-    },
-    { 
-      id: 6, 
-      name: '반포센트럴자이', 
-      region: '서울시 서초구 잠원동', 
-      imageUrl: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=300&h=300&fit=crop',
-      totalUnit: 757,
-      buildingRange: '101동 ~ 107동 (7개동)'
-    },
-    { 
-      id: 7, 
-      name: '서초역푸르지오', 
-      region: '서울시 서초구 서초동', 
-      imageUrl: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=300&h=300&fit=crop',
-      totalUnit: 890,
-      buildingRange: '101동 ~ 110동 (10개동)'
-    },
-    { 
-      id: 8, 
-      name: '송파역푸르지오', 
-      region: '서울시 송파구 송파동', 
-      imageUrl: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=300&h=300&fit=crop',
-      totalUnit: 1200,
-      buildingRange: '101동 ~ 115동 (15개동)'
-    },
-    { 
-      id: 9, 
-      name: '영등포역푸르지오', 
-      region: '서울시 영등포구 영등포동', 
-      imageUrl: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=300&h=300&fit=crop',
-      totalUnit: 950,
-      buildingRange: '101동 ~ 108동 (8개동)'
-    },
-    { 
-      id: 10, 
-      name: '오목교역푸르지오', 
-      region: '서울시 양천구 목동', 
-      imageUrl: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=300&h=300&fit=crop',
-      totalUnit: 1100,
-      buildingRange: '101동 ~ 112동 (12개동)'
-    },
-    { 
-      id: 11, 
-      name: '마포구아파트', 
-      region: '서울시 마포구 공덕동', 
-      imageUrl: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=300&h=300&fit=crop',
-      totalUnit: 850,
-      buildingRange: '101동 ~ 105동 (5개동)'
-    },
-    { 
-      id: 12, 
-      name: '양천구아파트', 
-      region: '서울시 양천구 신월동', 
-      imageUrl: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=300&h=300&fit=crop',
-      totalUnit: 1300,
-      buildingRange: '101동 ~ 118동 (18개동)'
-    },
-  ];
 
   const filteredAutocomplete = autocompleteData.filter(item =>
     item.name.toLowerCase().includes(searchInput.toLowerCase())
@@ -269,45 +179,20 @@ const SearchPage = () => {
       ...prev,
       [apartmentId]: !prev[apartmentId]
     }));
+    
+    // 토스트 메시지 표시
+    setToastMessage('즐겨찾기 기능은 현재 개발 중입니다. 곧 만나보실 수 있어요!');
+    setIsToastVisible(true);
+  };
+
+  const handleToastClose = () => {
+    setIsToastVisible(false);
   };
 
   const extractBuildingCount = (buildingRange: string) => {
     const match = buildingRange.match(/\((\d+)개동\)/);
     return match ? match[1] : '';
   };
-
-  const recommendedKeywords = [
-    '래미', '래미안원베일리', '서초구', '마포구', '송파구', '영등포구', '양천구'
-  ];
-
-  const popularKeywordsData = [
-    '래미안원베일리', '서초역', '반포르엘 아파트', '송파역', '영등포역', '오목교역'
-  ];
-
-  const recentApartmentsData = [
-    { 
-      id: 1, 
-      name: '래미안원베일리', 
-      region: '서울시 서초구 반포동',
-      location: '서울시 서초구 반포동 1',
-      totalUnit: 2990,
-      parkingCapacity: 3500,
-      buildingRange: '101동 ~ 123동 (23개동)',
-      lastViewedAt: '2024-01-01',
-      imageUrl: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=300&h=300&fit=crop'
-    },
-    { 
-      id: 2, 
-      name: '반포센트럴자이', 
-      region: '서울시 서초구 잠원동',
-      location: '서울시 서초구 잠원동 162',
-      totalUnit: 757,
-      parkingCapacity: 3500,
-      buildingRange: '101동 ~ 107동 (7개동)',
-      lastViewedAt: '2024-01-01',
-      imageUrl: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=300&h=300&fit=crop'
-    },
-  ];
 
   return (
     <div className={styles['search-page']}>
@@ -540,6 +425,13 @@ const SearchPage = () => {
           </div>
         )}
       </div>
+      
+      <Toast
+        message={toastMessage}
+        isVisible={isToastVisible}
+        onClose={handleToastClose}
+        duration={4000}
+      />
     </div>
   );
 };

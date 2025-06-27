@@ -106,15 +106,6 @@
 
   &__item {
     margin-bottom: calc(1rem / 2);
-    opacity: 0;
-    transform: translateX(20px);
-    animation: menuItemFadeIn 0.5s ease-out forwards;
-
-    @for $i from 1 through 11 {
-      &:nth-child(#{$i}) {
-        animation-delay: #{$i * 0.05}s;
-      }
-    }
   }
 
   &__link,
@@ -134,18 +125,6 @@
   }
 }
 
-@keyframes menuItemFadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-// 모바일 뷰에서의 스타일 조정
 @media (max-width: 768px) {
   .sidebar-overlay,
   .sidebar {

@@ -1,0 +1,87 @@
+@keyframes slideUp {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  animation: slideUp 0.3s ease-out;
+  
+  &--closing {
+    animation: slideDown 0.3s ease-in;
+  }
+  
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 280px;
+    max-width: 90vw;
+  }
+  
+  &__message {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  
+  &__progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 0 0 8px 8px;
+    overflow: hidden;
+    
+    &__bar {
+      height: 100%;
+      background: linear-gradient(90deg, #97bbff 0%, #7ba3ff 50%, #5f8bff 100%);
+      border-radius: 0 0 8px 8px;
+      transition: width 0.05s ease-out;
+      box-shadow: 0 0 8px rgba(151, 187, 255, 0.3);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .toast {
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    transform: none;
+    
+    &__content {
+      min-width: auto;
+      width: 100%;
+    }
+  }
+} 

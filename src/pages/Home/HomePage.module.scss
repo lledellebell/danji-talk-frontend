@@ -61,3 +61,150 @@
     }
   }
 }
+
+.apartment-section {
+  margin: 20px;
+  
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+    line-height: 28px;
+    letter-spacing: -2.5%;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+  }
+  
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding-bottom: 8px;
+  }
+  
+  &__card {
+    background: white;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    border-radius: 6px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  &__image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent 0%, #1E2533 100%);
+      pointer-events: none;
+    }
+  }
+  
+  &__favorite-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.8);
+    }
+    
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  
+  &__info {
+    padding-top: 8px;
+  }
+  
+  &__name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  
+  &__location {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    max-width: calc(100% - 16px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    z-index: 1;
+    
+    @media (min-width: 768px) {
+      max-width: calc(100% - 8px);
+      gap: 2px
+    }
+    
+    svg {
+      width: 10px;
+      height: 10px;
+      min-width: 10px;
+      min-height: 10px;
+      fill: #FF97B1;
+      flex-shrink: 0;
+      display: block;
+    }
+  }
+  
+  &__details {
+    font-size: 11px;
+    color: #767676;
+    font-weight: 500;
+  }
+}
+
+.new-apartment-section {
+  .apartment-section__title {
+    color: #111;
+  }
+}
+
+.trending-apartment-section {
+  .apartment-section__title {
+    color: #111;
+  }
+}

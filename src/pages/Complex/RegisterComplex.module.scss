@@ -390,7 +390,9 @@
   @media (min-width: 1024px) {
     max-width: 375px;
     border-radius: 48px;
-    bottom: 30px;
+    top: 50%;
     height: calc(100% - 62px) !important;
+    max-height: 762px;
+    transform: translate(0, -50%);
   }
 }
