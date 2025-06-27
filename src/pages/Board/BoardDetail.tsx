@@ -24,7 +24,7 @@ import styles from './BoardDetail.module.scss';
 import { useEditComment } from '../../hooks/useEditComment';
 import { useSendChatRequest } from '../../hooks/useSendChatRequest';
 import { usePostViewCount } from '../../hooks/usePostViewCount';
-import Alert from '../../components/common/Alert/chatAlert';
+import Alert from '../../components/common/Alert/ChatAlert';
 import ContentAlert from '../../components/common/Alert/ContentAlert';
 
 interface CommentMember {
@@ -158,7 +158,7 @@ const CommentList = ({ comments, feedId }: CommentListProps) => {
 
   const { addComment } = useAddComment();
   const { editComment } = useEditComment();
-  const { sendChatRequest, isSending } = useSendChatRequest();
+  const { sendChatRequest } = useSendChatRequest();
 
   const toggleMenu = (commentId: number) => {
     setOpenMenuId((prev) => (prev === commentId ? null : commentId));
