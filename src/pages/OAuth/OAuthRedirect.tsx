@@ -27,16 +27,17 @@ const OAuthRedirect = () => {
               }
             );
 
-            console.log('🔄 토큰 교환 성공:', response.data);
-
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('socialCode', code);
-            localStorage.setItem('loginType', 'kakao');
-            localStorage.removeItem('prevPath');
-
-            setIsAuthenticated();
-
-            window.location.href = '/home';
+            if (response.data.accessToken) {
+              // 토큰 저장
+              setIsAuthenticated();
+              navigate('/');
+            } else {
+              console.error('토큰이 응답에 없습니다:', response.data);
+              setTitle('로그인 실패');
+              setContent('인증에 실패했습니다.');
+              openAlert();
+              navigate('/login');
+            }
           } catch (exchangeError) {
             console.error('🔄 토큰 교환 오류:', exchangeError);
 

@@ -13,11 +13,6 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    console.log('Request:', {
-      url: config.url,
-      method: config.method,
-      headers: config.headers,
-    });
     return config;
   },
   (error) => {
@@ -28,11 +23,6 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => {
-    console.log('Response:', {
-      status: response.status,
-      data: response.data,
-      headers: response.headers,
-    });
     return response;
   },
   (error) => {

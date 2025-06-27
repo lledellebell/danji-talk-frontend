@@ -263,7 +263,6 @@ const SearchPage = () => {
       ...prev,
       [apartmentId]: !prev[apartmentId]
     }));
-    console.log('즐겨찾기 토글:', apartmentId);
   };
 
   const extractBuildingCount = (buildingRange: string) => {

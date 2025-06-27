@@ -28,10 +28,6 @@ api.interceptors.response.use(
 // 쿠키 확인
 api.interceptors.request.use(
   (config) => {
-    // 실제 쿠키 값
-    console.log('Request Cookies:', document.cookie);
-    // 요청 헤더
-    console.log('Request Headers:', config.headers);
     return config;
   },
   (error) => {

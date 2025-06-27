@@ -35,7 +35,6 @@ const SocialLoginList: React.FC = () => {
         const apiBaseUrl = import.meta.env.VITE_API_URL || '';
         const kakaoAuthUrl = `${apiBaseUrl}/oauth2/authorization/kakao`;
 
-        console.log('카카오 로그인 페이지로 이동:', kakaoAuthUrl);
         window.location.href = kakaoAuthUrl;
       } catch (error: unknown) {
         console.error('카카오 로그인 처리 중 오류:', error);
