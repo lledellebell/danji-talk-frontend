@@ -2,8 +2,10 @@ import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://danjitalk.duckdns.org';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: API_URL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -77,42 +79,42 @@ export const chatKeys = {
 export const chatService = {
   // 1:1 채팅 목록 조회
   getDirectChats: async () => {
-    const response = await api.get('/chat/direct');
+    const response = await api.get('/api/chat/direct');
     return response.data;
   },
 
   // 단체 채팅 목록 조회
   getGroupChats: async () => {
-    const response = await api.get('/chat/group');
+    const response = await api.get('/api/chat/group');
     return response.data;
   },
 
   // 보낸 요청
   getRequestChats: async () => {
-    const response = await api.get('/chat/request/sent');
+    const response = await api.get('/api/chat/request/sent');
     return response.data;
   },
 
   // 받은 요청
   getResponseChats: async () => {
-    const response = await api.get('/chat/request/received');
+    const response = await api.get('/api/chat/request/received');
     return response.data;
   },
 
   // 채팅방 상세 조회
   getChatRoomDetail: async (id: string) => {
-    const response = await api.get(`/chat/room/${id}`);
+    const response = await api.get(`/api/chat/room/${id}`);
     return response.data;
   },
 
   // 보낸 요청 취소
   deleteChatRequest: async (requestId: string) => {
-    const response = await api.delete(`/chat/request/${requestId}`);
+    const response = await api.delete(`/api/chat/request/${requestId}`);
     return response.data;
   },
 
   getWsToken: async () => {
-    const response = await api.get('/chat/ws-token');
+    const response = await api.post('/api/ws/token');
     return response.data;
   },
 };
