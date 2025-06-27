@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { chatKeys } from '../services/chatService';
+import { useMutation } from '@tanstack/react-query';
 
 interface SendChatRequestParams {
   receiverId: number;
