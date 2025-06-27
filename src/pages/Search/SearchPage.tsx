@@ -327,7 +327,7 @@ const SearchPage = () => {
         />
       </div>
       <div 
-        className={styles['ㅞㅡ']}
+        className={styles['search-page__content']}
         onClick={() => showAutocomplete && setShowAutocomplete(false)}
       >
         {isLoading && <Spinner />}
