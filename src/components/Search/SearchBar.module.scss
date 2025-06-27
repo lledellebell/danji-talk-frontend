@@ -5,63 +5,63 @@
   }
 
   &__form {
-    display: flex;
-    align-items: center;
-    position: relative;
-    width: 100%;
-    margin: 0;
-    padding: 20px;
-  }
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 20px;
+}
 
   &__label {
-    visibility: hidden;
-    position: absolute;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    clip: rect(0 0 0 0);
-  }
+  visibility: hidden;
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+}
 
   &__input {
-    width: 100%;
-    padding: 0.875rem 3rem 0.875rem 1rem;
-    border: 1px solid #97bbff;
-    border-radius: 8px;
-    font-size: 1rem;
-    background-color: white;
-    transition: all 0.2s ease;
+  width: 100%;
+  padding: 0.875rem 3rem 0.875rem 1rem;
+  border: 1px solid #97bbff;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: white;
+  transition: all 0.2s ease;
 
-    &:focus {
-      outline: none;
-      border-color: #97bbff;
-      box-shadow: 0 0 0 3px rgba(151, 187, 255, 0.1);
-    }
-
-    &::placeholder {
-      color: #9ca3af;
-    }
+  &:focus {
+    outline: none;
+    border-color: #97bbff;
+    box-shadow: 0 0 0 3px rgba(151, 187, 255, 0.1);
   }
 
+  &::placeholder {
+    color: #9ca3af;
+  }
+}
+
   &__button {
-    position: absolute;
-    right: 1.5rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    padding: 0.5rem;
-    cursor: pointer;
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: #97bbff;
+  transition: all 0.2s ease;
+
+  &:hover {
     color: #97bbff;
-    transition: all 0.2s ease;
+    transform: translateY(-50%) scale(1.1);
+  }
 
-    &:hover {
-      color: #97bbff;
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    &:active {
-      transform: translateY(-50%) scale(0.95);
+  &:active {
+    transform: translateY(-50%) scale(0.95);
     }
   }
 

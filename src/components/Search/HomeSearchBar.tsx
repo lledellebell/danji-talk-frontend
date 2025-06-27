@@ -1,16 +1,22 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './HomeSearchBar.module.scss';
 
 interface HomeSearchBarProps {
-  onSearch: (searchTerm: string) => void;
+  onSearch?: (searchTerm: string) => void;
 }
 
 const HomeSearchBar = ({ onSearch }: HomeSearchBarProps) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   const handleSearchAction = () => {
     if (searchTerm.trim()) {
-      onSearch(searchTerm.trim());
+      navigate(`/search?keyword=${encodeURIComponent(searchTerm.trim())}`);
+      
+      if (onSearch) {
+        onSearch(searchTerm.trim());
+      }
     }
   };
 

@@ -11,7 +11,7 @@ export interface PopularKeyword {
 
 export interface RecentKeyword {
   keyword: string;
-}
+} 
 
 export interface RecentApartment {
   id: number;

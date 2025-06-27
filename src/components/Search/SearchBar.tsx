@@ -84,6 +84,10 @@ const SearchBar = ({
     if (onShowAutocompleteChange) {
       onShowAutocompleteChange(value.length > 0);
     }
+    
+    if (!value.trim() && onShowAutocompleteChange) {
+      onShowAutocompleteChange(false);
+    }
   };
 
   const handleAutocompleteClick = (item: { id: number; name: string; region: string }) => {
