@@ -1,4 +1,4 @@
-<div align="left">
+<div align="right">
 <img src="https://api.visitorbadge.io/api/visitors?path=https://github.com/lledellebell/danji-talk-frontend&label=Visitors&labelColor=%23ffffff&countColor=%23555555&style=flat&labelStyle=none" />
 </div>
 
