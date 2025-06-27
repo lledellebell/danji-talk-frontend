@@ -8,7 +8,8 @@ import favorites from '../../assets/home/favorites.svg';
 import chat from '../../assets/home/chat.svg';
 import visitorVehicle from '../../assets/home/visitorVehicle.svg';
 import styles from './HomePage.module.scss';
-import SearchBar from '../../components/Search/SearchBar';
+import HomeSearchBar from '../../components/Search/HomeSearchBar';
+import Header from '../../layouts/Header';
 
 const menuItems = [
   { src: complexInfo, label: '단지정보' },
@@ -32,7 +33,8 @@ const HomePage = () => {
 
   return (
     <>
-      <SearchBar onSearch={handleSearch} />
+      <Header title="DANJITALK" type="main" />
+      <HomeSearchBar onSearch={handleSearch} />
       <div className={styles.menuContainer}>
         {menuItems.map((item, index) => (
           <div key={index} className={styles.menuItem}>
