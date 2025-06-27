@@ -1,3 +1,7 @@
+<div align="left">
+<img src="https://api.visitorbadge.io/api/visitors?path=https://github.com/lledellebell/danji-talk-frontend&label=Visitors&labelColor=%23ffffff&countColor=%23555555&style=flat&labelStyle=none" />
+</div>
+
 <p align="center">
   <img src="./src/assets/logo.svg" alt="단지톡 로고" width="100" />
 </p>
