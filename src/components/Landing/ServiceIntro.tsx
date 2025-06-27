@@ -1,4 +1,5 @@
 import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logo.svg';
 import FeatureList from './FeatureList';
 import { QRCodeSVG } from 'qrcode.react';
@@ -6,6 +7,11 @@ import { QRCodeSVG } from 'qrcode.react';
 const ServiceIntro = () => {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const isTablet = useMediaQuery('(max-width: 1024px)');
+  const navigate = useNavigate();
+
+  const handleStartApp = () => {
+    navigate('/');
+  };
 
   return (
     <div className="service-intro" aria-hidden={isMobile || isTablet}>
@@ -28,6 +34,26 @@ const ServiceIntro = () => {
         </div>
 
         <FeatureList />
+
+        <div className="start-app-section">
+          <button 
+            onClick={handleStartApp}
+            className="start-app-button"
+            style={{
+              backgroundColor: '#97BBFF',
+              color: 'white',
+              border: 'none',
+              borderRadius: '8px',
+              padding: '12px 24px',
+              fontSize: '16px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'background-color 0.2s ease'
+            }}
+          >
+            앱 시작하기
+          </button>
+        </div>
 
         <div className="qr-container">
           <div className="qr-item">

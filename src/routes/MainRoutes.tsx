@@ -1,20 +1,11 @@
 import { Outlet } from 'react-router-dom';
 import Header from '../layouts/Header';
-import SearchBar from '../components/Search/SearchBar';
-import MenuGrid from '../components/MenuGrid/MenuGrid';
 import { ChatList } from '../pages/Chat/ChatList';
 import Facilities from '../pages/Facilities/Facilities';
 import Favorites from '../pages/Favorites/Favorites';
 import ProtectedRoute from './ProtectedRoute';
 import { useLocation } from 'react-router-dom';
-
-const HomePage = () => (
-  <>
-    <Header title="DANJITALK" type="main" />
-    <SearchBar />
-    <MenuGrid />
-  </>
-);
+import HomePage from '../pages/Home/HomePage';
 
 const ChatPage = () => (
   <>

@@ -39,7 +39,8 @@ const SearchBar = ({
 
   const handleSearchAction = () => {
     if (onSearch) {
-      onSearch(searchTerm);
+      const currentSearchTerm = searchInput !== undefined ? searchInput : searchTerm;
+      onSearch(currentSearchTerm);
     }
   };
 
