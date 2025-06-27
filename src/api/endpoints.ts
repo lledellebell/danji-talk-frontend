@@ -38,4 +38,13 @@ export const API_ENDPOINTS = {
     LIKE: (boardId: string) => `/boards/${boardId}/like`,
     BOOKMARK: (boardId: string) => `/boards/${boardId}/bookmark`,
   },
+
+  // 검색 관련 엔드포인트
+  SEARCH: {
+    DANJI: '/search',
+    POPULAR_KEYWORDS: '/search/popular-keywords',
+    RECENT_KEYWORDS: '/search/recent-keywords',
+    ADD_RECENT_KEYWORD: '/search/recent-keywords',
+    RECENT_APARTMENT: '/search/recent-apartment',
+  },
 };

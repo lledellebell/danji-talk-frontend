@@ -1,4 +1,7 @@
-import { Routes, Route } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+} from 'react-router-dom';
 import { Suspense } from 'react';
 import AuthRoutes from './AuthRoutes';
 import MainRoutes from './MainRoutes';
@@ -24,8 +27,6 @@ import VehiclesPage from '../pages/MyPage/VehiclesPage';
 import Settings from '../pages/Settings/Settings';
 import Withdrawal from '../pages/Settings/Withdrawal/Withdrawal';
 import Profile from '../pages/Settings/Profile/Profile';
-import SearchBar from '../components/Search/SearchBar';
-import MenuGrid from '../components/MenuGrid/MenuGrid';
 import Header from '../layouts/Header';
 import { ChatList } from '../pages/Chat/ChatList';
 import ChatRoom from '../pages/Chat/ChatRoom';
@@ -35,17 +36,9 @@ import MyReservations from '../pages/MyReservations/MyReservations';
 import Notices from '../pages/Notices/Notices';
 import VisitorCar from '../pages/VisitorCar/VisitorCar';
 import RegisterComplex from '../pages/Complex/RegisterComplex';
-// import Home from '../pages/Home/Home';
+import SearchPage from '../pages/Search/SearchPage';
+import HomePage from '../pages/Home/HomePage';
 import OAuthRedirect from '../pages/OAuth/OAuthRedirect';
-
-const HomePage = () => (
-  <>
-    <Header title="DANJITALK" type="main" />
-    <SearchBar />
-    <MenuGrid />
-    {/* <Home /> */}
-  </>
-);
 
 const ChatPage = () => (
   <>
@@ -96,6 +89,7 @@ const AppRoutes = () => {
           <Route path="/my-reservations" element={<MyReservations />} />
           <Route path="/visitor-car" element={<VisitorCar />} />
           <Route path="/notices" element={<Notices />} />
+          <Route path="/search" element={<SearchPage />} />
         </Route>
 
         {/* 커뮤니티 라우트 */}

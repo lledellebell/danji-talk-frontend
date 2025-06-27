@@ -5,7 +5,6 @@ const Home = () => {
   const { complexes, fetchComplexes, isLoading, error } = useComplexStore();
 
   useEffect(() => {
-    // 데이터가 없을 때만 서버에서 가져오기
     if (complexes.length === 0 && !isLoading && !error) {
       fetchComplexes();
     }
