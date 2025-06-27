@@ -45,5 +45,6 @@ export const API_ENDPOINTS = {
     POPULAR_KEYWORDS: '/search/popular-keywords',
     RECENT_KEYWORDS: '/search/recent-keywords',
     ADD_RECENT_KEYWORD: '/search/recent-keywords',
+    RECENT_APARTMENT: '/search/recent-apartment',
   },
 };

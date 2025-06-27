@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from '../../../api/endpoints';
 import { apiClient } from '../../../api/client';
-import { Danji, PopularKeyword, RecentKeyword } from '../../../types/search';
+import { Danji, PopularKeyword, RecentKeyword, RecentApartment } from '../../../types/search';
 
 interface SearchParams {
   keyword: string;
@@ -13,6 +13,10 @@ interface PopularKeywordsParams {
 }
 
 interface RecentKeywordsParams {
+  limit?: number;
+}
+
+interface RecentApartmentsParams {
   limit?: number;
 }
 
@@ -43,6 +47,16 @@ class SearchViewModel {
       return Array.isArray(response.data) ? response.data : [];
     } catch (error) {
       console.error('최근 검색어 조회에 실패했습니다.', error);
+      throw error;
+    }
+  }
+
+  async getRecentApartments(params: RecentApartmentsParams): Promise<RecentApartment[]> {
+    try {
+      const response = await apiClient.get(API_ENDPOINTS.SEARCH.RECENT_APARTMENT, { params });
+      return Array.isArray(response.data) ? response.data : [];
+    } catch (error) {
+      console.error('최근 찾아본 단지 조회에 실패했습니다.', error);
       throw error;
     }
   }

@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import SearchViewModel from '../models/SearchViewModel';
-import { Danji, PopularKeyword, RecentKeyword } from '../../../types/search';
+import { Danji, PopularKeyword, RecentKeyword, RecentApartment } from '../../../types/search';
 
 const searchViewModel = new SearchViewModel();
 
@@ -8,6 +8,7 @@ export const useSearch = () => {
   const [searchResults, setSearchResults] = useState<Danji[]>([]);
   const [popularKeywords, setPopularKeywords] = useState<PopularKeyword[]>([]);
   const [recentKeywords, setRecentKeywords] = useState<RecentKeyword[]>([]);
+  const [recentApartments, setRecentApartments] = useState<RecentApartment[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -55,14 +56,29 @@ export const useSearch = () => {
     }
   }, []);
 
+  const fetchRecentApartments = useCallback(async (limit: number = 5) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const apartments = await searchViewModel.getRecentApartments({ limit });
+      setRecentApartments(apartments);
+    } catch (err) {
+      setError(err as Error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   return {
     searchResults,
     popularKeywords,
     recentKeywords,
+    recentApartments,
     isLoading,
     error,
     searchDanji,
     fetchPopularKeywords,
     fetchRecentKeywords,
+    fetchRecentApartments,
   };
 }; 
