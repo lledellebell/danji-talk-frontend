@@ -68,7 +68,13 @@
 html {
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-background);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 body {
@@ -81,6 +87,23 @@ body {
   color: var(--color-text);
   position: relative;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior: none;
+  min-height: -webkit-fill-available;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .landing-container,
+  .mobile-view .app-container {
+    min-height: -webkit-fill-available;
+  }
 }
 
 // SVG styles
