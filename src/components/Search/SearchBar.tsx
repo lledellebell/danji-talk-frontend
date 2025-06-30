@@ -108,7 +108,7 @@ const SearchBar = ({
   };
 
   return (
-    <div className={styles['search-bar__container']} onClick={(e) => e.stopPropagation()}>
+    <div className={styles['search-bar__container']} onClick={(e) => showAutocomplete && e.stopPropagation()}>
       <form className={styles['search-bar__form']}>
         <label htmlFor="searchInput" className={styles['search-bar__label']}>
           단지 검색

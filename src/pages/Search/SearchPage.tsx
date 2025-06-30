@@ -24,7 +24,6 @@ const SearchPage = () => {
     recentKeywords,
     isLoading,
     error,
-    searchDanji,
     fetchPopularKeywords,
     fetchRecentKeywords,
     fetchRecentApartments,
@@ -53,7 +52,7 @@ const SearchPage = () => {
     if (keywordFromUrl) {
       setHasSearched(true);
       setSearchInput(keywordFromUrl);
-      searchDanji(keywordFromUrl);
+      handleSearch(keywordFromUrl);
     } else {
       setHasSearched(false);
       setSearchInput('');
@@ -62,7 +61,7 @@ const SearchPage = () => {
       fetchRecentKeywords();
       fetchRecentApartments();
     }
-  }, [keywordFromUrl, searchDanji, fetchPopularKeywords, fetchRecentKeywords, fetchRecentApartments]);
+  }, [keywordFromUrl, fetchPopularKeywords, fetchRecentKeywords, fetchRecentApartments]);
 
   useEffect(() => {
     if (!searchInput.trim()) {
