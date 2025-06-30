@@ -12,14 +12,28 @@ import 'core-js/features/array/includes';
 import 'core-js/features/object/assign';
 import 'core-js/features/string/includes';
 
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
 const setVH = () => {
-  const vh = window.innerHeight * 0.01;
+  let vh = window.innerHeight * 0.01;
+  
+  if (isIOS) {
+    vh = window.visualViewport?.height ? window.visualViewport.height * 0.01 : vh;
+  }
+  
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 };
 
 setVH();
+
 window.addEventListener('resize', setVH);
-window.addEventListener('orientationchange', setVH);
+window.addEventListener('orientationchange', () => {
+  setTimeout(setVH, 100);
+});
+
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', setVH);
+}
 
 const queryClient = new QueryClient();
 const rootElement = document.getElementById('root');
@@ -36,8 +50,10 @@ createRoot(rootElement).render(
   </React.StrictMode>
 );
 
-document.addEventListener('DOMContentLoaded', () => {
+const initApp = () => {
   const appContainer = document.querySelector('.app-container') as HTMLElement;
+  if (!appContainer) return;
+  
   let startY = 0;
   let currentY = 0;
   let isDragging = false;
@@ -55,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const handleTouchStart = (e: TouchEvent) => {
+    if (e.touches.length > 1) return;
     isDragging = true;
     startY = e.touches[0].clientY;
     currentY = startY;
@@ -62,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const handleTouchMove = (e: TouchEvent) => {
-    if (!isDragging) return;
+    if (!isDragging || e.touches.length > 1) return;
 
     currentY = e.touches[0].clientY;
     const diff = currentY - startY;
@@ -87,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
     isDragging = false;
 
     const diff = currentY - startY;
-    const threshold = window.innerHeight * 0.15; // 15% of viewport height
+    const threshold = window.innerHeight * 0.15;
 
     toggleExpanded(
       appContainer.classList.contains('expanded')
@@ -96,7 +113,13 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   };
 
-  appContainer?.addEventListener('touchstart', handleTouchStart);
-  appContainer?.addEventListener('touchmove', handleTouchMove);
-  appContainer?.addEventListener('touchend', handleTouchEnd);
-});
+  appContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+  appContainer.addEventListener('touchmove', handleTouchMove, { passive: true });
+  appContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}

@@ -32,7 +32,7 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
     sourcemap: true,
-    target: ['es2015', 'safari11'],
+    target: ['es2015', 'safari11', 'chrome60', 'firefox60', 'edge18'],
     minify: 'terser',
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
