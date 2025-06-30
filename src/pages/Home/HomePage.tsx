@@ -41,8 +41,12 @@ const HomePage = () => {
     navigate(path);
   };
 
-  const handleApartmentClick = (apartmentId: number) => {
-    navigate(`/complex/${apartmentId}`);
+  const handleApartmentClick = () => {
+    setIsToastVisible(false);
+    setTimeout(() => {
+      setToastMessage('단지 상세 페이지는 현재 개발 중입니다. 곧 만나보실 수 있어요!');
+      setIsToastVisible(true);
+    }, 100);
   };
 
   const extractBuildingCount = (buildingRange: string) => {
@@ -57,9 +61,11 @@ const HomePage = () => {
       [apartmentId]: !prev[apartmentId]
     }));
     
-    // 토스트 메시지 표시
-    setToastMessage('즐겨찾기 기능은 현재 개발 중입니다. 곧 만나보실 수 있어요!');
-    setIsToastVisible(true);
+    setIsToastVisible(false);
+    setTimeout(() => {
+      setToastMessage('즐겨찾기 기능은 현재 개발 중입니다. 곧 만나보실 수 있어요!');
+      setIsToastVisible(true);
+    }, 100);
   };
 
   const handleToastClose = () => {
@@ -94,7 +100,7 @@ const HomePage = () => {
             <div 
               key={apartment.id} 
               className={styles['apartment-section__card']}
-              onClick={() => handleApartmentClick(apartment.id)}
+              onClick={() => handleApartmentClick()}
             >
               <div className={styles['apartment-section__image']}>
                 <img 
@@ -127,7 +133,7 @@ const HomePage = () => {
             <div 
               key={apartment.id} 
               className={styles['apartment-section__card']}
-              onClick={() => handleApartmentClick(apartment.id)}
+              onClick={() => handleApartmentClick()}
             >
               <div className={styles['apartment-section__image']}>
                 <img 

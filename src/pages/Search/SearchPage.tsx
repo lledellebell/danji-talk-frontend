@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchBar from '../../components/Search/SearchBar';
 import { useSearch } from '../../features/search/hooks/useSearch';
-import { RecentApartment } from '../../types/search';
 import styles from './SearchPage.module.scss';
 import Spinner from '../../components/common/Spinner/Spinner';
 import Toast from '../../components/common/Toast/Toast';
@@ -139,12 +138,20 @@ const SearchPage = () => {
     handleSearch(keyword);
   };
 
-  const handleApartmentClick = (apartment: RecentApartment) => {
-    navigate(`/complex/${apartment.id}`);
+  const handleApartmentClick = () => {
+    setIsToastVisible(false);
+    setTimeout(() => {
+      setToastMessage('단지 상세 페이지는 현재 개발 중입니다. 곧 만나보실 수 있어요!');
+      setIsToastVisible(true);
+    }, 100);
   };
 
-  const handleSearchResultClick = (result: { id: number; name: string; address: string }) => {
-    navigate(`/complex/${result.id}`);
+  const handleSearchResultClick = () => {
+    setIsToastVisible(false);
+    setTimeout(() => {
+      setToastMessage('단지 상세 페이지는 현재 개발 중입니다. 곧 만나보실 수 있어요!');
+      setIsToastVisible(true);
+    }, 100);
   };
 
   const handleBack = () => {
@@ -180,8 +187,11 @@ const SearchPage = () => {
     }));
     
     // 토스트 메시지 표시
-    setToastMessage('즐겨찾기 기능은 현재 개발 중입니다. 곧 만나보실 수 있어요!');
-    setIsToastVisible(true);
+    setIsToastVisible(false); // 기존 Toast 닫기
+    setTimeout(() => {
+      setToastMessage('즐겨찾기 기능은 현재 개발 중입니다. 곧 만나보실 수 있어요!');
+      setIsToastVisible(true);
+    }, 100);
   };
 
   const handleToastClose = () => {
@@ -262,7 +272,7 @@ const SearchPage = () => {
                   {recentApartmentsData.map((apartment) => (
                     <li 
                       key={apartment.id}
-                      onClick={() => handleApartmentClick(apartment)}
+                      onClick={() => handleApartmentClick()}
                       className={styles['search-page__clickable-item']}
                     >
                       <div className={styles['search-page__apartment-content']}>
@@ -339,7 +349,7 @@ const SearchPage = () => {
                 <li 
                   key={result.id} 
                   className={styles['search-page__clickable-item']}
-                  onClick={() => handleSearchResultClick(result)}
+                  onClick={() => handleSearchResultClick()}
                 >
                   <div className={styles['search-page__danji-content']}>
                     <div className={styles['search-page__danji-thumbnail']}>
@@ -388,7 +398,7 @@ const SearchPage = () => {
                 <li 
                   key={result.id} 
                   className={styles['search-page__clickable-item']}
-                  onClick={() => handleSearchResultClick(result)}
+                  onClick={() => handleSearchResultClick()}
                 >
                   <div className={styles['search-page__danji-content']}>
                     <div className={styles['search-page__danji-thumbnail']}>
