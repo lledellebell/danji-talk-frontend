@@ -16,28 +16,40 @@ const Toast: React.FC<ToastProps> = ({
 }) => {
   const [progress, setProgress] = useState(100);
   const animationFrameId = useRef<number | null>(null);
+  const startTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (isVisible) {
-      const startTime = Date.now();
-      const endTime = startTime + duration;
+      if (animationFrameId.current !== null) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
 
-      const update = () => {
+      startTimeRef.current = Date.now();
+      setProgress(100);
+
+      const updateProgress = () => {
+        if (!startTimeRef.current) return;
+
         const now = Date.now();
-        const elapsed = now - startTime;
+        const elapsed = now - startTimeRef.current;
         const newProgress = Math.max(0, 100 - (elapsed / duration) * 100);
+        
         setProgress(newProgress);
 
-        if (now < endTime) {
-          animationFrameId.current = requestAnimationFrame(update);
+        if (newProgress > 0) {
+          animationFrameId.current = requestAnimationFrame(updateProgress);
         } else {
-          setProgress(0);
           onClose();
         }
       };
 
+      animationFrameId.current = requestAnimationFrame(updateProgress);
+    } else {
+      if (animationFrameId.current !== null) {
+        cancelAnimationFrame(animationFrameId.current);
+        animationFrameId.current = null;
+      }
       setProgress(100);
-      animationFrameId.current = requestAnimationFrame(update);
     }
 
     return () => {
