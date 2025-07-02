@@ -12,28 +12,34 @@ const api = axios.create({
   },
 });
 
-// 401 에러 처리
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      // 로그인 페이지로 리다이렉트
-      // 이유: 쿠키가 만료되어 401 에러가 발생하는 경우, 로그인 페이지로 리다이렉트하여 사용자가 다시 로그인할 수 있도록 함
-      //   window.location.href = '/login';
-    }
-    return Promise.reject(error);
-  }
-);
-
-// 쿠키 확인
 api.interceptors.request.use(
   (config) => {
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {
     return Promise.reject(error);
   }
 );
+
+// 401 에러 처리
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('auth_token');
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+
 
 export interface ChatRoom {
   id: string;
@@ -110,7 +116,7 @@ export const chatService = {
   },
 
   getWsToken: async () => {
-    const response = await api.post('/api/ws/token');
+    const response = await api.post('/ws/token');
     return response.data;
   },
 };
@@ -157,7 +163,7 @@ export const useChatRoomDetail = (id: string) => {
 
 export const useWsToken = () => {
   return useQuery({
-    queryKey: chatKeys.wsToken(),
+    queryKey: [],
     queryFn: chatService.getWsToken,
     retry: false,
   });
