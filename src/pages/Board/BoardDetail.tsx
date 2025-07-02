@@ -326,6 +326,10 @@ const CommentList = ({ comments, feedId }: CommentListProps) => {
                         className={styles['comment-profile-img']}
                         src={profileIcon}
                         alt="프로필"
+                        onClick={() => {
+                          setSelectedMember(child.commentMemberResponseDto);
+                          setOpen(true);
+                        }}
                       />
                       <div className={styles['reply-author']}>
                         <span className={styles['reply-name']}>
