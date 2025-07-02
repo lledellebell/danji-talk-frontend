@@ -19,14 +19,16 @@ import { useApproveChat } from '../../hooks/useApproveChat';
 import { useRejectChat } from '../../hooks/useRejectChat';
 import { useNavigate } from 'react-router-dom';
 
-const OneToOneChat = () => {
+const OneToOneChat = ({ directChats }: { directChats: ChatRoom[] }) => {
+  const navigate = useNavigate();
+
   return (
     <>
       {directChats.map((chat, index) => (
         <React.Fragment key={index}>
           <div
             className={styles['one-to-one-chat']}
-            onClick={() => nav(`/chatroom/${chat.chatroomId}`)}
+            onClick={() => navigate(`/chatroom/${chat.chatroomId}`)}
           >
             <div className={styles['one-to-one-chat-container']}>
               <div className={styles['one-to-one-chat-info']}>
