@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
 import api from '../api/axios';
+import axios from 'axios';
 
 interface LoginResponse {
   token: string;
@@ -30,18 +31,26 @@ export const useLoginMutation = () => {
         });
 
         if (response.status === 200) {
-          return { token: 'success' };
+          return response.data;
         }
 
         throw new Error(errorMessages.default);
       } catch (error) {
-        if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        if (axios.isAxiosError(error)) {
+          const status = error.response?.status;
+          if (status && errorMessages[status as keyof typeof errorMessages]) {
+            throw new Error(errorMessages[status as keyof typeof errorMessages]);
+          } else if (error.request) {
+            throw new Error(errorMessages.networkError);
+          }
+        } else if (error instanceof TypeError && error.message === 'Failed to fetch') {
           throw new Error(errorMessages.networkError);
         }
         throw error;
       }
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      localStorage.setItem('auth_token', data.token);
       login();
       navigate('/', { replace: true });
     },
