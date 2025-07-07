@@ -211,26 +211,28 @@ const ChatRoom = () => {
 
   return (
     <>
-      <Header
-        title={information?.nickname ?? '채팅방'}
-        type="sub"
-        hasBackButton={true}
-        hasRightButton={true}
-        buttonText="나가기"
-        onClickButton={() => nav(-1)}
-      />
-      <ChatNotice />
-      <ChatDateBadge />
-      <div className={styles['bubble-container']}>
-        {messages.map((msg) =>
-          msg.sender.id === myId ? (
-            <RightBubble key={msg.id} message={msg} />
-          ) : (
-            <LeftBubble key={msg.id} message={msg} />
-          )
-        )}
+      <div className={styles['chat-room']}>
+        <Header
+          title={information?.nickname ?? '채팅방'}
+          type="sub"
+          hasBackButton={true}
+          hasRightButton={true}
+          buttonText="나가기"
+          onClickButton={() => nav(-1)}
+        />
+        <ChatNotice />
+        <ChatDateBadge />
+        <div className={styles['bubble-container']}>
+          {messages.map((msg) =>
+            msg.sender.id === myId ? (
+              <RightBubble key={msg.id} message={msg} />
+            ) : (
+              <LeftBubble key={msg.id} message={msg} />
+            )
+          )}
+        </div>
+        <ChatInput roomId={roomId!} />
       </div>
-      <ChatInput roomId={roomId!} />
     </>
   );
 };
