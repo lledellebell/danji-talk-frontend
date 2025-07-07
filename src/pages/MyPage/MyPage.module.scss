@@ -1,5 +1,17 @@
+@use '../../styles/mixins.scss' as mixins;
+
+/* Color Palette */
+$primary-color: #96bbff;
+$text-primary: #2c3e50;
+$text-secondary: #8e9aaf;
+$background-color: #f7f9fc;
+$card-bg-color: #ffffff;
+$border-color: #e0e7ff;
+$shadow-color: rgba(93, 127, 255, 0.1);
+
 .my-page {
-  padding: 1rem;
+  padding: 1.5rem;
+  min-height: 100vh;
 }
 
 .my-page__title {
@@ -9,192 +21,251 @@
 }
 
 .profile {
-  border-radius: 12px;
-  padding: 16px;
+  background-color: $card-bg-color;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 1.5rem;
+  outline: 1px solid $shadow-color;
+}
+
+.profile__user-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  border-bottom: 1px solid $border-color;
+  padding-bottom: 20px;
   margin-bottom: 20px;
-  box-shadow:
-    0 1px 5px rgba(0, 0, 0, 0.03),
-    0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.profile__image-container {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profile__image-wrapper {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  outline: 2px solid $border-color;
+  outline-offset: -2px;
+  background-color: $background-color;
+}
 
-  &__image-container {
-    position: relative;
-    width: 100px;
-    height: 100px;
+.profile__image-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile__image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: $primary-color;
+  background-color: $background-color;
+}
+
+.profile__user-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.profile__user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.profile__username {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+.profile__email {
+  font-size: 0.9rem;
+  color: $text-secondary;
+}
+
+.profile__edit-button {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  background: $primary-color;
+  border: 2px solid $card-bg-color;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  img {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(1);
+    transition: transform 0.2s;
   }
 
-  &__info {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  &__image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #eee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-
-    &-img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
+  &:hover {
+    img {
+      transform: scale(1.1);
     }
+  }
+}
 
-    &-placeholder {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: white;
-      color: #5d7fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      font-weight: bold;
-      text-transform: uppercase;
-      position: relative;
-      outline: 2px solid #5d7fff;
-    }
+.profile__user-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile__user-details-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+
+  p {
+    margin: 0;
+    color: $text-secondary;
+    width: 80px;
   }
 
-  &__details {
-    display: flex;
-    flex-direction: column;
+  span {
+    color: $text-primary;
+    font-weight: 500;
   }
+}
 
-  &__name {
-    font-size: 18px;
-    line-height: 24px;
+.profile__apartment-section {
+  h2 {
+    font-size: 1.1rem;
     font-weight: 600;
-    color: #111;
-    text-align: center;
+    color: $text-primary;
+    margin: 0 0 12px 0;
+  }
+}
+
+.profile__apartment-list {
+}
+
+.profile__apartment-item {
+  display: flex;
+  align-items: center;
+  background-color: $background-color;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  img {
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
   }
 
-  &__email {
-    font-size: 15px;
-    line-height: 22px;
-    color: #111;
+  span {
+    font-weight: 500;
+    color: $text-primary;
   }
 
-  &__edit-button {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 30px;
-    height: 30px;
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.2s;
-
-    &:hover {
-      background-color: var(--color-primary-dark);
-    }
+  &:hover {
+    background-color: $background-color;
   }
+}
 
-  &__loading {
-    width: 100%;
-    text-align: center;
-    padding: 20px;
-    color: var(--color-text-secondary);
-    font-size: 14px;
-  }
-
-  &__error {
-    width: 100%;
-    text-align: center;
-    padding: 16px;
-    color: #e74c3c;
-    font-size: 14px;
-    background-color: rgba(231, 76, 60, 0.1);
-    border-radius: 8px;
-  }
+.profile__no-apartment {
+  text-align: center;
+  color: $text-secondary;
+  padding: 20px;
+  background-color: $background-color;
+  border-radius: 8px;
 }
 
 .nav {
-  margin: 24px 0px;
-  box-shadow:
-    0 1px 5px rgba(0, 0, 0, 0.03),
-    0 0 1px rgba(0, 0, 0, 0.15);
-  border-radius: 8px;
-  padding: 8px;
+  background-color: $card-bg-color;
+  border-radius: 16px;
+  outline: 1px solid $shadow-color;
+  padding: 12px 0;
 }
 
 .nav__list {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 0;
+  list-style: none;
   padding: 0;
-  list-style-type: none;
-  position: relative;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
 }
 
 .nav__item {
-  border-radius: 8px;
-  transition: background-color 0.2s;
   flex: 1;
-  position: relative;
-
-  &:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 16px;
-    background-color: #e0e0e0;
-  }
 }
 
 .nav__link {
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   text-decoration: none;
-  text-align: center;
+  color: $text-secondary;
+  padding: 8px;
+  border-radius: 8px;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  position: relative;
 
-  &:active {
-    color: #97bbff;
+  &:hover {
+    background-color: $background-color;
+    color: $primary-color;
   }
 }
 
 .nav__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 28px;
   height: 28px;
-  margin-bottom: 6px;
+  transition: transform 0.2s;
+
+  .nav__link:hover & {
+    transform: scale(1.1);
+  }
 }
 
 .nav__label {
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: #97bbff;
+  text-align: center;
 }
 
 .sr-only {
   position: absolute;
-  left: -9999px;
-  top: auto;
   width: 1px;
   height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 
 .profile__info,
@@ -244,4 +315,32 @@
   line-height: 20px;
   font-weight: 600;
   cursor: pointer;
+}
+
+@include mixins.tablet {
+  .my-page {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .profile__user-card {
+    gap: 30px;
+  }
+  
+  .profile__image-wrapper {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile__username {
+    font-size: 1.5rem;
+  }
+
+  .profile__email {
+    font-size: 1rem;
+  }
+
+  .nav {
+    padding: 16px 0;
+  }
 }
