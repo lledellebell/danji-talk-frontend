@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { ApiResponse, ApiErrorResponse, HttpStatus } from './types';
+import { useAuthStore } from '../stores/authStore';
 
 // 기본 Axios 인스턴스 설정
 const baseConfig: AxiosRequestConfig = {
@@ -55,8 +56,10 @@ export const createApiClient = (config: AxiosRequestConfig = {}): AxiosInstance 
         // 인증 관련 에러 처리
         if (status === HttpStatus.UNAUTHORIZED) {
           localStorage.removeItem('auth_token');
-          // 로그인 페이지로 리다이렉트 등의 처리를 위한 이벤트 발행
-          window.dispatchEvent(new CustomEvent('auth:unauthorized'));
+          useAuthStore.getState().logout();
+          if (window.location.pathname !== '/login') {
+            window.location.href = '/login';
+          }
         }
         
         // 응답 형식 통일
