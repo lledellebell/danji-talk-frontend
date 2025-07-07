@@ -2,15 +2,9 @@ import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://danjitalk.duckdns.org';
+// const API_URL = import.meta.env.VITE_API_URL || 'https://danjitalk.duckdns.org';
 
-const api = axios.create({
-  baseURL: API_URL,
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+const api = axios.create({});
 
 api.interceptors.request.use(
   (config) => {
