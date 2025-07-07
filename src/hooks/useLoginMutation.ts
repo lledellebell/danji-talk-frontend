@@ -20,14 +20,19 @@ const errorMessages = {
 export const useLoginMutation = () => {
   const navigate = useNavigate();
   const { email: loginId, password, setError } = useAuthStore();
-  const { login } = useAuthStore();
+  const setIsAuthenticated = useAuthStore((state) => state.login);
 
   return useMutation<LoginResponse>({
     mutationFn: async () => {
       try {
-        const response = await api.post('/api/login', {
-          loginId,
-          password,
+        const response = await fetch(`/api/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify({ loginId, password }),
         });
 
         if (response.status === 200) {
@@ -54,12 +59,19 @@ export const useLoginMutation = () => {
       login();
       navigate('/', { replace: true });
     },
-    onError: (error) => {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError(errorMessages.default);
-      }
+    onError: (error: Error) => {
+      setError(error.message);
+      useAuthStore.getState().setPassword('');
+
+      setTimeout(() => {
+        if (loginId && password) {
+          document.getElementById('password')?.focus();
+        } else if (!loginId) {
+          document.getElementById('email')?.focus();
+        } else {
+          document.getElementById('password')?.focus();
+        }
+      }, 100);
     },
   });
 };
