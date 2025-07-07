@@ -163,9 +163,19 @@
 }
 
 .bubble-container {
+  flex: 1;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  height: calc(100vh - 93px);
-  overflow-y: auto;
+  padding: 16px 0;
+  box-sizing: border-box;
+}
+
+.chat-room {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding-bottom: 92px; // chat-input 높이 + 여유값
+  box-sizing: border-box;
 }
