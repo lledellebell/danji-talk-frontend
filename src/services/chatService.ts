@@ -39,8 +39,6 @@ api.interceptors.response.use(
   }
 );
 
-
-
 export interface ChatRoom {
   id: string;
   name: string; // 채팅방 이름
@@ -116,7 +114,7 @@ export const chatService = {
   },
 
   getWsToken: async () => {
-    const response = await api.post('/ws/token');
+    const response = await api.post('/api/ws/token');
     return response.data;
   },
 };
