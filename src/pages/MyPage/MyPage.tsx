@@ -13,7 +13,6 @@ import MailIcon from '../../assets/mypage/Mail.svg';
 import BrowserIcon from '../../assets/mypage/Browser.svg';
 import EditIcon from '../../assets/mypage/Edit.svg';
 
-
 import LogoIcon from '../../assets/logo.svg';
 
 interface NavItemProps {
@@ -106,23 +105,21 @@ const ProfileImage: React.FC<ProfileImageProps> = ({ imageUrl, userName }) => {
     setImageError(true);
   };
 
-  if (!imageUrl || imageError) {
-    return (
-      <div className={styles['profile__image-placeholder']}>
-        {getInitials(userName)}
-      </div>
-    );
-  }
-
   return (
-    <img
-      src={imageUrl}
-      width={100}
-      height={100}
-      alt="프로필 이미지"
-      className={styles['profile__image-img']}
-      onError={handleImageError}
-    />
+    <div className={styles['profile__image-wrapper']}>
+      {!imageUrl || imageError ? (
+        <div className={styles['profile__image-placeholder']}>
+          {getInitials(userName)}
+        </div>
+      ) : (
+        <img
+          src={imageUrl}
+          alt="프로필 이미지"
+          className={styles['profile__image-img']}
+          onError={handleImageError}
+        />
+      )}
+    </div>
   );
 };
 
@@ -200,7 +197,7 @@ const ProfileSection: React.FC = () => {
   }, [isLoggedIn, userEmail, navigate]);
 
   const handleEditProfile = () => {
-    navigate('/settings/profile');
+    setShowToast(true);
   };
 
   const handleApartmentInfoClick = () => {
@@ -219,35 +216,28 @@ const ProfileSection: React.FC = () => {
     <section className={styles['profile']}>
       <h1 className={styles['sr-only']}>마이페이지</h1>
       <div className={styles['profile__user-card']}>
-        <ProfileImage
-          imageUrl={userData.fileId ? `/api/files/${userData.fileId}` : ''}
-          userName={userData.name}
-        />
+        <div className={styles['profile__image-container']}>
+          <ProfileImage
+            imageUrl={userData.fileId ? `/api/files/${userData.fileId}` : ''}
+            userName={userData.name}
+          />
+          <button
+            className={styles['profile__edit-button']}
+            onClick={handleEditProfile}
+          >
+            <img src={EditIcon} alt="수정하기" />
+          </button>
+        </div>
         <div className={styles['profile__user-info-wrapper']}>
           <div className={styles['profile__user-info-container']}>
             <div className={styles['profile__user-info']}>
               <span className={styles['profile__username']}>
                 {userData.name}
+                {userData.nickname && `(${userData.nickname})`}
               </span>
-              <span className={styles['profile__user-id']}>
+              <span className={styles['profile__email']}>
                 {userData.email}
               </span>
-            </div>
-            <button
-              className={styles['profile__edit-button']}
-              onClick={handleEditProfile}
-            >
-              <img src={EditIcon} alt="수정하기" />
-            </button>
-          </div>
-          <div className={styles['profile__user-details-list']}>
-            <div className={styles['profile__user-details-item']}>
-              <p>닉네임</p>
-              <span>{userData.nickname}</span>
-            </div>
-            <div className={styles['profile__user-details-item']}>
-              <p>휴대폰번호</p>
-              <span>{userData.phoneNumber}</span>
             </div>
           </div>
         </div>
@@ -272,7 +262,7 @@ const ProfileSection: React.FC = () => {
       </div>
       <Toast
         isVisible={showToast}
-        message="현재 개발 중인 기능입니다."
+        message="준비 중인 기능입니다."
         onClose={() => setShowToast(false)}
       />
     </section>
